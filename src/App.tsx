@@ -1,30 +1,45 @@
-import { Container } from '@mui/material';
-import { doc, onSnapshot } from '@firebase/firestore';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { db } from './repositories/firebase';
+import AppComponent from './components/AppComponent';
+
+export const AppContext = createContext<{
+  user: string;
+  handleLogout: () => void;
+  handleSetUser: (value: string) => void;
+  handleNavigate: (pathname: string) => void;
+}>({
+  user: '',
+  handleLogout: () => {},
+  handleSetUser: () => {},
+  handleNavigate: () => {},
+});
 
 function App() {
-  const [data, setData] = useState('');
+  const navigate = useNavigate();
+  const [user, setUser] = useState('');
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(db, 'test', 'jwkfF2XUw0GO71f6ruVp'),
-      (doc) => {
-        const { text } = doc.data() || { text: '' };
-        setData(text);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
-    return () => {
-      unsubscribe();
-    };
+    const _user = localStorage.getItem('user') || '';
+    setUser(_user);
   }, []);
+
+  const handleSetUser = (value: string) => {
+    setUser(value);
+    localStorage.setItem('user', value);
+  };
+  const handleLogout = () => {
+    setUser('');
+    localStorage.setItem('user', '');
+  };
+  const handleNavigate = (pathname: string) => {
+    navigate(pathname);
+  };
   return (
-    <Container maxWidth='sm'>
-      <div>{data}</div>
-    </Container>
+    <AppContext.Provider
+      value={{ user, handleSetUser, handleLogout, handleNavigate }}
+    >
+      <AppComponent />
+    </AppContext.Provider>
   );
 }
 
