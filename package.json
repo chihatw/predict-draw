@@ -8,8 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chihatw/lang-gym-h.card.page.draw": "^1.0.9",
-    "@chihatw/lang-gym-h.card.page.predict": "^1.0.5",
+    "@chihatw/lang-gym-h.card.page.draw": "^1.0.10",
+    "@chihatw/lang-gym-h.card.page.predict": "^1.0.6",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
