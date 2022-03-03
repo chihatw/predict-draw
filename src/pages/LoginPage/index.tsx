@@ -1,8 +1,7 @@
 import { css } from '@emotion/css';
 import { Modal, Button } from '@mui/material';
 import React, { useContext } from 'react';
-
-import { AppContext } from '../../App';
+import AppContext from '../../services/context';
 
 const LoginPage = () => {
   const { user, handleSetUser } = useContext(AppContext);

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { AppContext } from '../../App';
+
 import Layout from '../../components/Layout';
+import AppContext from '../../services/context';
 
 const PredictPage = () => {
   const { user, handleLogout, handleNavigate } = useContext(AppContext);

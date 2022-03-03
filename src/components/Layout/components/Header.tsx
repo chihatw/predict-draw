@@ -1,7 +1,4 @@
 import { Button } from '@mui/material';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { AppContext } from '../../../App';
 
 const displaynames: { [key: string]: string } = {
   'li-san': '李さん',

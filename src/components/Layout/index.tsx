@@ -16,6 +16,7 @@ const Layout: React.FC<{
         handleLogout={handleLogout}
         handleNavigate={handleNavigate}
       />
+      <div style={{ height: 8 }} />
       {children}
     </div>
   );

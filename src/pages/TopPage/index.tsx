@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { useContext } from 'react';
 
 import Layout from '../../components/Layout';
-import { AppContext } from '../../App';
+import AppContext from '../../services/context';
 
 const TopPage = () => {
   const { handleNavigate, user, handleLogout } = useContext(AppContext);

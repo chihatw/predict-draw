@@ -1,9 +1,20 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../App';
+
 import Layout from '../../components/Layout';
+import AppContext from '../../services/context';
+import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 
 const DrawPage = () => {
-  const { user, handleLogout, handleNavigate } = useContext(AppContext);
+  const {
+    user,
+    cards,
+    predict,
+    liSanPoints,
+    kouSanPoints,
+    handleLogout,
+    handleNavigate,
+  } = useContext(AppContext);
+
   return (
     <Layout
       user={user}
@@ -11,7 +22,13 @@ const DrawPage = () => {
       handleLogout={handleLogout}
       handleNavigate={() => handleNavigate('/predict')}
     >
-      DrawPage
+      <Draw
+        points={user === 'li-san' ? liSanPoints : kouSanPoints}
+        cards={cards}
+        predict={predict}
+        opponentPoints={user === 'li-san' ? kouSanPoints : liSanPoints}
+        opponent={user === 'li-san' ? '黄さん' : '李さん'}
+      />
     </Layout>
   );
 };
