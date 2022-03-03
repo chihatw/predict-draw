@@ -7,12 +7,14 @@ import AppContext from './services/context';
 import useCards from './services/useCard';
 import usePredict from './services/usePredict';
 import usePoints from './services/usePoints';
+import useResult from './services/useResult';
 
 function App() {
   const navigate = useNavigate();
   const { user, handleLogout, handleSetUser } = useUser();
   const { cards } = useCards();
-  const { predict } = usePredict();
+  const { predict, handlePredict } = usePredict();
+  const { handleResult } = useResult();
   const { liSanPoints, kouSanPoints } = usePoints();
 
   const handleNavigate = (pathname: string) => {
@@ -29,6 +31,8 @@ function App() {
         handleLogout,
         handleSetUser,
         handleNavigate,
+        handlePredict,
+        handleResult,
       }}
     >
       <AppComponent />

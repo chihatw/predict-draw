@@ -13,6 +13,7 @@ const DrawPage = () => {
     kouSanPoints,
     handleLogout,
     handleNavigate,
+    handleResult,
   } = useContext(AppContext);
 
   return (
@@ -26,8 +27,9 @@ const DrawPage = () => {
         points={user === 'li-san' ? liSanPoints : kouSanPoints}
         cards={cards}
         predict={predict}
-        opponentPoints={user === 'li-san' ? kouSanPoints : liSanPoints}
         opponent={user === 'li-san' ? '黄さん' : '李さん'}
+        opponentPoints={user === 'li-san' ? kouSanPoints : liSanPoints}
+        superHandleResult={handleResult}
       />
     </Layout>
   );

@@ -21,8 +21,10 @@ const AppContext = createContext<{
   liSanPoints: number;
   kouSanPoints: number;
   handleLogout: () => void;
+  handlePredict: (value: string) => void;
   handleSetUser: (value: string) => void;
   handleNavigate: (pathname: string) => void;
+  handleResult: (value: string) => void;
 }>({
   user: '',
   cards: INITIAL_CARDS,
@@ -30,6 +32,8 @@ const AppContext = createContext<{
   liSanPoints: 0,
   kouSanPoints: 0,
   handleLogout: () => {},
+  handleResult: () => {},
+  handlePredict: () => {},
   handleSetUser: () => {},
   handleNavigate: () => {},
 });

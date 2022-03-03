@@ -1,10 +1,19 @@
 import { useContext } from 'react';
+import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 
 import Layout from '../../components/Layout';
 import AppContext from '../../services/context';
 
 const PredictPage = () => {
-  const { user, handleLogout, handleNavigate } = useContext(AppContext);
+  const {
+    user,
+    cards,
+    liSanPoints,
+    kouSanPoints,
+    handleLogout,
+    handlePredict,
+    handleNavigate,
+  } = useContext(AppContext);
   return (
     <Layout
       user={user}
@@ -12,7 +21,13 @@ const PredictPage = () => {
       handleLogout={handleLogout}
       handleNavigate={() => handleNavigate('/draw')}
     >
-      PredictPage
+      <Predict
+        cards={cards}
+        points={user === 'li-san' ? liSanPoints : kouSanPoints}
+        opponent={user === 'li-san' ? '黄さん' : '李さん'}
+        opponentPoints={user === 'li-san' ? kouSanPoints : liSanPoints}
+        superHandlePredict={handlePredict}
+      />
     </Layout>
   );
 };
