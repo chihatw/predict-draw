@@ -1,32 +1,21 @@
-import { Button } from '@mui/material';
-import { useContext } from 'react';
-
-import Layout from '../../components/Layout';
-import AppContext from '../../services/context';
+import Layout from '../../Layout';
 
 const TopPage = () => {
-  const { handleNavigate, user, handleLogout } = useContext(AppContext);
   return (
-    <Layout user={user} handleLogout={handleLogout}>
+    <Layout user=''>
       <div
-        style={{ marginTop: 160, display: 'flex', justifyContent: 'center' }}
+        style={{
+          color: 'rgba(0,0,0,0.15)',
+          height: '100%',
+          fontSize: 300,
+          position: 'fixed',
+          wordBreak: 'break-all',
+          fontWeight: 900,
+          lineHeight: 0.7,
+          fontFamily: 'Roboto, sans-serif',
+        }}
       >
-        <div style={{ display: 'grid', rowGap: 40, width: 300 }}>
-          <Button
-            variant='contained'
-            sx={{ height: 120 }}
-            onClick={() => handleNavigate('/predict')}
-          >
-            <span style={{ color: 'white', fontSize: 24 }}>質問する</span>
-          </Button>
-          <Button
-            variant='contained'
-            sx={{ height: 120 }}
-            onClick={() => handleNavigate('/draw')}
-          >
-            <span style={{ color: 'white', fontSize: 24 }}>返答する</span>
-          </Button>
-        </div>
+        under construction
       </div>
     </Layout>
   );

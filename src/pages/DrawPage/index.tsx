@@ -1,28 +1,15 @@
 import React, { useContext } from 'react';
 
-import Layout from '../../components/Layout';
+import Layout from '../../Layout';
 import AppContext from '../../services/context';
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 
 const DrawPage = () => {
-  const {
-    user,
-    cards,
-    predict,
-    liSanPoints,
-    kouSanPoints,
-    handleLogout,
-    handleNavigate,
-    handleResult,
-  } = useContext(AppContext);
+  const { user, cards, predict, liSanPoints, kouSanPoints, handleResult } =
+    useContext(AppContext);
 
   return (
-    <Layout
-      user={user}
-      buttonLabel='質問する'
-      handleLogout={handleLogout}
-      handleNavigate={() => handleNavigate('/predict')}
-    >
+    <Layout user='liSan'>
       <Draw
         points={user === 'li-san' ? liSanPoints : kouSanPoints}
         cards={cards}
