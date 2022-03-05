@@ -9,7 +9,6 @@ const useResult = () => {
       doc(db, 'game', 'result'),
       (doc) => {
         const { value } = (doc.data() as { value: string }) || { value: '' };
-        console.log(value);
         setResult(value);
       },
       (error) => {
