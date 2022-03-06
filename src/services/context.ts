@@ -19,6 +19,8 @@ const AppContext = createContext<{
   predict: string;
   liSanPoints: number;
   kouSanPoints: number;
+  liSanPageState: string;
+  kouSanPageState: string;
   handlePredict: (value: string) => void;
   handleNavigate: (pathname: string) => void;
   handleResult: (value: string) => void;
@@ -27,6 +29,8 @@ const AppContext = createContext<{
   predict: '',
   liSanPoints: 0,
   kouSanPoints: 0,
+  liSanPageState: '',
+  kouSanPageState: '',
   handleResult: () => {},
   handlePredict: () => {},
   handleNavigate: () => {},

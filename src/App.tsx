@@ -7,9 +7,11 @@ import useResult from './services/useResult';
 import AppRoutes from './routes/AppRoutes';
 import AppContext from './services/context';
 import usePredict from './services/usePredict';
+import usePageState from './services/usePageState';
 
 function App() {
   useIpInfo();
+  const { liSanPageState, kouSanPageState } = usePageState();
   const navigate = useNavigate();
   const { cards } = useCards();
   const { predict, handlePredict } = usePredict();
@@ -29,6 +31,8 @@ function App() {
         handleNavigate,
         handlePredict,
         handleResult,
+        liSanPageState,
+        kouSanPageState,
       }}
     >
       <AppRoutes />

@@ -1,0 +1,32 @@
+import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
+import React, { useContext } from 'react';
+import AppContext from '../../services/context';
+
+const UserPage: React.FC<{ state: string; user: string }> = ({
+  state,
+  user,
+}) => {
+  const { cards, liSanPoints, kouSanPoints, handlePredict } =
+    useContext(AppContext);
+  switch (state) {
+    case 'predict':
+      return (
+        <Predict
+          cards={cards}
+          points={user === 'liSan' ? liSanPoints : kouSanPoints}
+          opponent={user === 'liSan' ? '黄さん' : '李さん'}
+          opponentPoints={user === 'liSan' ? kouSanPoints : liSanPoints}
+          superHandlePredict={handlePredict}
+          superShowScorePane={true}
+          superShowRatioPane={true}
+          superShowPredictPane={true}
+        />
+      );
+    case 'draw':
+      return <div>draw</div>;
+    default:
+      return <div></div>;
+  }
+};
+
+export default UserPage;
