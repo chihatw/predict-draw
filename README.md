@@ -7,6 +7,5 @@
   - cloud functions 使用のために firebase を`従量課金`にしている
 
 # TODO perpetuateIpInfo, removeIpInfo を上に移動
- - kouSan でも利用できるようにする
  - predict-draw-master で onSnapshot で取得
 
