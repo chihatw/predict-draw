@@ -21,9 +21,19 @@ const AppContext = createContext<{
   kouSanPoints: number;
   liSanPageState: string;
   kouSanPageState: string;
+  showScorePane: boolean;
+  showRatioPane: boolean;
+  showPredictPane: boolean;
   handlePredict: (value: string) => void;
   handleNavigate: (pathname: string) => void;
   handleResult: (value: string) => void;
+  handleShowPane: ({
+    docId,
+    visible,
+  }: {
+    docId: string;
+    visible: boolean;
+  }) => void;
 }>({
   cards: INITIAL_CARDS,
   predict: '',
@@ -31,9 +41,13 @@ const AppContext = createContext<{
   kouSanPoints: 0,
   liSanPageState: '',
   kouSanPageState: '',
+  showScorePane: false,
+  showRatioPane: false,
+  showPredictPane: false,
   handleResult: () => {},
   handlePredict: () => {},
   handleNavigate: () => {},
+  handleShowPane: () => {},
 });
 
 export default AppContext;

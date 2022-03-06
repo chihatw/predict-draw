@@ -6,8 +6,15 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
   state,
   user,
 }) => {
-  const { cards, liSanPoints, kouSanPoints, handlePredict } =
-    useContext(AppContext);
+  const {
+    cards,
+    liSanPoints,
+    kouSanPoints,
+    showScorePane,
+    showRatioPane,
+    showPredictPane,
+    handlePredict,
+  } = useContext(AppContext);
   switch (state) {
     case 'predict':
       return (
@@ -17,9 +24,9 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
           opponentPoints={user === 'liSan' ? kouSanPoints : liSanPoints}
           superHandlePredict={handlePredict}
-          superShowScorePane={true}
-          superShowRatioPane={true}
-          superShowPredictPane={true}
+          superShowScorePane={showScorePane}
+          superShowRatioPane={showRatioPane}
+          superShowPredictPane={showPredictPane}
         />
       );
     case 'draw':

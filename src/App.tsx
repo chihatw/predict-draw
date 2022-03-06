@@ -8,10 +8,13 @@ import AppRoutes from './routes/AppRoutes';
 import AppContext from './services/context';
 import usePredict from './services/usePredict';
 import usePageState from './services/usePageState';
+import useShowPanes from './services/useShowPanes';
 
 function App() {
   useIpInfo();
   const { liSanPageState, kouSanPageState } = usePageState();
+  const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
+    useShowPanes();
   const navigate = useNavigate();
   const { cards } = useCards();
   const { predict, handlePredict } = usePredict();
@@ -28,11 +31,16 @@ function App() {
         predict,
         liSanPoints,
         kouSanPoints,
+        liSanPageState,
+        kouSanPageState,
+        showScorePane,
+        showRatioPane,
+        showPredictPane,
         handleNavigate,
         handlePredict,
         handleResult,
-        liSanPageState,
-        kouSanPageState,
+
+        handleShowPane,
       }}
     >
       <AppRoutes />

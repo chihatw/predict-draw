@@ -8,6 +8,7 @@ const usePredict = () => {
     const unsub = onSnapshot(
       doc(db, 'game', 'predict'),
       (doc) => {
+        console.log(`fetch predict`);
         const { value } = (doc.data() as { value: string }) || { value: '' };
         setPredict(value);
       },
@@ -20,6 +21,7 @@ const usePredict = () => {
     };
   }, []);
   const handlePredict = async (value: string) => {
+    console.log('update predict');
     await updateDoc(doc(db, 'game', 'predict'), { value });
   };
   return { predict, handlePredict };
