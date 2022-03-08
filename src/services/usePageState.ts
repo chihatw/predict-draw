@@ -2,8 +2,9 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../repositories/firebase';
 
-const LI_SAN_PROP = 'liSanPageState';
-const KOU_SAN_PROP = 'kouSanPageState';
+const COLLECTION = 'pageStates';
+const LI_SAN_PROP = 'liSan';
+const KOU_SAN_PROP = 'kouSan';
 
 const usePageState = () => {
   const [liSanPageState, setLiSanPageState] = useState('');
@@ -12,7 +13,7 @@ const usePageState = () => {
   // 李さんの状態監視
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', LI_SAN_PROP),
+      doc(db, COLLECTION, LI_SAN_PROP),
       (doc) => {
         console.log(`fetch ${LI_SAN_PROP}`);
         const { state } = (doc.data() as { state: string }) || { state: '' };
@@ -30,7 +31,7 @@ const usePageState = () => {
   // 黄さんの状態監視
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', KOU_SAN_PROP),
+      doc(db, COLLECTION, KOU_SAN_PROP),
       (doc) => {
         console.log(`fetch ${KOU_SAN_PROP}`);
         const { state } = (doc.data() as { state: string }) || { state: '' };

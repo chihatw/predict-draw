@@ -7,7 +7,8 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
   user,
 }) => {
   const {
-    cards,
+    yesRatio,
+    newGameAt,
     liSanPoints,
     kouSanPoints,
     showScorePane,
@@ -19,7 +20,8 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
     case 'predict':
       return (
         <Predict
-          cards={cards}
+          yesRatio={yesRatio}
+          newGameAt={newGameAt}
           points={user === 'liSan' ? liSanPoints : kouSanPoints}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
           opponentPoints={user === 'liSan' ? kouSanPoints : liSanPoints}

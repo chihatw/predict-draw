@@ -7,8 +7,9 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
   state,
 }) => {
   const {
-    cards,
     predict,
+    yesRatio,
+    newGameAt,
     liSanPoints,
     kouSanPoints,
     showRatioPane: _showRatioPane,
@@ -35,24 +36,25 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
 
   const handleShowScorePane = (visible: boolean) => {
     setShowScorePane(visible);
-    handleShowPane({ visible, docId: 'showScorePane' });
+    handleShowPane({ visible, docId: 'scorePane' });
   };
 
   const handleShowRatioPane = (visible: boolean) => {
     setShowRatioPane(visible);
-    handleShowPane({ visible, docId: 'showRatioPane' });
+    handleShowPane({ visible, docId: 'ratioPane' });
   };
 
   const handleShowPredictPane = (visible: boolean) => {
     setShowPredictPane(visible);
-    handleShowPane({ visible, docId: 'showPredictPane' });
+    handleShowPane({ visible, docId: 'predictPane' });
   };
 
   switch (state) {
     case 'predict':
       return (
         <Predict
-          cards={cards}
+          yesRatio={yesRatio}
+          newGameAt={newGameAt}
           points={user === 'liSan' ? liSanPoints : kouSanPoints}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
           superPredict={predict}

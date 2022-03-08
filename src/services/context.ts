@@ -1,12 +1,5 @@
 import { createContext } from 'react';
 
-export type Cards = {
-  yes: number;
-  no: number;
-};
-
-export const INITIAL_CARDS: Cards = { yes: 0, no: 0 };
-
 export type Users = {
   liSan: number;
   kouSan: number;
@@ -15,8 +8,9 @@ export type Users = {
 export const INITIAL_USERS: Users = { liSan: 0, kouSan: 0 };
 
 const AppContext = createContext<{
-  cards: Cards;
   predict: string;
+  yesRatio: number;
+  newGameAt: number;
   liSanPoints: number;
   kouSanPoints: number;
   liSanPageState: string;
@@ -35,8 +29,9 @@ const AppContext = createContext<{
     visible: boolean;
   }) => void;
 }>({
-  cards: INITIAL_CARDS,
   predict: '',
+  yesRatio: 0,
+  newGameAt: 0,
   liSanPoints: 0,
   kouSanPoints: 0,
   liSanPageState: '',

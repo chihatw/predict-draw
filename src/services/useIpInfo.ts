@@ -4,6 +4,25 @@ import { useEffect, useState } from 'react';
 
 import { db } from '../repositories/firebase';
 
+const useIpInfo = () => {
+  const { pathname } = useLocation();
+
+  const [ipInfo, setIpInfo] = useState('');
+
+  useEffect(() => {
+    perpetuateIpInfo({ pathname, setIpInfo });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+      removeIpInfo({ ipInfo, pathname });
+    });
+    return () => removeIpInfo({ ipInfo, pathname });
+  }, [ipInfo, pathname]);
+};
+
+export default useIpInfo;
+
 const getCollection = (pathname: string) => {
   switch (pathname) {
     case '/liSan':
@@ -26,26 +45,31 @@ const perpetuateIpInfo = async ({
   const collection = getCollection(pathname);
   if (!collection) return;
 
-  const res = await window.fetch(
-    `https://ipinfo.io?callback&token=${import.meta.env.VITE_IPINFO_TOKEN}`
-  );
-  const { ip, city, region, country } = ((await res.json()) as {
-    ip: string;
-    city: string;
-    region: string;
-    country: string;
-  }) || {
-    ip: '',
-    city: '',
-    region: '',
-    country: '',
-  };
-  const ipInfo = [country, region, city, ip]
-    .join('_')
-    .replaceAll('.', '')
-    .replaceAll('/', '');
+  let ipInfo = 'noIpInfo';
+
+  try {
+    const res = await window.fetch(
+      `https://ipinfo.io?callback&token=${import.meta.env.VITE_IPINFO_TOKEN}`
+    );
+    const { ip, city, region, country } = ((await res.json()) as {
+      ip: string;
+      city: string;
+      region: string;
+      country: string;
+    }) || {
+      ip: '',
+      city: '',
+      region: '',
+      country: '',
+    };
+    ipInfo = [country, region, city, ip]
+      .join('_')
+      .replaceAll('.', '')
+      .replaceAll('/', '');
+  } catch (e) {}
 
   setIpInfo(ipInfo);
+  // idのみの登録なので、中身は {}
   await setDoc(doc(db, collection, ipInfo), {});
 };
 
@@ -62,21 +86,3 @@ const removeIpInfo = ({
   const url = `https://us-central1-predict-draw.cloudfunctions.net/deleteIpInfo?collection=${collection}&ipInfo=${ipInfo}`;
   window.navigator.sendBeacon(url);
 };
-
-const useIpInfo = () => {
-  const { pathname } = useLocation();
-
-  const [ipInfo, setIpInfo] = useState('');
-  useEffect(() => {
-    perpetuateIpInfo({ pathname, setIpInfo });
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      removeIpInfo({ ipInfo, pathname });
-    });
-    return () => removeIpInfo({ ipInfo, pathname });
-  }, [ipInfo, pathname]);
-};
-
-export default useIpInfo;

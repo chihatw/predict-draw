@@ -2,14 +2,21 @@ import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../repositories/firebase';
 
+const COLLECTION = 'points';
+const LI_SAN_ID = 'liSan';
+const KOU_SAN_ID = 'kouSan';
+
 const usePoints = () => {
   const [liSanPoints, setLiSanPoints] = useState(0);
   const [kouSanPoints, setKouSanPoints] = useState(0);
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', 'li-san-points'),
+      doc(db, COLLECTION, LI_SAN_ID),
       (doc) => {
-        const { points } = (doc.data() as { points: number }) || { points: '' };
+        const { points } = (doc.data() as { points: number }) || {
+          points: 0,
+        };
+        console.log(points);
         setLiSanPoints(points);
       },
       (error) => {
@@ -22,9 +29,9 @@ const usePoints = () => {
   }, []);
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', 'kou-san-points'),
+      doc(db, COLLECTION, KOU_SAN_ID),
       (doc) => {
-        const { points } = (doc.data() as { points: number }) || { points: '' };
+        const { points } = (doc.data() as { points: number }) || { points: 33 };
         setKouSanPoints(points);
       },
       (error) => {
@@ -36,17 +43,9 @@ const usePoints = () => {
     };
   }, []);
 
-  const handleUpdateLiSanPoints = async (points: number) => {
-    await updateDoc(doc(db, 'game', 'li-san-points'), { points });
-  };
-  const handleUpdateKouSanPoints = async (points: number) => {
-    await updateDoc(doc(db, 'game', 'kou-san-points'), { points });
-  };
   return {
     liSanPoints,
     kouSanPoints,
-    handleUpdateLiSanPoints,
-    handleUpdateKouSanPoints,
   };
 };
 export default usePoints;

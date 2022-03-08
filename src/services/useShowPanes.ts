@@ -2,9 +2,11 @@ import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../repositories/firebase';
 
-const SHOW_SCORE_PANE = 'showScorePane';
-const SHOW_RATIO_PANE = 'showRatioPane';
-const SHOW_PREDICT_PANE = 'showPredictPane';
+const COLLECTION = 'shows';
+
+const SHOW_SCORE_PANE = 'scorePane';
+const SHOW_RATIO_PANE = 'ratioPane';
+const SHOW_PREDICT_PANE = 'predictPane';
 
 const useShowPanes = () => {
   const [showScorePane, setShowScorePane] = useState(false);
@@ -14,7 +16,7 @@ const useShowPanes = () => {
   // showScorePaneの監視
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', SHOW_SCORE_PANE),
+      doc(db, COLLECTION, SHOW_SCORE_PANE),
       (doc) => {
         console.log(`fetch ${SHOW_SCORE_PANE}`);
         const { visible } = (doc.data() as { visible: boolean }) || {
@@ -32,7 +34,7 @@ const useShowPanes = () => {
   // showRasioPaneの監視
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', SHOW_RATIO_PANE),
+      doc(db, COLLECTION, SHOW_RATIO_PANE),
       (doc) => {
         console.log(`fetch ${SHOW_RATIO_PANE}`);
         const { visible } = (doc.data() as { visible: boolean }) || {
@@ -50,7 +52,7 @@ const useShowPanes = () => {
   // showPredictPaneの監視
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, 'game', SHOW_PREDICT_PANE),
+      doc(db, COLLECTION, SHOW_PREDICT_PANE),
       (doc) => {
         console.log(`fetch ${SHOW_PREDICT_PANE}`);
         const { visible } = (doc.data() as { visible: boolean }) || {
@@ -74,7 +76,7 @@ const useShowPanes = () => {
     visible: boolean;
   }) => {
     if ([SHOW_SCORE_PANE, SHOW_RATIO_PANE, SHOW_PREDICT_PANE].includes(docId)) {
-      setDoc(doc(db, 'game', docId), { visible });
+      setDoc(doc(db, COLLECTION, docId), { visible });
     } else {
       console.log(`incorrect docId: ${docId}`);
     }

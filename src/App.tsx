@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import useIpInfo from './services/useIpInfo';
-import useCards from './services/useCard';
+import useYesRatio from './services/useYesRatio';
 import usePoints from './services/usePoints';
 import useResult from './services/useResult';
 import AppRoutes from './routes/AppRoutes';
@@ -9,6 +9,7 @@ import AppContext from './services/context';
 import usePredict from './services/usePredict';
 import usePageState from './services/usePageState';
 import useShowPanes from './services/useShowPanes';
+import useNewGameAt from './services/useNewGameAt';
 
 function App() {
   useIpInfo();
@@ -16,9 +17,10 @@ function App() {
   const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
     useShowPanes();
   const navigate = useNavigate();
-  const { cards } = useCards();
-  const { predict, handlePredict } = usePredict();
+  const { yesRatio } = useYesRatio();
+  const { newGameAt } = useNewGameAt();
   const { handleResult } = useResult();
+  const { predict, handlePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
 
   const handleNavigate = (pathname: string) => {
@@ -27,8 +29,9 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        cards,
         predict,
+        yesRatio,
+        newGameAt,
         liSanPoints,
         kouSanPoints,
         liSanPageState,
