@@ -2,6 +2,7 @@ import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext } from 'react';
 import AppContext from '../../services/context';
+import Greeting from '../Greeting';
 
 const UserPage: React.FC<{ state: string; user: string }> = ({
   state,
@@ -10,15 +11,15 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
   const {
     yesRatio,
     newGameAt,
-    liSanPoints,
-    kouSanPoints,
-    showScorePane,
     showRatioPane,
     showPredictPane,
     handlePredict,
     handleUpdateDrawn,
   } = useContext(AppContext);
+  // TODO stateを増やす。 greeting, talking to 李さん、talking to 黄さん
   switch (state) {
+    case 'greeting':
+      return <Greeting />;
     case 'predict':
       return (
         <Predict

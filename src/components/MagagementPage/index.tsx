@@ -2,6 +2,7 @@ import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../services/context';
+import Greeting from '../Greeting';
 
 const ManagementPage: React.FC<{ state: string; user: string }> = ({
   user,
@@ -12,8 +13,6 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
     predict,
     yesRatio,
     newGameAt,
-    liSanPoints,
-    kouSanPoints,
     showRatioPane: _showRatioPane,
     showScorePane: _showScorePane,
     showPredictPane: _showPredictPane,
@@ -21,13 +20,8 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
     handlePredict,
     handleShowPane,
   } = useContext(AppContext);
-  const [showScorePane, setShowScorePane] = useState(_showScorePane);
   const [showRatioPane, setShowRatioPane] = useState(_showRatioPane);
   const [showPredictPane, setShowPredictPane] = useState(_showPredictPane);
-
-  useEffect(() => {
-    setShowScorePane(_showScorePane);
-  }, [_showScorePane]);
 
   useEffect(() => {
     setShowRatioPane(_showRatioPane);
@@ -36,11 +30,6 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
   useEffect(() => {
     setShowPredictPane(_showPredictPane);
   }, [_showPredictPane]);
-
-  const handleShowScorePane = (visible: boolean) => {
-    setShowScorePane(visible);
-    handleShowPane({ visible, docId: 'scorePane' });
-  };
 
   const handleShowRatioPane = (visible: boolean) => {
     setShowRatioPane(visible);
@@ -52,7 +41,10 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
     handleShowPane({ visible, docId: 'predictPane' });
   };
 
+  // TODO stateを増やす。 greeting, talking to 李さん、talking to 黄さん
   switch (state) {
+    case 'greeting':
+      return <Greeting />;
     case 'predict':
       return (
         <Predict

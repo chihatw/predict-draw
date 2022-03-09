@@ -14,8 +14,6 @@
 - - 'predic'|'draw'|''
 
 # TODO drawページ
-- userページで引いたカードがmanagement pageに表示されるようにする
-- master の予想、結果不要
 - 紙吹雪
 - https://www.kirilv.com/canvas-confetti/
 - メトロノーム
