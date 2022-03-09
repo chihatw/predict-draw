@@ -3,6 +3,8 @@ import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../services/context';
 import Greeting from '../Greeting';
+import TalkingToKouSan from '../TalkingToKouSan';
+import TalkingToLiSan from '../TalkingToLiSan';
 
 const ManagementPage: React.FC<{ state: string; user: string }> = ({
   user,
@@ -41,10 +43,13 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
     handleShowPane({ visible, docId: 'predictPane' });
   };
 
-  // TODO stateを増やす。 greeting, talking to 李さん、talking to 黄さん
   switch (state) {
     case 'greeting':
       return <Greeting />;
+    case 'talkingToLiSan':
+      return <TalkingToLiSan />;
+    case 'talkingToKouSan':
+      return <TalkingToKouSan />;
     case 'predict':
       return (
         <Predict

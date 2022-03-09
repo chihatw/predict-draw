@@ -32,9 +32,9 @@ const Greeting = () => {
       <div
         style={{
           color: '#aaa',
+          display: 'flex',
           fontSize: 48,
           fontWeight: 'bold',
-          display: 'flex',
         }}
       >
         {'こんにちは'.split('').map((letter, index) => (
