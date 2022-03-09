@@ -3,7 +3,14 @@ import React, { useMemo } from 'react';
 
 import Header from './components/Header';
 
-const Layout: React.FC<{ user: string }> = ({ children, user }) => {
+const HEADER_HEIGHT = 60;
+const PADDING_TOP = 8;
+
+const Layout: React.FC<{ user: string; label?: string }> = ({
+  user,
+  label,
+  children,
+}) => {
   const theme = useTheme();
   const backgroundColor = useMemo(() => {
     let result = '';
@@ -19,10 +26,16 @@ const Layout: React.FC<{ user: string }> = ({ children, user }) => {
     return result;
   }, []);
   return (
-    <div>
-      <Header backgroundColor={backgroundColor} />
-      <div style={{ height: 8 }} />
-      {children}
+    <div style={{ height: '100%' }}>
+      <Header
+        label={label}
+        height={HEADER_HEIGHT}
+        backgroundColor={backgroundColor}
+      />
+      <div style={{ height: PADDING_TOP }} />
+      <div style={{ height: `calc(100% - ${HEADER_HEIGHT + PADDING_TOP}px)` }}>
+        {children}
+      </div>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import AppContext from '../../services/context';
 const LisanPage = () => {
   const { liSanPageState } = useContext(AppContext);
   return (
-    <Layout user='liSan'>
+    <Layout user='liSan' label='李さん'>
       <UserPage state={liSanPageState} user='liSan' />
     </Layout>
   );

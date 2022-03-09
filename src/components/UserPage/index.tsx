@@ -1,3 +1,4 @@
+import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext } from 'react';
 import AppContext from '../../services/context';
@@ -15,6 +16,7 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
     showRatioPane,
     showPredictPane,
     handlePredict,
+    handleUpdateDrawn,
   } = useContext(AppContext);
   switch (state) {
     case 'predict':
@@ -22,17 +24,20 @@ const UserPage: React.FC<{ state: string; user: string }> = ({
         <Predict
           yesRatio={yesRatio}
           newGameAt={newGameAt}
-          points={user === 'liSan' ? liSanPoints : kouSanPoints}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
-          opponentPoints={user === 'liSan' ? kouSanPoints : liSanPoints}
           superHandlePredict={handlePredict}
-          superShowScorePane={showScorePane}
           superShowRatioPane={showRatioPane}
           superShowPredictPane={showPredictPane}
         />
       );
     case 'draw':
-      return <div>draw</div>;
+      return (
+        <Draw
+          yesRatio={yesRatio}
+          newGameAt={newGameAt}
+          superHandleDrawn={handleUpdateDrawn}
+        />
+      );
     default:
       return <div></div>;
   }

@@ -7,7 +7,7 @@ import ManagementPage from '../../components/MagagementPage';
 const ManageKouSanPage = () => {
   const { kouSanPageState } = useContext(AppContext);
   return (
-    <Layout user='kouSan'>
+    <Layout user='kouSan' label='黄さん - モニター'>
       <ManagementPage state={kouSanPageState} user='kouSan' />
     </Layout>
   );

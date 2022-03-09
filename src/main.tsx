@@ -7,8 +7,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 const theme = createTheme({
   palette: {
-    primary: { main: '#ff9800' },
-    secondary: { main: '#1976d2' },
+    primary: { main: '#c62828' },
+    secondary: { main: '#1565c0' },
   },
 });
 
@@ -16,7 +16,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <App />
+        <div style={{ height: '100vh' }}>
+          <App />
+        </div>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,

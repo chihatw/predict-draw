@@ -1,3 +1,4 @@
+import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../services/context';
@@ -7,6 +8,7 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
   state,
 }) => {
   const {
+    drawn,
     predict,
     yesRatio,
     newGameAt,
@@ -15,6 +17,7 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
     showRatioPane: _showRatioPane,
     showScorePane: _showScorePane,
     showPredictPane: _showPredictPane,
+    handleUpdateDrawn,
     handlePredict,
     handleShowPane,
   } = useContext(AppContext);
@@ -54,23 +57,27 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
       return (
         <Predict
           yesRatio={yesRatio}
-          newGameAt={newGameAt}
-          points={user === 'liSan' ? liSanPoints : kouSanPoints}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
+          newGameAt={newGameAt}
           superPredict={predict}
-          opponentPoints={user === 'liSan' ? kouSanPoints : liSanPoints}
-          superShowScorePane={showScorePane}
           superShowRatioPane={showRatioPane}
           superShowPredictPane={showPredictPane}
           superHandlePredict={handlePredict}
-          superHandleShowScorePane={handleShowScorePane}
           superHandleShowRatioPane={handleShowRatioPane}
           superHandleShowPredictPane={handleShowPredictPane}
           isManagementMode
         />
       );
     case 'draw':
-      return <div>management draw</div>;
+      return (
+        <Draw
+          yesRatio={yesRatio}
+          newGameAt={newGameAt}
+          superDrawn={drawn}
+          superHandleDrawn={handleUpdateDrawn}
+          isManagementMode
+        />
+      );
     default:
       return <div>management</div>;
   }

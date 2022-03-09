@@ -8,6 +8,7 @@ export type Users = {
 export const INITIAL_USERS: Users = { liSan: 0, kouSan: 0 };
 
 const AppContext = createContext<{
+  drawn: 'yes' | 'no' | '';
   predict: string;
   yesRatio: number;
   newGameAt: number;
@@ -20,7 +21,7 @@ const AppContext = createContext<{
   showPredictPane: boolean;
   handlePredict: (value: string) => void;
   handleNavigate: (pathname: string) => void;
-  handleResult: (value: string) => void;
+  handleUpdateDrawn: (value: string) => void;
   handleShowPane: ({
     docId,
     visible,
@@ -29,6 +30,7 @@ const AppContext = createContext<{
     visible: boolean;
   }) => void;
 }>({
+  drawn: '',
   predict: '',
   yesRatio: 0,
   newGameAt: 0,
@@ -39,7 +41,7 @@ const AppContext = createContext<{
   showScorePane: false,
   showRatioPane: false,
   showPredictPane: false,
-  handleResult: () => {},
+  handleUpdateDrawn: () => {},
   handlePredict: () => {},
   handleNavigate: () => {},
   handleShowPane: () => {},

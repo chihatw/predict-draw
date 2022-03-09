@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useIpInfo from './services/useIpInfo';
 import useYesRatio from './services/useYesRatio';
 import usePoints from './services/usePoints';
-import useResult from './services/useResult';
+import useDrawn from './services/useDrawn';
 import AppRoutes from './routes/AppRoutes';
 import AppContext from './services/context';
 import usePredict from './services/usePredict';
@@ -19,7 +19,7 @@ function App() {
   const navigate = useNavigate();
   const { yesRatio } = useYesRatio();
   const { newGameAt } = useNewGameAt();
-  const { handleResult } = useResult();
+  const { drawn, handleUpdateDrawn } = useDrawn();
   const { predict, handlePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
 
@@ -29,21 +29,21 @@ function App() {
   return (
     <AppContext.Provider
       value={{
+        drawn,
         predict,
         yesRatio,
         newGameAt,
         liSanPoints,
         kouSanPoints,
-        liSanPageState,
-        kouSanPageState,
         showScorePane,
         showRatioPane,
+        liSanPageState,
+        kouSanPageState,
         showPredictPane,
-        handleNavigate,
         handlePredict,
-        handleResult,
-
+        handleNavigate,
         handleShowPane,
+        handleUpdateDrawn,
       }}
     >
       <AppRoutes />
