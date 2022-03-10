@@ -5,10 +5,30 @@ import { db } from '../repositories/firebase';
 const COLLECTION = 'pageStates';
 const LI_SAN_PROP = 'liSan';
 const KOU_SAN_PROP = 'kouSan';
+const NOTES_PROP = 'notes';
 
 const usePageState = () => {
   const [liSanPageState, setLiSanPageState] = useState('');
   const [kouSanPageState, setKouSanPageState] = useState('');
+  const [notesPageState, setNotesPageState] = useState('');
+
+  // ノートの状態監視
+  useEffect(() => {
+    const unsub = onSnapshot(
+      doc(db, COLLECTION, NOTES_PROP),
+      (doc) => {
+        console.log(`fetch ${NOTES_PROP}`);
+        const { state } = (doc.data() as { state: string }) || { state: '' };
+        setNotesPageState(state);
+      },
+      (error) => {
+        console.warn(error);
+      }
+    );
+    return () => {
+      unsub();
+    };
+  }, []);
 
   // 李さんの状態監視
   useEffect(() => {
@@ -45,6 +65,6 @@ const usePageState = () => {
       unsub();
     };
   }, []);
-  return { liSanPageState, kouSanPageState };
+  return { liSanPageState, kouSanPageState, notesPageState };
 };
 export default usePageState;

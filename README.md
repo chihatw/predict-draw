@@ -13,7 +13,3 @@
 - KouSanPageState
 - - 'predic'|'draw'|''
 
-# TODO drawページ
-- 紙吹雪
-- https://www.kirilv.com/canvas-confetti/
-- メトロノーム

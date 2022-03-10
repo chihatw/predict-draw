@@ -1,23 +1,34 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
-import React, { useContext } from 'react';
-import AppContext from '../../services/context';
-import Greeting from '../Greeting';
-import TalkingToKouSan from '../TalkingToKouSan';
-import TalkingToLiSan from '../TalkingToLiSan';
+import React, { useContext, useMemo } from 'react';
+import AppContext from '../services/context';
+import Greeting from './Greeting';
+import TalkingToKouSan from './TalkingToKouSan';
+import TalkingToLiSan from './TalkingToLiSan';
 
-const UserPage: React.FC<{ state: string; user: string }> = ({
-  state,
-  user,
-}) => {
+const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
     yesRatio,
     newGameAt,
     showRatioPane,
+    liSanPageState,
     showPredictPane,
+    kouSanPageState,
     handlePredict,
     handleUpdateDrawn,
   } = useContext(AppContext);
+
+  const state = useMemo(() => {
+    switch (user) {
+      case 'liSan':
+        return liSanPageState;
+      case 'kouSan':
+        return kouSanPageState;
+      default:
+        return 'greeting';
+    }
+  }, [user, liSanPageState, kouSanPageState]);
+
   switch (state) {
     case 'greeting':
       return <Greeting />;

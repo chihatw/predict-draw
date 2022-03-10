@@ -14,10 +14,11 @@ const AppContext = createContext<{
   newGameAt: number;
   liSanPoints: number;
   kouSanPoints: number;
-  liSanPageState: string;
-  kouSanPageState: string;
   showScorePane: boolean;
   showRatioPane: boolean;
+  liSanPageState: string;
+  notesPageState: string;
+  kouSanPageState: string;
   showPredictPane: boolean;
   handlePredict: (value: string) => void;
   handleNavigate: (pathname: string) => void;
@@ -36,10 +37,11 @@ const AppContext = createContext<{
   newGameAt: 0,
   liSanPoints: 0,
   kouSanPoints: 0,
-  liSanPageState: '',
-  kouSanPageState: '',
   showScorePane: false,
   showRatioPane: false,
+  notesPageState: '',
+  liSanPageState: '',
+  kouSanPageState: '',
   showPredictPane: false,
   handleUpdateDrawn: () => {},
   handlePredict: () => {},

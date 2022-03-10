@@ -13,7 +13,7 @@ import useNewGameAt from './services/useNewGameAt';
 
 function App() {
   useIpInfo();
-  const { liSanPageState, kouSanPageState } = usePageState();
+  const { liSanPageState, kouSanPageState, notesPageState } = usePageState();
   const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
     useShowPanes();
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ function App() {
         showScorePane,
         showRatioPane,
         liSanPageState,
+        notesPageState,
         kouSanPageState,
         showPredictPane,
         handlePredict,

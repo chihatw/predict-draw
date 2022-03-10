@@ -6,21 +6,21 @@ import Header from './components/Header';
 const HEADER_HEIGHT = 60;
 const PADDING_TOP = 8;
 
-const Layout: React.FC<{ user: string; label?: string }> = ({
-  user,
+const Layout: React.FC<{ color: 'red' | 'blue' | ''; label?: string }> = ({
+  color,
   label,
   children,
 }) => {
   const theme = useTheme();
   const backgroundColor = useMemo(() => {
     let result = '';
-    switch (user) {
-      case 'liSan':
+    switch (color) {
+      case 'red':
         result = theme.palette.primary.main;
         break;
-      case 'kouSan':
+      case 'blue':
         result = theme.palette.secondary.main;
-      default:
+        break;
     }
 
     return result;

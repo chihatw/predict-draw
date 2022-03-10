@@ -1,8 +1,8 @@
-import Layout from '../../Layout';
+import Layout from '../Layout';
 
 const TopPage = () => {
   return (
-    <Layout user=''>
+    <Layout color=''>
       <div
         style={{
           color: 'rgba(0,0,0,0.15)',

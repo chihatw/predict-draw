@@ -1,15 +1,12 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
-import React, { useContext, useEffect, useState } from 'react';
-import AppContext from '../../services/context';
-import Greeting from '../Greeting';
-import TalkingToKouSan from '../TalkingToKouSan';
-import TalkingToLiSan from '../TalkingToLiSan';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import AppContext from '../services/context';
+import Greeting from './Greeting';
+import TalkingToKouSan from './TalkingToKouSan';
+import TalkingToLiSan from './TalkingToLiSan';
 
-const ManagementPage: React.FC<{ state: string; user: string }> = ({
-  user,
-  state,
-}) => {
+const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
   const {
     drawn,
     predict,
@@ -17,11 +14,25 @@ const ManagementPage: React.FC<{ state: string; user: string }> = ({
     newGameAt,
     showRatioPane: _showRatioPane,
     showScorePane: _showScorePane,
+    liSanPageState,
+    kouSanPageState,
     showPredictPane: _showPredictPane,
     handleUpdateDrawn,
     handlePredict,
     handleShowPane,
   } = useContext(AppContext);
+
+  const state = useMemo(() => {
+    switch (user) {
+      case 'liSan':
+        return liSanPageState;
+      case 'kouSan':
+        return kouSanPageState;
+      default:
+        return 'greeting';
+    }
+  }, [user, liSanPageState, kouSanPageState]);
+
   const [showRatioPane, setShowRatioPane] = useState(_showRatioPane);
   const [showPredictPane, setShowPredictPane] = useState(_showPredictPane);
 
