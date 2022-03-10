@@ -10,9 +10,11 @@ import usePredict from './services/usePredict';
 import usePageState from './services/usePageState';
 import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
+import usePitches from './services/usePitches';
 
 function App() {
   useIpInfo();
+  const { note1PitchList, handleUpdatePitchList } = usePitches();
   const { liSanPageState, kouSanPageState, notesPageState } = usePageState();
   const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
     useShowPanes();
@@ -45,6 +47,8 @@ function App() {
         handleNavigate,
         handleShowPane,
         handleUpdateDrawn,
+        note1PitchList,
+        handleUpdatePitchList,
       }}
     >
       <AppRoutes />

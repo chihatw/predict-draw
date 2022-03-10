@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+export type pitchesArray = string[][][];
+
 export type Users = {
   liSan: number;
   kouSan: number;
@@ -30,6 +32,14 @@ const AppContext = createContext<{
     docId: string;
     visible: boolean;
   }) => void;
+  note1PitchList: [string, pitchesArray][];
+  handleUpdatePitchList: ({
+    note,
+    pitchList,
+  }: {
+    note: 'note1' | 'note2';
+    pitchList: [string, pitchesArray][];
+  }) => void;
 }>({
   drawn: '',
   predict: '',
@@ -41,12 +51,14 @@ const AppContext = createContext<{
   showRatioPane: false,
   notesPageState: '',
   liSanPageState: '',
+  note1PitchList: [],
   kouSanPageState: '',
   showPredictPane: false,
-  handleUpdateDrawn: () => {},
   handlePredict: () => {},
   handleNavigate: () => {},
   handleShowPane: () => {},
+  handleUpdateDrawn: () => {},
+  handleUpdatePitchList: () => {},
 });
 
 export default AppContext;

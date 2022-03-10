@@ -11,6 +11,8 @@
   "dependencies": {
     "@chihatw/lang-gym-h.card.page.draw": "^1.0.18",
     "@chihatw/lang-gym-h.card.page.predict": "^1.0.28",
+    "@chihatw/lang-gym-h.form.input-pitch-list": "^1.0.1",
+    "@chihatw/lang-gym-h.ui.sentence-pitch-line": "^1.0.0",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
