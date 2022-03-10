@@ -7,7 +7,7 @@ import Layout from '../../Layout';
 import AppContext from '../../services/context';
 import NotesPageStatePane from './components/NotesPageStatePane';
 
-const InputPitchesPage = () => {
+const ManageNotesPage = () => {
   const {
     notesPageState,
     note1PitchList,
@@ -71,4 +71,4 @@ const InputPitchesPage = () => {
   );
 };
 
-export default InputPitchesPage;
+export default ManageNotesPage;

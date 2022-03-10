@@ -1,8 +1,10 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
+import { Container } from '@mui/material';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import AppContext from '../services/context';
 import Greeting from './Greeting';
+import PageStatePane from './PageStatePane';
 import TalkingToKouSan from './TalkingToKouSan';
 import TalkingToLiSan from './TalkingToLiSan';
 
@@ -18,11 +20,13 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
     kouSanPageState,
     showPredictPane: _showPredictPane,
     updateDrawn,
-    handlePredict,
+    updatePredict,
     handleShowPane,
+    updateLiSanPageState,
+    updateKouSanPageState,
   } = useContext(AppContext);
 
-  const state = useMemo(() => {
+  const _state = useMemo(() => {
     switch (user) {
       case 'liSan':
         return liSanPageState;
@@ -35,6 +39,11 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
 
   const [showRatioPane, setShowRatioPane] = useState(_showRatioPane);
   const [showPredictPane, setShowPredictPane] = useState(_showPredictPane);
+  const [state, setState] = useState(_state);
+
+  useEffect(() => {
+    setState(_state);
+  }, [_state]);
 
   useEffect(() => {
     setShowRatioPane(_showRatioPane);
@@ -54,41 +63,64 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
     handleShowPane({ visible, docId: 'predictPane' });
   };
 
-  switch (state) {
-    case 'greeting':
-      return <Greeting />;
-    case 'talkingToLiSan':
-      return <TalkingToLiSan />;
-    case 'talkingToKouSan':
-      return <TalkingToKouSan />;
-    case 'predict':
-      return (
-        <Predict
-          yesRatio={yesRatio}
-          opponent={user === 'liSan' ? '黄さん' : '李さん'}
-          newGameAt={newGameAt}
-          superPredict={predict}
-          superShowRatioPane={showRatioPane}
-          superShowPredictPane={showPredictPane}
-          superHandlePredict={handlePredict}
-          superHandleShowRatioPane={handleShowRatioPane}
-          superHandleShowPredictPane={handleShowPredictPane}
-          isManagementMode
-        />
-      );
-    case 'draw':
-      return (
-        <Draw
-          yesRatio={yesRatio}
-          newGameAt={newGameAt}
-          superDrawn={drawn}
-          superHandleDrawn={updateDrawn}
-          isManagementMode
-        />
-      );
-    default:
-      return <div>management</div>;
-  }
+  const handleChangeState = (state: string) => {
+    setState(state);
+    //TODO predictのクリア?
+    switch (user) {
+      case 'liSan':
+        updateLiSanPageState(state);
+        break;
+      case 'kouSan':
+        updateKouSanPageState(state);
+        break;
+      default:
+    }
+  };
+
+  return (
+    <>
+      <Container maxWidth='sm'>
+        <PageStatePane state={state} handleChangeState={handleChangeState} />
+      </Container>
+      {(() => {
+        switch (state) {
+          case 'greeting':
+            return <Greeting />;
+          case 'talkingToLiSan':
+            return <TalkingToLiSan />;
+          case 'talkingToKouSan':
+            return <TalkingToKouSan />;
+          case 'predict':
+            return (
+              <Predict
+                yesRatio={yesRatio}
+                opponent={user === 'liSan' ? '黄さん' : '李さん'}
+                newGameAt={newGameAt}
+                superPredict={predict}
+                superShowRatioPane={showRatioPane}
+                superShowPredictPane={showPredictPane}
+                superHandlePredict={updatePredict}
+                superHandleShowRatioPane={handleShowRatioPane}
+                superHandleShowPredictPane={handleShowPredictPane}
+                isManagementMode
+              />
+            );
+          case 'draw':
+            return (
+              <Draw
+                yesRatio={yesRatio}
+                newGameAt={newGameAt}
+                superDrawn={drawn}
+                superHandleDrawn={updateDrawn}
+                isManagementMode
+              />
+            );
+          default:
+            return <></>;
+        }
+      })()}
+    </>
+  );
 };
 
 export default ManagementPage;

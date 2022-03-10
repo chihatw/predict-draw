@@ -20,6 +20,8 @@ function App() {
     liSanPageState,
     kouSanPageState,
     updateNotesPageState,
+    updateLiSanPageState,
+    updateKouSanPageState,
   } = usePageState();
   const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
     useShowPanes();
@@ -27,7 +29,7 @@ function App() {
   const { yesRatio } = useYesRatio();
   const { newGameAt } = useNewGameAt();
   const { drawn, updateDrawn } = useDrawn();
-  const { predict, handlePredict } = usePredict();
+  const { predict, updatePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
 
   const handleNavigate = (pathname: string) => {
@@ -50,11 +52,13 @@ function App() {
         kouSanPageState,
         showPredictPane,
         updateDrawn,
-        handlePredict,
+        updatePredict,
         handleNavigate,
         handleShowPane,
         updatePitchList,
         updateNotesPageState,
+        updateLiSanPageState,
+        updateKouSanPageState,
       }}
     >
       <AppRoutes />

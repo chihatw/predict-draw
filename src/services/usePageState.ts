@@ -66,6 +66,18 @@ const usePageState = () => {
     };
   }, []);
 
+  const updateLiSanPageState = (state: string) => {
+    setLiSanPageState(state);
+    console.log(`set ${LI_SAN_PROP}`);
+    setDoc(doc(db, COLLECTION, LI_SAN_PROP), { state });
+  };
+
+  const updateKouSanPageState = (state: string) => {
+    setKouSanPageState(state);
+    console.log(`set ${KOU_SAN_PROP}`);
+    setDoc(doc(db, COLLECTION, KOU_SAN_PROP), { state });
+  };
+
   const updateNotesPageState = (state: string) => {
     setNotesPageState(state);
     console.log(`set ${NOTES_PROP}`);
@@ -76,6 +88,8 @@ const usePageState = () => {
     liSanPageState,
     kouSanPageState,
     updateNotesPageState,
+    updateLiSanPageState,
+    updateKouSanPageState,
   };
 };
 export default usePageState;

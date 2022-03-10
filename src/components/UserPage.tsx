@@ -14,8 +14,8 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     liSanPageState,
     showPredictPane,
     kouSanPageState,
-    handlePredict,
     updateDrawn,
+    updatePredict,
   } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -42,7 +42,7 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
           yesRatio={yesRatio}
           newGameAt={newGameAt}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
-          superHandlePredict={handlePredict}
+          superHandlePredict={updatePredict}
           superShowRatioPane={showRatioPane}
           superShowPredictPane={showPredictPane}
         />

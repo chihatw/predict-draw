@@ -20,10 +20,10 @@ const usePredict = () => {
       unsub();
     };
   }, []);
-  const handlePredict = async (value: string) => {
+  const updatePredict = async (value: string) => {
     console.log('update predict');
     await updateDoc(doc(db, 'game', 'predict'), { value });
   };
-  return { predict, handlePredict };
+  return { predict, updatePredict };
 };
 export default usePredict;
