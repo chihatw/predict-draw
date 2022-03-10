@@ -1,18 +1,20 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
-import { Container } from '@mui/material';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { Button, Container, Slider } from '@mui/material';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import AppContext from '../services/context';
 import Greeting from './Greeting';
 import PageStatePane from './PageStatePane';
 import TalkingToKouSan from './TalkingToKouSan';
 import TalkingToLiSan from './TalkingToLiSan';
 
+const DELAY = 15; // ms
+
 const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
   const {
     drawn,
     predict,
-    yesRatio,
+    yesRatio: _yesRatio,
     newGameAt,
     showRatioPane: _showRatioPane,
     showScorePane: _showScorePane,
@@ -21,10 +23,14 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
     showPredictPane: _showPredictPane,
     updateDrawn,
     updatePredict,
+    updateYesRatio,
     handleShowPane,
+    updateNewGameAt,
     updateLiSanPageState,
     updateKouSanPageState,
   } = useContext(AppContext);
+
+  const timerId = useRef(0);
 
   const _state = useMemo(() => {
     switch (user) {
@@ -37,13 +43,18 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
     }
   }, [user, liSanPageState, kouSanPageState]);
 
+  const [state, setState] = useState(_state);
+  const [yesRatio, setYesRatio] = useState(_yesRatio);
   const [showRatioPane, setShowRatioPane] = useState(_showRatioPane);
   const [showPredictPane, setShowPredictPane] = useState(_showPredictPane);
-  const [state, setState] = useState(_state);
 
   useEffect(() => {
     setState(_state);
   }, [_state]);
+
+  useEffect(() => {
+    setYesRatio(_yesRatio);
+  }, [_yesRatio]);
 
   useEffect(() => {
     setShowRatioPane(_showRatioPane);
@@ -65,7 +76,7 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
 
   const handleChangeState = (state: string) => {
     setState(state);
-    //TODO predictのクリア?
+    updatePredict('');
     switch (user) {
       case 'liSan':
         updateLiSanPageState(state);
@@ -77,10 +88,50 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
     }
   };
 
+  const handleChangeYesRatio = (value: number) => {
+    setYesRatio(value);
+    window.clearTimeout(timerId.current);
+    timerId.current = window.setTimeout(() => {
+      updateYesRatio(value);
+      updateNewGameAt();
+    }, DELAY);
+  };
+
+  const handleNewGame = () => {
+    updateNewGameAt();
+    updatePredict('');
+  };
+
   return (
     <>
       <Container maxWidth='sm'>
-        <PageStatePane state={state} handleChangeState={handleChangeState} />
+        <div style={{ display: 'grid', rowGap: 8, padding: '8px 0' }}>
+          <PageStatePane state={state} handleChangeState={handleChangeState} />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div>{`Yes Ratio: ${yesRatio}%`}</div>
+            <div style={{ padding: '0 16px', flexGrow: 1 }}>
+              <Slider
+                color='secondary'
+                value={yesRatio}
+                onChange={(e, value: number | number[]) => {
+                  typeof value === 'number' && handleChangeYesRatio(value);
+                }}
+              />
+            </div>
+          </div>
+          <div>{`予想: ${
+            !predict ? '未選択' : predict === 'yes' ? 'はい' : 'いいえ'
+          }`}</div>
+          <Button variant='contained' color='secondary' onClick={handleNewGame}>
+            new game
+          </Button>
+        </div>
       </Container>
       {(() => {
         switch (state) {

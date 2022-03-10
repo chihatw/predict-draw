@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 
 import { db } from '../repositories/firebase';
 
@@ -24,6 +24,11 @@ const useNewGameAt = () => {
       unsub();
     };
   }, []);
-  return { newGameAt };
+
+  const updateNewGameAt = () => {
+    console.log('update new game at');
+    updateDoc(doc(db, COLLECTION, DOC_ID), { date: Date.now() });
+  };
+  return { newGameAt, updateNewGameAt };
 };
 export default useNewGameAt;

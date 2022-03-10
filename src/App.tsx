@@ -26,8 +26,8 @@ function App() {
   const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
     useShowPanes();
   const navigate = useNavigate();
-  const { yesRatio } = useYesRatio();
-  const { newGameAt } = useNewGameAt();
+  const { yesRatio, updateYesRatio } = useYesRatio();
+  const { newGameAt, updateNewGameAt } = useNewGameAt();
   const { drawn, updateDrawn } = useDrawn();
   const { predict, updatePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
@@ -54,7 +54,9 @@ function App() {
         updateDrawn,
         updatePredict,
         handleNavigate,
+        updateYesRatio,
         handleShowPane,
+        updateNewGameAt,
         updatePitchList,
         updateNotesPageState,
         updateLiSanPageState,

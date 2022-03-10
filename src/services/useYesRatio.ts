@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 
 import { db } from '../repositories/firebase';
 
@@ -25,6 +25,10 @@ const useYesRatio = () => {
     };
   }, []);
 
-  return { yesRatio };
+  const updateYesRatio = (ratio: number) => {
+    console.log(`update ${COLLECTION}.${DOC_ID}`);
+    updateDoc(doc(db, COLLECTION, DOC_ID), { ratio });
+  };
+  return { yesRatio, updateYesRatio };
 };
 export default useYesRatio;

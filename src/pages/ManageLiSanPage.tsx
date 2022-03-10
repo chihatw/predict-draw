@@ -3,7 +3,7 @@ import ManagementPage from '../components/ManagementPage';
 
 const ManageLiSanPage = () => {
   return (
-    <Layout color='red' label='李さん - Monitor'>
+    <Layout color='red' label='李さん - モニター'>
       <ManagementPage user='liSan' />
     </Layout>
   );

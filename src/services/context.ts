@@ -23,9 +23,10 @@ const AppContext = createContext<{
   note1PitchList: [string, pitchesArray][];
   kouSanPageState: string;
   showPredictPane: boolean;
-  updatePredict: (value: string) => void;
-  handleNavigate: (pathname: string) => void;
   updateDrawn: (value: string) => void;
+  updatePredict: (value: string) => void;
+  updateYesRatio: (ratio: number) => void;
+  handleNavigate: (pathname: string) => void;
   handleShowPane: ({
     docId,
     visible,
@@ -34,6 +35,7 @@ const AppContext = createContext<{
     visible: boolean;
   }) => void;
 
+  updateNewGameAt: () => void;
   updatePitchList: ({
     note,
     pitchList,
@@ -58,10 +60,12 @@ const AppContext = createContext<{
   note1PitchList: [],
   kouSanPageState: '',
   showPredictPane: false,
+  updateDrawn: () => {},
   updatePredict: () => {},
   handleNavigate: () => {},
+  updateYesRatio: () => {},
   handleShowPane: () => {},
-  updateDrawn: () => {},
+  updateNewGameAt: () => {},
   updatePitchList: () => {},
   updateNotesPageState: () => {},
   updateLiSanPageState: () => {},
