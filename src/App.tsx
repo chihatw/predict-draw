@@ -14,14 +14,19 @@ import usePitches from './services/usePitches';
 
 function App() {
   useIpInfo();
-  const { note1PitchList, handleUpdatePitchList } = usePitches();
-  const { liSanPageState, kouSanPageState, notesPageState } = usePageState();
+  const { note1PitchList, updatePitchList } = usePitches();
+  const {
+    notesPageState,
+    liSanPageState,
+    kouSanPageState,
+    updateNotesPageState,
+  } = usePageState();
   const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
     useShowPanes();
   const navigate = useNavigate();
   const { yesRatio } = useYesRatio();
   const { newGameAt } = useNewGameAt();
-  const { drawn, handleUpdateDrawn } = useDrawn();
+  const { drawn, updateDrawn } = useDrawn();
   const { predict, handlePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
 
@@ -39,16 +44,17 @@ function App() {
         kouSanPoints,
         showScorePane,
         showRatioPane,
+        note1PitchList,
         liSanPageState,
         notesPageState,
         kouSanPageState,
         showPredictPane,
+        updateDrawn,
         handlePredict,
         handleNavigate,
         handleShowPane,
-        handleUpdateDrawn,
-        note1PitchList,
-        handleUpdatePitchList,
+        updatePitchList,
+        updateNotesPageState,
       }}
     >
       <AppRoutes />

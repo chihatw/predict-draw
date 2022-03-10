@@ -16,8 +16,8 @@ const AppRoutes = () => {
       <Route path='/kouSan' element={<KouSanPage />} />
       <Route path='/m/liSan' element={<ManageLiSanPage />} />
       <Route path='/m/kouSan' element={<ManageKouSanPage />} />
-      <Route path='notes' element={<NotesPage />} />
-      <Route path='inputPitches' element={<InputPitchesPage />} />
+      <Route path='/notes' element={<NotesPage />} />
+      <Route path='/m/notes' element={<InputPitchesPage />} />
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );

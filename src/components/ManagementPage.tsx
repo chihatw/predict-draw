@@ -17,7 +17,7 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
     liSanPageState,
     kouSanPageState,
     showPredictPane: _showPredictPane,
-    handleUpdateDrawn,
+    updateDrawn,
     handlePredict,
     handleShowPane,
   } = useContext(AppContext);
@@ -82,7 +82,7 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
           yesRatio={yesRatio}
           newGameAt={newGameAt}
           superDrawn={drawn}
-          superHandleDrawn={handleUpdateDrawn}
+          superHandleDrawn={updateDrawn}
           isManagementMode
         />
       );

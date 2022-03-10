@@ -24,9 +24,9 @@ const useDrawn = () => {
       unsub();
     };
   }, []);
-  const handleUpdateDrawn = async (value: string) => {
+  const updateDrawn = async (value: string) => {
     await updateDoc(doc(db, COLLECTION, DOC_ID), { value });
   };
-  return { drawn, handleUpdateDrawn };
+  return { drawn, updateDrawn };
 };
 export default useDrawn;

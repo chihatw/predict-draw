@@ -31,7 +31,7 @@ const usePitches = () => {
     };
   }, []);
 
-  const handleUpdatePitchList = ({
+  const updatePitchList = ({
     note,
     pitchList,
   }: {
@@ -42,6 +42,6 @@ const usePitches = () => {
       pitchList: JSON.stringify(pitchList),
     });
   };
-  return { note1PitchList, handleUpdatePitchList };
+  return { note1PitchList, updatePitchList };
 };
 export default usePitches;

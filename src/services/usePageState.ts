@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../repositories/firebase';
 
@@ -65,6 +65,17 @@ const usePageState = () => {
       unsub();
     };
   }, []);
-  return { liSanPageState, kouSanPageState, notesPageState };
+
+  const updateNotesPageState = (state: string) => {
+    setNotesPageState(state);
+    console.log(`set ${NOTES_PROP}`);
+    setDoc(doc(db, COLLECTION, NOTES_PROP), { state });
+  };
+  return {
+    notesPageState,
+    liSanPageState,
+    kouSanPageState,
+    updateNotesPageState,
+  };
 };
 export default usePageState;

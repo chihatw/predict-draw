@@ -20,11 +20,12 @@ const AppContext = createContext<{
   showRatioPane: boolean;
   liSanPageState: string;
   notesPageState: string;
+  note1PitchList: [string, pitchesArray][];
   kouSanPageState: string;
   showPredictPane: boolean;
   handlePredict: (value: string) => void;
   handleNavigate: (pathname: string) => void;
-  handleUpdateDrawn: (value: string) => void;
+  updateDrawn: (value: string) => void;
   handleShowPane: ({
     docId,
     visible,
@@ -32,14 +33,15 @@ const AppContext = createContext<{
     docId: string;
     visible: boolean;
   }) => void;
-  note1PitchList: [string, pitchesArray][];
-  handleUpdatePitchList: ({
+
+  updatePitchList: ({
     note,
     pitchList,
   }: {
     note: 'note1' | 'note2';
     pitchList: [string, pitchesArray][];
   }) => void;
+  updateNotesPageState: (state: string) => void;
 }>({
   drawn: '',
   predict: '',
@@ -57,8 +59,9 @@ const AppContext = createContext<{
   handlePredict: () => {},
   handleNavigate: () => {},
   handleShowPane: () => {},
-  handleUpdateDrawn: () => {},
-  handleUpdatePitchList: () => {},
+  updateDrawn: () => {},
+  updatePitchList: () => {},
+  updateNotesPageState: () => {},
 });
 
 export default AppContext;

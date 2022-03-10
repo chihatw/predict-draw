@@ -15,7 +15,7 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     showPredictPane,
     kouSanPageState,
     handlePredict,
-    handleUpdateDrawn,
+    updateDrawn,
   } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -52,7 +52,7 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
         <Draw
           yesRatio={yesRatio}
           newGameAt={newGameAt}
-          superHandleDrawn={handleUpdateDrawn}
+          superHandleDrawn={updateDrawn}
         />
       );
     default:
