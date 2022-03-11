@@ -14,10 +14,10 @@ const AppRoutes = () => {
       <Route path='/' element={<TopPage />} />
       <Route path='/liSan' element={<LisanPage />} />
       <Route path='/kouSan' element={<KouSanPage />} />
-      <Route path='/m/liSan' element={<ManageLiSanPage />} />
-      <Route path='/m/kouSan' element={<ManageKouSanPage />} />
+      <Route path='/mng/liSan' element={<ManageLiSanPage />} />
+      <Route path='/mng/kouSan' element={<ManageKouSanPage />} />
       <Route path='/notes' element={<NotesPage />} />
-      <Route path='/m/notes' element={<ManageNotesPage />} />
+      <Route path='/mng/notes' element={<ManageNotesPage />} />
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );
