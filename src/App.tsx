@@ -11,6 +11,7 @@ import usePageState from './services/usePageState';
 import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
 import usePitches from './services/usePitches';
+import useBpmCalc from './services/useBpmCalc';
 
 function App() {
   useIpInfo();
@@ -31,6 +32,13 @@ function App() {
   const { drawn, updateDrawn } = useDrawn();
   const { predict, updatePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
+  const {
+    bpmCalcBpm,
+    bpmCalcLabel,
+    isBpmCalcRunning,
+    handleStopBpmCalcTiemr,
+    handleStartBpmCalcTimer,
+  } = useBpmCalc();
 
   const handleNavigate = (pathname: string) => {
     navigate(pathname);
@@ -42,8 +50,10 @@ function App() {
         predict,
         yesRatio,
         newGameAt,
+        bpmCalcBpm,
         liSanPoints,
         kouSanPoints,
+        bpmCalcLabel,
         showScorePane,
         showRatioPane,
         note1PitchList,
@@ -51,6 +61,7 @@ function App() {
         notesPageState,
         kouSanPageState,
         showPredictPane,
+        isBpmCalcRunning,
         updateDrawn,
         updatePredict,
         handleNavigate,
@@ -61,6 +72,8 @@ function App() {
         updateNotesPageState,
         updateLiSanPageState,
         updateKouSanPageState,
+        handleStopBpmCalcTiemr,
+        handleStartBpmCalcTimer,
       }}
     >
       <AppRoutes />

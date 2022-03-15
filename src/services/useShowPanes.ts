@@ -22,7 +22,6 @@ const useShowPanes = () => {
         const { visible } = (doc.data() as { visible: boolean }) || {
           visible: false,
         };
-        console.log(visible);
         setShowScorePane(visible);
       },
       (error) => {
@@ -40,7 +39,6 @@ const useShowPanes = () => {
         const { visible } = (doc.data() as { visible: boolean }) || {
           visible: false,
         };
-        console.log(visible);
         setShowRatioPane(visible);
       },
       (error) => {
@@ -58,7 +56,6 @@ const useShowPanes = () => {
         const { visible } = (doc.data() as { visible: boolean }) || {
           visible: false,
         };
-        console.log(visible);
         setShowPredictPane(visible);
       },
       (error) => {

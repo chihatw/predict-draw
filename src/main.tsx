@@ -9,12 +9,31 @@ import { TypographyOptions } from '@mui/material/styles/createTypography';
 interface ExtendedTypographyOptions extends TypographyOptions {
   mPlusRounded: React.CSSProperties;
   mPlusRounded500: React.CSSProperties;
+  lato100: React.CSSProperties;
+  lato900: React.CSSProperties;
+  mRounded300: React.CSSProperties;
+}
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    liSan: { main: string };
+    kouSan: { main: string };
+  }
+  interface PaletteOptions {
+    liSan?: {
+      main?: string;
+    };
+    kouSan?: {
+      main?: string;
+    };
+  }
 }
 
 const theme = createTheme({
   palette: {
-    primary: { main: '#c62828' },
-    secondary: { main: '#1565c0' },
+    liSan: { main: '#c62828' },
+    kouSan: { main: '#1565c0' },
+    primary: { main: '#52a2aa' },
   },
   typography: {
     mPlusRounded: {
@@ -25,6 +44,21 @@ const theme = createTheme({
       color: '#555',
       fontFamily: '"M PLUS Rounded 1c", sans-serif',
       fontWeight: 500,
+    },
+    lato100: {
+      color: '#555',
+      fontFamily: 'Lato, sans-serif',
+      fontWeight: 100,
+    },
+    lato900: {
+      color: '#555',
+      fontFamily: 'Lato, sans-serif',
+      fontWeight: 900,
+    },
+    mRounded300: {
+      color: '#555',
+      fontFamily: '"M Plus Rounded 1c", sans-serif',
+      fontWeight: 300,
     },
   } as ExtendedTypographyOptions,
 });

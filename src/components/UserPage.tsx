@@ -1,3 +1,4 @@
+import { BpmCulc } from '@chihatw/lang-gym-h.card.page.bpm-culc';
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext, useMemo } from 'react';
@@ -10,12 +11,15 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
     yesRatio,
     newGameAt,
+    bpmCalcLabel: { label, syllableCount },
     showRatioPane,
     liSanPageState,
     showPredictPane,
     kouSanPageState,
     updateDrawn,
     updatePredict,
+    handleStopBpmCalcTiemr,
+    handleStartBpmCalcTimer,
   } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -36,6 +40,15 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
       return <TalkingToLiSan />;
     case 'talkingToKouSan':
       return <TalkingToKouSan />;
+    case 'bpmCalc':
+      return (
+        <BpmCulc
+          label={label}
+          syllableCount={syllableCount}
+          superhandleStop={handleStopBpmCalcTiemr}
+          superhandleStart={handleStartBpmCalcTimer}
+        />
+      );
     case 'predict':
       return (
         <Predict

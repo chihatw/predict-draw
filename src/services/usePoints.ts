@@ -16,7 +16,6 @@ const usePoints = () => {
         const { points } = (doc.data() as { points: number }) || {
           points: 0,
         };
-        console.log(points);
         setLiSanPoints(points);
       },
       (error) => {

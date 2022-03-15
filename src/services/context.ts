@@ -1,5 +1,12 @@
 import { createContext } from 'react';
 
+export type BpmCalcLabel = { label: string; syllableCount: number };
+
+export const INITIAL_BPM_CALC_LABEL: BpmCalcLabel = {
+  label: '',
+  syllableCount: 0,
+};
+
 export type pitchesArray = string[][][];
 
 export type Users = {
@@ -14,8 +21,10 @@ const AppContext = createContext<{
   predict: string;
   yesRatio: number;
   newGameAt: number;
+  bpmCalcBpm: number;
   liSanPoints: number;
   kouSanPoints: number;
+  bpmCalcLabel: BpmCalcLabel;
   showScorePane: boolean;
   showRatioPane: boolean;
   liSanPageState: string;
@@ -23,6 +32,7 @@ const AppContext = createContext<{
   note1PitchList: [string, pitchesArray][];
   kouSanPageState: string;
   showPredictPane: boolean;
+  isBpmCalcRunning: boolean;
   updateDrawn: (value: string) => void;
   updatePredict: (value: string) => void;
   updateYesRatio: (ratio: number) => void;
@@ -46,13 +56,17 @@ const AppContext = createContext<{
   updateNotesPageState: (state: string) => void;
   updateLiSanPageState: (state: string) => void;
   updateKouSanPageState: (state: string) => void;
+  handleStopBpmCalcTiemr: (value: number) => void;
+  handleStartBpmCalcTimer: () => void;
 }>({
   drawn: '',
   predict: '',
   yesRatio: 0,
   newGameAt: 0,
+  bpmCalcBpm: 0,
   liSanPoints: 0,
   kouSanPoints: 0,
+  bpmCalcLabel: INITIAL_BPM_CALC_LABEL,
   showScorePane: false,
   showRatioPane: false,
   notesPageState: '',
@@ -60,6 +74,7 @@ const AppContext = createContext<{
   note1PitchList: [],
   kouSanPageState: '',
   showPredictPane: false,
+  isBpmCalcRunning: false,
   updateDrawn: () => {},
   updatePredict: () => {},
   handleNavigate: () => {},
@@ -70,6 +85,8 @@ const AppContext = createContext<{
   updateNotesPageState: () => {},
   updateLiSanPageState: () => {},
   updateKouSanPageState: () => {},
+  handleStopBpmCalcTiemr: () => {},
+  handleStartBpmCalcTimer: () => {},
 });
 
 export default AppContext;

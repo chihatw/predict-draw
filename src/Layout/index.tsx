@@ -16,10 +16,10 @@ const Layout: React.FC<{ color: 'red' | 'blue' | ''; label?: string }> = ({
     let result = '';
     switch (color) {
       case 'red':
-        result = theme.palette.primary.main;
+        result = theme.palette.liSan.main;
         break;
       case 'blue':
-        result = theme.palette.secondary.main;
+        result = theme.palette.kouSan.main;
         break;
     }
 
