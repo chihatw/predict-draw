@@ -1,16 +1,13 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { BpmCulc } from '@chihatw/lang-gym-h.card.page.bpm-culc';
-import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
-import { useTheme } from '@mui/system';
-import { Container } from '@mui/material';
 import React, { useContext, useMemo } from 'react';
 
-import AppContext from '../services/context';
 import Greeting from './Greeting';
-import TalkingToKouSan from './TalkingToKouSan';
+import AppContext from '../services/context';
+import BpmTrackPage from '../pages/BpmTrackPage';
 import TalkingToLiSan from './TalkingToLiSan';
-import { BpmPlayer } from '@chihatw/lang-gym-h.card.ui.bpm-player';
+import TalkingToKouSan from './TalkingToKouSan';
 
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
@@ -81,29 +78,3 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
 };
 
 export default UserPage;
-
-const BpmTrackPage = () => {
-  const {
-    bpmTrackBpm,
-    bpmTrackType,
-    bpmTrackStopAt,
-    bpmTrackOffsets,
-    bpmTrackStartAt,
-    bpmTrackBpmPitchesArray,
-  } = useContext(AppContext);
-  return (
-    <Container maxWidth='sm' sx={{ display: 'grid', rowGap: 2 }}>
-      <BpmPane bpm={bpmTrackBpm} />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <BpmPlayer
-          bpm={bpmTrackBpm}
-          type={bpmTrackType}
-          offsets={bpmTrackOffsets}
-          superStopAt={bpmTrackStopAt}
-          superStartAt={bpmTrackStartAt}
-          bpmPitchesArray={bpmTrackBpmPitchesArray}
-        />
-      </div>
-    </Container>
-  );
-};
