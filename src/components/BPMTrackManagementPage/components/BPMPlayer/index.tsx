@@ -1,20 +1,36 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-import AppContext from '../../../../services/context';
-import { Metronome } from './classes/Metronome';
-import { Pitches } from './classes/Pitches';
-import { Timer } from './classes/Timer';
 import PitchesPane from './components/PitchesPane';
+import { Metronome, Pitches, Timer } from './classes';
 
-const BPMPlayer = () => {
-  const {
-    bpmTrackBpm,
-    bpmTrackType,
-    bpmTrackStopAt,
-    bpmTrackOffsets,
-    bpmTrackStartAt,
-    bpmTrackBpmPitchesArray,
-  } = useContext(AppContext);
+const BPMPlayer = ({
+  bpm,
+  type,
+  scale,
+  offsets,
+  superStopAt,
+  superStartAt,
+  bpmPitchesArray,
+}: {
+  bpm: number;
+  type: string;
+  scale?: number;
+  offsets: number[];
+  superStopAt: number;
+  superStartAt: number;
+  bpmPitchesArray: string[][][];
+}) => {
+  console.log(
+    JSON.stringify({
+      bpm,
+      type,
+      scale,
+      offsets,
+      superStopAt,
+      superStartAt,
+      bpmPitchesArray,
+    })
+  );
 
   const timer = useMemo(() => new Timer(), []);
 
@@ -22,24 +38,24 @@ const BPMPlayer = () => {
   const pitchesRef = useRef<Pitches | null>(null);
   const metronomeRef = useRef<Metronome | null>(null);
 
-  const [stopAt, setStopAt] = useState(bpmTrackStopAt);
-  const [startAt, setStartAt] = useState(bpmTrackStartAt);
+  const [stopAt, setStopAt] = useState(superStopAt);
+  const [startAt, setStartAt] = useState(superStartAt);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    if (startAt !== 0 && startAt !== bpmTrackStartAt) {
+    if (startAt !== 0 && startAt !== superStartAt) {
       start();
     }
-    setStartAt(bpmTrackStartAt);
-  }, [bpmTrackStartAt]);
+    setStartAt(superStartAt);
+  }, [superStartAt]);
 
   useEffect(() => {
-    if (stopAt !== 0 && stopAt !== bpmTrackStopAt) {
+    if (stopAt !== 0 && stopAt !== superStopAt) {
       stop();
     }
-    setStopAt(bpmTrackStopAt);
-  }, [bpmTrackStopAt]);
+    setStopAt(superStopAt);
+  }, [superStopAt]);
 
   const start = () => {
     setIsPlaying(true);
@@ -47,16 +63,16 @@ const BPMPlayer = () => {
 
     timer.startAt = now;
     metronomeRef.current = new Metronome({
-      bpm: bpmTrackBpm,
-      type: bpmTrackType,
+      bpm,
+      type,
       startAt: now,
-      bpmPitchesArray: bpmTrackBpmPitchesArray,
+      bpmPitchesArray,
     });
 
     pitchesRef.current = new Pitches({
-      bpm: bpmTrackBpm,
-      type: bpmTrackType,
-      bpmPitchesArray: bpmTrackBpmPitchesArray,
+      bpm,
+      type,
+      bpmPitchesArray,
     });
     loopId.current = requestAnimationFrame(loop);
   };
@@ -94,16 +110,16 @@ const BPMPlayer = () => {
       style={{
         display: 'grid',
         rowGap: 4,
-        transform: 'scale(1.3)',
+        transform: `scale(${scale || 1.0})`,
         transformOrigin: 'left top',
       }}
     >
-      {bpmTrackBpmPitchesArray.map((pitches, index) => (
+      {bpmPitchesArray.map((pitches, index) => (
         <div key={index} style={{ display: 'flex' }}>
           <PitchesPane
-            isMora={['mora', 'onebyone'].includes(bpmTrackType)}
+            isMora={['mora', 'onebyone'].includes(type)}
             pitches={pitches}
-            startAt={bpmTrackOffsets[index]}
+            startAt={offsets[index]}
             isPlaying={isPlaying}
             activeIndex={activeIndex}
           />
