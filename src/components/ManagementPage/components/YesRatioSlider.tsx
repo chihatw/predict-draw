@@ -40,7 +40,7 @@ const YesRatioSlider = () => {
       <div>{`Yes Ratio: ${yesRatio}%`}</div>
       <div style={{ padding: '0 16px', flexGrow: 1 }}>
         <Slider
-          color='secondary'
+          // color='secondary'
           value={yesRatio}
           onChange={(e, value: number | number[]) => {
             typeof value === 'number' && handleChangeYesRatio(value);
