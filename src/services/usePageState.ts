@@ -1,7 +1,8 @@
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { PageState } from '../components/ManagementPage/components/PageStatePane';
+
 import { db } from '../repositories/firebase';
+import { PageState } from './context';
 
 const COLLECTION = 'pageStates';
 const LI_SAN_PROP = 'liSan';
