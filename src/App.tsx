@@ -12,6 +12,7 @@ import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
 import usePitches from './services/usePitches';
 import useBpmCalc from './services/useBpmCalc';
+import useBpmTrack from './services/useBpmTrack';
 
 function App() {
   useIpInfo();
@@ -39,6 +40,20 @@ function App() {
     handleStopBpmCalcTiemr,
     handleStartBpmCalcTimer,
   } = useBpmCalc();
+  const {
+    bpmTrackBpm,
+    bpmTrackType,
+    bpmTrackStopAt,
+    bpmTrackOffsets,
+    bpmTrackStartAt,
+    bpmTrackBpmPitchesArray,
+    updateBpmTrackBpm,
+    updateBpmTrackType,
+    updateBpmTrackStopAt,
+    updateBpmTrackOffsets,
+    updateBpmPitchesArray,
+    updateBpmTrackStartAt,
+  } = useBpmTrack();
 
   const handleNavigate = (pathname: string) => {
     navigate(pathname);
@@ -52,25 +67,37 @@ function App() {
         newGameAt,
         bpmCalcBpm,
         liSanPoints,
+        bpmTrackBpm,
         kouSanPoints,
         bpmCalcLabel,
+        bpmTrackType,
         showScorePane,
         showRatioPane,
+        bpmTrackStopAt,
         note1PitchList,
         liSanPageState,
         notesPageState,
+        bpmTrackOffsets,
+        bpmTrackStartAt,
         kouSanPageState,
         showPredictPane,
         isBpmCalcRunning,
+        bpmTrackBpmPitchesArray,
         updateDrawn,
         updatePredict,
-        handleNavigate,
         updateYesRatio,
+        handleNavigate,
         handleShowPane,
         updateNewGameAt,
         updatePitchList,
+        updateBpmTrackBpm,
+        updateBpmTrackType,
+        updateBpmTrackStopAt,
         updateNotesPageState,
         updateLiSanPageState,
+        updateBpmTrackOffsets,
+        updateBpmPitchesArray,
+        updateBpmTrackStartAt,
         updateKouSanPageState,
         handleStopBpmCalcTiemr,
         handleStartBpmCalcTimer,

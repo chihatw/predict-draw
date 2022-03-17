@@ -6,7 +6,18 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { useContext } from 'react';
-import AppContext from '../../../services/context';
+import AppContext, { PageState } from '../../../services/context';
+
+const PAGE_STATE: { value: PageState; label: string }[] = [
+  { value: 'greeting', label: '挨拶' },
+  { value: 'bpmCalc', label: 'BPMCalc' },
+  { value: 'bpmTrack', label: 'BPMTrack' },
+  { value: 'predict', label: '質問' },
+  { value: 'draw', label: '返答' },
+  { value: 'talkingToLiSan', label: '李さんに' },
+  { value: 'talkingToKouSan', label: '黄さんに' },
+  { value: '', label: '空欄' },
+];
 
 const PageStatePane = ({
   user,
@@ -14,13 +25,13 @@ const PageStatePane = ({
   setState,
 }: {
   user: string;
-  state: string;
-  setState: (state: string) => void;
+  state: PageState;
+  setState: (state: PageState) => void;
 }) => {
   const { updatePredict, updateLiSanPageState, updateKouSanPageState } =
     useContext(AppContext);
 
-  const handleChangeState = (state: string) => {
+  const handleChangeState = (state: PageState) => {
     setState(state);
     updatePredict('');
     switch (user) {
@@ -35,48 +46,21 @@ const PageStatePane = ({
   };
 
   return (
-    <FormControl color='secondary'>
+    <FormControl>
       <FormLabel sx={{ fontSize: 12 }}>状態</FormLabel>
       <RadioGroup
         row
         value={state}
-        onChange={(e) => handleChangeState(e.target.value)}
+        onChange={(e) => handleChangeState(e.target.value as PageState)}
       >
-        <FormControlLabel
-          value='greeting'
-          control={<Radio size='small' />}
-          label='挨拶'
-        />
-        <FormControlLabel
-          value='bpmCalc'
-          control={<Radio size='small' />}
-          label='BPMCalc'
-        />
-        <FormControlLabel
-          value='predict'
-          control={<Radio size='small' />}
-          label='質問'
-        />
-        <FormControlLabel
-          value='draw'
-          control={<Radio size='small' />}
-          label='返答'
-        />
-        <FormControlLabel
-          value='talkingToLiSan'
-          control={<Radio size='small' />}
-          label='李さんに'
-        />
-        <FormControlLabel
-          value='talkingToKouSan'
-          control={<Radio size='small' />}
-          label='黄さんに'
-        />
-        <FormControlLabel
-          value=''
-          control={<Radio size='small' />}
-          label='空欄'
-        />
+        {PAGE_STATE.map(({ value, label }, index) => (
+          <FormControlLabel
+            key={index}
+            value={value}
+            control={<Radio size='small' />}
+            label={label}
+          />
+        ))}
       </RadioGroup>
     </FormControl>
   );

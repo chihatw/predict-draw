@@ -1,5 +1,6 @@
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { PageState } from '../components/ManagementPage/components/PageStatePane';
 import { db } from '../repositories/firebase';
 
 const COLLECTION = 'pageStates';
@@ -8,8 +9,8 @@ const KOU_SAN_PROP = 'kouSan';
 const NOTES_PROP = 'notes';
 
 const usePageState = () => {
-  const [liSanPageState, setLiSanPageState] = useState('');
-  const [kouSanPageState, setKouSanPageState] = useState('');
+  const [liSanPageState, setLiSanPageState] = useState<PageState>('');
+  const [kouSanPageState, setKouSanPageState] = useState<PageState>('');
   const [notesPageState, setNotesPageState] = useState('');
 
   // ノートの状態監視
@@ -36,7 +37,7 @@ const usePageState = () => {
       doc(db, COLLECTION, LI_SAN_PROP),
       (doc) => {
         console.log(`fetch ${LI_SAN_PROP}`);
-        const { state } = (doc.data() as { state: string }) || { state: '' };
+        const { state } = (doc.data() as { state: PageState }) || { state: '' };
         setLiSanPageState(state);
       },
       (error) => {
@@ -54,7 +55,7 @@ const usePageState = () => {
       doc(db, COLLECTION, KOU_SAN_PROP),
       (doc) => {
         console.log(`fetch ${KOU_SAN_PROP}`);
-        const { state } = (doc.data() as { state: string }) || { state: '' };
+        const { state } = (doc.data() as { state: PageState }) || { state: '' };
         setKouSanPageState(state);
       },
       (error) => {
@@ -66,13 +67,13 @@ const usePageState = () => {
     };
   }, []);
 
-  const updateLiSanPageState = (state: string) => {
+  const updateLiSanPageState = (state: PageState) => {
     setLiSanPageState(state);
     console.log(`set ${LI_SAN_PROP}`);
     setDoc(doc(db, COLLECTION, LI_SAN_PROP), { state });
   };
 
-  const updateKouSanPageState = (state: string) => {
+  const updateKouSanPageState = (state: PageState) => {
     setKouSanPageState(state);
     console.log(`set ${KOU_SAN_PROP}`);
     setDoc(doc(db, COLLECTION, KOU_SAN_PROP), { state });

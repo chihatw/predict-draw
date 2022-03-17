@@ -1,5 +1,15 @@
 import { createContext } from 'react';
 
+export type PageState =
+  | 'greeting'
+  | 'bpmCalc'
+  | 'bpmTrack'
+  | 'predict'
+  | 'draw'
+  | 'talkingToLiSan'
+  | 'talkingToKouSan'
+  | '';
+
 export type BpmCalcLabel = { label: string; syllableCount: number };
 
 export const INITIAL_BPM_CALC_LABEL: BpmCalcLabel = {
@@ -27,10 +37,10 @@ const AppContext = createContext<{
   bpmCalcLabel: BpmCalcLabel;
   showScorePane: boolean;
   showRatioPane: boolean;
-  liSanPageState: string;
+  liSanPageState: PageState;
   notesPageState: string;
   note1PitchList: [string, pitchesArray][];
-  kouSanPageState: string;
+  kouSanPageState: PageState;
   showPredictPane: boolean;
   isBpmCalcRunning: boolean;
   updateDrawn: (value: string) => void;
@@ -54,10 +64,22 @@ const AppContext = createContext<{
     pitchList: [string, pitchesArray][];
   }) => void;
   updateNotesPageState: (state: string) => void;
-  updateLiSanPageState: (state: string) => void;
-  updateKouSanPageState: (state: string) => void;
+  updateLiSanPageState: (state: PageState) => void;
+  updateKouSanPageState: (state: PageState) => void;
   handleStopBpmCalcTiemr: (value: number) => void;
   handleStartBpmCalcTimer: () => void;
+  bpmTrackBpm: number;
+  bpmTrackType: string;
+  bpmTrackStopAt: number;
+  bpmTrackOffsets: number[];
+  bpmTrackStartAt: number;
+  bpmTrackBpmPitchesArray: string[][][];
+  updateBpmTrackBpm: (value: number) => void;
+  updateBpmTrackType: (value: string) => void;
+  updateBpmTrackStopAt: (value: number) => void;
+  updateBpmTrackOffsets: (value: number[]) => void;
+  updateBpmPitchesArray: (value: string[][][]) => void;
+  updateBpmTrackStartAt: (value: number) => void;
 }>({
   drawn: '',
   predict: '',
@@ -65,16 +87,22 @@ const AppContext = createContext<{
   newGameAt: 0,
   bpmCalcBpm: 0,
   liSanPoints: 0,
+  bpmTrackBpm: 0,
   kouSanPoints: 0,
   bpmCalcLabel: INITIAL_BPM_CALC_LABEL,
+  bpmTrackType: 'syllable',
   showScorePane: false,
   showRatioPane: false,
+  bpmTrackStopAt: 0,
   notesPageState: '',
   liSanPageState: '',
   note1PitchList: [],
   kouSanPageState: '',
+  bpmTrackOffsets: [],
+  bpmTrackStartAt: 0,
   showPredictPane: false,
   isBpmCalcRunning: false,
+  bpmTrackBpmPitchesArray: [],
   updateDrawn: () => {},
   updatePredict: () => {},
   handleNavigate: () => {},
@@ -82,8 +110,14 @@ const AppContext = createContext<{
   handleShowPane: () => {},
   updateNewGameAt: () => {},
   updatePitchList: () => {},
+  updateBpmTrackBpm: () => {},
+  updateBpmTrackType: () => {},
+  updateBpmTrackStopAt: () => {},
   updateNotesPageState: () => {},
   updateLiSanPageState: () => {},
+  updateBpmTrackOffsets: () => {},
+  updateBpmPitchesArray: () => {},
+  updateBpmTrackStartAt: () => {},
   updateKouSanPageState: () => {},
   handleStopBpmCalcTiemr: () => {},
   handleStartBpmCalcTimer: () => {},

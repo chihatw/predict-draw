@@ -3,18 +3,19 @@ import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import { Container } from '@mui/material';
 import { useContext } from 'react';
 
-import AppContext from '../../../services/context';
 import Greeting from '../../Greeting';
-import TalkingToKouSan from '../../TalkingToKouSan';
 import TalkingToLiSan from '../../TalkingToLiSan';
+import TalkingToKouSan from '../../TalkingToKouSan';
+import AppContext, { PageState } from '../../../services/context';
+import BPMTrackManagementPage from '../../BPMTrackManagementPage';
 
-const PageSwitcher = ({ user, state }: { user: string; state: string }) => {
+const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
   const {
     drawn,
     predict,
+    yesRatio,
     newGameAt,
     bpmCalcBpm,
-    yesRatio,
     showRatioPane,
     showPredictPane,
     isBpmCalcRunning,
@@ -70,6 +71,8 @@ const PageSwitcher = ({ user, state }: { user: string; state: string }) => {
           <div>{`BPM: ${bpmCalcBpm}`}</div>
         </Container>
       );
+    case 'bpmTrack':
+      return <BPMTrackManagementPage />;
     default:
       return <></>;
   }
