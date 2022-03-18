@@ -11,6 +11,7 @@ const items = [
   { value: 'mora', label: '拍' },
   { value: 'syllable', label: '節' },
   { value: 'onebyone', label: 'One by One' },
+  { value: 'syncopation', label: 'シンコペーション' },
 ];
 
 const TrackTypeRadioButtons = () => {

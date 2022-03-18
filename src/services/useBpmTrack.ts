@@ -4,26 +4,24 @@ import { db } from '../repositories/firebase';
 
 const COLLECTION = 'bpmTrack';
 const BPM_DOC_ID = 'bpm';
-const STOP_AT_DOC_ID = 'stopAt';
 const OFFSETS_DOC_ID = 'offsets';
-const START_AT_DOC_ID = 'startAt';
 const TRACK_TYPE_DOC_ID = 'trackType';
+const SYNCOPATION_RATIO_DOC_ID = 'syncopationRatio';
 const BPM_PITCHES_ARRAY_DOC_ID = 'bpmPitchesArray';
 
 const useBpmTrack = () => {
   const [bpm, setBpm] = useState(0);
-  const [stopAt, setStopAt] = useState(0);
-  const [startAt, setStartAt] = useState(0);
   const [offsets, setOffsets] = useState<number[]>([]);
   const [trackType, setTrackType] = useState('syllable');
   const [bpmPitchesArray, setBpmPitchesArray] = useState<string[][][]>([]);
+  const [syncopationRatio, setSyncopationRatio] = useState(100);
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, COLLECTION, STOP_AT_DOC_ID),
+      doc(db, COLLECTION, SYNCOPATION_RATIO_DOC_ID),
       (doc) => {
-        console.log(`fetch ${COLLECTION}.${STOP_AT_DOC_ID}`);
-        const { stopAt } = (doc.data() as { stopAt: number }) || { stopAt: 0 };
-        setStopAt(stopAt);
+        console.log(`fetch ${COLLECTION}.${SYNCOPATION_RATIO_DOC_ID}`);
+        const { ratio } = (doc.data() as { ratio: number }) || { ratio: 100 };
+        setSyncopationRatio(ratio);
       },
       (error) => {
         console.warn(error);
@@ -40,25 +38,6 @@ const useBpmTrack = () => {
         console.log(`fetch ${COLLECTION}.${BPM_DOC_ID}`);
         const { bpm } = (doc.data() as { bpm: number }) || { bpm: 0 };
         setBpm(bpm);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
-    return () => {
-      unsub();
-    };
-  }, []);
-
-  useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, START_AT_DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${START_AT_DOC_ID}`);
-        const { startAt } = (doc.data() as { startAt: number }) || {
-          startAt: 0,
-        };
-        setStartAt(startAt);
       },
       (error) => {
         console.warn(error);
@@ -142,13 +121,9 @@ const useBpmTrack = () => {
     const json = JSON.stringify(offsets);
     updateDoc(doc(db, COLLECTION, OFFSETS_DOC_ID), { json });
   };
-  const updateStartAt = (startAt: number) => {
-    console.log(`update ${COLLECTION}.${START_AT_DOC_ID}`);
-    updateDoc(doc(db, COLLECTION, START_AT_DOC_ID), { startAt });
-  };
-  const updateStopAt = (stopAt: number) => {
-    console.log(`update ${COLLECTION}.${STOP_AT_DOC_ID}`);
-    updateDoc(doc(db, COLLECTION, STOP_AT_DOC_ID), { stopAt });
+  const updateSyncopationRatio = (ratio: number) => {
+    console.log(`update ${COLLECTION}.${SYNCOPATION_RATIO_DOC_ID}`);
+    updateDoc(doc(db, COLLECTION, SYNCOPATION_RATIO_DOC_ID), { ratio });
   };
   const updateTrackType = (type: string) => {
     console.log(`update ${COLLECTION}.${TRACK_TYPE_DOC_ID}`);
@@ -157,16 +132,14 @@ const useBpmTrack = () => {
   return {
     bpmTrackBpm: bpm,
     bpmTrackType: trackType,
-    bpmTrackStopAt: stopAt,
     bpmTrackOffsets: offsets,
-    bpmTrackStartAt: startAt,
+    syncopationRatio,
     bpmTrackBpmPitchesArray: bpmPitchesArray,
     updateBpmTrackBpm: updateBpm,
     updateBpmTrackType: updateTrackType,
-    updateBpmTrackStopAt: updateStopAt,
     updateBpmTrackOffsets: updateOffsets,
     updateBpmPitchesArray,
-    updateBpmTrackStartAt: updateStartAt,
+    updateSyncopationRatio,
   };
 };
 export default useBpmTrack;

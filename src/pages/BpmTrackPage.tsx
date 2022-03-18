@@ -9,9 +9,8 @@ const BpmTrackPage = () => {
   const {
     bpmTrackBpm,
     bpmTrackType,
-    bpmTrackStopAt,
     bpmTrackOffsets,
-    bpmTrackStartAt,
+    syncopationRatio,
     bpmTrackBpmPitchesArray,
   } = useContext(AppContext);
   return (
@@ -22,11 +21,10 @@ const BpmTrackPage = () => {
           <BpmPlayer
             bpm={bpmTrackBpm}
             type={bpmTrackType}
-            offsets={bpmTrackOffsets}
-            superStopAt={bpmTrackStopAt}
-            superStartAt={bpmTrackStartAt}
-            bpmPitchesArray={bpmTrackBpmPitchesArray}
             scale={1.3}
+            offsets={bpmTrackOffsets}
+            syncopationRatio={syncopationRatio}
+            bpmPitchesArray={bpmTrackBpmPitchesArray}
           />
         </div>
       </div>

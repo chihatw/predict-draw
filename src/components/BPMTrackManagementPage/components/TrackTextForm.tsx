@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import string2BpmPitchesArray from 'string2bpm-pitches-array';
-import bpmPitchesArray2String from 'bpm-piches-array2string';
+import bpmPitchesArray2String from 'bpm-pitches-array2string';
 import { useContext, useEffect, useState } from 'react';
 
 import AppContext from '../../../services/context';

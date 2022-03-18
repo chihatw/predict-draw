@@ -70,16 +70,14 @@ const AppContext = createContext<{
   handleStartBpmCalcTimer: () => void;
   bpmTrackBpm: number;
   bpmTrackType: string;
-  bpmTrackStopAt: number;
   bpmTrackOffsets: number[];
-  bpmTrackStartAt: number;
+  syncopationRatio: number;
   bpmTrackBpmPitchesArray: string[][][];
   updateBpmTrackBpm: (value: number) => void;
   updateBpmTrackType: (value: string) => void;
-  updateBpmTrackStopAt: (value: number) => void;
   updateBpmTrackOffsets: (value: number[]) => void;
   updateBpmPitchesArray: (value: string[][][]) => void;
-  updateBpmTrackStartAt: (value: number) => void;
+  updateSyncopationRatio: (value: number) => void;
 }>({
   drawn: '',
   predict: '',
@@ -93,14 +91,13 @@ const AppContext = createContext<{
   bpmTrackType: 'syllable',
   showScorePane: false,
   showRatioPane: false,
-  bpmTrackStopAt: 0,
   notesPageState: '',
   liSanPageState: '',
   note1PitchList: [],
   kouSanPageState: '',
   bpmTrackOffsets: [],
-  bpmTrackStartAt: 0,
   showPredictPane: false,
+  syncopationRatio: 100,
   isBpmCalcRunning: false,
   bpmTrackBpmPitchesArray: [],
   updateDrawn: () => {},
@@ -112,13 +109,12 @@ const AppContext = createContext<{
   updatePitchList: () => {},
   updateBpmTrackBpm: () => {},
   updateBpmTrackType: () => {},
-  updateBpmTrackStopAt: () => {},
   updateNotesPageState: () => {},
   updateLiSanPageState: () => {},
   updateBpmTrackOffsets: () => {},
   updateBpmPitchesArray: () => {},
-  updateBpmTrackStartAt: () => {},
   updateKouSanPageState: () => {},
+  updateSyncopationRatio: () => {},
   handleStopBpmCalcTiemr: () => {},
   handleStartBpmCalcTimer: () => {},
 });
