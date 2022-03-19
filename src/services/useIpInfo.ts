@@ -83,6 +83,6 @@ const removeIpInfo = ({
   const collection = getCollection(pathname);
   if (!pathname || !ipInfo) return;
 
-  const url = `https://us-central1-predict-draw.cloudfunctions.net/deleteIpInfo?collection=${collection}&ipInfo=${ipInfo}`;
-  window.navigator.sendBeacon(url);
+  // const url = `https://us-central1-predict-draw.cloudfunctions.net/deleteIpInfo?collection=${collection}&ipInfo=${ipInfo}`;
+  // window.navigator.sendBeacon(url);
 };

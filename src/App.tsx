@@ -1,21 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 
-import useIpInfo from './services/useIpInfo';
-import useYesRatio from './services/useYesRatio';
-import usePoints from './services/usePoints';
+// import useIpInfo from './services/useIpInfo';
 import useDrawn from './services/useDrawn';
+import usePoints from './services/usePoints';
 import AppRoutes from './routes/AppRoutes';
+import usePitches from './services/usePitches';
 import AppContext from './services/context';
 import usePredict from './services/usePredict';
+import useBpmCalc from './services/useBpmCalc';
+import useYesRatio from './services/useYesRatio';
+import useBpmTrack from './services/useBpmTrack';
 import usePageState from './services/usePageState';
 import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
-import usePitches from './services/usePitches';
-import useBpmCalc from './services/useBpmCalc';
-import useBpmTrack from './services/useBpmTrack';
 
 function App() {
-  useIpInfo();
+  // useIpInfo();
   const { note1PitchList, updatePitchList } = usePitches();
   const {
     notesPageState,
