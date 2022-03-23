@@ -3,7 +3,9 @@ import { BpmCulc } from '@chihatw/lang-gym-h.card.page.bpm-culc';
 import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext, useMemo } from 'react';
 
+import noImage from '../images/keitai.png';
 import Greeting from './Greeting';
+import yesImage from '../images/suimin.png';
 import AppContext from '../services/context';
 import BpmTrackPage from '../pages/BpmTrackPage';
 import TalkingToLiSan from './TalkingToLiSan';
@@ -54,6 +56,8 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     case 'predict':
       return (
         <Predict
+          noImage={noImage}
+          yesImage={yesImage}
           yesRatio={yesRatio}
           newGameAt={newGameAt}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
@@ -65,6 +69,8 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     case 'draw':
       return (
         <Draw
+          noImage={noImage}
+          yesImage={yesImage}
           yesRatio={yesRatio}
           newGameAt={newGameAt}
           superHandleDrawn={updateDrawn}

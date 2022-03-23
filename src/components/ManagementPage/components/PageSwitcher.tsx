@@ -3,7 +3,9 @@ import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import { Container } from '@mui/material';
 import { useContext } from 'react';
 
+import noImage from '../../../images/keitai.png';
 import Greeting from '../../Greeting';
+import yesImage from '../../../images/suimin.png';
 import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
 import AppContext, { PageState } from '../../../services/context';
@@ -42,6 +44,8 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
     case 'predict':
       return (
         <Predict
+          noImage={noImage}
+          yesImage={yesImage}
           yesRatio={yesRatio}
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
           newGameAt={newGameAt}
@@ -57,6 +61,8 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
     case 'draw':
       return (
         <Draw
+          noImage={noImage}
+          yesImage={yesImage}
           yesRatio={yesRatio}
           newGameAt={newGameAt}
           superDrawn={drawn}

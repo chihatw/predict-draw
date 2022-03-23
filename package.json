@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@chihatw/lang-gym-h.card.page.bpm-culc": "^1.0.3",
-    "@chihatw/lang-gym-h.card.page.draw": "^1.0.21",
-    "@chihatw/lang-gym-h.card.page.predict": "^1.0.30",
+    "@chihatw/lang-gym-h.card.page.draw": "^1.0.24",
+    "@chihatw/lang-gym-h.card.page.predict": "^1.0.33",
     "@chihatw/lang-gym-h.card.ui.bpm-pane": "^1.0.1",
     "@chihatw/lang-gym-h.card.ui.bpm-player": "^1.0.10",
     "@chihatw/lang-gym-h.ui.sentence-pitch-line": "^1.0.0",
@@ -31,8 +31,8 @@
     "string2pitches-array": "^1.0.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.40",
-    "@types/react-dom": "^17.0.13",
+    "@types/react": "^17.0.42",
+    "@types/react-dom": "^17.0.14",
     "@vitejs/plugin-react": "^1.0.7",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
