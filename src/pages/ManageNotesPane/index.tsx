@@ -21,7 +21,10 @@ const ManageNotesPage = () => {
   // note1PitchListを文字列化して、inputに代入
   useEffect(() => {
     // inputにすでに値がある場合は、代入しない
-    if (!!input) return;
+    if (!!input) {
+      setInput(input);
+      return;
+    }
     const lines: string[] = [];
     for (const line of note1PitchList) {
       lines.push(line[0]);
