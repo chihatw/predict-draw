@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import { Container, TextField } from '@mui/material';
 import pitchesArray2String from 'pitches-array2string';
@@ -17,24 +17,24 @@ const ManageNotesPage = () => {
 
   const [input, setInput] = useState('');
   const [state, setState] = useState(notesPageState);
+  const isBlankRef = useRef(false);
 
   // note1PitchListを文字列化して、inputに代入
   useEffect(() => {
-    // inputにすでに値がある場合は、代入しない
-    if (!!input) {
-      setInput(input);
-      return;
-    }
+    if (!!input) return;
     const lines: string[] = [];
     for (const line of note1PitchList) {
       lines.push(line[0]);
       lines.push(pitchesArray2String(line[1]));
     }
-    setInput(lines.join('\n'));
+    if (!isBlankRef.current) {
+      setInput(lines.join('\n'));
+    }
   }, [note1PitchList, input]);
 
   const handleChangeInput = (input: string) => {
     setInput(input);
+    isBlankRef.current = input === '';
     const pitchList: [string, string[][][]][] = [];
     const lines = input.split('\n').filter((i) => i);
     lines.forEach((line, index) => {

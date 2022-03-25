@@ -1,5 +1,6 @@
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+
 import { db } from '../repositories/firebase';
 import { pitchesArray } from './context';
 
@@ -38,6 +39,7 @@ const usePitches = () => {
     note: 'note1' | 'note2';
     pitchList: [string, pitchesArray][];
   }) => {
+    console.log(`update pitchList`);
     updateDoc(doc(db, COLLECTION, note), {
       pitchList: JSON.stringify(pitchList),
     });
