@@ -1,4 +1,3 @@
-import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { BpmCulc } from '@chihatw/lang-gym-h.card.page.bpm-culc';
 import React, { useContext, useMemo } from 'react';
 
@@ -10,6 +9,7 @@ import BpmTrackPage from '../pages/BpmTrackPage';
 import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
 import { Predict } from '../pages/predict';
+import { Draw } from '../pages/draw';
 
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
