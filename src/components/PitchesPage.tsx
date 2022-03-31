@@ -5,7 +5,7 @@ import {
   TableBody,
   TableCell,
 } from '@mui/material';
-import { SentencePitchLine } from '@chihatw/lang-gym-h.ui.sentence-pitch-line';
+import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 
 const PitchesPage = ({
   pitchList,

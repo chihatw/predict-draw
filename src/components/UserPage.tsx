@@ -1,4 +1,3 @@
-import { BpmCulc } from '@chihatw/lang-gym-h.card.page.bpm-culc';
 import React, { useContext, useMemo } from 'react';
 
 import noImage from '../images/keitai.png';
@@ -10,6 +9,7 @@ import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
 import { Predict } from '../pages/predict';
 import { Draw } from '../pages/draw';
+import { BpmCulc } from '../pages/bpm-culc';
 
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
