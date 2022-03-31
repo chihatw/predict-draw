@@ -1,6 +1,5 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
 import { BpmCulc } from '@chihatw/lang-gym-h.card.page.bpm-culc';
-import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import React, { useContext, useMemo } from 'react';
 
 import noImage from '../images/keitai.png';
@@ -10,6 +9,7 @@ import AppContext from '../services/context';
 import BpmTrackPage from '../pages/BpmTrackPage';
 import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
+import { Predict } from '../pages/predict';
 
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {

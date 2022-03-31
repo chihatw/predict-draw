@@ -1,5 +1,4 @@
 import { Draw } from '@chihatw/lang-gym-h.card.page.draw';
-import { Predict } from '@chihatw/lang-gym-h.card.page.predict';
 import { Container } from '@mui/material';
 import { useContext } from 'react';
 
@@ -10,6 +9,7 @@ import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
 import AppContext, { PageState } from '../../../services/context';
 import BPMTrackManagementPage from '../../BPMTrackManagementPage';
+import { Predict } from '../../../pages/predict';
 
 const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
   const {

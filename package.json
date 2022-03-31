@@ -11,7 +11,6 @@
   "dependencies": {
     "@chihatw/lang-gym-h.card.page.bpm-culc": "^1.0.3",
     "@chihatw/lang-gym-h.card.page.draw": "^1.0.24",
-    "@chihatw/lang-gym-h.card.page.predict": "^1.0.33",
     "@chihatw/lang-gym-h.card.ui.bpm-pane": "^1.0.1",
     "@chihatw/lang-gym-h.card.ui.bpm-player": "^1.0.10",
     "@chihatw/lang-gym-h.ui.sentence-pitch-line": "^1.0.0",
