@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { Container } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import RatioPane from './components/RatioPane';
 import PredictPane from './components/PredictPane';
@@ -15,8 +15,6 @@ export type PredictProps = {
   isManagementMode?: boolean;
   superShowRatioPane: boolean;
   superShowPredictPane: boolean;
-  yesImage: any;
-  noImage: any;
   superHandlePredict?: (value: string) => void;
   superHandleShowRatioPane?: (value: boolean) => void;
   superHandleShowPredictPane?: (value: boolean) => void;
@@ -30,8 +28,6 @@ export function Predict({
   isManagementMode,
   superShowRatioPane,
   superShowPredictPane,
-  yesImage,
-  noImage,
   superHandlePredict,
   superHandleShowRatioPane,
   superHandleShowPredictPane,
@@ -81,8 +77,6 @@ export function Predict({
           superShowPredictPane={superShowPredictPane}
           handlePredict={handlePredict}
           handleShowPredict={handleShowPredict}
-          yesImage={yesImage}
-          noImage={noImage}
         />
       </div>
     </Container>

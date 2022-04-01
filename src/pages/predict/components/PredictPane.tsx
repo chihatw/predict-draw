@@ -16,13 +16,9 @@ const PredictPane: React.FC<{
   showPredictPane: boolean;
   isManagementMode: boolean;
   superShowPredictPane: boolean;
-  yesImage: any;
-  noImage: any;
   handlePredict: (value: string) => void;
   handleShowPredict: (checked: boolean) => void;
 }> = ({
-  yesImage,
-  noImage,
   opponent,
   newGameAt,
   cardWidth,
@@ -38,7 +34,7 @@ const PredictPane: React.FC<{
       <div>
         <div>
           <Switch
-            size="small"
+            size='small'
             checked={showPredictPane}
             onChange={(e) => handleShowPredict(e.target.checked)}
           />
@@ -56,8 +52,6 @@ const PredictPane: React.FC<{
             superPredict={superPredict}
             isManagementMode={true}
             handlePredict={handlePredict}
-            yesImage={yesImage}
-            noImage={noImage}
           />
           {!superShowPredictPane && <Smoke />}
         </div>
@@ -71,8 +65,6 @@ const PredictPane: React.FC<{
           cardWidth={cardWidth}
           newGameAt={newGameAt}
           handlePredict={handlePredict}
-          yesImage={yesImage}
-          noImage={noImage}
         />
       </Collapse>
     );
@@ -88,8 +80,6 @@ const PredictPaneContext: React.FC<{
   superPredict?: string;
   isManagementMode?: boolean;
   handlePredict: (value: string) => void;
-  yesImage: any;
-  noImage: any;
 }> = ({
   opponent,
   newGameAt,
@@ -97,8 +87,6 @@ const PredictPaneContext: React.FC<{
   superPredict,
   isManagementMode,
   handlePredict,
-  yesImage,
-  noImage,
 }) => (
   <>
     <CustomLabel label={`${opponent}は何をしていた？`} />
@@ -109,8 +97,6 @@ const PredictPaneContext: React.FC<{
       superPredict={superPredict}
       isManagementMode={isManagementMode}
       handlePredict={handlePredict}
-      yesImage={yesImage}
-      noImage={noImage}
     />
   </>
 );
@@ -123,16 +109,12 @@ const Predictx: React.FC<{
   cardWidth: number;
   superPredict?: string;
   isManagementMode?: boolean;
-  yesImage: any;
-  noImage: any;
   handlePredict: (value: string) => void;
 }> = ({
   cardWidth,
   newGameAt,
   superPredict,
   isManagementMode,
-  yesImage,
-  noImage,
   handlePredict,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -223,8 +205,6 @@ const Predictx: React.FC<{
             closedAt={closedAts[index]}
             stripeColor={STRIPE_COLOR}
             handleClick={() => handleClick(index)}
-            yesImage={yesImage}
-            noImage={noImage}
           />
         ))}
       </div>

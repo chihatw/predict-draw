@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-// import useIpInfo from './services/useIpInfo';
 import useDrawn from './services/useDrawn';
 import usePoints from './services/usePoints';
 import AppRoutes from './routes/AppRoutes';
@@ -15,7 +14,6 @@ import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
 
 function App() {
-  // useIpInfo();
   const { note1PitchList, updatePitchList } = usePitches();
   const {
     notesPageState,

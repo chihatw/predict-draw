@@ -1,22 +1,9 @@
-import { CustomLabel } from '@chihatw/lang-gym-h.ui.custom-label';
-import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-import SingleCard from './components/SingleCard';
+import DrawPageComponent from './components/DrawPageComponent';
 
 const STRIPE_COLOR = '#5dbec4';
-
 const SINGLE_CARD_WIDTH = 240;
-
-export type DrawProps = {
-  yesRatio: number;
-  newGameAt: number;
-  superDrawn?: 'yes' | 'no' | '';
-  isManagementMode?: boolean;
-  superHandleDrawn?: (value: string) => void;
-  yesImage: any;
-  noImage: any;
-};
 
 export function Draw({
   yesRatio,
@@ -24,11 +11,15 @@ export function Draw({
   superDrawn,
   isManagementMode,
   superHandleDrawn,
-  yesImage,
-  noImage,
-}: DrawProps) {
-  const [drawn, setDrawn] = useState<'yes' | 'no' | ''>('no');
-  const [preDrawn, setPreDrawn] = useState<'yes' | 'no' | ''>('no');
+}: {
+  yesRatio: number;
+  newGameAt: number;
+  superDrawn?: 'yes' | 'no' | '';
+  isManagementMode?: boolean;
+  superHandleDrawn?: (value: string) => void;
+}) {
+  const [drawn, setDrawn] = useState('no');
+  const [preDrawn, setPreDrawn] = useState('no');
   const [closedAt, setClosedAt] = useState(Date.now());
   const [openedAt, setOpenedAt] = useState(Date.now());
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -76,51 +67,20 @@ export function Draw({
     !!superHandleDrawn && superHandleDrawn(_drawn);
   };
 
+  const handleClick = () => {
+    handleSelect(selectedIndex === -1 ? 0 : -1);
+  };
+
   return (
-    <Container maxWidth='sm'>
-      <div style={{ display: 'grid', rowGap: 8 }}>
-        <CustomLabel label={`地震発生時間`} />
-        <div style={{ padding: '16px 8px' }}>
-          <Ratio progress={yesRatio} />
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              pointerEvents: isManagementMode ? 'none' : 'auto',
-            }}
-          >
-            <SingleCard
-              width={SINGLE_CARD_WIDTH}
-              isYes={drawn === 'yes'}
-              closedAt={closedAt}
-              opendeAt={openedAt}
-              stripeColor={STRIPE_COLOR}
-              handleClick={() => handleSelect(selectedIndex === -1 ? 0 : -1)}
-              yesImage={yesImage}
-              noImage={noImage}
-            />
-          </div>
-        </div>
-      </div>
-    </Container>
+    <DrawPageComponent
+      drawn={drawn}
+      width={SINGLE_CARD_WIDTH}
+      yesRatio={yesRatio}
+      closedAt={closedAt}
+      openedAt={openedAt}
+      stripeColor={STRIPE_COLOR}
+      isManagementMode={isManagementMode || false}
+      handleClick={handleClick}
+    />
   );
 }
-
-const Ratio: React.FC<{ progress: number }> = ({ progress }) => {
-  // 2000-01-01 20:00:00 は iOS でエラー
-  const start = new Date('2000/01/01 20:00:00');
-  const date = new Date(start.getTime() + 10 * 60 * 60 * 8 * progress);
-
-  return (
-    <div style={{ whiteSpace: 'nowrap' }}>
-      <span style={{ fontSize: 32, paddingRight: 4 }}>{date.getHours()}</span>
-      <span>時</span>
-      <span style={{ fontSize: 32, paddingRight: 4 }}>
-        {String(date.getMinutes()).padStart(2, '0')}
-      </span>
-      <span>分</span>
-    </div>
-  );
-};

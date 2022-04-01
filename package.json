@@ -9,11 +9,11 @@
     "upgrade-interactive": "npm-check --update"
   },
   "dependencies": {
+    "@chihatw/flip-card.card-behind": "^1.0.1",
+    "@chihatw/flip-card.card-frame": "^1.0.0",
+    "@chihatw/flip-card.flip-card": "^1.0.1",
     "@chihatw/lang-gym-h.card.ui.bpm-pane": "^1.0.3",
     "@chihatw/lang-gym-h.card.ui.bpm-player": "^1.0.12",
-    "@chihatw/lang-gym-h.card.ui.card": "^1.0.6",
-    "@chihatw/lang-gym-h.card.ui.card-behind": "^1.0.0",
-    "@chihatw/lang-gym-h.card.ui.flip-card": "^1.0.8",
     "@chihatw/lang-gym-h.ui.custom-label": "^1.0.4",
     "@chihatw/pitch-line.sentence-pitch-line": "^1.0.0",
     "@emotion/css": "^11.7.1",

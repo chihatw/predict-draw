@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { css } from '@emotion/css';
-import { Card } from '@chihatw/lang-gym-h.card.ui.card';
-import { FlipCard } from '@chihatw/lang-gym-h.card.ui.flip-card';
-import { CardBehind } from '@chihatw/lang-gym-h.card.ui.card-behind';
+import { FlipCard } from '@chihatw/flip-card.flip-card';
+import { CardBehind } from '@chihatw/flip-card.card-behind';
+
+import CardFace from '../../../components/CardFace';
+
+const GORLDEN_RATIO = 1.618;
 
 const DoubleCard = ({
   width,
@@ -11,18 +14,15 @@ const DoubleCard = ({
   closedAt,
   stripeColor,
   handleClick,
-  yesImage,
-  noImage,
 }: {
   width: number;
   isYes: boolean;
-  noImage: any;
   openedAt: number;
-  yesImage: any;
   closedAt: number;
   stripeColor: string;
   handleClick: () => void;
 }) => {
+  const height = useMemo(() => width * GORLDEN_RATIO, [width]);
   return (
     <div
       className={css({
@@ -34,18 +34,14 @@ const DoubleCard = ({
       <FlipCard
         disabled
         width={width}
-        frontSide={
-          <Card
-            isYes={isYes}
-            width={width}
-            yesImage={yesImage}
-            noImage={noImage}
-          />
+        height={height}
+        frontSide={<CardFace isYes={isYes} width={width} height={height} />}
+        backSide={
+          <CardBehind color={stripeColor} width={width} height={height} />
         }
-        backSide={<CardBehind color={stripeColor} width={width} />}
-        superOpen={openedAt}
-        superClose={closedAt}
-        rotateTimes={1}
+        superOpenAt={openedAt}
+        superCloseAt={closedAt}
+        extraRotate={1}
       />
     </div>
   );
