@@ -7,6 +7,7 @@ import ManageLiSanPage from '../pages/ManageLiSanPage';
 import ManageKouSanPage from '../pages/ManageKouSanPage';
 import NotesPage from '../pages/NotesPage';
 import ManageNotesPage from '../pages/ManageNotesPane';
+import SandBox from '../components/SandBox';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AppRoutes = () => {
       <Route path='/mng/kouSan' element={<ManageKouSanPage />} />
       <Route path='/notes' element={<NotesPage />} />
       <Route path='/mng/notes' element={<ManageNotesPage />} />
+      <Route path='/dev' element={<SandBox />} />
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );

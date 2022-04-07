@@ -12,6 +12,7 @@ import useBpmTrack from './services/useBpmTrack';
 import usePageState from './services/usePageState';
 import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
+import { useTimes } from './services/useTimes';
 
 function App() {
   const { note1PitchList, updatePitchList } = usePitches();
