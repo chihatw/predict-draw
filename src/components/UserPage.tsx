@@ -8,6 +8,9 @@ import TalkingToKouSan from './TalkingToKouSan';
 import { Predict } from '../pages/predict';
 import { Draw } from '../pages/draw';
 import { BpmCulc } from '../pages/bpm-culc';
+import ReadTimePractice from './ReadTimePractice';
+import ReadTimePerformance from './ReadTimePerformance';
+import WriteTimePerformance from './WriteTimePerformance';
 
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
@@ -36,6 +39,12 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
   }, [user, liSanPageState, kouSanPageState]);
 
   switch (state) {
+    case 'readTimePractice':
+      return <ReadTimePractice />;
+    case 'readTimePerformance':
+      return <ReadTimePerformance />;
+    case 'writeTimePerformance':
+      return <WriteTimePerformance />;
     case 'greeting':
       return <Greeting />;
     case 'talkingToLiSan':

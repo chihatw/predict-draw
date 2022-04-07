@@ -56,7 +56,7 @@ for (let i = 0; i < LEVEL_C; i++) {
 
 const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
-  const { inputTime, score } = useTimes();
+  const { inputTime, score, time } = useTimes();
   const { setTime, clearScore } = useHandleTimes();
 
   const _state = useMemo(() => {
@@ -77,7 +77,6 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
   }, [_state]);
 
   const handleClickTime = (time: Date) => {
-    console.log(time.getTime());
     setTime(time.getTime());
   };
 
@@ -94,10 +93,25 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
             <Button onClick={clearScore}>Clear</Button>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '80px auto' }}>
+            <div>設定時間</div>
+            <div>{`${time.getHours()}時${String(time.getMinutes()).padStart(
+              2,
+              '0'
+            )}分`}</div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '80px auto' }}>
             <div>入力時間</div>
             <div>{`${inputTime.getHours()}時${String(
               inputTime.getMinutes()
             ).padStart(2, '0')}分`}</div>
+          </div>
+          <div style={{ padding: 8, border: '1px solid #eee' }}>
+            練習用
+            <PracticeButton h='10' m='00' handleClickTime={handleClickTime} />
+            <PracticeButton h='13' m='00' handleClickTime={handleClickTime} />
+            <PracticeButton h='18' m='00' handleClickTime={handleClickTime} />
+            <PracticeButton h='20' m='30' handleClickTime={handleClickTime} />
+            <PracticeButton h='03' m='00' handleClickTime={handleClickTime} />
           </div>
           <div>時間問題</div>
           {times.map((time, index) => (
@@ -119,3 +133,19 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
 };
 
 export default ManagementPage;
+
+const PracticeButton = ({
+  h,
+  m,
+  handleClickTime,
+}: {
+  h: string;
+  m: string;
+  handleClickTime: (value: Date) => void;
+}) => (
+  <div>
+    <Button onClick={() => handleClickTime(new Date(`2022/01/01/${h}:${m}`))}>
+      {`${h}時${m}分`}
+    </Button>
+  </div>
+);

@@ -8,6 +8,9 @@ export type PageState =
   | 'draw'
   | 'talkingToLiSan'
   | 'talkingToKouSan'
+  | 'readTimePractice'
+  | 'readTimePerformance'
+  | 'writeTimePerformance'
   | '';
 
 export type BpmCalcLabel = { label: string; syllableCount: number };

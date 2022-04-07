@@ -6,7 +6,6 @@ import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import Layout from '../Layout';
 import { useHandleTimes, useTimes } from '../services/useTimes';
-import { SettingsCellRounded } from '@mui/icons-material';
 
 const SandBox = () => {
   const { time } = useTimes();
@@ -20,12 +19,8 @@ const SandBox = () => {
     const answerMinutes = time.getMinutes();
     const inputHours = value.getHours();
     const inputMinutes = value?.getMinutes();
-    console.log({ answerHours, answerMinutes, inputHours, inputMinutes });
     if (answerHours === inputHours && answerMinutes === inputMinutes) {
-      console.log('Correct!!');
       setScore(score + 10);
-    } else {
-      console.log('Incorrect!!');
     }
   };
 

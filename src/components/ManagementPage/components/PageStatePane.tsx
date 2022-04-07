@@ -9,6 +9,9 @@ import { useContext } from 'react';
 import AppContext, { PageState } from '../../../services/context';
 
 const PAGE_STATE: { value: PageState; label: string }[] = [
+  { value: 'readTimePractice', label: '時間表示練習' },
+  { value: 'readTimePerformance', label: '時間表示本番' },
+  { value: 'writeTimePerformance', label: '時間入力' },
   { value: 'greeting', label: '挨拶' },
   { value: 'bpmCalc', label: 'BPMCalc' },
   { value: 'bpmTrack', label: 'BPMTrack' },
