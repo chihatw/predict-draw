@@ -7,7 +7,7 @@ import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
 import { Predict } from '../pages/predict';
 import { Draw } from '../pages/draw';
-import { BpmCulc } from '../pages/bpm-culc';
+import { BpmCulc } from '../pages/BpmCalc';
 import ReadTimePractice from './ReadTimePractice';
 import ReadTimePerformance from './ReadTimePerformance';
 import WriteTimePerformance from './WriteTimePerformance';

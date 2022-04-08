@@ -7,20 +7,18 @@ import { Timer } from './classes/Timer';
 import TimerButton from './components/TimerButton';
 import BPMCulcLabel from './components/BPMCulcLabel';
 
-export type BpmCulcProps = {
+export const BpmCulc = ({
+  label,
+  syllableCount,
+  superhandleStop,
+  superhandleStart,
+}: {
   label: string;
   syllableCount: number;
   superSetTime?: (value: number) => void;
   superhandleStop?: (value: number) => void;
   superhandleStart?: () => void;
-};
-
-export function BpmCulc({
-  label,
-  syllableCount,
-  superhandleStop,
-  superhandleStart,
-}: BpmCulcProps) {
+}) => {
   const timer = useMemo(() => new Timer(), []);
   const loopIdRef = useRef(0);
 
@@ -72,13 +70,13 @@ export function BpmCulc({
       <TimerButton isRunning={isRunning} handleClick={handleClick} />
       <div style={{ height: 40 }} />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button variant="outlined" sx={{ width: 260 }} onClick={handleReset}>
+        <Button variant='outlined' sx={{ width: 260 }} onClick={handleReset}>
           RESET
         </Button>
       </div>
     </div>
   );
-}
+};
 
 const calcBpm = ({
   miliSeconds,
