@@ -1,5 +1,5 @@
-import { css } from '@emotion/css';
 import React from 'react';
+import { css } from '@emotion/css';
 
 const Clock = ({ time }: { time: Date }) => {
   return (
@@ -38,7 +38,9 @@ const Clock = ({ time }: { time: Date }) => {
           top: '30%',
           left: '49%',
           transformOrigin: 'bottom',
-          transform: `rotateZ(${time.getHours() * 30}deg)`,
+          transform: `rotateZ(${
+            time.getHours() * 30 + time.getMinutes() * 0.5
+          }deg)`,
         }}
       />
       <div

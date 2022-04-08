@@ -23,6 +23,7 @@ export const snapshotDocumentValue = <T>({
   return onSnapshot(
     doc(db, colId, docId),
     (snapshot) => {
+      console.log(`snapshot ${colId}.${docId}`);
       if (snapshot.exists()) {
         const value: T = snapshot.data().value;
         setValue(value);

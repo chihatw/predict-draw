@@ -1,7 +1,18 @@
 import React, { useMemo } from 'react';
 import Clock from './Clock';
 
-const TimeDisplay = ({ time }: { time: Date }) => {
+const TimeDisplay = ({
+  hours,
+  minutes,
+}: {
+  hours: number;
+  minutes: number;
+}) => {
+  const time = useMemo(
+    () => new Date(`2022/01/01 ${hours}:${minutes}:00`),
+    [hours, minutes]
+  );
+
   const isDark = useMemo(() => {
     const hours = time.getHours();
     return hours < 5 || hours > 19;

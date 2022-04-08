@@ -1,9 +1,11 @@
 import React from 'react';
-import { useTimes } from '../services/useTimes';
+
 import TimeDisplay from './TimeDisplay';
+import { useTimes } from '../../services/useTimes';
 
 const ReadTimePractice = () => {
-  const { time } = useTimes();
+  const { hours, minutes } = useTimes();
+
   return (
     <div>
       <div
@@ -11,7 +13,7 @@ const ReadTimePractice = () => {
       >
         相手に時間を伝えてください
       </div>
-      <TimeDisplay time={time} />
+      <TimeDisplay hours={hours} minutes={minutes} />
     </div>
   );
 };

@@ -56,8 +56,15 @@ for (let i = 0; i < LEVEL_C; i++) {
 
 const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
-  const { inputTime, score, time } = useTimes();
+  const { inputTime, score, hours, minutes } = useTimes();
   const { setTime, clearScore } = useHandleTimes();
+
+  const time = useMemo(
+    () => new Date(`2020/01/01 ${hours}:${minutes}:00`),
+    [hours, minutes]
+  );
+
+  const _inputTime = useMemo(() => new Date(inputTime), [inputTime]);
 
   const _state = useMemo(() => {
     switch (user) {
@@ -101,8 +108,8 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '80px auto' }}>
             <div>入力時間</div>
-            <div>{`${inputTime.getHours()}時${String(
-              inputTime.getMinutes()
+            <div>{`${_inputTime.getHours()}時${String(
+              _inputTime.getMinutes()
             ).padStart(2, '0')}分`}</div>
           </div>
           <div style={{ padding: 8, border: '1px solid #eee' }}>

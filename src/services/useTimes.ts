@@ -1,110 +1,128 @@
-import { doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { Unsubscribe } from 'firebase/firestore';
+import { useEffect, useMemo, useState } from 'react';
+
 import { db } from '../repositories/firebase';
+import {
+  updateDocumenValue,
+  snapshotDocumentValue,
+} from '../repositories/utils';
 
 const COLLECTION = 'times';
-const TIME_DOC_ID = 'time';
+
 const SCORE_DOC_ID = 'score';
+const HOURS_DOC_ID = 'hours';
+const MINUTES_DOC_ID = 'minutes';
 const INPUT_TIME_DOC_ID = 'inputTime';
 
 export const useTimes = () => {
-  const [time, setTime] = useState(new Date());
   const [score, setScore] = useState(0);
-  const [inputTime, setInputTime] = useState(new Date());
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [inputTime, setInputTime] = useState(0);
+
+  const _snapshotDocumentValue = useMemo(
+    () =>
+      function <T>({
+        docId,
+        initialValue,
+        setValue,
+      }: {
+        docId: string;
+        initialValue: T;
+        setValue: (value: T) => void;
+      }): Unsubscribe {
+        return snapshotDocumentValue({
+          db,
+          docId,
+          colId: COLLECTION,
+          initialValue,
+          setValue,
+        });
+      },
+    []
+  );
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, SCORE_DOC_ID),
-      (snapshot) => {
-        console.log('snapshot score');
-        if (snapshot.exists()) {
-          const score: number = snapshot.data().score;
-          setScore(score);
-        } else {
-          setScore(0);
-        }
-      },
-      (e) => {
-        console.warn(e);
-        setScore(0);
-      }
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: SCORE_DOC_ID,
+      initialValue: 0,
+      setValue: setScore,
+    });
     return () => {
       unsub();
     };
   }, []);
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, INPUT_TIME_DOC_ID),
-      (snapshot) => {
-        if (snapshot.exists()) {
-          const time: Date = new Date(snapshot.data().time);
-          setInputTime(time);
-        } else {
-          setInputTime(new Date());
-        }
-      },
-      () => {}
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: HOURS_DOC_ID,
+      initialValue: 0,
+      setValue: setHours,
+    });
     return () => {
       unsub();
     };
   }, []);
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, TIME_DOC_ID),
-      (snapshot) => {
-        if (snapshot.exists()) {
-          const time: Date = new Date(snapshot.data().time);
-          setTime(time);
-        }
-      },
-      (e) => {
-        console.warn(e);
-        setTime(new Date());
-      }
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: MINUTES_DOC_ID,
+      initialValue: 0,
+      setValue: setMinutes,
+    });
     return () => {
       unsub();
     };
   }, []);
-  return { time, inputTime, score };
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: INPUT_TIME_DOC_ID,
+      initialValue: 0,
+      setValue: setInputTime,
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  return { inputTime, score, hours, minutes };
 };
 
 export const useHandleTimes = () => {
+  const _updateDocumentValue = useMemo(
+    () =>
+      function <T>({ value, docId }: { value: T; docId: string }) {
+        updateDocumenValue({
+          db,
+          value,
+          colId: COLLECTION,
+          docId,
+        });
+      },
+    []
+  );
+
+  const updateHours = (value: number) =>
+    _updateDocumentValue({ value, docId: HOURS_DOC_ID });
+
+  const updateMinute = (value: number) =>
+    _updateDocumentValue({ value, docId: MINUTES_DOC_ID });
+
+  const updateScore = (value: number) =>
+    _updateDocumentValue({ value, docId: SCORE_DOC_ID });
+
+  const updateInputTime = (value: number) =>
+    _updateDocumentValue({ value, docId: INPUT_TIME_DOC_ID });
+
   const setTime = (time: number) => {
-    console.log('set time');
-    setDoc(doc(db, COLLECTION, TIME_DOC_ID), { time })
-      .then(() => {})
-      .catch((e) => {
-        console.warn(e);
-      });
+    const date = new Date(time);
+    updateHours(date.getHours());
+    updateMinute(date.getMinutes());
   };
-  const setInputTime = (time: number) => {
-    console.log('set input time');
-    setDoc(doc(db, COLLECTION, INPUT_TIME_DOC_ID), { time })
-      .then(() => {})
-      .catch((e) => {
-        console.warn(e);
-      });
-  };
-  const setScore = (score: number) => {
-    console.log('set score');
-    setDoc(doc(db, COLLECTION, SCORE_DOC_ID), { score })
-      .then()
-      .catch((e) => {
-        console.warn(e);
-      });
-  };
+
   const clearScore = () => {
-    console.log('set score');
-    setDoc(doc(db, COLLECTION, SCORE_DOC_ID), { score: 0 })
-      .then()
-      .catch((e) => {
-        console.warn(e);
-      });
+    updateScore(0);
   };
-  return { setTime, setInputTime, setScore, clearScore };
+  return { setTime, updateScore, clearScore, updateInputTime };
 };

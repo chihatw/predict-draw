@@ -1,9 +1,9 @@
-import React from 'react';
-import { useTimes } from '../services/useTimes';
+import React, { useMemo } from 'react';
+import { useTimes } from '../../services/useTimes';
 import TimeDisplay from './TimeDisplay';
 
 const ReadTimePerformance = () => {
-  const { time, score } = useTimes();
+  const { hours, minutes, score } = useTimes();
 
   return (
     <div>
@@ -12,7 +12,7 @@ const ReadTimePerformance = () => {
       >
         相手に時間を伝えてください
       </div>
-      <TimeDisplay time={time} />
+      <TimeDisplay hours={hours} minutes={minutes} />
       <div
         style={{
           paddingTop: 20,

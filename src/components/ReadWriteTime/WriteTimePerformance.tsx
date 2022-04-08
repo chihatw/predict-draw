@@ -2,14 +2,18 @@ import { css } from '@emotion/css';
 import { LocalizationProvider, TimePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Button, TextField } from '@mui/material';
-import React, { useRef, useState } from 'react';
-import { useHandleTimes, useTimes } from '../services/useTimes';
+import React, { useRef, useState, useMemo } from 'react';
+import { useHandleTimes, useTimes } from '../../services/useTimes';
 
 const WriteTimePerformance = () => {
-  const { time, score } = useTimes();
-  const { setInputTime, setScore } = useHandleTimes();
+  const { hours, minutes, score } = useTimes();
+  const { updateInputTime, updateScore } = useHandleTimes();
   const [value, setValue] = useState<Date | null>(new Date(Date.now()));
   const [text, setText] = useState('');
+  const time = useMemo(
+    () => new Date(`2020/01/01 ${hours}:${minutes}:00`),
+    [hours, minutes]
+  );
 
   const labelRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +24,7 @@ const WriteTimePerformance = () => {
     const inputHours = value.getHours();
     const inputMinutes = value?.getMinutes();
     if (answerHours === inputHours && answerMinutes === inputMinutes) {
-      setScore(score + 10);
+      updateScore(score + 10);
       setText('正解です');
     } else {
       setText('違います');
@@ -40,9 +44,9 @@ const WriteTimePerformance = () => {
   const handleChange = (newValue: Date | null) => {
     setValue(newValue);
     if (!!newValue) {
-      setInputTime(newValue.getTime());
+      updateInputTime(newValue.getTime());
     } else {
-      setInputTime(0);
+      updateInputTime(0);
     }
   };
 
