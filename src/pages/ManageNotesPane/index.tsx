@@ -1,22 +1,15 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import { Container, TextField } from '@mui/material';
 import pitchesArray2String from 'pitches-array2string';
 
 import Layout from '../../Layout';
-import AppContext from '../../services/context';
-import NotesPageStatePane from './components/NotesPageStatePane';
+import usePitches, { PitchesArray } from '../../services/usePitches';
 
 const ManageNotesPage = () => {
-  const {
-    notesPageState,
-    note1PitchList,
-    updatePitchList,
-    updateNotesPageState,
-  } = useContext(AppContext);
+  const { note1PitchList, updatePitchList } = usePitches();
 
   const [input, setInput] = useState('');
-  const [state, setState] = useState(notesPageState);
   const isBlankRef = useRef(false);
 
   // note1PitchListを文字列化して、inputに代入
@@ -35,7 +28,7 @@ const ManageNotesPage = () => {
   const handleChangeInput = (input: string) => {
     setInput(input);
     isBlankRef.current = input === '';
-    const pitchList: [string, string[][][]][] = [];
+    const pitchList: [string, PitchesArray][] = [];
     const lines = input.split('\n').filter((i) => i);
     lines.forEach((line, index) => {
       if (index % 2) {
@@ -45,30 +38,20 @@ const ManageNotesPage = () => {
         pitchList.push([line, []]);
       }
     });
-    updatePitchList({ pitchList, note: 'note1' });
-  };
-
-  const handleChangeState = (state: string) => {
-    setState(state);
-    updateNotesPageState(state);
+    updatePitchList(pitchList);
   };
 
   return (
     <Layout color='blue' label='Input Pitches'>
       <Container maxWidth='sm'>
-        <div style={{ display: 'grid', rowGap: 8 }}>
-          <NotesPageStatePane
-            state={state}
-            handleChangeState={handleChangeState}
-          />
-          <TextField
-            rows={10}
-            value={input}
-            color='secondary'
-            multiline
-            onChange={(e) => handleChangeInput(e.target.value)}
-          />
-        </div>
+        <TextField
+          rows={10}
+          value={input}
+          color='secondary'
+          multiline
+          fullWidth
+          onChange={(e) => handleChangeInput(e.target.value)}
+        />
       </Container>
     </Layout>
   );

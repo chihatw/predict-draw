@@ -1,27 +1,14 @@
-import { useContext } from 'react';
+import React from 'react';
 
 import Layout from '../Layout';
-import Greeting from '../components/Greeting';
-import AppContext from '../services/context';
+import usePitches from '../services/usePitches';
 import PitchesPage from '../components/PitchesPage';
 
 const NotesPage = () => {
-  const { notesPageState: state } = useContext(AppContext);
-  const { note1PitchList } = useContext(AppContext);
+  const { note1PitchList } = usePitches();
   return (
     <Layout color='blue' label='單詞'>
-      <>
-        {(() => {
-          switch (state) {
-            case 'greeting':
-              return <Greeting />;
-            case 'pitches':
-              return <PitchesPage pitchList={note1PitchList} />;
-            default:
-              return <></>;
-          }
-        })()}
-      </>
+      <PitchesPage pitchList={note1PitchList} />
     </Layout>
   );
 };

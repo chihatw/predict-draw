@@ -1,48 +1,82 @@
-import { useEffect, useState } from 'react';
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { useEffect, useMemo, useState } from 'react';
+import { Unsubscribe } from 'firebase/firestore';
 
 import { db } from '../repositories/firebase';
-import { pitchesArray } from './context';
+
+import {
+  updateDocumenValue,
+  snapshotDocumentValue,
+} from '../repositories/utils';
+
+export type PitchesArray = string[][][];
 
 const COLLECTION = 'pitches';
-const DOC_ID = 'note1';
+const NOTE1_DOC_ID = 'note1';
 
 const usePitches = () => {
+  const [pitchListStr, setPitchListStr] = useState('');
+
   const [note1PitchList, setNote1PitchList] = useState<
-    [string, pitchesArray][]
+    [string, PitchesArray][]
   >([]);
-  // note1の監視
-  useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${DOC_ID}`);
-        const { pitchList } = (doc.data() as { pitchList: string }) || {
-          pitchList: '',
-        };
-        const parsed: [string, pitchesArray][] = JSON.parse(pitchList);
-        setNote1PitchList(parsed);
+
+  const _snapshotDocumentValue = useMemo(
+    () =>
+      function <T>({
+        docId,
+        initialValue,
+        setValue,
+      }: {
+        docId: string;
+        initialValue: T;
+        setValue: (value: T) => void;
+      }): Unsubscribe {
+        return snapshotDocumentValue({
+          db,
+          docId,
+          colId: COLLECTION,
+          initialValue,
+          setValue,
+        });
       },
-      (error) => {
-        console.warn(error);
-      }
-    );
+    []
+  );
+
+  const _updateDocumentValue = useMemo(
+    () =>
+      function <T>({ value, docId }: { value: T; docId: string }) {
+        updateDocumenValue({
+          db,
+          value,
+          colId: COLLECTION,
+          docId,
+        });
+      },
+    []
+  );
+
+  useEffect(() => {
+    if (!pitchListStr) return;
+    const pitchList: [string, PitchesArray][] = JSON.parse(pitchListStr);
+    setNote1PitchList(pitchList);
+  }, [pitchListStr]);
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: NOTE1_DOC_ID,
+      initialValue: '',
+      setValue: setPitchListStr,
+    });
     return () => {
       unsub();
     };
   }, []);
 
-  const updatePitchList = ({
-    note,
-    pitchList,
-  }: {
-    note: 'note1' | 'note2';
-    pitchList: [string, pitchesArray][];
-  }) => {
-    console.log(`update pitchList`);
-    updateDoc(doc(db, COLLECTION, note), {
-      pitchList: JSON.stringify(pitchList),
-    });
+  const updateNote1 = (value: string) =>
+    _updateDocumentValue({ value, docId: NOTE1_DOC_ID });
+
+  const updatePitchList = (pitchList: [string, PitchesArray][]) => {
+    updateNote1(JSON.stringify(pitchList));
   };
   return { note1PitchList, updatePitchList };
 };

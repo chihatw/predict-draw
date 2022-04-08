@@ -13,8 +13,6 @@ export type PageState =
   | 'writeTimePerformance'
   | '';
 
-export type pitchesArray = string[][][];
-
 export type Users = {
   liSan: number;
   kouSan: number;
@@ -24,18 +22,8 @@ export const INITIAL_USERS: Users = { liSan: 0, kouSan: 0 };
 
 const AppContext = createContext<{
   liSanPageState: PageState;
-  notesPageState: string;
-  note1PitchList: [string, pitchesArray][];
   kouSanPageState: PageState;
   handleNavigate: (pathname: string) => void;
-  updatePitchList: ({
-    note,
-    pitchList,
-  }: {
-    note: 'note1' | 'note2';
-    pitchList: [string, pitchesArray][];
-  }) => void;
-  updateNotesPageState: (state: string) => void;
   updateLiSanPageState: (state: PageState) => void;
   updateKouSanPageState: (state: PageState) => void;
 
@@ -52,18 +40,14 @@ const AppContext = createContext<{
 }>({
   bpmTrackBpm: 0,
   bpmTrackType: 'syllable',
-  notesPageState: '',
   liSanPageState: '',
-  note1PitchList: [],
   kouSanPageState: '',
   bpmTrackOffsets: [],
   syncopationRatio: 100,
   bpmTrackBpmPitchesArray: [],
   handleNavigate: () => {},
-  updatePitchList: () => {},
   updateBpmTrackBpm: () => {},
   updateBpmTrackType: () => {},
-  updateNotesPageState: () => {},
   updateLiSanPageState: () => {},
   updateBpmTrackOffsets: () => {},
   updateBpmPitchesArray: () => {},

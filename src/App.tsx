@@ -7,12 +7,9 @@ import useBpmTrack from './services/useBpmTrack';
 import usePageState from './services/usePageState';
 
 function App() {
-  const { note1PitchList, updatePitchList } = usePitches();
   const {
-    notesPageState,
     liSanPageState,
     kouSanPageState,
-    updateNotesPageState,
     updateLiSanPageState,
     updateKouSanPageState,
   } = usePageState();
@@ -38,18 +35,14 @@ function App() {
       value={{
         bpmTrackBpm,
         bpmTrackType,
-        note1PitchList,
         liSanPageState,
-        notesPageState,
         bpmTrackOffsets,
         kouSanPageState,
         syncopationRatio,
         bpmTrackBpmPitchesArray,
         handleNavigate,
-        updatePitchList,
         updateBpmTrackBpm,
         updateBpmTrackType,
-        updateNotesPageState,
         updateLiSanPageState,
         updateBpmTrackOffsets,
         updateBpmPitchesArray,
