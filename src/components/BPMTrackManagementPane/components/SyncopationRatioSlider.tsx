@@ -1,12 +1,15 @@
 import { Slider } from '@mui/material';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import AppContext from '../../../services/context';
-import useBpmTrack from '../../../services/useBpmTrack';
+import React, { useEffect, useRef, useState } from 'react';
 
 const DELAY = 15; // ms
 
-const SyncopationRatioSlider = () => {
-  const { syncopationRatio, updateSyncopationRatio } = useBpmTrack();
+const SyncopationRatioSlider = ({
+  syncopationRatio,
+  updateSyncopationRatio,
+}: {
+  syncopationRatio: number;
+  updateSyncopationRatio: (value: number) => void;
+}) => {
   const [value, setValue] = useState(syncopationRatio);
 
   const timerId = useRef(0);

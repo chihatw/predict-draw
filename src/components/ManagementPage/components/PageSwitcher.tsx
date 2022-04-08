@@ -6,7 +6,7 @@ import Greeting from '../../Greeting';
 import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
 import { PageState } from '../../../services/context';
-import BPMTrackManagementPage from '../../BPMTrackManagementPage';
+import BPMTrackManagementPane from '../../BPMTrackManagementPane';
 import { PredictPane } from '../../PredictPane';
 import { Draw } from '../../DrawPane';
 
@@ -37,7 +37,7 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
         </Container>
       );
     case 'bpmTrack':
-      return <BPMTrackManagementPage />;
+      return <BPMTrackManagementPane />;
     default:
       return <></>;
   }

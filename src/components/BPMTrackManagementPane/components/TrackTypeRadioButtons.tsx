@@ -4,9 +4,7 @@ import {
   FormControl,
   FormControlLabel,
 } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import AppContext from '../../../services/context';
-import useBpmTrack from '../../../services/useBpmTrack';
+import { useEffect, useState } from 'react';
 
 const items = [
   { value: 'mora', label: '拍' },
@@ -15,8 +13,13 @@ const items = [
   { value: 'syncopation', label: 'シンコペーション' },
 ];
 
-const TrackTypeRadioButtons = () => {
-  const { trackType, updateTrackType } = useBpmTrack();
+const TrackTypeRadioButtons = ({
+  trackType,
+  updateTrackType,
+}: {
+  trackType: string;
+  updateTrackType: (value: string) => void;
+}) => {
   const [type, setType] = useState(trackType);
 
   useEffect(() => {

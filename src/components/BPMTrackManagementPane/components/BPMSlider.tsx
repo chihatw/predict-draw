@@ -1,12 +1,15 @@
 import { Slider } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
-import useBpmTrack from '../../../services/useBpmTrack';
-
 const DELAY = 15; // ms
 
-const BPMSlider = () => {
-  const { bpm: superBpm, updateBpm } = useBpmTrack();
+const BPMSlider = ({
+  superBpm,
+  updateBpm,
+}: {
+  superBpm: number;
+  updateBpm: (value: number) => void;
+}) => {
   const [bpm, setBpm] = useState(0);
 
   const timerId = useRef(0);

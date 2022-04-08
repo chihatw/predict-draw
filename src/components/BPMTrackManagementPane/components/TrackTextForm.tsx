@@ -3,11 +3,15 @@ import string2BpmPitchesArray from 'string2bpm-pitches-array';
 import bpmPitchesArray2String from 'bpm-pitches-array2string';
 import React, { useEffect, useState } from 'react';
 
-import useBpmTrack from '../../../services/useBpmTrack';
-
-const TrackTextForm = () => {
-  const { bpmPitchesArray, updateOffsets, updateBpmPitchesArray } =
-    useBpmTrack();
+const TrackTextForm = ({
+  bpmPitchesArray,
+  updateOffsets,
+  updateBpmPitchesArray,
+}: {
+  bpmPitchesArray: string[][][];
+  updateOffsets: (value: number[]) => void;
+  updateBpmPitchesArray: (value: string[][][]) => void;
+}) => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
