@@ -7,7 +7,7 @@ import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
 import { Predict } from '../pages/predict';
 import { Draw } from '../pages/draw';
-import { BpmCulc } from '../pages/BpmCalc';
+import { BpmCulc } from '../pages/BpmCalcPane';
 import ReadTimePractice from './ReadTimePractice';
 import ReadTimePerformance from './ReadTimePerformance';
 import WriteTimePerformance from './WriteTimePerformance';
@@ -16,15 +16,12 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const {
     yesRatio,
     newGameAt,
-    bpmCalcLabel: { label, syllableCount },
     showRatioPane,
     liSanPageState,
     showPredictPane,
     kouSanPageState,
     updateDrawn,
     updatePredict,
-    handleStopBpmCalcTiemr,
-    handleStartBpmCalcTimer,
   } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -52,14 +49,7 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     case 'talkingToKouSan':
       return <TalkingToKouSan />;
     case 'bpmCalc':
-      return (
-        <BpmCulc
-          label={label}
-          syllableCount={syllableCount}
-          superhandleStop={handleStopBpmCalcTiemr}
-          superhandleStart={handleStartBpmCalcTimer}
-        />
-      );
+      return <BpmCulc />;
     case 'predict':
       return (
         <Predict

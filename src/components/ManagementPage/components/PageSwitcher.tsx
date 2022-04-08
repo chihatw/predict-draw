@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
 import { useContext } from 'react';
 
+import { useBpmCalc } from '../../../services/useBpmCalc';
 import noImage from '../../../images/keitai.png';
 import Greeting from '../../Greeting';
 import yesImage from '../../../images/suimin.png';
@@ -17,14 +18,14 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
     predict,
     yesRatio,
     newGameAt,
-    bpmCalcBpm,
     showRatioPane,
     showPredictPane,
-    isBpmCalcRunning,
     updateDrawn,
     updatePredict,
     handleShowPane,
   } = useContext(AppContext);
+
+  const { bpm, isRunning } = useBpmCalc();
 
   const handleShowRatioPane = (visible: boolean) => {
     handleShowPane({ visible, docId: 'ratioPane' });
@@ -69,8 +70,8 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
     case 'bpmCalc':
       return (
         <Container maxWidth='sm' sx={{ paddingTop: 1 }}>
-          <div>{isBpmCalcRunning ? '計測中' : '待機中'}</div>
-          <div>{`BPM: ${bpmCalcBpm}`}</div>
+          <div>{isRunning ? '計測中' : '待機中'}</div>
+          <div>{`BPM: ${bpm}`}</div>
         </Container>
       );
     case 'bpmTrack':

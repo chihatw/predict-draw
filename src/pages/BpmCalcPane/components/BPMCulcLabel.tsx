@@ -3,10 +3,10 @@ import React from 'react';
 
 const BPMCulcLabel = ({
   label,
-  syllableCount,
+  beatCount,
 }: {
   label: string;
-  syllableCount: number;
+  beatCount: number;
 }) => {
   const theme = useTheme();
   return (
@@ -20,7 +20,7 @@ const BPMCulcLabel = ({
         <span>{label}</span>
         <span style={{ fontSize: 16, paddingLeft: 8 }}>
           {' '}
-          {`(${syllableCount} beats)`}
+          {`(${beatCount} beats)`}
         </span>
       </div>
     </div>

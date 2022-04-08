@@ -1,97 +1,128 @@
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { Unsubscribe } from 'firebase/firestore';
+import { useEffect, useMemo, useState } from 'react';
+
 import { db } from '../repositories/firebase';
-import { BpmCalcLabel, INITIAL_BPM_CALC_LABEL } from './context';
+import {
+  updateDocumenValue,
+  snapshotDocumentValue,
+} from '../repositories/utils';
+
+export type BpmCalcLabel = { label: string; syllableCount: number };
 
 const COLLECTION = 'bpmCalc';
 const BPM_DOC_ID = 'bpm';
 const LABEL_DOC_ID = 'label';
 const IS_RUNNING_DOC_ID = 'isRunning';
+const BEAT_COUNT_DOC_ID = 'beatCount';
 
-const useBpmCalc = () => {
-  const [label, setLabel] = useState<BpmCalcLabel>(INITIAL_BPM_CALC_LABEL);
+export const useBpmCalc = () => {
   const [bpm, setBpm] = useState(0);
+  const [label, setLabel] = useState('');
+  const [beatCount, setBeatCount] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, LABEL_DOC_ID),
-      (doc) => {
-        const label = (doc.data() as BpmCalcLabel) || INITIAL_BPM_CALC_LABEL;
-        setLabel(label);
+  const _snapshotDocumentValue = useMemo(
+    () =>
+      function <T>({
+        docId,
+        initialValue,
+        setValue,
+      }: {
+        docId: string;
+        initialValue: T;
+        setValue: (value: T) => void;
+      }): Unsubscribe {
+        return snapshotDocumentValue({
+          db,
+          docId,
+          colId: COLLECTION,
+          initialValue,
+          setValue,
+        });
       },
-      (error) => {
-        console.warn(error);
-      }
-    );
-    return () => {
-      unsub();
-    };
-  }, []);
-
-  useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, IS_RUNNING_DOC_ID),
-      (doc) => {
-        const { flag } = (doc.data() as { flag: boolean }) || { flag: false };
-        setIsRunning(flag);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
-    return () => {
-      unsub();
-    };
-  }, []);
+    []
+  );
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, BPM_DOC_ID),
-      (doc) => {
-        const { bpm } = (doc.data() as { bpm: number }) || { bpm: 0 };
-        setBpm(bpm);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
-    return () => {
-      unsub();
-    };
-  }, []);
-
-  const handleStartTimer = () => {
-    updateDoc(doc(db, COLLECTION, BPM_DOC_ID), { bpm: 0 });
-    updateDoc(doc(db, COLLECTION, IS_RUNNING_DOC_ID), { flag: true });
-  };
-
-  const handleStopTiemr = (miliSeconds: number) => {
-    const bpm = calcBpm({
-      miliSeconds,
-      syllableCount: label.syllableCount,
+    const usesub = _snapshotDocumentValue({
+      docId: BEAT_COUNT_DOC_ID,
+      initialValue: 0,
+      setValue: setBeatCount,
     });
-    updateDoc(doc(db, COLLECTION, BPM_DOC_ID), { bpm });
-    updateDoc(doc(db, COLLECTION, IS_RUNNING_DOC_ID), { flag: false });
-  };
+    return () => {
+      usesub();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: LABEL_DOC_ID,
+      initialValue: '',
+      setValue: setLabel,
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: IS_RUNNING_DOC_ID,
+      initialValue: false,
+      setValue: setIsRunning,
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: BPM_DOC_ID,
+      initialValue: 0,
+      setValue: setBpm,
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return {
-    bpmCalcBpm: bpm,
-    bpmCalcLabel: label,
-    isBpmCalcRunning: isRunning,
-    handleStopBpmCalcTiemr: handleStopTiemr,
-    handleStartBpmCalcTimer: handleStartTimer,
+    bpm,
+    label,
+    beatCount,
+    isRunning,
   };
 };
-export default useBpmCalc;
 
-const calcBpm = ({
-  miliSeconds,
-  syllableCount,
-}: {
-  miliSeconds: number;
-  syllableCount: number;
-}) => {
-  const seconds = miliSeconds / 1000;
-  return Math.floor((syllableCount / seconds) * 60);
+export const useHandleBpmCalc = () => {
+  const _updateDocumentValue = useMemo(
+    () =>
+      function <T>({ value, docId }: { value: T; docId: string }) {
+        updateDocumenValue({
+          db,
+          value,
+          colId: COLLECTION,
+          docId,
+        });
+      },
+    []
+  );
+
+  const updateBpm = (value: number) =>
+    _updateDocumentValue({ value, docId: BPM_DOC_ID });
+
+  const updateIsRunning = (value: boolean) => {
+    _updateDocumentValue({ value, docId: IS_RUNNING_DOC_ID });
+  };
+
+  const startTimer = () => {
+    updateBpm(0);
+    updateIsRunning(true);
+  };
+  const stopTimer = (bpm: number) => {
+    updateBpm(bpm);
+    updateIsRunning(false);
+  };
+  return { updateBpm, updateIsRunning, startTimer, stopTimer };
 };

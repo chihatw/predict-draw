@@ -13,13 +13,6 @@ export type PageState =
   | 'writeTimePerformance'
   | '';
 
-export type BpmCalcLabel = { label: string; syllableCount: number };
-
-export const INITIAL_BPM_CALC_LABEL: BpmCalcLabel = {
-  label: '',
-  syllableCount: 0,
-};
-
 export type pitchesArray = string[][][];
 
 export type Users = {
@@ -34,10 +27,10 @@ const AppContext = createContext<{
   predict: string;
   yesRatio: number;
   newGameAt: number;
-  bpmCalcBpm: number;
+
   liSanPoints: number;
   kouSanPoints: number;
-  bpmCalcLabel: BpmCalcLabel;
+
   showScorePane: boolean;
   showRatioPane: boolean;
   liSanPageState: PageState;
@@ -45,7 +38,7 @@ const AppContext = createContext<{
   note1PitchList: [string, pitchesArray][];
   kouSanPageState: PageState;
   showPredictPane: boolean;
-  isBpmCalcRunning: boolean;
+
   updateDrawn: (value: string) => void;
   updatePredict: (value: string) => void;
   updateYesRatio: (ratio: number) => void;
@@ -69,8 +62,7 @@ const AppContext = createContext<{
   updateNotesPageState: (state: string) => void;
   updateLiSanPageState: (state: PageState) => void;
   updateKouSanPageState: (state: PageState) => void;
-  handleStopBpmCalcTiemr: (value: number) => void;
-  handleStartBpmCalcTimer: () => void;
+
   bpmTrackBpm: number;
   bpmTrackType: string;
   bpmTrackOffsets: number[];
@@ -86,11 +78,9 @@ const AppContext = createContext<{
   predict: '',
   yesRatio: 0,
   newGameAt: 0,
-  bpmCalcBpm: 0,
   liSanPoints: 0,
   bpmTrackBpm: 0,
   kouSanPoints: 0,
-  bpmCalcLabel: INITIAL_BPM_CALC_LABEL,
   bpmTrackType: 'syllable',
   showScorePane: false,
   showRatioPane: false,
@@ -101,7 +91,6 @@ const AppContext = createContext<{
   bpmTrackOffsets: [],
   showPredictPane: false,
   syncopationRatio: 100,
-  isBpmCalcRunning: false,
   bpmTrackBpmPitchesArray: [],
   updateDrawn: () => {},
   updatePredict: () => {},
@@ -118,8 +107,6 @@ const AppContext = createContext<{
   updateBpmPitchesArray: () => {},
   updateKouSanPageState: () => {},
   updateSyncopationRatio: () => {},
-  handleStopBpmCalcTiemr: () => {},
-  handleStartBpmCalcTimer: () => {},
 });
 
 export default AppContext;

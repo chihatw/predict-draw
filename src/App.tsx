@@ -6,13 +6,11 @@ import AppRoutes from './routes/AppRoutes';
 import usePitches from './services/usePitches';
 import AppContext from './services/context';
 import usePredict from './services/usePredict';
-import useBpmCalc from './services/useBpmCalc';
 import useYesRatio from './services/useYesRatio';
 import useBpmTrack from './services/useBpmTrack';
 import usePageState from './services/usePageState';
 import useShowPanes from './services/useShowPanes';
 import useNewGameAt from './services/useNewGameAt';
-import { useTimes } from './services/useTimes';
 
 function App() {
   const { note1PitchList, updatePitchList } = usePitches();
@@ -32,13 +30,6 @@ function App() {
   const { drawn, updateDrawn } = useDrawn();
   const { predict, updatePredict } = usePredict();
   const { liSanPoints, kouSanPoints } = usePoints();
-  const {
-    bpmCalcBpm,
-    bpmCalcLabel,
-    isBpmCalcRunning,
-    handleStopBpmCalcTiemr,
-    handleStartBpmCalcTimer,
-  } = useBpmCalc();
   const {
     bpmTrackBpm,
     bpmTrackType,
@@ -62,11 +53,11 @@ function App() {
         predict,
         yesRatio,
         newGameAt,
-        bpmCalcBpm,
+
         liSanPoints,
         bpmTrackBpm,
         kouSanPoints,
-        bpmCalcLabel,
+
         bpmTrackType,
         showScorePane,
         showRatioPane,
@@ -77,7 +68,7 @@ function App() {
         kouSanPageState,
         showPredictPane,
         syncopationRatio,
-        isBpmCalcRunning,
+
         bpmTrackBpmPitchesArray,
         updateDrawn,
         updatePredict,
@@ -93,9 +84,8 @@ function App() {
         updateBpmTrackOffsets,
         updateBpmPitchesArray,
         updateKouSanPageState,
-        handleStopBpmCalcTiemr,
+
         updateSyncopationRatio,
-        handleStartBpmCalcTimer,
       }}
     >
       <AppRoutes />

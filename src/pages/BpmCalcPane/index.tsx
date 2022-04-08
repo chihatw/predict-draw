@@ -1,28 +1,20 @@
 import { Button } from '@mui/material';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import TimePane from './components/TimePane';
-import { Timer } from './classes/Timer';
 import TimerButton from './components/TimerButton';
 import BPMCulcLabel from './components/BPMCulcLabel';
+import { useBpmCalc, useHandleBpmCalc } from '../../services/useBpmCalc';
 
-export const BpmCulc = ({
-  label,
-  syllableCount,
-  superhandleStop,
-  superhandleStart,
-}: {
-  label: string;
-  syllableCount: number;
-  superSetTime?: (value: number) => void;
-  superhandleStop?: (value: number) => void;
-  superhandleStart?: () => void;
-}) => {
-  const timer = useMemo(() => new Timer(), []);
+export const BpmCulc = () => {
+  const { label, beatCount } = useBpmCalc();
+  const { startTimer, stopTimer } = useHandleBpmCalc();
+
   const loopIdRef = useRef(0);
+  const startAtRef = useRef(0);
 
-  const [bpm, setBpm] = useState(-1);
+  const [bpm, setBpm] = useState(-1); // -1 で '--' を表示
   const [isRunning, setIsRunning] = useState(false);
   const [miliSeconds, setMiliSeconds] = useState(0);
 
@@ -36,23 +28,24 @@ export const BpmCulc = ({
 
   const start = () => {
     setIsRunning(true);
-    !!superhandleStart && superhandleStart();
-    timer.startAt = performance.now();
+    startTimer();
+    startAtRef.current = performance.now();
     loopIdRef.current = requestAnimationFrame(loop);
     setBpm(-1);
   };
   const loop = () => {
-    const elapsedTime = Math.floor(timer.getElaspedTime(performance.now()));
+    const elapsedTime = Math.floor(performance.now() - startAtRef.current);
     setMiliSeconds(elapsedTime);
     loopIdRef.current = requestAnimationFrame(loop);
   };
   const stop = () => {
     setIsRunning(false);
-    const elapsedTime = Math.floor(timer.getElaspedTime(performance.now()));
+    const elapsedTime = Math.floor(performance.now() - startAtRef.current);
     setMiliSeconds(elapsedTime);
-    !!superhandleStop && superhandleStop(elapsedTime);
     cancelAnimationFrame(loopIdRef.current);
-    setBpm(calcBpm({ miliSeconds: elapsedTime, syllableCount }));
+    const bpm = calcBpm({ miliSeconds: elapsedTime, beatCount });
+    setBpm(bpm);
+    stopTimer(bpm);
   };
 
   const handleReset = () => {
@@ -62,7 +55,7 @@ export const BpmCulc = ({
 
   return (
     <div>
-      <BPMCulcLabel label={label} syllableCount={syllableCount} />
+      <BPMCulcLabel label={label} beatCount={beatCount} />
       <div style={{ height: 40 }} />
       <BpmPane bpm={bpm} />
       <TimePane miliSeconds={miliSeconds} />
@@ -79,12 +72,12 @@ export const BpmCulc = ({
 };
 
 const calcBpm = ({
+  beatCount,
   miliSeconds,
-  syllableCount,
 }: {
+  beatCount: number;
   miliSeconds: number;
-  syllableCount: number;
 }) => {
   const seconds = miliSeconds / 1000;
-  return Math.floor((syllableCount / seconds) * 60);
+  return Math.floor((beatCount / seconds) * 60);
 };
