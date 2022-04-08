@@ -7,13 +7,10 @@ import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
 import { PageState } from '../../../services/context';
 import BPMTrackManagementPage from '../../BPMTrackManagementPage';
-import { Predict } from '../../../pages/predict';
-import usePredict from '../../../services/usePredict';
+import { PredictPane } from '../../PredictPane';
 import { Draw } from '../../DrawPane';
 
 const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
-  const { newGameAt, predict, yesRatio, updatePredict } = usePredict();
-
   const { bpm, isRunning } = useBpmCalc();
 
   switch (state) {
@@ -25,12 +22,8 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
       return <TalkingToKouSan />;
     case 'predict':
       return (
-        <Predict
-          yesRatio={yesRatio}
+        <PredictPane
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
-          newGameAt={newGameAt}
-          superPredict={predict}
-          superHandlePredict={updatePredict}
           isManagementMode
         />
       );

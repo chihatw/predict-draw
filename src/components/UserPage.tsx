@@ -5,18 +5,15 @@ import AppContext from '../services/context';
 import BpmTrackPage from '../pages/BpmTrackPage';
 import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
-import { Predict } from '../pages/predict';
+import { PredictPane } from './PredictPane';
 import { Draw } from './DrawPane';
 import { BpmCulc } from './BpmCalcPane';
 import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
 import WriteTimePerformance from './ReadWriteTime/WriteTimePerformance';
-import usePredict from '../services/usePredict';
 
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
-
-  const { yesRatio, newGameAt, updatePredict } = usePredict();
 
   const state = useMemo(() => {
     switch (user) {
@@ -45,14 +42,7 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     case 'bpmCalc':
       return <BpmCulc />;
     case 'predict':
-      return (
-        <Predict
-          yesRatio={yesRatio}
-          newGameAt={newGameAt}
-          opponent={user === 'liSan' ? '黄さん' : '李さん'}
-          superHandlePredict={updatePredict}
-        />
-      );
+      return <PredictPane opponent={user === 'liSan' ? '黄さん' : '李さん'} />;
     case 'draw':
       return <Draw />;
     case 'bpmTrack':

@@ -1,12 +1,12 @@
 import { Slider } from '@mui/material';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import AppContext from '../../../services/context';
+import useBpmTrack from '../../../services/useBpmTrack';
 
 const DELAY = 15; // ms
 
 const BPMSlider = () => {
-  const { bpmTrackBpm, updateBpmTrackBpm } = useContext(AppContext);
+  const { bpmTrackBpm, updateBpmTrackBpm } = useBpmTrack();
   const [bpm, setBpm] = useState(bpmTrackBpm);
 
   const timerId = useRef(0);

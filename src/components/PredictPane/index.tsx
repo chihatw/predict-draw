@@ -1,29 +1,27 @@
 import { css } from '@emotion/css';
 import { Container } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import RatioPane from './components/RatioPane';
-import PredictPane from './components/PredictPane';
+import PredictRow from './components/PredictRow';
+import usePredict from '../../services/usePredict';
 
 const CARD_WIDTH = 160;
 
-export type PredictProps = {
-  yesRatio: number;
-  opponent: string;
-  newGameAt: number;
-  superPredict?: string;
-  isManagementMode?: boolean;
-  superHandlePredict?: (value: string) => void;
-};
-
-export function Predict({
+export const PredictPane = ({
   opponent,
-  yesRatio,
-  newGameAt,
-  superPredict,
   isManagementMode,
-  superHandlePredict,
-}: PredictProps) {
+}: {
+  opponent: string;
+  isManagementMode?: boolean;
+}) => {
+  const {
+    newGameAt,
+    predict: superPredict,
+    yesRatio,
+    updatePredict: superHandlePredict,
+  } = usePredict();
+
   const handlePredict = (value: string) => {
     !!superHandlePredict && superHandlePredict(value);
   };
@@ -32,7 +30,7 @@ export function Predict({
     <Container maxWidth='sm'>
       <div className={css({ display: 'grid' })}>
         <RatioPane progress={yesRatio} />
-        <PredictPane
+        <PredictRow
           opponent={opponent}
           newGameAt={newGameAt}
           cardWidth={CARD_WIDTH}
@@ -43,4 +41,4 @@ export function Predict({
       </div>
     </Container>
   );
-}
+};

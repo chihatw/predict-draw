@@ -1,14 +1,12 @@
 import { css } from '@emotion/css';
 import { CustomLabel } from '@chihatw/lang-gym-h.ui.custom-label';
-import { Collapse, Switch } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
-import Smoke from './Smoke';
 import DoubleCard from './DoubleCard';
 
 const STRIPE_COLOR = '#5dbec4';
 
-const PredictPane: React.FC<{
+const PredictRow: React.FC<{
   opponent: string;
   newGameAt: number;
   cardWidth: number;
@@ -48,7 +46,7 @@ const PredictPane: React.FC<{
   }
 };
 
-export default PredictPane;
+export default PredictRow;
 
 const PredictPaneContext: React.FC<{
   opponent: string;

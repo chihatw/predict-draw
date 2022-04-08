@@ -1,9 +1,9 @@
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { Container } from '@mui/material';
 import { BpmPlayer } from '@chihatw/lang-gym-h.card.ui.bpm-player';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import AppContext from '../services/context';
+import useBpmTrack from '../services/useBpmTrack';
 
 const BpmTrackPage = () => {
   const {
@@ -12,7 +12,7 @@ const BpmTrackPage = () => {
     bpmTrackOffsets,
     syncopationRatio,
     bpmTrackBpmPitchesArray,
-  } = useContext(AppContext);
+  } = useBpmTrack();
   return (
     <Container maxWidth='sm' sx={{ display: 'grid', rowGap: 5 }}>
       <BpmPane bpm={bpmTrackBpm} />

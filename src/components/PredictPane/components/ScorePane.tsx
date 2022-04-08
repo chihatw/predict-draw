@@ -2,8 +2,6 @@ import React from 'react';
 import { CustomLabel } from '@chihatw/lang-gym-h.ui.custom-label';
 import { Collapse, Switch } from '@mui/material';
 
-import Smoke from './Smoke';
-
 const ScorePane: React.FC<{
   user: string;
   points: number;
@@ -28,7 +26,7 @@ const ScorePane: React.FC<{
       <div>
         <div>
           <Switch
-            size="small"
+            size='small'
             checked={showScorePane}
             onChange={(e) => {
               handleShowScore(e.target.checked);
@@ -42,7 +40,6 @@ const ScorePane: React.FC<{
             opponent={opponent}
             opponentPoints={opponentPoints}
           />
-          {!superShowScorePane && <Smoke />}
         </div>
       </div>
     );
@@ -69,7 +66,7 @@ const Context: React.FC<{
   opponentPoints: number;
 }> = ({ user, points, opponent, opponentPoints }) => (
   <>
-    <CustomLabel label="得点" />
+    <CustomLabel label='得点' />
     <div
       style={{
         padding: '16px 8px',

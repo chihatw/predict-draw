@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import AppContext from '../../../services/context';
+import useBpmTrack from '../../../services/useBpmTrack';
 
 const items = [
   { value: 'mora', label: '拍' },
@@ -15,7 +16,7 @@ const items = [
 ];
 
 const TrackTypeRadioButtons = () => {
-  const { bpmTrackType, updateBpmTrackType } = useContext(AppContext);
+  const { bpmTrackType, updateBpmTrackType } = useBpmTrack();
   const [type, setType] = useState(bpmTrackType);
 
   useEffect(() => {

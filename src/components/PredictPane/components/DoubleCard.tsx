@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import { FlipCard } from '@chihatw/flip-card.flip-card';
 import { CardBehind } from '@chihatw/flip-card.card-behind';
 
-import CardFace from '../../../components/CardFace';
+import CardFace from '../../CardFace';
 
 const GORLDEN_RATIO = 1.618;
 

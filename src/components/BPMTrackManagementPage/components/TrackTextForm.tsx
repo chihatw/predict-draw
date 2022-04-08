@@ -1,16 +1,16 @@
 import { TextField } from '@mui/material';
 import string2BpmPitchesArray from 'string2bpm-pitches-array';
 import bpmPitchesArray2String from 'bpm-pitches-array2string';
-import { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import AppContext from '../../../services/context';
+import useBpmTrack from '../../../services/useBpmTrack';
 
 const TrackTextForm = () => {
   const {
     bpmTrackBpmPitchesArray,
     updateBpmPitchesArray,
     updateBpmTrackOffsets,
-  } = useContext(AppContext);
+  } = useBpmTrack();
   const [input, setInput] = useState('');
 
   useEffect(() => {
