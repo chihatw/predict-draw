@@ -1,16 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-import useDrawn from './services/useDrawn';
-import usePoints from './services/usePoints';
 import AppRoutes from './routes/AppRoutes';
 import usePitches from './services/usePitches';
 import AppContext from './services/context';
-import usePredict from './services/usePredict';
-import useYesRatio from './services/useYesRatio';
 import useBpmTrack from './services/useBpmTrack';
 import usePageState from './services/usePageState';
-import useShowPanes from './services/useShowPanes';
-import useNewGameAt from './services/useNewGameAt';
 
 function App() {
   const { note1PitchList, updatePitchList } = usePitches();
@@ -22,14 +16,7 @@ function App() {
     updateLiSanPageState,
     updateKouSanPageState,
   } = usePageState();
-  const { showScorePane, showRatioPane, showPredictPane, handleShowPane } =
-    useShowPanes();
   const navigate = useNavigate();
-  const { yesRatio, updateYesRatio } = useYesRatio();
-  const { newGameAt, updateNewGameAt } = useNewGameAt();
-  const { drawn, updateDrawn } = useDrawn();
-  const { predict, updatePredict } = usePredict();
-  const { liSanPoints, kouSanPoints } = usePoints();
   const {
     bpmTrackBpm,
     bpmTrackType,
@@ -49,33 +36,16 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        drawn,
-        predict,
-        yesRatio,
-        newGameAt,
-
-        liSanPoints,
         bpmTrackBpm,
-        kouSanPoints,
-
         bpmTrackType,
-        showScorePane,
-        showRatioPane,
         note1PitchList,
         liSanPageState,
         notesPageState,
         bpmTrackOffsets,
         kouSanPageState,
-        showPredictPane,
         syncopationRatio,
-
         bpmTrackBpmPitchesArray,
-        updateDrawn,
-        updatePredict,
-        updateYesRatio,
         handleNavigate,
-        handleShowPane,
-        updateNewGameAt,
         updatePitchList,
         updateBpmTrackBpm,
         updateBpmTrackType,

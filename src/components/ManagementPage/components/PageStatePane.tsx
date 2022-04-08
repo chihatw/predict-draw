@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import AppContext, { PageState } from '../../../services/context';
+import usePredict from '../../../services/usePredict';
 
 const PAGE_STATE: { value: PageState; label: string }[] = [
   { value: 'readTimePractice', label: '時間表示練習' },
@@ -31,8 +32,10 @@ const PageStatePane = ({
   state: PageState;
   setState: (state: PageState) => void;
 }) => {
-  const { updatePredict, updateLiSanPageState, updateKouSanPageState } =
+  const { updateLiSanPageState, updateKouSanPageState } =
     useContext(AppContext);
+
+  const { updatePredict } = usePredict();
 
   const handleChangeState = (state: PageState) => {
     setState(state);

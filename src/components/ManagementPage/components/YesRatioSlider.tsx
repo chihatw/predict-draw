@@ -1,16 +1,12 @@
 import { Slider } from '@mui/material';
-import { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import AppContext from '../../../services/context';
+import usePredict from '../../../services/usePredict';
 
 const DELAY = 15; // ms
 
 const YesRatioSlider = () => {
-  const {
-    yesRatio: _yesRatio,
-    updateYesRatio,
-    updateNewGameAt,
-  } = useContext(AppContext);
+  const { yesRatio: _yesRatio, updateYesRatio, updateNewGameAt } = usePredict();
 
   const [yesRatio, setYesRatio] = useState(_yesRatio);
 

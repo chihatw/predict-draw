@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import AppContext from '../../../services/context';
+import usePredict from '../../../services/usePredict';
 
 const PredictPane = () => {
-  const { predict } = useContext(AppContext);
+  const { predict } = usePredict();
   return (
     <div>{`予想: ${
       !predict ? '未選択' : predict === 'yes' ? 'はい' : 'いいえ'

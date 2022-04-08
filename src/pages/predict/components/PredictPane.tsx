@@ -13,60 +13,37 @@ const PredictPane: React.FC<{
   newGameAt: number;
   cardWidth: number;
   superPredict?: string;
-  showPredictPane: boolean;
   isManagementMode: boolean;
-  superShowPredictPane: boolean;
   handlePredict: (value: string) => void;
-  handleShowPredict: (checked: boolean) => void;
 }> = ({
   opponent,
   newGameAt,
   cardWidth,
   superPredict,
-  showPredictPane,
   isManagementMode,
-  superShowPredictPane,
   handlePredict,
-  handleShowPredict,
 }) => {
   if (isManagementMode) {
     return (
       <div>
-        <div>
-          <Switch
-            size='small'
-            checked={showPredictPane}
-            onChange={(e) => handleShowPredict(e.target.checked)}
-          />
-        </div>
-        <div
-          style={{
-            position: 'relative',
-            pointerEvents: 'none',
-          }}
-        >
-          <PredictPaneContext
-            opponent={opponent}
-            newGameAt={newGameAt}
-            cardWidth={cardWidth}
-            superPredict={superPredict}
-            isManagementMode={true}
-            handlePredict={handlePredict}
-          />
-          {!superShowPredictPane && <Smoke />}
-        </div>
+        <PredictPaneContext
+          opponent={opponent}
+          newGameAt={newGameAt}
+          cardWidth={cardWidth}
+          superPredict={superPredict}
+          isManagementMode={true}
+          handlePredict={handlePredict}
+        />
       </div>
     );
   } else {
     return (
-      <Collapse in={!!superShowPredictPane}>
-        <PredictPaneContext
-          opponent={opponent}
-          cardWidth={cardWidth}
-          newGameAt={newGameAt}
-          handlePredict={handlePredict}
-        />
-      </Collapse>
+      <PredictPaneContext
+        opponent={opponent}
+        cardWidth={cardWidth}
+        newGameAt={newGameAt}
+        handlePredict={handlePredict}
+      />
     );
   }
 };

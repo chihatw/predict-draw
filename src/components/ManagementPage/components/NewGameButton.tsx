@@ -1,9 +1,10 @@
+import React from 'react';
 import { Button } from '@mui/material';
-import { useContext } from 'react';
-import AppContext from '../../../services/context';
+
+import usePredict from '../../../services/usePredict';
 
 const NewGameButton = () => {
-  const { updatePredict, updateNewGameAt } = useContext(AppContext);
+  const { updatePredict, updateNewGameAt } = usePredict();
   const handleNewGame = () => {
     updateNewGameAt();
     updatePredict('');

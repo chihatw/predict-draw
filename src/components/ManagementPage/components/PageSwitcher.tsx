@@ -1,39 +1,21 @@
 import { Container } from '@mui/material';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { useBpmCalc } from '../../../services/useBpmCalc';
-import noImage from '../../../images/keitai.png';
 import Greeting from '../../Greeting';
-import yesImage from '../../../images/suimin.png';
 import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
 import AppContext, { PageState } from '../../../services/context';
 import BPMTrackManagementPage from '../../BPMTrackManagementPage';
 import { Predict } from '../../../pages/predict';
+import usePredict from '../../../services/usePredict';
 import { Draw } from '../../../pages/draw';
 
 const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
-  const {
-    drawn,
-    predict,
-    yesRatio,
-    newGameAt,
-    showRatioPane,
-    showPredictPane,
-    updateDrawn,
-    updatePredict,
-    handleShowPane,
-  } = useContext(AppContext);
+  const { drawn, newGameAt, predict, yesRatio, updateDrawn, updatePredict } =
+    usePredict();
 
   const { bpm, isRunning } = useBpmCalc();
-
-  const handleShowRatioPane = (visible: boolean) => {
-    handleShowPane({ visible, docId: 'ratioPane' });
-  };
-
-  const handleShowPredictPane = (visible: boolean) => {
-    handleShowPane({ visible, docId: 'predictPane' });
-  };
 
   switch (state) {
     case 'greeting':
@@ -49,11 +31,7 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
           opponent={user === 'liSan' ? '黄さん' : '李さん'}
           newGameAt={newGameAt}
           superPredict={predict}
-          superShowRatioPane={showRatioPane}
-          superShowPredictPane={showPredictPane}
           superHandlePredict={updatePredict}
-          superHandleShowRatioPane={handleShowRatioPane}
-          superHandleShowPredictPane={handleShowPredictPane}
           isManagementMode
         />
       );
