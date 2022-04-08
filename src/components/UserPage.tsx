@@ -6,7 +6,7 @@ import BpmTrackPage from '../pages/BpmTrackPage';
 import TalkingToLiSan from './TalkingToLiSan';
 import TalkingToKouSan from './TalkingToKouSan';
 import { Predict } from '../pages/predict';
-import { Draw } from '../pages/draw';
+import { Draw } from './DrawPane';
 import { BpmCulc } from './BpmCalcPane';
 import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
@@ -16,7 +16,7 @@ import usePredict from '../services/usePredict';
 const UserPage: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
 
-  const { yesRatio, newGameAt, updateDrawn, updatePredict } = usePredict();
+  const { yesRatio, newGameAt, updatePredict } = usePredict();
 
   const state = useMemo(() => {
     switch (user) {
@@ -54,13 +54,7 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
         />
       );
     case 'draw':
-      return (
-        <Draw
-          yesRatio={yesRatio}
-          newGameAt={newGameAt}
-          superHandleDrawn={updateDrawn}
-        />
-      );
+      return <Draw />;
     case 'bpmTrack':
       return <BpmTrackPage />;
     default:

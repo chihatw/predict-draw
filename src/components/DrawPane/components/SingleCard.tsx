@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { CardBehind } from '@chihatw/flip-card.card-behind';
 import { FlipCard } from '@chihatw/flip-card.flip-card';
-import CardFace from '../../../components/CardFace';
+import CardFace from '../../CardFace';
 
 const Golden_Ratio = 1.618;
 

@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import usePredict from '../../services/usePredict';
 
 import DrawPageComponent from './components/DrawPageComponent';
 
 const STRIPE_COLOR = '#5dbec4';
 const SINGLE_CARD_WIDTH = 240;
 
-export function Draw({
-  yesRatio,
-  newGameAt,
-  superDrawn,
-  isManagementMode,
-  superHandleDrawn,
-}: {
-  yesRatio: number;
-  newGameAt: number;
-  superDrawn?: 'yes' | 'no' | '';
-  isManagementMode?: boolean;
-  superHandleDrawn?: (value: string) => void;
-}) {
+export function Draw({ isManagementMode }: { isManagementMode?: boolean }) {
+  const {
+    drawn: superDrawn,
+    yesRatio,
+    newGameAt,
+    updateDrawn: superHandleDrawn,
+  } = usePredict();
+
   const [drawn, setDrawn] = useState('no');
   const [preDrawn, setPreDrawn] = useState('no');
   const [closedAt, setClosedAt] = useState(Date.now());

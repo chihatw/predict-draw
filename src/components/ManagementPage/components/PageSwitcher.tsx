@@ -1,19 +1,18 @@
 import { Container } from '@mui/material';
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { useBpmCalc } from '../../../services/useBpmCalc';
 import Greeting from '../../Greeting';
 import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
-import AppContext, { PageState } from '../../../services/context';
+import { PageState } from '../../../services/context';
 import BPMTrackManagementPage from '../../BPMTrackManagementPage';
 import { Predict } from '../../../pages/predict';
 import usePredict from '../../../services/usePredict';
-import { Draw } from '../../../pages/draw';
+import { Draw } from '../../DrawPane';
 
 const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
-  const { drawn, newGameAt, predict, yesRatio, updateDrawn, updatePredict } =
-    usePredict();
+  const { newGameAt, predict, yesRatio, updatePredict } = usePredict();
 
   const { bpm, isRunning } = useBpmCalc();
 
@@ -36,15 +35,7 @@ const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
         />
       );
     case 'draw':
-      return (
-        <Draw
-          yesRatio={yesRatio}
-          newGameAt={newGameAt}
-          superDrawn={drawn}
-          superHandleDrawn={updateDrawn}
-          isManagementMode
-        />
-      );
+      return <Draw isManagementMode />;
     case 'bpmCalc':
       return (
         <Container maxWidth='sm' sx={{ paddingTop: 1 }}>
