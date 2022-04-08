@@ -6,18 +6,15 @@ import React, { useEffect, useState } from 'react';
 import useBpmTrack from '../../../services/useBpmTrack';
 
 const TrackTextForm = () => {
-  const {
-    bpmTrackBpmPitchesArray,
-    updateBpmPitchesArray,
-    updateBpmTrackOffsets,
-  } = useBpmTrack();
+  const { bpmPitchesArray, updateOffsets, updateBpmPitchesArray } =
+    useBpmTrack();
   const [input, setInput] = useState('');
 
   useEffect(() => {
     if (!!input) return;
-    const _input = bpmPitchesArray2String(bpmTrackBpmPitchesArray);
+    const _input = bpmPitchesArray2String(bpmPitchesArray);
     setInput(_input);
-  }, [bpmTrackBpmPitchesArray]);
+  }, [bpmPitchesArray]);
 
   const handleInput = (input: string) => {
     setInput(input);
@@ -26,7 +23,7 @@ const TrackTextForm = () => {
     updateBpmPitchesArray(bpmPitchesArray);
 
     const startAts = bpmPitchesArray2StartAts(bpmPitchesArray);
-    updateBpmTrackOffsets(startAts);
+    updateOffsets(startAts);
   };
   return (
     <TextField

@@ -16,15 +16,15 @@ const items = [
 ];
 
 const TrackTypeRadioButtons = () => {
-  const { bpmTrackType, updateBpmTrackType } = useBpmTrack();
-  const [type, setType] = useState(bpmTrackType);
+  const { trackType, updateTrackType } = useBpmTrack();
+  const [type, setType] = useState(trackType);
 
   useEffect(() => {
-    setType(bpmTrackType);
-  }, [bpmTrackType]);
+    setType(trackType);
+  }, [trackType]);
 
   const handleChange = (type: string) => {
-    updateBpmTrackType(type);
+    updateTrackType(type);
   };
   return (
     <FormControl>

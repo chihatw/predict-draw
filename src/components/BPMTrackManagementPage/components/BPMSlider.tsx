@@ -6,21 +6,21 @@ import useBpmTrack from '../../../services/useBpmTrack';
 const DELAY = 15; // ms
 
 const BPMSlider = () => {
-  const { bpmTrackBpm, updateBpmTrackBpm } = useBpmTrack();
-  const [bpm, setBpm] = useState(bpmTrackBpm);
+  const { bpm: superBpm, updateBpm } = useBpmTrack();
+  const [bpm, setBpm] = useState(0);
 
   const timerId = useRef(0);
 
   useEffect(() => {
-    setBpm(bpmTrackBpm);
-  }, [bpmTrackBpm]);
+    setBpm(superBpm);
+  }, [superBpm]);
 
   const handleChangeBpm = (value: number) => {
     setBpm(value);
 
     window.clearTimeout(timerId.current);
     timerId.current = window.setTimeout(() => {
-      updateBpmTrackBpm(value);
+      updateBpm(value);
     }, DELAY);
   };
 

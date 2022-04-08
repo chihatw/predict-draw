@@ -1,8 +1,14 @@
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { Unsubscribe } from 'firebase/firestore';
+import { useEffect, useMemo, useState } from 'react';
+
 import { db } from '../repositories/firebase';
+import {
+  updateDocumenValue,
+  snapshotDocumentValue,
+} from '../repositories/utils';
 
 const COLLECTION = 'bpmTrack';
+
 const BPM_DOC_ID = 'bpm';
 const OFFSETS_DOC_ID = 'offsets';
 const TRACK_TYPE_DOC_ID = 'trackType';
@@ -12,132 +18,143 @@ const BPM_PITCHES_ARRAY_DOC_ID = 'bpmPitchesArray';
 const useBpmTrack = () => {
   const [bpm, setBpm] = useState(0);
   const [offsets, setOffsets] = useState<number[]>([]);
+  const [offsetsStr, setOffsetsStr] = useState('');
   const [trackType, setTrackType] = useState('syllable');
-  const [bpmPitchesArray, setBpmPitchesArray] = useState<string[][][]>([]);
+  const [bpmPitchesArray, setPitchesArray] = useState<string[][][]>([]);
   const [syncopationRatio, setSyncopationRatio] = useState(100);
-  useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, SYNCOPATION_RATIO_DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${SYNCOPATION_RATIO_DOC_ID}`);
-        const { ratio } = (doc.data() as { ratio: number }) || { ratio: 100 };
-        setSyncopationRatio(ratio);
+  const [bpmPitchesArrayStr, setBpmPitchesArrayStr] = useState('');
+
+  const _snapshotDocumentValue = useMemo(
+    () =>
+      function <T>({
+        docId,
+        initialValue,
+        setValue,
+      }: {
+        docId: string;
+        initialValue: T;
+        setValue: (value: T) => void;
+      }): Unsubscribe {
+        return snapshotDocumentValue({
+          db,
+          docId,
+          colId: COLLECTION,
+          initialValue,
+          setValue,
+        });
       },
-      (error) => {
-        console.warn(error);
-      }
-    );
+    []
+  );
+
+  const _updateDocumentValue = useMemo(
+    () =>
+      function <T>({ value, docId }: { value: T; docId: string }) {
+        updateDocumenValue({
+          db,
+          value,
+          colId: COLLECTION,
+          docId,
+        });
+      },
+    []
+  );
+
+  useEffect(() => {
+    if (!offsetsStr) return;
+    const offsets: number[] = JSON.parse(offsetsStr);
+    setOffsets(offsets);
+  }, [offsetsStr]);
+
+  useEffect(() => {
+    if (!bpmPitchesArrayStr) return;
+    const bpmPitchesArray: string[][][] = JSON.parse(bpmPitchesArrayStr);
+    setPitchesArray(bpmPitchesArray);
+  }, [bpmPitchesArrayStr]);
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: SYNCOPATION_RATIO_DOC_ID,
+      initialValue: 100,
+      setValue: setSyncopationRatio,
+    });
     return () => {
       unsub();
     };
   }, []);
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, BPM_DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${BPM_DOC_ID}`);
-        const { bpm } = (doc.data() as { bpm: number }) || { bpm: 0 };
-        setBpm(bpm);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: BPM_DOC_ID,
+      initialValue: 0,
+      setValue: setBpm,
+    });
     return () => {
       unsub();
     };
   }, []);
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, TRACK_TYPE_DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${TRACK_TYPE_DOC_ID}`);
-        const { type } = (doc.data() as { type: string }) || {
-          type: 'syllable',
-        };
-        setTrackType(type);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: TRACK_TYPE_DOC_ID,
+      initialValue: 'syllable',
+      setValue: setTrackType,
+    });
     return () => {
       unsub();
     };
   }, []);
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, BPM_PITCHES_ARRAY_DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${BPM_PITCHES_ARRAY_DOC_ID}`);
-        const { json } = (doc.data() as { json: string }) || {
-          json: '[]',
-        };
-        const bpmPitchesArray: string[][][] = JSON.parse(json);
-        setBpmPitchesArray(bpmPitchesArray);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: BPM_PITCHES_ARRAY_DOC_ID,
+      initialValue: '',
+      setValue: setBpmPitchesArrayStr,
+    });
     return () => {
       unsub();
     };
   }, []);
 
   useEffect(() => {
-    const unsub = onSnapshot(
-      doc(db, COLLECTION, OFFSETS_DOC_ID),
-      (doc) => {
-        console.log(`fetch ${COLLECTION}.${OFFSETS_DOC_ID}`);
-        const { json } = (doc.data() as { json: string }) || {
-          json: '[]',
-        };
-        const offsets: number[] = JSON.parse(json);
-        setOffsets(offsets);
-      },
-      (error) => {
-        console.warn(error);
-      }
-    );
+    const unsub = _snapshotDocumentValue({
+      docId: OFFSETS_DOC_ID,
+      initialValue: '',
+      setValue: setOffsetsStr,
+    });
     return () => {
       unsub();
     };
   }, []);
 
   const updateBpm = (bpm: number) => {
-    console.log(`update ${COLLECTION}.${BPM_DOC_ID}`);
-    updateDoc(doc(db, COLLECTION, BPM_DOC_ID), { bpm });
+    _updateDocumentValue({ docId: BPM_DOC_ID, value: bpm });
   };
   const updateBpmPitchesArray = (bpmPitchesArray: string[][][]) => {
-    console.log(`update ${COLLECTION}.${BPM_PITCHES_ARRAY_DOC_ID}`);
-    const json = JSON.stringify(bpmPitchesArray);
-    updateDoc(doc(db, COLLECTION, BPM_PITCHES_ARRAY_DOC_ID), { json });
+    _updateDocumentValue({
+      docId: BPM_PITCHES_ARRAY_DOC_ID,
+      value: JSON.stringify(bpmPitchesArray),
+    });
   };
   const updateOffsets = (offsets: number[]) => {
-    console.log(`update ${COLLECTION}.${OFFSETS_DOC_ID}`);
-    const json = JSON.stringify(offsets);
-    updateDoc(doc(db, COLLECTION, OFFSETS_DOC_ID), { json });
+    _updateDocumentValue({
+      docId: OFFSETS_DOC_ID,
+      value: JSON.stringify(offsets),
+    });
   };
   const updateSyncopationRatio = (ratio: number) => {
-    console.log(`update ${COLLECTION}.${SYNCOPATION_RATIO_DOC_ID}`);
-    updateDoc(doc(db, COLLECTION, SYNCOPATION_RATIO_DOC_ID), { ratio });
+    _updateDocumentValue({ docId: SYNCOPATION_RATIO_DOC_ID, value: ratio });
   };
   const updateTrackType = (type: string) => {
-    console.log(`update ${COLLECTION}.${TRACK_TYPE_DOC_ID}`);
-    updateDoc(doc(db, COLLECTION, TRACK_TYPE_DOC_ID), { type });
+    _updateDocumentValue({ docId: TRACK_TYPE_DOC_ID, value: type });
   };
   return {
-    bpmTrackBpm: bpm,
-    bpmTrackType: trackType,
-    bpmTrackOffsets: offsets,
+    bpm,
+    trackType,
+    offsets,
     syncopationRatio,
-    bpmTrackBpmPitchesArray: bpmPitchesArray,
-    updateBpmTrackBpm: updateBpm,
-    updateBpmTrackType: updateTrackType,
-    updateBpmTrackOffsets: updateOffsets,
+    bpmPitchesArray,
+    updateBpm,
+    updateTrackType,
+    updateOffsets,
     updateBpmPitchesArray,
     updateSyncopationRatio,
   };
