@@ -1,6 +1,6 @@
 import React from 'react';
-import noImage from '../images/keitai.png';
-import yesImage from '../images/suimin.png';
+import noImage from './images/keitai.png';
+import yesImage from './images/suimin.png';
 
 const ImageCard = ({ isYes, width }: { isYes: boolean; width: number }) => {
   return (

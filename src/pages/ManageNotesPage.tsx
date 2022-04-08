@@ -3,8 +3,8 @@ import string2PitchesArray from 'string2pitches-array';
 import { Container, TextField } from '@mui/material';
 import pitchesArray2String from 'pitches-array2string';
 
-import Layout from '../../Layout';
-import usePitches, { PitchesArray } from '../../services/usePitches';
+import Layout from '../Layout';
+import usePitches, { PitchesArray } from '../services/usePitches';
 
 const ManageNotesPage = () => {
   const { note1PitchList, updatePitchList } = usePitches();

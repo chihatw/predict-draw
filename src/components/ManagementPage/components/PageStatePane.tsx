@@ -5,8 +5,9 @@ import {
   FormControl,
   FormControlLabel,
 } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import AppContext, { PageState } from '../../../services/context';
+import usePageState from '../../../services/usePageState';
 import usePredict from '../../../services/usePredict';
 
 const PAGE_STATE: { value: PageState; label: string }[] = [
@@ -25,20 +26,34 @@ const PAGE_STATE: { value: PageState; label: string }[] = [
 
 const PageStatePane = ({
   user,
-  state,
   setState,
 }: {
-  user: string;
   state: PageState;
+  user: string;
   setState: (state: PageState) => void;
 }) => {
-  const { updateLiSanPageState, updateKouSanPageState } =
-    useContext(AppContext);
+  const {
+    liSanPageState,
+    kouSanPageState,
+    updateLiSanPageState,
+    updateKouSanPageState,
+  } = usePageState();
+
+  const state = useMemo(() => {
+    switch (user) {
+      case 'liSan':
+        return liSanPageState;
+      case 'kouSan':
+        return kouSanPageState;
+      default:
+        return 'greeting';
+    }
+  }, [liSanPageState, kouSanPageState, user]);
 
   const { updatePredict } = usePredict();
 
   const handleChangeState = (state: PageState) => {
-    setState(state);
+    // setState(state);
     updatePredict('');
     switch (user) {
       case 'liSan':

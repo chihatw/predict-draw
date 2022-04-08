@@ -6,7 +6,7 @@ import KouSanPage from '../pages/KouSanPage';
 import ManageLiSanPage from '../pages/ManageLiSanPage';
 import ManageKouSanPage from '../pages/ManageKouSanPage';
 import NotesPage from '../pages/NotesPage';
-import ManageNotesPage from '../pages/ManageNotesPane';
+import ManageNotesPage from '../pages/ManageNotesPage';
 import SandBox from '../components/SandBox';
 
 const AppRoutes = () => {

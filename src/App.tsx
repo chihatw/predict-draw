@@ -5,12 +5,7 @@ import AppContext from './services/context';
 import usePageState from './services/usePageState';
 
 function App() {
-  const {
-    liSanPageState,
-    kouSanPageState,
-    updateLiSanPageState,
-    updateKouSanPageState,
-  } = usePageState();
+  const { liSanPageState, kouSanPageState } = usePageState();
   const navigate = useNavigate();
 
   const handleNavigate = (pathname: string) => {
@@ -22,8 +17,6 @@ function App() {
         liSanPageState,
         kouSanPageState,
         handleNavigate,
-        updateLiSanPageState,
-        updateKouSanPageState,
       }}
     >
       <AppRoutes />

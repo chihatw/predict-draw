@@ -7,8 +7,8 @@ import TalkingToLiSan from '../../TalkingToLiSan';
 import TalkingToKouSan from '../../TalkingToKouSan';
 import { PageState } from '../../../services/context';
 import BPMTrackManagementPane from '../../BPMTrackManagementPane';
-import { PredictPane } from '../../PredictPane';
-import { Draw } from '../../DrawPane';
+import { PredictPane } from '../../PredictDraw/PredictPane';
+import { Draw } from '../../PredictDraw/DrawPane';
 
 const PageSwitcher = ({ user, state }: { user: string; state: PageState }) => {
   const { bpm, isRunning } = useBpmCalc();

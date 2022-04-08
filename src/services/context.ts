@@ -24,14 +24,10 @@ const AppContext = createContext<{
   liSanPageState: PageState;
   kouSanPageState: PageState;
   handleNavigate: (pathname: string) => void;
-  updateLiSanPageState: (state: PageState) => void;
-  updateKouSanPageState: (state: PageState) => void;
 }>({
   liSanPageState: '',
   kouSanPageState: '',
   handleNavigate: () => {},
-  updateLiSanPageState: () => {},
-  updateKouSanPageState: () => {},
 });
 
 export default AppContext;

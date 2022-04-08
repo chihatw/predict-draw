@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import usePredict from '../../services/usePredict';
+import usePredict from '../../../services/usePredict';
 
 import DrawPageComponent from './components/DrawPageComponent';
 
