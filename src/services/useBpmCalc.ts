@@ -112,9 +112,15 @@ export const useHandleBpmCalc = () => {
   const updateBpm = (value: number) =>
     _updateDocumentValue({ value, docId: BPM_DOC_ID });
 
+  const updateLabel = (value: string) =>
+    _updateDocumentValue({ value, docId: LABEL_DOC_ID });
+
   const updateIsRunning = (value: boolean) => {
     _updateDocumentValue({ value, docId: IS_RUNNING_DOC_ID });
   };
+
+  const updateBeatCount = (value: number) =>
+    _updateDocumentValue({ value, docId: BEAT_COUNT_DOC_ID });
 
   const startTimer = () => {
     updateBpm(0);
@@ -124,5 +130,12 @@ export const useHandleBpmCalc = () => {
     updateBpm(bpm);
     updateIsRunning(false);
   };
-  return { updateBpm, updateIsRunning, startTimer, stopTimer };
+  return {
+    stopTimer,
+    updateBpm,
+    startTimer,
+    updateLabel,
+    updateIsRunning,
+    updateBeatCount,
+  };
 };
