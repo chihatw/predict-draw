@@ -6,7 +6,7 @@ import SyncopationRatioSlider from './components/SyncopationRatioSlider';
 import TrackTextForm from './components/TrackTextForm';
 import TrackTypeRadioButtons from './components/TrackTypeRadioButtons';
 
-const BPMTrackManagementPane = () => {
+const MngBPMTrackPane = () => {
   const {
     bpm,
     updateBpm,
@@ -40,4 +40,4 @@ const BPMTrackManagementPane = () => {
   );
 };
 
-export default BPMTrackManagementPane;
+export default MngBPMTrackPane;

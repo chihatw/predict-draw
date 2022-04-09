@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PageState } from '../../../services/context';
-import BPMTrackManagementPane from '../../BPMTrackManagementPane';
+import MngBPMTrackPane from '../../MgnBPMTrackPane';
 
 import MngBpmCalc from '../../MngBpmCalcPane';
 import MngTimePane from '../../MngTimePane';
@@ -15,7 +15,7 @@ const PaneSwitcher = ({ state }: { state: PageState }) => {
     case 'bpmCalc':
       return <MngBpmCalc />;
     case 'bpmTrack':
-      return <BPMTrackManagementPane />;
+      return <MngBPMTrackPane />;
     case 'readTimePerformance':
       return <MngTimePane />;
     default:
