@@ -1,5 +1,5 @@
 import Layout from '../Layout';
-import PaneSwitcher from '../components/PaneSwitcher';
+import PaneSwitcher from '../panes/PaneSwitcher';
 
 const KouSanPage = () => {
   return (

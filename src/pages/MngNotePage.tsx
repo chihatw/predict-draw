@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Layout from '../Layout';
-import MngNotePane from '../components/Note/MngNotePane';
+import MngNotePane from '../panes/Note/MngNotePane';
 
 const MngNotePage = () => {
   return (

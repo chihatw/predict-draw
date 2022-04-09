@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from '../Layout';
 import usePitches from '../services/usePitches';
-import NotePane from '../components/Note/NotePane';
+import NotePane from '../panes/Note/NotePane';
 
 const NotePage = () => {
   const { note1PitchList } = usePitches();
