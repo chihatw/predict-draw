@@ -3,7 +3,7 @@ import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 
 import BPMSlider from './components/BPMSlider';
-import useBpmTrack from '../../services/useBpmTrack';
+import useBpmTrack from '../../../services/useBpmTrack';
 import TrackTextForm from './components/TrackTextForm';
 import TrackTypeRadioButtons from './components/TrackTypeRadioButtons';
 import SyncopationRatioSlider from './components/SyncopationRatioSlider';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { PageState } from '../../../services/context';
-import MngBPMTrackPane from '../../MngBPMTrackPane';
+import MngBPMTrackPane from '../../BPMTrack/MngBPMTrackPane';
 
 import MngBpmCalc from '../../MngBpmCalcPane';
 import MngTimePane from '../../MngTimePane';
