@@ -58,6 +58,7 @@ const usePitches = () => {
   useEffect(() => {
     if (!pitchListStr) return;
     const pitchList: [string, PitchesArray][] = JSON.parse(pitchListStr);
+    console.log({ pitchList });
     setNote1PitchList(pitchList);
   }, [pitchListStr]);
 

@@ -9,13 +9,13 @@ import TrackTypeRadioButtons from './components/TrackTypeRadioButtons';
 const MngBPMTrackPane = () => {
   const {
     bpm,
-    updateBpm,
     trackType,
-    updateTrackType,
-    syncopationRatio,
-    updateSyncopationRatio,
     bpmPitchesArray,
+    syncopationRatio,
+    updateBpm,
     updateOffsets,
+    updateTrackType,
+    updateSyncopationRatio,
     updateBpmPitchesArray,
   } = useBpmTrack();
   return (

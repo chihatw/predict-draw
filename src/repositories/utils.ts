@@ -26,7 +26,11 @@ export const snapshotDocumentValue = <T>({
       console.log(`snapshot ${colId}.${docId}`);
       if (snapshot.exists()) {
         const value: T = snapshot.data().value;
-        setValue(value);
+        if (!!value) {
+          setValue(value);
+        } else {
+          setValue(initialValue);
+        }
       } else {
         setValue(initialValue);
       }
