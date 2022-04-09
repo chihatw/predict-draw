@@ -4,7 +4,7 @@ import React from 'react';
 
 import RatioPane from './components/RatioPane';
 import PredictRow from './components/PredictRow';
-import usePredict from '../../../services/usePredict';
+import usePredict from '../../../../services/usePredict';
 
 const CARD_WIDTH = 160;
 

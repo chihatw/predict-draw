@@ -1,12 +1,12 @@
 import React, { useContext, useMemo } from 'react';
 
 import Greeting from './Greeting';
-import { Draw } from './PredictDraw/DrawPane';
+import { Draw } from './PredictDraw/PredictDrawPane/DrawPane';
 import TalkingTo from './TalkingTo';
 import AppContext from '../services/context';
 import { BpmCulc } from './BpmCalcPane';
 import BpmTrackPane from './BPMTrack/BpmTrackPane';
-import { PredictPane } from './PredictDraw/PredictPane';
+import { PredictPane } from './PredictDraw/PredictDrawPane/PredictPane';
 import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
 import WriteTimePerformance from './ReadWriteTime/WriteTimePerformance';

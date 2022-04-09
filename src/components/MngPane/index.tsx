@@ -5,7 +5,7 @@ import MngBpmCalc from '../MngBpmCalcPane';
 import MngTimePane from '../MngTimePane';
 import PageStatePane from './components/PageStatePane';
 import MngBPMTrackPane from '../BPMTrack/MngBPMTrackPane';
-import MngPredictDrawPane from '../MngPredictDrawPane';
+import MngPredictDrawPane from '../PredictDraw/MngPredictDrawPane';
 import AppContext, { PageState } from '../../services/context';
 
 const MngPane: React.FC<{ user: string }> = ({ user }) => {

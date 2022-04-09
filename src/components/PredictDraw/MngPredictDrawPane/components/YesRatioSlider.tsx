@@ -1,7 +1,7 @@
 import { Slider } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
-import usePredict from '../../../services/usePredict';
+import usePredict from '../../../../services/usePredict';
 
 const DELAY = 15; // ms
 

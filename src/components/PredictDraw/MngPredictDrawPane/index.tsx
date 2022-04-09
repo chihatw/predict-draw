@@ -1,5 +1,5 @@
 import React from 'react';
-import usePredict from '../../services/usePredict';
+import usePredict from '../../../services/usePredict';
 import NewGameButton from './components/NewGameButton';
 import YesRatioSlider from './components/YesRatioSlider';
 
