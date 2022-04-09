@@ -5,7 +5,7 @@ import { Draw } from './PredictDraw/DrawPane';
 import TalkingTo from './TalkingTo';
 import AppContext from '../services/context';
 import { BpmCulc } from './BpmCalcPane';
-import BpmTrackPane from './BpmTrakPane';
+import BpmTrackPane from './BpmTrackPane';
 import { PredictPane } from './PredictDraw/PredictPane';
 import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';

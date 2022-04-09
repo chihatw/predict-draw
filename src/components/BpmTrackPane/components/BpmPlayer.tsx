@@ -28,9 +28,9 @@ const BpmPlayer = ({
   superUpdateStartAt?: (value: number) => void;
   superUpdateIsPlaying?: (value: boolean) => void;
 }) => {
+  const loopId = useRef(0);
   const startAtRef = useRef(0);
 
-  const loopId = useRef(0);
   const pitchesRef = useRef<DisplayScheduler | null>(null);
   const metronomeRef = useRef<BeatScheduler | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
