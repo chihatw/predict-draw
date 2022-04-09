@@ -1,6 +1,6 @@
 import { Button, Container } from '@mui/material';
 import React, { useMemo } from 'react';
-import { useHandleTimes, useTimes } from '../../services/useTimes';
+import { useHandleTimes, useTimes } from '../../../services/useTimes';
 
 const LEVEL_A = 3;
 const LEVEL_B = 3;

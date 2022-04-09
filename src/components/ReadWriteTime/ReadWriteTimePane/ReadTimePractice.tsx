@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TimeDisplay from './TimeDisplay';
-import { useTimes } from '../../services/useTimes';
+import { useTimes } from '../../../services/useTimes';
 
 const ReadTimePractice = () => {
   const { hours, minutes } = useTimes();

@@ -7,9 +7,9 @@ import AppContext from '../services/context';
 import { BpmCulc } from './BpmCalcPane';
 import BpmTrackPane from './BPMTrack/BpmTrackPane';
 import { PredictPane } from './PredictDraw/PredictDrawPane/PredictPane';
-import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
-import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
-import WriteTimePerformance from './ReadWriteTime/WriteTimePerformance';
+import ReadTimePractice from './ReadWriteTime/ReadWriteTimePane/ReadTimePractice';
+import ReadTimePerformance from './ReadWriteTime/ReadWriteTimePane/ReadTimePerformance';
+import WriteTimePerformance from './ReadWriteTime/ReadWriteTimePane/WriteTimePerformance';
 
 const PaneSwitcher: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);

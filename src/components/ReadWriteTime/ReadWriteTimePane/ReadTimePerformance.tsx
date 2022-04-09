@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTimes } from '../../services/useTimes';
+import { useTimes } from '../../../services/useTimes';
 import TimeDisplay from './TimeDisplay';
 
 const ReadTimePerformance = () => {

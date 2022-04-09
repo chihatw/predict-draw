@@ -2,11 +2,11 @@ import { Container, Divider } from '@mui/material';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import MngBpmCalc from '../MngBpmCalcPane';
-import MngTimePane from '../MngTimePane';
+import AppContext from '../../services/context';
+import MngTimePane from '../ReadWriteTime/MngReadWiteTimePane';
 import PageStatePane from './components/PageStatePane';
 import MngBPMTrackPane from '../BPMTrack/MngBPMTrackPane';
 import MngPredictDrawPane from '../PredictDraw/MngPredictDrawPane';
-import AppContext, { PageState } from '../../services/context';
 
 const MngPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);

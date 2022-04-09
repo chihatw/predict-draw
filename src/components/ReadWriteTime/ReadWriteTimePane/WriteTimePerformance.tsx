@@ -3,7 +3,7 @@ import { LocalizationProvider, TimePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Button, TextField } from '@mui/material';
 import React, { useRef, useState, useMemo } from 'react';
-import { useHandleTimes, useTimes } from '../../services/useTimes';
+import { useHandleTimes, useTimes } from '../../../services/useTimes';
 
 const WriteTimePerformance = () => {
   const { hours, minutes, score } = useTimes();
