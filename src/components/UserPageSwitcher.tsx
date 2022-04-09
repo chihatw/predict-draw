@@ -5,7 +5,7 @@ import { Draw } from './PredictDraw/DrawPane';
 import TalkingTo from './TalkingTo';
 import AppContext from '../services/context';
 import { BpmCulc } from './BpmCalcPane';
-import BpmTrackPage from './BpmTrakPane';
+import BpmTrackPane from './BpmTrakPane';
 import { PredictPane } from './PredictDraw/PredictPane';
 import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
@@ -45,7 +45,7 @@ const UserPageSwitcher: React.FC<{ user: string }> = ({ user }) => {
     case 'draw':
       return <Draw />;
     case 'bpmTrack':
-      return <BpmTrackPage />;
+      return <BpmTrackPane />;
     default:
       return <div></div>;
   }

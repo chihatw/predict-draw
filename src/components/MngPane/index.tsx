@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import AppContext from '../../services/context';
@@ -29,6 +29,7 @@ const MngPane: React.FC<{ user: string }> = ({ user }) => {
     <Container maxWidth='sm'>
       <div style={{ display: 'grid', rowGap: 16, padding: '8px 0' }}>
         <PageStatePane state={state} user={user} setState={setState} />
+        <Divider />
         <PaneSwitcher state={state} />
       </div>
     </Container>

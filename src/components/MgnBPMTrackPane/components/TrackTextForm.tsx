@@ -7,10 +7,12 @@ const TrackTextForm = ({
   bpmPitchesArray,
   updateOffsets,
   updateBpmPitchesArray,
+  superHandleChangeInput,
 }: {
   bpmPitchesArray: string[][][];
   updateOffsets: (value: number[]) => void;
   updateBpmPitchesArray: (value: string[][][]) => void;
+  superHandleChangeInput: (value: string) => void;
 }) => {
   const [input, setInput] = useState('');
 
@@ -22,8 +24,8 @@ const TrackTextForm = ({
 
   const handleInput = (input: string) => {
     setInput(input);
+    superHandleChangeInput(input);
     const bpmPitchesArray = string2BpmPitchesArray(input);
-    console.log({ input, bpmPitchesArray });
     updateBpmPitchesArray(bpmPitchesArray);
 
     const startAts = bpmPitchesArray2StartAts(bpmPitchesArray);
