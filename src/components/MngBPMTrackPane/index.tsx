@@ -7,7 +7,7 @@ import useBpmTrack from '../../services/useBpmTrack';
 import TrackTextForm from './components/TrackTextForm';
 import TrackTypeRadioButtons from './components/TrackTypeRadioButtons';
 import SyncopationRatioSlider from './components/SyncopationRatioSlider';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 const MngBPMTrackPane = () => {
   const {
