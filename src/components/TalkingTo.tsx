@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-const TalkingToLiSan = () => {
+const TalkingTo = ({ name }: { name: string }) => {
+  const color = useMemo(
+    () => (name === '李桑' ? '#c62828' : '#1565c0'),
+    [name]
+  );
   return (
     <div
       style={{
@@ -12,18 +16,18 @@ const TalkingToLiSan = () => {
     >
       <div
         style={{
-          color: '#c62828',
+          color,
           fontSize: 100,
           fontWeight: 'bold',
           lineHeight: '100px',
         }}
       >
         <div>我現在</div>
-        <div>跟李桑</div>
+        <div>{`跟${name}`}</div>
         <div>講話</div>
       </div>
     </div>
   );
 };
 
-export default TalkingToLiSan;
+export default TalkingTo;

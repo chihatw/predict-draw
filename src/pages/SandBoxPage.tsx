@@ -4,8 +4,8 @@ import TimePicker from '@mui/lab/TimePicker';
 
 import React from 'react';
 
-const SandBox = () => {
+const SandBoxPage = () => {
   return <></>;
 };
 
-export default SandBox;
+export default SandBoxPage;

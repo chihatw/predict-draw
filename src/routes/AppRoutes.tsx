@@ -7,7 +7,7 @@ import MngLiSanPage from '../pages/MngLiSanPage';
 import MngKouSanPage from '../pages/MngKouSanPage';
 import NotesPage from '../pages/NotesPage';
 import MngNotesPage from '../pages/MngNotesPage';
-import SandBox from '../components/SandBox';
+import SandBoxPage from '../pages/SandBoxPage';
 
 const AppRoutes = () => {
   return (
@@ -19,7 +19,7 @@ const AppRoutes = () => {
       <Route path='/mng/kouSan' element={<MngKouSanPage />} />
       <Route path='/notes' element={<NotesPage />} />
       <Route path='/mng/notes' element={<MngNotesPage />} />
-      <Route path='/dev' element={<SandBox />} />
+      <Route path='/dev' element={<SandBoxPage />} />
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );

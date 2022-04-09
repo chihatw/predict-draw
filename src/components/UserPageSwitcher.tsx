@@ -3,8 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import Greeting from './Greeting';
 import AppContext from '../services/context';
 import BpmTrackPage from './BpmTrackPane';
-import TalkingToLiSan from './TalkingToLiSan';
-import TalkingToKouSan from './TalkingToKouSan';
+import TalkingTo from './TalkingTo';
 import { PredictPane } from './PredictDraw/PredictPane';
 import { Draw } from './PredictDraw/DrawPane';
 import { BpmCulc } from './BpmCalcPane';
@@ -12,7 +11,7 @@ import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
 import WriteTimePerformance from './ReadWriteTime/WriteTimePerformance';
 
-const UserPage: React.FC<{ user: string }> = ({ user }) => {
+const UserPageSwitcher: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -36,9 +35,9 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
     case 'greeting':
       return <Greeting />;
     case 'talkingToLiSan':
-      return <TalkingToLiSan />;
+      return <TalkingTo name='李桑' />;
     case 'talkingToKouSan':
-      return <TalkingToKouSan />;
+      return <TalkingTo name='黄桑' />;
     case 'bpmCalc':
       return <BpmCulc />;
     case 'predict':
@@ -52,4 +51,4 @@ const UserPage: React.FC<{ user: string }> = ({ user }) => {
   }
 };
 
-export default UserPage;
+export default UserPageSwitcher;

@@ -1,10 +1,10 @@
 import Layout from '../Layout';
-import UserPage from '../components/UserPage';
+import UserPageSwitcher from '../components/UserPageSwitcher';
 
 const LisanPage = () => {
   return (
     <Layout color='red' label='李さん'>
-      <UserPage user='liSan' />
+      <UserPageSwitcher user='liSan' />
     </Layout>
   );
 };

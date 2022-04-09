@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 
-const PitchesPage = ({
+const PitchesPane = ({
   pitchList,
 }: {
   pitchList: [string, string[][][]][];
@@ -33,4 +33,4 @@ const PitchesPage = ({
   </Container>
 );
 
-export default PitchesPage;
+export default PitchesPane;
