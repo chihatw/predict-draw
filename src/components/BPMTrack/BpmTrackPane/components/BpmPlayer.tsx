@@ -6,6 +6,7 @@ import NotesRow from './NotesRow';
 import KanasRow from './KanasRow';
 import { BeatScheduler } from '../../classes/BeatScheduler';
 import { DisplayScheduler } from '../../classes/DisplayScheduler';
+import { createAudioContext } from '../../../../services/utils';
 
 const BpmPlayer = ({
   bpm,
@@ -31,10 +32,11 @@ const BpmPlayer = ({
   const loopId = useRef(0);
   const startAtRef = useRef(0);
 
-  const pitchesRef = useRef<DisplayScheduler | null>(null);
-  const metronomeRef = useRef<BeatScheduler | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const beatSchedulerRef = useRef<BeatScheduler | null>(null);
+  const displaySchedulerRef = useRef<DisplayScheduler | null>(null);
 
+  // xPos 表示のために利用
   const [progress, setProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -46,7 +48,7 @@ const BpmPlayer = ({
     const now = performance.now();
 
     startAtRef.current = now;
-    metronomeRef.current = new BeatScheduler({
+    beatSchedulerRef.current = new BeatScheduler({
       bpm,
       type,
       startAt: now,
@@ -55,7 +57,7 @@ const BpmPlayer = ({
       syncopationRatio,
     });
 
-    pitchesRef.current = new DisplayScheduler({
+    displaySchedulerRef.current = new DisplayScheduler({
       bpm,
       type,
       bpmPitchesArray,
@@ -67,21 +69,24 @@ const BpmPlayer = ({
 
   const loop = () => {
     const now = performance.now();
-    const pitches = pitchesRef.current;
-    const metronome = metronomeRef.current;
+    const beatScheduler = beatSchedulerRef.current;
+    const displayScheduler = displaySchedulerRef.current;
 
     // 打拍
-    !!metronome && metronome.tick(now);
+    !!beatScheduler && beatScheduler.tick(now);
 
     // 経過時間
     const elapsedTime = now - startAtRef.current;
-    // const elapsedTime = timer.elapsedTime(now);
 
     // ハイライト
-    const activeIndex = !!pitches ? pitches.getActiveIndex(elapsedTime) : -1;
+    const activeIndex = !!displayScheduler
+      ? displayScheduler.getActiveIndex(elapsedTime)
+      : -1;
     setActiveIndex(activeIndex);
 
-    const progress = !!pitches ? pitches.getProgress(elapsedTime) : 0;
+    const progress = !!displayScheduler
+      ? displayScheduler.getProgress(elapsedTime)
+      : 0;
     setProgress(progress);
 
     // 自己呼び出し
@@ -95,8 +100,8 @@ const BpmPlayer = ({
     cancelAnimationFrame(loopId.current);
     setActiveIndex(-1);
 
-    pitchesRef.current = null;
-    metronomeRef.current = null;
+    displaySchedulerRef.current = null;
+    beatSchedulerRef.current = null;
     !!superUpdateStopAt && superUpdateStopAt(Date.now());
   };
 
@@ -105,17 +110,7 @@ const BpmPlayer = ({
       stop();
     } else {
       if (!audioContextRef.current) {
-        audioContextRef.current = new window.AudioContext();
-        const audioContext = audioContextRef.current;
-        const osc = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-
-        osc.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-
-        gainNode.gain.value = 0;
-        osc.start(audioContext.currentTime);
-        osc.stop(audioContext.currentTime + 0.01);
+        audioContextRef.current = createAudioContext();
       }
       if (!!audioContextRef.current) {
         start();

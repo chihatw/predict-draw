@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { Container } from '@mui/material';
+import React, { useMemo } from 'react';
 
-import useBpmTrack from '../../../services/useBpmTrack';
 import BpmPlayer from './components/BpmPlayer';
+import useBpmTrack from '../../../services/useBpmTrack';
 import { pitchesArrayLines2BpmPitchesArray } from '../services/utils';
 
 const BpmTrackPane = () => {
