@@ -11,7 +11,7 @@ import ReadTimePractice from './ReadWriteTime/ReadTimePractice';
 import ReadTimePerformance from './ReadWriteTime/ReadTimePerformance';
 import WriteTimePerformance from './ReadWriteTime/WriteTimePerformance';
 
-const UserPageSwitcher: React.FC<{ user: string }> = ({ user }) => {
+const PaneSwitcher: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -51,4 +51,4 @@ const UserPageSwitcher: React.FC<{ user: string }> = ({ user }) => {
   }
 };
 
-export default UserPageSwitcher;
+export default PaneSwitcher;

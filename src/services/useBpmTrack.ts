@@ -27,7 +27,6 @@ const useBpmTrack = () => {
   const [pitchesArrayLines, setPitchesArrayLines] = useState<PitchesArray[]>(
     []
   );
-  // const [bpmPitchesArrayStr, setBpmPitchesArrayStr] = useState('');
 
   const _snapshotDocumentValue = useMemo(
     () =>

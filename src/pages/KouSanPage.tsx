@@ -1,10 +1,10 @@
 import Layout from '../Layout';
-import UserPageSwitcher from '../components/UserPageSwitcher';
+import PaneSwitcher from '../components/PaneSwitcher';
 
 const KouSanPage = () => {
   return (
     <Layout color='blue' label='黄さん'>
-      <UserPageSwitcher user='kouSan' />
+      <PaneSwitcher user='kouSan' />
     </Layout>
   );
 };
