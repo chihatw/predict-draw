@@ -1,5 +1,5 @@
 import Layout from '../Layout';
-import ManagementPage from '../components/ManagementPage';
+import ManagementPage from '../components/ManagementPane';
 
 const ManageKouSanPage = () => {
   return (
