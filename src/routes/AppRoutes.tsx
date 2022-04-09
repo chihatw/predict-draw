@@ -5,8 +5,8 @@ import LisanPage from '../pages/LiSanPage';
 import KouSanPage from '../pages/KouSanPage';
 import MngLiSanPage from '../pages/MngLiSanPage';
 import MngKouSanPage from '../pages/MngKouSanPage';
-import NotesPage from '../pages/NotesPage';
-import MngNotesPage from '../pages/MngNotesPage';
+import NotePage from '../pages/NotePage';
+import MngNotePage from '../pages/MngNotePage';
 import SandBoxPage from '../pages/SandBoxPage';
 
 const AppRoutes = () => {
@@ -17,8 +17,8 @@ const AppRoutes = () => {
       <Route path='/kouSan' element={<KouSanPage />} />
       <Route path='/mng/liSan' element={<MngLiSanPage />} />
       <Route path='/mng/kouSan' element={<MngKouSanPage />} />
-      <Route path='/notes' element={<NotesPage />} />
-      <Route path='/mng/notes' element={<MngNotesPage />} />
+      <Route path='/note' element={<NotePage />} />
+      <Route path='/mng/note' element={<MngNotePage />} />
       <Route path='/dev' element={<SandBoxPage />} />
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>

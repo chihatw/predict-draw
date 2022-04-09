@@ -7,11 +7,7 @@ import {
 } from '@mui/material';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 
-const PitchesPane = ({
-  pitchList,
-}: {
-  pitchList: [string, string[][][]][];
-}) => (
+const NotePane = ({ pitchList }: { pitchList: [string, string[][][]][] }) => (
   <Container maxWidth='sm'>
     <div style={{ height: 16 }} />
     <Table size='small'>
@@ -33,4 +29,4 @@ const PitchesPane = ({
   </Container>
 );
 
-export default PitchesPane;
+export default NotePane;

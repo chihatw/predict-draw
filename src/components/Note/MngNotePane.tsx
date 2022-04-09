@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { Container, TextField } from '@mui/material';
 import pitchesArray2String from 'pitches-array2string';
+import { Container, TextField } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 
-import Layout from '../Layout';
-import usePitches, { PitchesArray } from '../services/usePitches';
+import usePitches, { PitchesArray } from '../../services/usePitches';
 
-const MngNotesPage = () => {
+const MngNotePane = () => {
   const { note1PitchList, updatePitchList } = usePitches();
 
   const [input, setInput] = useState('');
@@ -40,21 +39,18 @@ const MngNotesPage = () => {
     });
     updatePitchList(pitchList);
   };
-
   return (
-    <Layout color='blue' label='Input Pitches'>
-      <Container maxWidth='sm'>
-        <TextField
-          rows={10}
-          value={input}
-          color='secondary'
-          multiline
-          fullWidth
-          onChange={(e) => handleChangeInput(e.target.value)}
-        />
-      </Container>
-    </Layout>
+    <Container maxWidth='sm'>
+      <TextField
+        rows={10}
+        value={input}
+        color='secondary'
+        multiline
+        fullWidth
+        onChange={(e) => handleChangeInput(e.target.value)}
+      />
+    </Container>
   );
 };
 
-export default MngNotesPage;
+export default MngNotePane;
