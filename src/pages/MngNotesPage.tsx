@@ -6,7 +6,7 @@ import pitchesArray2String from 'pitches-array2string';
 import Layout from '../Layout';
 import usePitches, { PitchesArray } from '../services/usePitches';
 
-const ManageNotesPage = () => {
+const MngNotesPage = () => {
   const { note1PitchList, updatePitchList } = usePitches();
 
   const [input, setInput] = useState('');
@@ -57,4 +57,4 @@ const ManageNotesPage = () => {
   );
 };
 
-export default ManageNotesPage;
+export default MngNotesPage;

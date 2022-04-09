@@ -54,7 +54,7 @@ for (let i = 0; i < LEVEL_C; i++) {
   times.push(new Date(`2022/01/01/${hours[i]}:${min}0`));
 }
 
-const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
+const MngPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
   const { inputTime, score, hours, minutes } = useTimes();
   const { setTime, clearScore } = useHandleTimes();
@@ -139,7 +139,7 @@ const ManagementPage: React.FC<{ user: string }> = ({ user }) => {
   );
 };
 
-export default ManagementPage;
+export default MngPane;
 
 const PracticeButton = ({
   h,
