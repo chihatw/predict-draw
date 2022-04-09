@@ -4,7 +4,6 @@ export class Beat {
     this._audioContext = audioContext;
   }
   play(hz?: number) {
-    this._audioContext = new window.AudioContext();
     const osc = this._audioContext.createOscillator();
     osc.frequency.value = hz || 1000;
     osc.connect(this._audioContext.destination);

@@ -13,16 +13,21 @@ const BPM_DOC_ID = 'bpm';
 const OFFSETS_DOC_ID = 'offsets';
 const TRACK_TYPE_DOC_ID = 'trackType';
 const SYNCOPATION_RATIO_DOC_ID = 'syncopationRatio';
-const BPM_PITCHES_ARRAY_DOC_ID = 'bpmPitchesArray';
+const PITCHES_ARRAY_LINES_DOC_ID = 'pitchesArrayLines';
+
+export type PitchesArray = string[][][];
 
 const useBpmTrack = () => {
   const [bpm, setBpm] = useState(0);
   const [offsets, setOffsets] = useState<number[]>([]);
   const [offsetsStr, setOffsetsStr] = useState('');
   const [trackType, setTrackType] = useState('syllable');
-  const [bpmPitchesArray, setPitchesArray] = useState<string[][][]>([]);
   const [syncopationRatio, setSyncopationRatio] = useState(100);
-  const [bpmPitchesArrayStr, setBpmPitchesArrayStr] = useState('');
+  const [pitchesArrayLinesStr, setPitchesArrayLinesStr] = useState('');
+  const [pitchesArrayLines, setPitchesArrayLines] = useState<PitchesArray[]>(
+    []
+  );
+  // const [bpmPitchesArrayStr, setBpmPitchesArrayStr] = useState('');
 
   const _snapshotDocumentValue = useMemo(
     () =>
@@ -60,16 +65,16 @@ const useBpmTrack = () => {
   );
 
   useEffect(() => {
+    if (!pitchesArrayLinesStr) return;
+    const pitchesArrayLines: PitchesArray[] = JSON.parse(pitchesArrayLinesStr);
+    setPitchesArrayLines(pitchesArrayLines);
+  }, [pitchesArrayLinesStr]);
+
+  useEffect(() => {
     if (!offsetsStr) return;
     const offsets: number[] = JSON.parse(offsetsStr);
     setOffsets(offsets);
   }, [offsetsStr]);
-
-  useEffect(() => {
-    if (!bpmPitchesArrayStr) return;
-    const bpmPitchesArray: string[][][] = JSON.parse(bpmPitchesArrayStr);
-    setPitchesArray(bpmPitchesArray);
-  }, [bpmPitchesArrayStr]);
 
   useEffect(() => {
     const unsub = _snapshotDocumentValue({
@@ -105,15 +110,14 @@ const useBpmTrack = () => {
 
   useEffect(() => {
     const unsub = _snapshotDocumentValue({
-      docId: BPM_PITCHES_ARRAY_DOC_ID,
+      docId: PITCHES_ARRAY_LINES_DOC_ID,
       initialValue: '',
-      setValue: setBpmPitchesArrayStr,
+      setValue: setPitchesArrayLinesStr,
     });
     return () => {
       unsub();
     };
   }, []);
-
   useEffect(() => {
     const unsub = _snapshotDocumentValue({
       docId: OFFSETS_DOC_ID,
@@ -128,10 +132,11 @@ const useBpmTrack = () => {
   const updateBpm = (bpm: number) => {
     _updateDocumentValue({ docId: BPM_DOC_ID, value: bpm });
   };
-  const updateBpmPitchesArray = (bpmPitchesArray: string[][][]) => {
+
+  const updatePitchesArrayLines = (pitchesArrayLines: PitchesArray[]) => {
     _updateDocumentValue({
-      docId: BPM_PITCHES_ARRAY_DOC_ID,
-      value: JSON.stringify(bpmPitchesArray),
+      docId: PITCHES_ARRAY_LINES_DOC_ID,
+      value: JSON.stringify(pitchesArrayLines),
     });
   };
   const updateOffsets = (offsets: number[]) => {
@@ -148,15 +153,15 @@ const useBpmTrack = () => {
   };
   return {
     bpm,
-    trackType,
     offsets,
+    trackType,
     syncopationRatio,
-    bpmPitchesArray,
+    pitchesArrayLines,
     updateBpm,
-    updateTrackType,
     updateOffsets,
-    updateBpmPitchesArray,
+    updateTrackType,
     updateSyncopationRatio,
+    updatePitchesArrayLines,
   };
 };
 export default useBpmTrack;

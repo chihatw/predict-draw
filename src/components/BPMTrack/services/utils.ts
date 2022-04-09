@@ -1,3 +1,6 @@
+import string2PitchesArray from 'string2pitches-array';
+import { PitchesArray } from '../../../services/usePitches';
+
 export const bpmPitchesArray2MoraTrack = (bpmPitchesArray: string[][][]) => {
   const moraTrack: number[] = [];
   for (const line of bpmPitchesArray) {
@@ -39,4 +42,35 @@ export const bpmPitchesArray2SyllableTrack = (
     syllableTrack = syllableTrack.concat(new Array(syllableCount).fill(0));
   }
   return syllableTrack;
+};
+
+export const string2PitchesArrayLines = (value: string) => {
+  const lines = value.split('\n').filter((i) => i);
+  const pitchesArrayLines: PitchesArray[] = [];
+  for (const line of lines) {
+    const pitchesArray = string2PitchesArray(line);
+    pitchesArrayLines.push(pitchesArray);
+  }
+  return pitchesArrayLines;
+};
+
+export const pitchesArrayLines2BpmPitchesArray = (
+  pitchesArrayLines: PitchesArray[]
+) => {
+  const bpmPitchesArray: string[][][] = [];
+  for (const pitchesArray of pitchesArrayLines) {
+    let lineBpmPitchesArray: string[][] = [];
+    for (const pitches of pitchesArray) {
+      const deleteM = pitches.map((pitch) => {
+        if (pitch[0] === 'm') {
+          return [''];
+        } else {
+          return pitch;
+        }
+      });
+      lineBpmPitchesArray = lineBpmPitchesArray.concat(deleteM);
+    }
+    bpmPitchesArray.push(lineBpmPitchesArray);
+  }
+  return bpmPitchesArray;
 };

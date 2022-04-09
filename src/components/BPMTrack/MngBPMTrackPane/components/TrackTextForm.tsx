@@ -1,33 +1,39 @@
 import { TextField } from '@mui/material';
 import string2BpmPitchesArray from 'string2bpm-pitches-array';
-import bpmPitchesArray2String from 'bpm-pitches-array2string';
 import React, { useEffect, useState } from 'react';
 
+import { PitchesArray } from '../../../../services/useBpmTrack';
+import pitchesArray2String from 'pitches-array2string';
+import { string2PitchesArrayLines } from '../../services/utils';
+
 const TrackTextForm = ({
-  bpmPitchesArray,
+  pitchesArrayLines,
   updateOffsets,
-  updateBpmPitchesArray,
-  superHandleChangeInput,
+  updatePitchesArrayLines,
 }: {
-  bpmPitchesArray: string[][][];
+  pitchesArrayLines: PitchesArray[];
   updateOffsets: (value: number[]) => void;
-  updateBpmPitchesArray: (value: string[][][]) => void;
-  superHandleChangeInput: (value: string) => void;
+  updatePitchesArrayLines: (value: PitchesArray[]) => void;
 }) => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
     if (!!input) return;
-    const _input = bpmPitchesArray2String(bpmPitchesArray);
+
+    const lines: string[] = [];
+    for (const pitchesArray of pitchesArrayLines) {
+      const line = pitchesArray2String(pitchesArray);
+      lines.push(line);
+    }
+    const _input = lines.join('\n');
     setInput(_input);
-  }, [bpmPitchesArray]);
+  }, [pitchesArrayLines]);
 
   const handleInput = (input: string) => {
     setInput(input);
-    superHandleChangeInput(input);
+    const pitchesArrayLines: PitchesArray[] = string2PitchesArrayLines(input);
+    updatePitchesArrayLines(pitchesArrayLines);
     const bpmPitchesArray = string2BpmPitchesArray(input);
-    updateBpmPitchesArray(bpmPitchesArray);
-
     const startAts = bpmPitchesArray2StartAts(bpmPitchesArray);
     updateOffsets(startAts);
   };

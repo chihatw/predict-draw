@@ -1,48 +1,31 @@
-import { Container, IconButton } from '@mui/material';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import string2PitchesArray from 'string2pitches-array';
+import { Container, IconButton } from '@mui/material';
+import React, { useRef, useState } from 'react';
 
 import BPMSlider from './components/BPMSlider';
 import useBpmTrack from '../../../services/useBpmTrack';
 import TrackTextForm from './components/TrackTextForm';
 import TrackTypeRadioButtons from './components/TrackTypeRadioButtons';
 import SyncopationRatioSlider from './components/SyncopationRatioSlider';
-import { useEffect, useRef, useState } from 'react';
 import { PlayCircleRounded, StopCircleRounded } from '@mui/icons-material';
-import bpmPitchesArray2String from 'bpm-pitches-array2string';
 
 const MngBPMTrackPane = () => {
   const {
     bpm,
     trackType,
-    bpmPitchesArray,
     syncopationRatio,
+    pitchesArrayLines,
     updateBpm,
     updateOffsets,
     updateTrackType,
     updateSyncopationRatio,
-    updateBpmPitchesArray,
+    updatePitchesArrayLines,
   } = useBpmTrack();
 
   const loopId = useRef(0);
   const startAtRef = useRef(0);
 
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const [pitchesArrayLines, setPitchesArrayLines] = useState<string[][][][]>(
-    []
-  );
-
-  useEffect(() => {
-    const input = bpmPitchesArray2String(bpmPitchesArray);
-    const pitchesArrayLines = input2PitchesArrayLines(input);
-    setPitchesArrayLines(pitchesArrayLines);
-  }, [bpmPitchesArray]);
-
-  const handleChangeInput = (value: string) => {
-    const pitchesArrayLines = input2PitchesArrayLines(value);
-    setPitchesArrayLines(pitchesArrayLines);
-  };
 
   const handleClick = () => {
     if (isPlaying) {
@@ -66,14 +49,13 @@ const MngBPMTrackPane = () => {
           updateSyncopationRatio={updateSyncopationRatio}
         />
         <TrackTextForm
-          bpmPitchesArray={bpmPitchesArray}
+          pitchesArrayLines={pitchesArrayLines}
           updateOffsets={updateOffsets}
-          updateBpmPitchesArray={updateBpmPitchesArray}
-          superHandleChangeInput={handleChangeInput}
+          updatePitchesArrayLines={updatePitchesArrayLines}
         />
         {pitchesArrayLines.map((pitchesArray, index) => (
           <div key={index}>
-            <SentencePitchLine pitchesArray={pitchesArray} />
+            <SentencePitchLine pitchesArray={pitchesArray} hasBorders />
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -91,13 +73,3 @@ const MngBPMTrackPane = () => {
 };
 
 export default MngBPMTrackPane;
-
-const input2PitchesArrayLines = (value: string) => {
-  const lines = value.split('\n').filter((i) => i);
-  const pitchesArrayLines: string[][][][] = [];
-  for (const line of lines) {
-    const pitchesArray = string2PitchesArray(line);
-    pitchesArrayLines.push(pitchesArray);
-  }
-  return pitchesArrayLines;
-};

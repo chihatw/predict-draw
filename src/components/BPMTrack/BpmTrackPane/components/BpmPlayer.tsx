@@ -1,11 +1,11 @@
-import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
-import { Container, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { PlayCircleRounded, StopCircleRounded } from '@mui/icons-material';
-import { DisplayScheduler } from '../classes/DisplayScheduler';
-import { BeatScheduler } from '../classes/BeatScheduler';
+
 import NotesRow from './NotesRow';
 import KanasRow from './KanasRow';
+import { BeatScheduler } from '../../classes/BeatScheduler';
+import { DisplayScheduler } from '../../classes/DisplayScheduler';
 
 const BpmPlayer = ({
   bpm,
