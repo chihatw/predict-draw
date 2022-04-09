@@ -53,7 +53,6 @@ const PageStatePane = ({
   const { updatePredict } = usePredict();
 
   const handleChangeState = (state: PageState) => {
-    // setState(state);
     updatePredict('');
     switch (user) {
       case 'liSan':

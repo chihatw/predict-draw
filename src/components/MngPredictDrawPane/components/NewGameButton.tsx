@@ -1,10 +1,13 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
-import usePredict from '../../../services/usePredict';
-
-const NewGameButton = () => {
-  const { updatePredict, updateNewGameAt } = usePredict();
+const NewGameButton = ({
+  updatePredict,
+  updateNewGameAt,
+}: {
+  updatePredict: (value: string) => void;
+  updateNewGameAt: () => void;
+}) => {
   const handleNewGame = () => {
     updateNewGameAt();
     updatePredict('');
