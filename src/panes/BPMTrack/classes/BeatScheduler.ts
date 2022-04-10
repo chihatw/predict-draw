@@ -9,12 +9,15 @@ export class BeatScheduler {
   private _beatIntervals: number[]; // bpm と syncopationRatio から計算した 音と音の間隔(ms)
   private _4NotesDuration: number;
 
-  private _noteIndex = 0;
+  private _noteIndex = -1;
+  private _hasCountDown: boolean = false;
+  private _countDownIndex = 0;
 
   constructor({
     bpm,
     type,
     startAt,
+    hasCountDown,
     audioContext,
     bpmPitchesArray,
     syncopationRatio,
@@ -22,6 +25,7 @@ export class BeatScheduler {
     bpm: number;
     type: string;
     startAt: number;
+    hasCountDown?: boolean;
     audioContext: AudioContext;
     bpmPitchesArray: string[][][];
     syncopationRatio: number;
@@ -29,6 +33,7 @@ export class BeatScheduler {
     this._beat = new Beat(audioContext);
     this._startAt = startAt;
     this._nextBeatAt = startAt;
+    this._hasCountDown = hasCountDown || false;
 
     this._beatNotes = getBeatNotes({ type, bpmPitchesArray, syncopationRatio });
     this._beatIntervals = getBeatIntervals({ bpm, type, syncopationRatio });
@@ -40,28 +45,46 @@ export class BeatScheduler {
 
   tick(now: number) {
     const _leftTime = this._nextBeatAt - now;
+    let _xPosProgress = 0;
 
-    if (_leftTime < 0) {
-      // 音を鳴らす
-      const _beatNote = this._beatNotes[this._noteIndex];
-      if (_beatNote > -1) {
-        this._beat.play(_beatNote > 0 ? 1000 : 800);
+    if (!this._hasCountDown) {
+      if (_leftTime < 0) {
+        // インデックスのカウントアップ
+        this._noteIndex = (this._noteIndex + 1) % this._beatNotes.length;
+
+        // 音を鳴らす
+        const _beatNote = this._beatNotes[this._noteIndex];
+        if (_beatNote > -1) {
+          this._beat.play(_beatNote > 0 ? 1000 : 800);
+        }
+
+        // nextBeatAt の更新
+        this._nextBeatAt += this._beatIntervals[this._noteIndex % 2];
       }
 
-      // nextBeatAt の更新
-      this._nextBeatAt += this._beatIntervals[this._noteIndex % 2];
+      // 4拍節の中の進捗度を計算
+      const _elapsedTime = now - this._startAt;
 
-      // インデックスのカウントアップ
-      this._noteIndex = (this._noteIndex + 1) % this._beatNotes.length;
+      // 経過時間を４拍の長さで割った残り
+      const _extraTime = Math.floor(_elapsedTime % this._4NotesDuration);
+      _xPosProgress = Math.floor((_extraTime / this._4NotesDuration) * 100);
     }
+    // カウントダウンがある場合
+    else {
+      if (_leftTime < 0) {
+        // 低音を鳴らす
+        this._beat.play(800);
+        // nextBeatAt の更新
+        this._nextBeatAt += this._beatIntervals[this._countDownIndex % 2];
 
-    // 4拍節の中の進捗度を計算
-    const _elapsedTime = now - this._startAt;
+        // カウントダウン・インデックスのカウントアップ
+        this._countDownIndex = this._countDownIndex + 1;
 
-    // 経過時間を４拍の長さで割った残り
-    const _extraTime = Math.floor(_elapsedTime % this._4NotesDuration);
-    const _xPosProgress = Math.floor((_extraTime / this._4NotesDuration) * 100);
-
-    return { noteIndex: this._noteIndex - 1, xPosProgress: _xPosProgress };
+        if (this._countDownIndex > 7) {
+          this._hasCountDown = false;
+        }
+      }
+    }
+    return { noteIndex: this._noteIndex, xPosProgress: _xPosProgress };
   }
 }

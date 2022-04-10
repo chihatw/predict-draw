@@ -14,9 +14,9 @@ const MngBPMTrackPane = () => {
   const {
     bpm,
     stopAt,
-    offsets,
     startAt,
     trackType,
+    indexOffsets,
     syncopationRatio,
     pitchesArrayLines,
     updateBpm,
@@ -59,8 +59,8 @@ const MngBPMTrackPane = () => {
           bpm={bpm}
           type={trackType}
           scale={1.3}
-          offsets={offsets}
           superStopAt={stopAt}
+          indexOffsets={indexOffsets}
           superStartAt={startAt}
           bpmPitchesArray={bpmPitchesArray}
           syncopationRatio={syncopationRatio}

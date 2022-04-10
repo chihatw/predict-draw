@@ -4,6 +4,7 @@ import { PlayCircleRounded, StopCircleRounded } from '@mui/icons-material';
 
 import NotesRow from './NotesRow';
 import KanasRow from './KanasRow';
+import CountDown from './CountDown';
 import { BeatScheduler } from '../classes/BeatScheduler';
 import { createAudioContext, useCallbackByTime } from '../../../services/utils';
 
@@ -11,9 +12,9 @@ const BpmPlayer = ({
   bpm,
   type,
   scale,
-  offsets,
   superStopAt,
   superStartAt,
+  indexOffsets,
   bpmPitchesArray,
   syncopationRatio,
   superUpdateStopAt,
@@ -22,8 +23,8 @@ const BpmPlayer = ({
   bpm: number;
   type: string;
   scale?: number;
-  offsets: number[];
   superStopAt?: number;
+  indexOffsets: number[];
   superStartAt?: number;
   bpmPitchesArray: string[][][];
   syncopationRatio: number;
@@ -39,6 +40,8 @@ const BpmPlayer = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [noteIndex, setNoteIndex] = useState(-1);
   const [xPosProgress, setXPosProgress] = useState(0);
+  const [countDownLabel, setCountDownLabel] = useState(4);
+  const [countDownDisplay, setCountDownDisplay] = useState('none');
 
   useCallbackByTime({
     time: superStopAt,
@@ -70,9 +73,27 @@ const BpmPlayer = ({
       audioContext: audioContextRef.current,
       bpmPitchesArray,
       syncopationRatio,
+      hasCountDown: true,
     });
 
     loopId.current = requestAnimationFrame(loop);
+
+    // カウントダウンの表示
+    const interval = Math.floor((60 * 1000) / bpm);
+    setCountDownDisplay('flex');
+    let count = 0;
+    let intervalId = 0;
+    intervalId = window.setInterval(function () {
+      setCountDownLabel(3 - count);
+      count++;
+      if (count > 3) {
+        clearInterval(intervalId);
+      }
+    }, interval);
+    setTimeout(() => {
+      setCountDownDisplay('none');
+      setCountDownLabel(4);
+    }, interval * 4);
   };
 
   const loop = () => {
@@ -111,7 +132,13 @@ const BpmPlayer = ({
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        position: 'relative',
+        justifyContent: 'center',
+      }}
+    >
       <div style={{ display: 'grid', rowGap: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <NotesRow
@@ -121,24 +148,20 @@ const BpmPlayer = ({
             syncopationRatio={syncopationRatio}
           />
         </div>
-        <div
-          style={{
-            display: 'grid',
-            rowGap: 4,
-          }}
-        >
-          {bpmPitchesArray.map((pitches, index) => (
-            <div key={index} style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ rowGap: 4, display: 'grid' }}>
+            {bpmPitchesArray.map((pitches, index) => (
               <KanasRow
+                key={index}
+                scale={scale}
                 isMora={['mora', 'onebyone'].includes(type)}
                 pitches={pitches}
-                startAt={offsets[index]}
                 isPlaying={type !== 'syncopation' && isPlaying}
                 noteIndex={type !== 'syncopation' ? noteIndex : -1}
-                scale={scale}
+                indexOffset={indexOffsets[index]}
               />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <IconButton color='primary' onClick={handleClick}>
@@ -150,6 +173,7 @@ const BpmPlayer = ({
           </IconButton>
         </div>
       </div>
+      <CountDown display={countDownDisplay} label={countDownLabel} />
     </div>
   );
 };

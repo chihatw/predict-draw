@@ -10,9 +10,9 @@ const BpmTrackPane = () => {
   const {
     bpm,
     stopAt,
-    offsets,
     startAt,
     trackType,
+    indexOffsets,
     syncopationRatio,
     pitchesArrayLines,
     setStopAt,
@@ -29,8 +29,8 @@ const BpmTrackPane = () => {
         bpm={bpm}
         type={trackType}
         scale={1.3}
-        offsets={offsets}
         superStopAt={stopAt}
+        indexOffsets={indexOffsets}
         superStartAt={startAt}
         bpmPitchesArray={bpmPitchesArray}
         syncopationRatio={syncopationRatio}

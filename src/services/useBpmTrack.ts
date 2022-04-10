@@ -24,9 +24,9 @@ const useBpmTrack = () => {
   const [bpm, setBpm] = useState(0);
   const [stopAt, setStopAt] = useState(0);
   const [startAt, setStartAt] = useState(0);
-  const [offsets, setOffsets] = useState<number[]>([]);
-  const [offsetsStr, setOffsetsStr] = useState('');
   const [trackType, setTrackType] = useState('syllable');
+  const [offsetsStr, setOffsetsStr] = useState('');
+  const [indexOffsets, setIndexOffsets] = useState<number[]>([]);
   const [syncopationRatio, setSyncopationRatio] = useState(100);
   const [pitchesArrayLinesStr, setPitchesArrayLinesStr] = useState('');
   const [pitchesArrayLines, setPitchesArrayLines] = useState<PitchesArray[]>(
@@ -90,8 +90,8 @@ const useBpmTrack = () => {
 
   useEffect(() => {
     if (!offsetsStr) return;
-    const offsets: number[] = JSON.parse(offsetsStr);
-    setOffsets(offsets);
+    const indexOffsets: number[] = JSON.parse(offsetsStr);
+    setIndexOffsets(indexOffsets);
   }, [offsetsStr]);
 
   // onSnapshot
@@ -181,10 +181,10 @@ const useBpmTrack = () => {
       value: JSON.stringify(pitchesArrayLines),
     });
   };
-  const updateOffsets = (offsets: number[]) => {
+  const updateOffsets = (indexOffsets: number[]) => {
     _updateDocumentValue({
       docId: OFFSETS_DOC_ID,
-      value: JSON.stringify(offsets),
+      value: JSON.stringify(indexOffsets),
     });
   };
   const updateSyncopationRatio = (ratio: number) => {
@@ -206,7 +206,7 @@ const useBpmTrack = () => {
     bpm,
     stopAt,
     startAt,
-    offsets,
+    indexOffsets,
     trackType,
     syncopationRatio,
     pitchesArrayLines,
