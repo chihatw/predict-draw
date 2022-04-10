@@ -5,12 +5,15 @@ import { db } from '../repositories/firebase';
 import {
   updateDocumenValue,
   snapshotDocumentValue,
+  setDocumenValue,
 } from '../repositories/utils';
 
 const COLLECTION = 'bpmTrack';
 
 const BPM_DOC_ID = 'bpm';
 const OFFSETS_DOC_ID = 'offsets';
+const STOP_AT_DOC_ID = 'stopAt';
+const START_AT_DOC_ID = 'startAt';
 const TRACK_TYPE_DOC_ID = 'trackType';
 const SYNCOPATION_RATIO_DOC_ID = 'syncopationRatio';
 const PITCHES_ARRAY_LINES_DOC_ID = 'pitchesArrayLines';
@@ -19,6 +22,8 @@ export type PitchesArray = string[][][];
 
 const useBpmTrack = () => {
   const [bpm, setBpm] = useState(0);
+  const [stopAt, setStopAt] = useState(0);
+  const [startAt, setStartAt] = useState(0);
   const [offsets, setOffsets] = useState<number[]>([]);
   const [offsetsStr, setOffsetsStr] = useState('');
   const [trackType, setTrackType] = useState('syllable');
@@ -63,6 +68,20 @@ const useBpmTrack = () => {
     []
   );
 
+  const _setDocumentValue = useMemo(
+    () =>
+      function <T>({ value, docId }: { value: T; docId: string }) {
+        setDocumenValue({
+          db,
+          value,
+          colId: COLLECTION,
+          docId,
+        });
+      },
+    []
+  );
+
+  // JSON.parse
   useEffect(() => {
     if (!pitchesArrayLinesStr) return;
     const pitchesArrayLines: PitchesArray[] = JSON.parse(pitchesArrayLinesStr);
@@ -74,6 +93,30 @@ const useBpmTrack = () => {
     const offsets: number[] = JSON.parse(offsetsStr);
     setOffsets(offsets);
   }, [offsetsStr]);
+
+  // onSnapshot
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: STOP_AT_DOC_ID,
+      initialValue: 0,
+      setValue: setStopAt,
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsub = _snapshotDocumentValue({
+      docId: START_AT_DOC_ID,
+      initialValue: 0,
+      setValue: setStartAt,
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
 
   useEffect(() => {
     const unsub = _snapshotDocumentValue({
@@ -150,13 +193,26 @@ const useBpmTrack = () => {
   const updateTrackType = (type: string) => {
     _updateDocumentValue({ docId: TRACK_TYPE_DOC_ID, value: type });
   };
+
+  const setRemoteStopAt = (value: number) => {
+    _setDocumentValue({ docId: STOP_AT_DOC_ID, value });
+  };
+
+  const setRemoteStartAt = (value: number) => {
+    _setDocumentValue({ docId: START_AT_DOC_ID, value });
+  };
+
   return {
     bpm,
+    stopAt,
+    startAt,
     offsets,
     trackType,
     syncopationRatio,
     pitchesArrayLines,
+    setStopAt: setRemoteStopAt,
     updateBpm,
+    setStartAt: setRemoteStartAt,
     updateOffsets,
     updateTrackType,
     updateSyncopationRatio,

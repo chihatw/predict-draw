@@ -2,6 +2,7 @@ import {
   doc,
   Firestore,
   onSnapshot,
+  setDoc,
   Unsubscribe,
   updateDoc,
 } from 'firebase/firestore';
@@ -56,6 +57,29 @@ export const updateDocumenValue = async <T>({
 }): Promise<T | null> => {
   console.log(`update ${colId}.${docId}`);
   return await updateDoc(doc(db, colId, docId), { value })
+    .then(() => {
+      return value;
+    })
+    .catch((e) => {
+      console.warn(e);
+      return null;
+    });
+};
+
+// ドキュメントの value フィールドの値を設定する（フィールド名固定）
+export const setDocumenValue = async <T>({
+  db,
+  value,
+  colId,
+  docId,
+}: {
+  db: Firestore;
+  colId: string;
+  value: T;
+  docId: string;
+}): Promise<T | null> => {
+  console.log(`set ${colId}.${docId}`);
+  return await setDoc(doc(db, colId, docId), { value })
     .then(() => {
       return value;
     })
