@@ -3,13 +3,13 @@ import Note from './Note';
 
 const NotesRow = ({
   height,
-  activeIndex,
+  noteIndex,
   xPosProgress,
   notePairCount,
   syncopationRatio,
 }: {
   height: number;
-  activeIndex: number;
+  noteIndex: number;
   xPosProgress: number;
   notePairCount?: number;
   syncopationRatio: number;
@@ -70,7 +70,7 @@ const NotesRow = ({
             }
             return (
               <div key={index} style={{ position: 'absolute', top: 0, left }}>
-                <Note height={height} isActive={activeIndex === index} />
+                <Note height={height} isActive={noteIndex === index} />
               </div>
             );
           })}

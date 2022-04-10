@@ -7,21 +7,21 @@ const KanasRow = ({
   startAt,
   pitches,
   isPlaying,
-  activeIndex,
+  noteIndex,
 }: {
   scale?: number;
   isMora: boolean;
   pitches: string[][];
   startAt: number;
   isPlaying: boolean;
-  activeIndex: number;
+  noteIndex: number;
 }) => (
   <>
     {pitches.map((pitch, pitchIndex) => {
       const index = startAt + pitchIndex;
       const isActive = isMora
-        ? index === activeIndex
-        : [activeIndex * 2, activeIndex * 2 + 1].includes(index);
+        ? index === noteIndex
+        : [noteIndex * 2, noteIndex * 2 + 1].includes(index);
       const isAccent =
         // ターゲットが高音
         !!pitch[1] &&

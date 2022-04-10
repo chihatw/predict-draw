@@ -1,13 +1,11 @@
 import { IconButton } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { PlayCircleRounded, StopCircleRounded } from '@mui/icons-material';
 
 import NotesRow from './NotesRow';
 import KanasRow from './KanasRow';
 import { BeatScheduler } from '../classes/BeatScheduler';
-import { DisplayScheduler } from '../classes/DisplayScheduler';
-import { createAudioContext } from '../../../services/utils';
-import { getBeatIntervals, getBeatNotes } from '../services/utils';
+import { createAudioContext, useCallbackByTime } from '../../../services/utils';
 
 const BpmPlayer = ({
   bpm,
@@ -37,37 +35,27 @@ const BpmPlayer = ({
 
   const audioContextRef = useRef<AudioContext | null>(null);
   const beatSchedulerRef = useRef<BeatScheduler | null>(null);
-  const displaySchedulerRef = useRef<DisplayScheduler | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [xPosProgress, setProgress] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(-1);
+  const [noteIndex, setNoteIndex] = useState(-1);
+  const [xPosProgress, setXPosProgress] = useState(0);
 
-  useEffect(() => {
-    // 0 の時は無視
-    if (!superStartAt) return;
+  useCallbackByTime({
+    time: superStopAt,
+    callback: () => stop(),
+    resetTime: superUpdateStopAt,
+  });
 
-    // superStartAtが更新された場合、 start
-    if (superStartAt !== startAtRef.current) {
-      startAtRef.current = performance.now(); // ローカルの基準値を設定
-      start(startAtRef.current);
-    }
-    return () => {
-      // コンポーネント削除時に初期化
-      !!superUpdateStartAt && superUpdateStartAt(0);
-    };
-  }, [superStartAt]);
-
-  useEffect(() => {
-    // 0 の時は無視
-    if (!superStopAt) return;
-    // superStopAtが更新された場合、 stop
-    stop();
-    return () => {
-      // コンポーネント削除時に初期化
-      !!superUpdateStopAt && superUpdateStopAt(0);
-    };
-  }, [superStopAt]);
+  useCallbackByTime({
+    time: superStartAt,
+    callback: () => {
+      if (superStartAt !== startAtRef.current) {
+        startAtRef.current = performance.now(); // ローカルの基準値を設定
+        start(startAtRef.current);
+      }
+    },
+    resetTime: superUpdateStartAt,
+  });
 
   const start = (now: number) => {
     if (!audioContextRef.current) {
@@ -75,39 +63,28 @@ const BpmPlayer = ({
     }
     setIsPlaying(true);
 
-    const beatNotes = getBeatNotes({ type, bpmPitchesArray, syncopationRatio });
-    const beatIntervals = getBeatIntervals({ bpm, type, syncopationRatio });
-
     beatSchedulerRef.current = new BeatScheduler({
-      beatNotes,
-      nextBeatAt: now,
-      beatIntervals,
+      bpm,
+      type,
+      startAt: now,
       audioContext: audioContextRef.current,
+      bpmPitchesArray,
+      syncopationRatio,
     });
 
-    displaySchedulerRef.current = new DisplayScheduler({
-      startAt: now,
-      beatNotes,
-      beatIntervals,
-      isSyncopation: type === 'syncopation',
-    });
     loopId.current = requestAnimationFrame(loop);
   };
 
   const loop = () => {
     const now = performance.now();
     const beatScheduler = beatSchedulerRef.current;
-    const displayScheduler = displaySchedulerRef.current;
 
-    // 打拍
-    !!beatScheduler && beatScheduler.tick(now);
+    const { noteIndex, xPosProgress } = !!beatScheduler
+      ? beatScheduler.tick(now)
+      : { noteIndex: -1, xPosProgress: 0 };
 
-    // ハイライト, シンコペーション用のxPosProgress
-    const { index, xPosProgress } = !!displayScheduler
-      ? displayScheduler.tick(now)
-      : { index: -1, xPosProgress: 0 };
-    setProgress(xPosProgress);
-    setActiveIndex(index);
+    setNoteIndex(noteIndex);
+    setXPosProgress(xPosProgress);
 
     // 自己呼び出し
     loopId.current = requestAnimationFrame(loop);
@@ -117,9 +94,8 @@ const BpmPlayer = ({
     setIsPlaying(false);
 
     cancelAnimationFrame(loopId.current);
-    setActiveIndex(-1);
+    setNoteIndex(-1);
 
-    displaySchedulerRef.current = null;
     beatSchedulerRef.current = null;
   };
 
@@ -140,8 +116,8 @@ const BpmPlayer = ({
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <NotesRow
             height={60}
-            activeIndex={type === 'syncopation' ? activeIndex : -1}
-            xPosProgress={xPosProgress}
+            noteIndex={type === 'syncopation' ? noteIndex : -1}
+            xPosProgress={type === 'syncopation' ? xPosProgress : 0}
             syncopationRatio={syncopationRatio}
           />
         </div>
@@ -158,7 +134,7 @@ const BpmPlayer = ({
                 pitches={pitches}
                 startAt={offsets[index]}
                 isPlaying={type !== 'syncopation' && isPlaying}
-                activeIndex={type !== 'syncopation' ? activeIndex : -1}
+                noteIndex={type !== 'syncopation' ? noteIndex : -1}
                 scale={scale}
               />
             </div>
