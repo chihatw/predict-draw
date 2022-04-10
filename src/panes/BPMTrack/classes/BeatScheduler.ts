@@ -60,11 +60,15 @@ export class BeatScheduler {
 
   tick(now: number) {
     const beatElapsedTime = now - this._startAt;
+
     if (beatElapsedTime > 0) {
       const syncopation =
         (!!(this._index % 2) ? 1 : -1) *
         ((this._beatRate * (100 - this._syncopationRatio)) / 100);
+
+      // startAt の更新
       this._startAt += this._beatRate + syncopation;
+
       const pitch = this._track[this._index];
       if (pitch > -1) {
         // 音を鳴らす
