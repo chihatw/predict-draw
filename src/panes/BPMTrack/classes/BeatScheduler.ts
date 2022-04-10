@@ -1,81 +1,45 @@
-import {
-  bpmPitchesArray2MoraTrack,
-  bpmPitchesArray2OneByOneTrack,
-  bpmPitchesArray2SyllableTrack,
-} from '../services/utils';
 import { Beat } from './Beat';
 
 export class BeatScheduler {
   private _beat: Beat;
-  private _track: number[] = [];
-  private _startAt: number;
-  private _beatRate: number;
-  private _syncopationRatio: number;
+  private _beatNotes: number[]; // 鳴らす音の種類: 1: 高音, 0: 低音, -1: 無音
+  private _nextBeatAt: number; // 次に音を鳴らす時刻(ms)
+  private _beatIntervals: number[]; // bpm と syncopationRatio から計算した 音と音の間隔(ms)
 
-  private _index = 0;
+  private _noteIndex = 0;
 
   constructor({
-    bpm,
-    type,
-    startAt,
+    beatNotes,
+    nextBeatAt,
     audioContext,
-    bpmPitchesArray,
-    syncopationRatio,
+    beatIntervals,
   }: {
-    bpm: number;
-    type: string;
-    startAt: number;
+    beatNotes: number[];
+    nextBeatAt: number;
     audioContext: AudioContext;
-    bpmPitchesArray: string[][][];
-    syncopationRatio: number;
+    beatIntervals: number[];
   }) {
-    let beatRate = 0;
-    let track: number[] = [];
-
-    switch (type) {
-      case 'syncopation':
-        track = syncopationRatio === 0 ? [0, -1, 0, -1] : [0, 0, 0, 0];
-        beatRate = (60 * 1000) / 2 / bpm;
-        break;
-      case 'mora':
-        track = bpmPitchesArray2MoraTrack(bpmPitchesArray);
-        beatRate = (60 * 1000) / 2 / bpm;
-        break;
-      case 'onebyone':
-        track = bpmPitchesArray2OneByOneTrack(bpmPitchesArray);
-        beatRate = (60 * 1000) / 2 / bpm;
-        break;
-      case 'syllable':
-        track = bpmPitchesArray2SyllableTrack(bpmPitchesArray);
-        beatRate = (60 * 1000) / bpm;
-        break;
-    }
-
     this._beat = new Beat(audioContext);
-    this._track = track;
-    this._startAt = startAt;
-    this._beatRate = beatRate;
-    this._syncopationRatio = syncopationRatio;
+    this._beatNotes = beatNotes;
+    this._nextBeatAt = nextBeatAt;
+    this._beatIntervals = beatIntervals;
   }
 
   tick(now: number) {
-    const beatElapsedTime = now - this._startAt;
+    const _leftTime = this._nextBeatAt - now;
 
-    if (beatElapsedTime > 0) {
-      const syncopation =
-        (!!(this._index % 2) ? 1 : -1) *
-        ((this._beatRate * (100 - this._syncopationRatio)) / 100);
-
-      // startAt の更新
-      this._startAt += this._beatRate + syncopation;
-
-      const pitch = this._track[this._index];
-      if (pitch > -1) {
-        // 音を鳴らす
-        this._beat.play(pitch > 0 ? 1000 : 800);
+    if (_leftTime < 0) {
+      // 音を鳴らす
+      const _beatNote = this._beatNotes[this._noteIndex];
+      if (_beatNote > -1) {
+        this._beat.play(_beatNote > 0 ? 1000 : 800);
       }
 
-      this._index = (this._index + 1) % this._track.length;
+      // nextBeatAt の更新
+      this._nextBeatAt += this._beatIntervals[this._noteIndex % 2];
+
+      // インデックスのカウントアップ
+      this._noteIndex = (this._noteIndex + 1) % this._beatNotes.length;
     }
   }
 }

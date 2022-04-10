@@ -7,6 +7,7 @@ import KanasRow from './KanasRow';
 import { BeatScheduler } from '../classes/BeatScheduler';
 import { DisplayScheduler } from '../classes/DisplayScheduler';
 import { createAudioContext } from '../../../services/utils';
+import { getBeatIntervals, getBeatNotes } from '../services/utils';
 
 const BpmPlayer = ({
   bpm,
@@ -38,8 +39,8 @@ const BpmPlayer = ({
   const beatSchedulerRef = useRef<BeatScheduler | null>(null);
   const displaySchedulerRef = useRef<DisplayScheduler | null>(null);
 
-  const [progress, setProgress] = useState(0); // xPos 表示のために利用
   const [isPlaying, setIsPlaying] = useState(false);
+  const [xPosProgress, setProgress] = useState(0);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
@@ -73,20 +74,22 @@ const BpmPlayer = ({
       audioContextRef.current = createAudioContext();
     }
     setIsPlaying(true);
+
+    const beatNotes = getBeatNotes({ type, bpmPitchesArray, syncopationRatio });
+    const beatIntervals = getBeatIntervals({ bpm, type, syncopationRatio });
+
     beatSchedulerRef.current = new BeatScheduler({
-      bpm,
-      type,
-      startAt: now,
+      beatNotes,
+      nextBeatAt: now,
+      beatIntervals,
       audioContext: audioContextRef.current,
-      bpmPitchesArray,
-      syncopationRatio,
     });
 
     displaySchedulerRef.current = new DisplayScheduler({
-      bpm,
-      type,
-      bpmPitchesArray,
-      syncopationRatio,
+      startAt: now,
+      beatNotes,
+      beatIntervals,
+      isSyncopation: type === 'syncopation',
     });
     loopId.current = requestAnimationFrame(loop);
   };
@@ -99,19 +102,12 @@ const BpmPlayer = ({
     // 打拍
     !!beatScheduler && beatScheduler.tick(now);
 
-    // 経過時間
-    const elapsedTime = now - startAtRef.current;
-
-    // ハイライト
-    const activeIndex = !!displayScheduler
-      ? displayScheduler.getActiveIndex(elapsedTime)
-      : -1;
-    setActiveIndex(activeIndex);
-
-    const progress = !!displayScheduler
-      ? displayScheduler.getProgress(elapsedTime)
-      : 0;
-    setProgress(progress);
+    // ハイライト, シンコペーション用のxPosProgress
+    const { index, xPosProgress } = !!displayScheduler
+      ? displayScheduler.tick(now)
+      : { index: -1, xPosProgress: 0 };
+    setProgress(xPosProgress);
+    setActiveIndex(index);
 
     // 自己呼び出し
     loopId.current = requestAnimationFrame(loop);
@@ -144,8 +140,8 @@ const BpmPlayer = ({
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <NotesRow
             height={60}
-            progress={progress}
             activeIndex={type === 'syncopation' ? activeIndex : -1}
+            xPosProgress={xPosProgress}
             syncopationRatio={syncopationRatio}
           />
         </div>

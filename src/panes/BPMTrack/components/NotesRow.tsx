@@ -3,14 +3,14 @@ import Note from './Note';
 
 const NotesRow = ({
   height,
-  progress,
   activeIndex,
+  xPosProgress,
   notePairCount,
   syncopationRatio,
 }: {
   height: number;
-  progress: number;
   activeIndex: number;
+  xPosProgress: number;
   notePairCount?: number;
   syncopationRatio: number;
 }) => {
@@ -35,8 +35,8 @@ const NotesRow = ({
     if (!ctx || !canvas) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (!!progress) {
-      let xPos = Math.floor(canvas.width * (progress / 100)) + width / 2;
+    if (!!xPosProgress) {
+      let xPos = Math.floor(canvas.width * (xPosProgress / 100)) + width / 2;
       if (xPos > canvas.width) {
         xPos -= canvas.width;
       }
@@ -49,7 +49,7 @@ const NotesRow = ({
       ctx.stroke();
       ctx.closePath();
     }
-  }, [progress]);
+  }, [xPosProgress]);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>

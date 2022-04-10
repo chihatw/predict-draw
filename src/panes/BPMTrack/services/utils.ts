@@ -74,3 +74,62 @@ export const pitchesArrayLines2BpmPitchesArray = (
   }
   return bpmPitchesArray;
 };
+
+export const getBeatIntervals = ({
+  bpm,
+  type,
+  syncopationRatio,
+}: {
+  bpm: number;
+  type: string;
+  syncopationRatio: number;
+}) => {
+  const intervals: number[] = [];
+  let interval = 0;
+  switch (type) {
+    case 'mora':
+    case 'onebyone':
+    case 'syncopation':
+      interval = (60 * 1000) / 2 / bpm;
+      const _offset = (interval * (100 - syncopationRatio)) / 100;
+      intervals.push(Math.round(interval - _offset));
+      intervals.push(Math.round(interval + _offset));
+      break;
+    case 'syllable':
+      interval = (60 * 1000) / bpm;
+      intervals.push(Math.round(interval));
+      intervals.push(Math.round(interval));
+      break;
+    default:
+  }
+  return intervals;
+};
+
+export const getBeatNotes = ({
+  type,
+  bpmPitchesArray,
+  syncopationRatio,
+}: {
+  type: string;
+  bpmPitchesArray: string[][][];
+  syncopationRatio: number;
+}) => {
+  let _beatNotes: number[] = []; // 鳴らす音の種類
+
+  switch (type) {
+    case 'syncopation':
+      _beatNotes = syncopationRatio === 0 ? [0, -1, 0, -1] : [0, 0, 0, 0];
+      break;
+    case 'mora':
+      _beatNotes = bpmPitchesArray2MoraTrack(bpmPitchesArray);
+      break;
+    case 'onebyone':
+      _beatNotes = bpmPitchesArray2OneByOneTrack(bpmPitchesArray);
+      break;
+    case 'syllable':
+      _beatNotes = bpmPitchesArray2SyllableTrack(bpmPitchesArray);
+      break;
+    default:
+  }
+  return _beatNotes;
+};
