@@ -6,6 +6,7 @@ export class BeatScheduler {
   private _startAt: number;
   private _beatNotes: number[]; // 鳴らす音の種類: 1: 高音, 0: 低音, -1: 無音
   private _nextBeatAt: number; // 次に音を鳴らす時刻(ms)
+  private _coundDownMax: number;
   private _beatIntervals: number[]; // bpm と syncopationRatio から計算した 音と音の間隔(ms)
   private _4NotesDuration: number;
 
@@ -34,6 +35,7 @@ export class BeatScheduler {
     this._startAt = startAt;
     this._nextBeatAt = startAt;
     this._hasCountDown = hasCountDown || false;
+    this._coundDownMax = type === 'syllable' ? 3 : 7;
 
     this._beatNotes = getBeatNotes({ type, bpmPitchesArray, syncopationRatio });
     this._beatIntervals = getBeatIntervals({ bpm, type, syncopationRatio });
@@ -80,7 +82,7 @@ export class BeatScheduler {
         // カウントダウン・インデックスのカウントアップ
         this._countDownIndex = this._countDownIndex + 1;
 
-        if (this._countDownIndex > 7) {
+        if (this._countDownIndex > this._coundDownMax) {
           this._hasCountDown = false;
         }
       }

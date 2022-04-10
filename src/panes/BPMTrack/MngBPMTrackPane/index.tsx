@@ -1,6 +1,6 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
+import React from 'react';
 import { Container } from '@mui/material';
-import React, { useMemo } from 'react';
+import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 
 import BPMSlider from './components/BPMSlider';
 import BpmPlayer from '../components/BpmPlayer';
@@ -8,7 +8,6 @@ import useBpmTrack from '../../../services/useBpmTrack';
 import TrackTextForm from './components/TrackTextForm';
 import TrackTypeRadioButtons from './components/TrackTypeRadioButtons';
 import SyncopationRatioSlider from './components/SyncopationRatioSlider';
-import { pitchesArrayLines2BpmPitchesArray } from '../services/utils';
 
 const MngBPMTrackPane = () => {
   const {
@@ -28,11 +27,6 @@ const MngBPMTrackPane = () => {
     updatePitchesArrayLines,
   } = useBpmTrack();
 
-  const bpmPitchesArray = useMemo(
-    () => pitchesArrayLines2BpmPitchesArray(pitchesArrayLines),
-    [pitchesArrayLines]
-  );
-
   return (
     <Container maxWidth='sm'>
       <div style={{ display: 'grid', rowGap: 8 }}>
@@ -50,11 +44,18 @@ const MngBPMTrackPane = () => {
           updateOffsets={updateOffsets}
           updatePitchesArrayLines={updatePitchesArrayLines}
         />
-        {pitchesArrayLines.map((pitchesArray, index) => (
-          <div key={index}>
-            <SentencePitchLine pitchesArray={pitchesArray} hasBorders />
+        {trackType === 'syncopation' && (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'grid', rowGap: 8 }}>
+              {pitchesArrayLines.map((pitchesArray, index) => (
+                <div key={index}>
+                  <SentencePitchLine pitchesArray={pitchesArray} hasBorders />
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
+        )}
+
         <BpmPlayer
           bpm={bpm}
           type={trackType}
@@ -62,8 +63,8 @@ const MngBPMTrackPane = () => {
           superStopAt={stopAt}
           indexOffsets={indexOffsets}
           superStartAt={startAt}
-          bpmPitchesArray={bpmPitchesArray}
           syncopationRatio={syncopationRatio}
+          pitchesArrayLines={pitchesArrayLines}
           superUpdateStopAt={setStopAt}
           superUpdateStartAt={setStartAt}
         />

@@ -1,11 +1,14 @@
 import { IconButton } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { PlayCircleRounded, StopCircleRounded } from '@mui/icons-material';
 
 import NotesRow from './NotesRow';
-import KanasRow from './KanasRow';
 import CountDown from './CountDown';
+import BeatKanaTable from './BeatKanaTable';
+import { PitchesArray } from '../../../services/useBpmTrack';
 import { BeatScheduler } from '../classes/BeatScheduler';
+import SentencePitchLines from './SentencePitchLines';
+import { pitchesArrayLines2BpmPitchesArray } from '../services/utils';
 import { createAudioContext, useCallbackByTime } from '../../../services/utils';
 
 const BpmPlayer = ({
@@ -15,8 +18,8 @@ const BpmPlayer = ({
   superStopAt,
   superStartAt,
   indexOffsets,
-  bpmPitchesArray,
   syncopationRatio,
+  pitchesArrayLines,
   superUpdateStopAt,
   superUpdateStartAt,
 }: {
@@ -26,8 +29,8 @@ const BpmPlayer = ({
   superStopAt?: number;
   indexOffsets: number[];
   superStartAt?: number;
-  bpmPitchesArray: string[][][];
   syncopationRatio: number;
+  pitchesArrayLines: PitchesArray[];
   superUpdateStopAt?: (value: number) => void;
   superUpdateStartAt?: (value: number) => void;
 }) => {
@@ -36,6 +39,11 @@ const BpmPlayer = ({
 
   const audioContextRef = useRef<AudioContext | null>(null);
   const beatSchedulerRef = useRef<BeatScheduler | null>(null);
+
+  const bpmPitchesArray = useMemo(
+    () => pitchesArrayLines2BpmPitchesArray(pitchesArrayLines),
+    [pitchesArrayLines]
+  );
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [noteIndex, setNoteIndex] = useState(-1);
@@ -66,6 +74,8 @@ const BpmPlayer = ({
     }
     setIsPlaying(true);
 
+    const hasCountDown = type !== 'syncopation';
+
     beatSchedulerRef.current = new BeatScheduler({
       bpm,
       type,
@@ -73,27 +83,29 @@ const BpmPlayer = ({
       audioContext: audioContextRef.current,
       bpmPitchesArray,
       syncopationRatio,
-      hasCountDown: true,
+      hasCountDown,
     });
 
     loopId.current = requestAnimationFrame(loop);
 
-    // カウントダウンの表示
-    const interval = Math.floor((60 * 1000) / bpm);
-    setCountDownDisplay('flex');
-    let count = 0;
-    let intervalId = 0;
-    intervalId = window.setInterval(function () {
-      setCountDownLabel(3 - count);
-      count++;
-      if (count > 3) {
-        clearInterval(intervalId);
-      }
-    }, interval);
-    setTimeout(() => {
-      setCountDownDisplay('none');
-      setCountDownLabel(4);
-    }, interval * 4);
+    if (hasCountDown) {
+      // カウントダウンの表示
+      const interval = Math.floor((60 * 1000) / bpm);
+      setCountDownDisplay('flex');
+      let count = 0;
+      let intervalId = 0;
+      intervalId = window.setInterval(function () {
+        setCountDownLabel(3 - count);
+        count++;
+        if (count > 3) {
+          clearInterval(intervalId);
+        }
+      }, interval);
+      setTimeout(() => {
+        setCountDownDisplay('none');
+        setCountDownLabel(4);
+      }, interval * 4);
+    }
   };
 
   const loop = () => {
@@ -140,29 +152,30 @@ const BpmPlayer = ({
       }}
     >
       <div style={{ display: 'grid', rowGap: 20 }}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {type === 'syncopation' ? (
           <NotesRow
             height={60}
             noteIndex={type === 'syncopation' ? noteIndex : -1}
             xPosProgress={type === 'syncopation' ? xPosProgress : 0}
             syncopationRatio={syncopationRatio}
           />
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ rowGap: 4, display: 'grid' }}>
-            {bpmPitchesArray.map((pitches, index) => (
-              <KanasRow
-                key={index}
+        ) : (
+          <div style={{ display: 'grid', rowGap: 20 }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <SentencePitchLines pitchesArrayLines={pitchesArrayLines} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <BeatKanaTable
+                type={type}
                 scale={scale}
-                isMora={['mora', 'onebyone'].includes(type)}
-                pitches={pitches}
-                isPlaying={type !== 'syncopation' && isPlaying}
-                noteIndex={type !== 'syncopation' ? noteIndex : -1}
-                indexOffset={indexOffsets[index]}
+                noteIndex={noteIndex}
+                isPlaying={isPlaying}
+                indexOffsets={indexOffsets}
+                bpmPitchesArray={bpmPitchesArray}
               />
-            ))}
+            </div>
           </div>
-        </div>
+        )}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <IconButton color='primary' onClick={handleClick}>
             {isPlaying ? (
