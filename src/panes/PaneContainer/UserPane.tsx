@@ -1,17 +1,18 @@
 import React, { useContext, useMemo } from 'react';
 
-import Greeting from './Greeting';
-import { Draw } from './PredictDraw/PredictDrawPane/DrawPane';
-import TalkingTo from './TalkingTo';
-import AppContext from '../services/context';
-import { BpmCulc } from './BpmCalcPane';
-import BpmTrackPane from './BPMTrack/BpmTrackPane';
-import { PredictPane } from './PredictDraw/PredictDrawPane/PredictPane';
-import ReadTimePractice from './ReadWriteTime/ReadWriteTimePane/ReadTimePractice';
-import ReadTimePerformance from './ReadWriteTime/ReadWriteTimePane/ReadTimePerformance';
-import WriteTimePerformance from './ReadWriteTime/ReadWriteTimePane/WriteTimePerformance';
+import Greeting from '../Greeting';
+import { Draw } from '../PredictDraw/PredictDrawPane/DrawPane';
+import TalkingTo from '../TalkingTo';
+import AppContext from '../../services/context';
+import { BpmCulc } from '../BpmCalcPane';
+import BpmTrackPane from '../BPMTrack/BpmTrackPane';
+import { PredictPane } from '../PredictDraw/PredictDrawPane/PredictPane';
+import WorkoutItemsPane from '../WorkoutItems/WorkoutItemsPane';
+import ReadTimePractice from '../ReadWriteTime/ReadWriteTimePane/ReadTimePractice';
+import ReadTimePerformance from '../ReadWriteTime/ReadWriteTimePane/ReadTimePerformance';
+import WriteTimePerformance from '../ReadWriteTime/ReadWriteTimePane/WriteTimePerformance';
 
-const PaneSwitcher: React.FC<{ user: string }> = ({ user }) => {
+const UserPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
 
   const state = useMemo(() => {
@@ -46,9 +47,11 @@ const PaneSwitcher: React.FC<{ user: string }> = ({ user }) => {
       return <Draw />;
     case 'bpmTrack':
       return <BpmTrackPane />;
+    case 'workoutItems':
+      return <WorkoutItemsPane />;
     default:
       return <div></div>;
   }
 };
 
-export default PaneSwitcher;
+export default UserPane;

@@ -1,12 +1,13 @@
 import { Container, Divider } from '@mui/material';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import MngBpmCalc from '../MngBpmCalcPane';
-import AppContext from '../../services/context';
-import MngTimePane from '../ReadWriteTime/MngReadWiteTimePane';
+import MngBpmCalc from '../../MngBpmCalcPane';
+import AppContext from '../../../services/context';
+import MngTimePane from '../../ReadWriteTime/MngReadWiteTimePane';
 import PageStatePane from './components/PageStatePane';
-import MngBPMTrackPane from '../BPMTrack/MngBPMTrackPane';
-import MngPredictDrawPane from '../PredictDraw/MngPredictDrawPane';
+import MngBPMTrackPane from '../../BPMTrack/MngBPMTrackPane';
+import MngPredictDrawPane from '../../PredictDraw/MngPredictDrawPane';
+import MngWorkoutItemsPane from '../../WorkoutItems/MngWorkoutItemsPane';
 
 const MngPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
@@ -31,7 +32,7 @@ const MngPane: React.FC<{ user: string }> = ({ user }) => {
   return (
     <Container maxWidth='sm'>
       <div style={{ display: 'grid', rowGap: 16, padding: '8px 0' }}>
-        <PageStatePane state={state} user={user} setState={setState} />
+        <PageStatePane user={user} />
         <Divider />
         {(() => {
           switch (state) {
@@ -44,6 +45,8 @@ const MngPane: React.FC<{ user: string }> = ({ user }) => {
               return <MngBPMTrackPane />;
             case 'readTimePerformance':
               return <MngTimePane />;
+            case 'workoutItems':
+              return <MngWorkoutItemsPane />;
             default:
               return <></>;
           }

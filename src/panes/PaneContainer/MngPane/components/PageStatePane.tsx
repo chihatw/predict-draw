@@ -6,9 +6,9 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { useContext, useMemo } from 'react';
-import AppContext, { PageState } from '../../../services/context';
-import usePageState from '../../../services/usePageState';
-import usePredict from '../../../services/usePredict';
+import AppContext, { PageState } from '../../../../services/context';
+import usePageState from '../../../../services/usePageState';
+import usePredict from '../../../../services/usePredict';
 
 const PAGE_STATE: { value: PageState; label: string }[] = [
   { value: 'readTimePractice', label: '時間表示練習' },
@@ -21,17 +21,11 @@ const PAGE_STATE: { value: PageState; label: string }[] = [
   { value: 'draw', label: '返答' },
   { value: 'talkingToLiSan', label: '李さんに' },
   { value: 'talkingToKouSan', label: '黄さんに' },
+  { value: 'workoutItems', label: 'WorkoutItems' },
   { value: '', label: '空欄' },
 ];
 
-const PageStatePane = ({
-  user,
-  setState,
-}: {
-  state: PageState;
-  user: string;
-  setState: (state: PageState) => void;
-}) => {
+const PageStatePane = ({ user }: { user: string }) => {
   const {
     liSanPageState,
     kouSanPageState,

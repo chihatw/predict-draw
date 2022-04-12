@@ -1,5 +1,5 @@
 import Layout from '../Layout';
-import MngPane from '../panes/MngPane';
+import MngPane from '../panes/PaneContainer/MngPane';
 
 const MngKouSanPage = () => {
   return (

@@ -1,10 +1,10 @@
 import Layout from '../Layout';
-import PaneSwitcher from '../panes/PaneSwitcher';
+import UserPane from '../panes/PaneContainer/UserPane';
 
 const KouSanPage = () => {
   return (
     <Layout color='blue' label='黄さん'>
-      <PaneSwitcher user='kouSan' />
+      <UserPane user='kouSan' />
     </Layout>
   );
 };
