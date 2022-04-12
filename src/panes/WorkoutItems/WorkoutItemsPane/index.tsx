@@ -1,22 +1,35 @@
 import { ClearRounded, StopCircleRounded } from '@mui/icons-material';
 import { Container, IconButton } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo, useEffect, useRef, useState } from 'react';
+import string2PitchesArray from 'string2pitches-array';
 import {
   useHandleWorkoutItems,
   useWorkoutItems,
+  WorkoutItem,
 } from '../../../services/useWorkoutItems';
+import BPMPane from '../../BpmCalcPane/components/BPMPane';
 import TimerDisplay from './components/TimerDisplay';
 import WorkoutItemRow from './components/WorkoutItemRow';
 
 const WorkoutItemsPane = () => {
   const { workoutItems, checkedIndexes: superCheckedIndexes } =
     useWorkoutItems();
+
+  const beatCount = useMemo(() => {
+    const pitchesArrayLines = workoutItems.map((workoutItem) =>
+      string2PitchesArray(workoutItem.pitchesArray)
+    );
+    return Math.ceil(pitchesArrayLines.flat(2).length / 2);
+  }, [workoutItems]);
+
   const { setCheckedIndexes: superSetCheckedIndexes } = useHandleWorkoutItems();
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [currentCheckedIndex, setCurrentCheckedIndex] = useState(-1);
 
-  const [isRunning, setIsRunning] = useState(false);
   const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [bpm, setBpm] = useState(0);
+
   const startAtRef = useRef(0);
   const rafRef = useRef(0);
 
@@ -59,15 +72,32 @@ const WorkoutItemsPane = () => {
     superSetCheckedIndexes([]);
     setCurrentCheckedIndex(-1);
     setTime(0);
+    setBpm(0);
   };
 
   const handleClickStop = () => {
     stop();
+    const bpm = Math.floor(beatCount / (time / 1000 / 60));
+    setBpm(bpm);
   };
 
   return (
     <Container maxWidth='sm'>
-      <TimerDisplay time={time} />
+      <div
+        style={{
+          height: 115,
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+        }}
+      >
+        {checkedIndexes.length === workoutItems.length && !isRunning ? (
+          <BPMPane bpm={bpm} />
+        ) : (
+          <TimerDisplay time={time} />
+        )}
+      </div>
+
       <div style={{ display: 'grid', rowGap: 0 }}>
         {workoutItems.map((workoutItem, index) => (
           <WorkoutItemRow
