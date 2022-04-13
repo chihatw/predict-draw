@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { db } from '../repositories/firebase';
 import {
+  setDocumenValue,
   updateDocumenValue,
   snapshotDocumentValue,
-  setDocumenValue,
 } from '../repositories/utils';
 
 const COLLECTION = 'bpmTrack';

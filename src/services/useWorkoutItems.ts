@@ -1,8 +1,9 @@
+import { Unsubscribe } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
-import { setDocumenValue, snapshotDocumentValue } from '../repositories/utils';
 
 import { db } from '../repositories/firebase';
-import { Unsubscribe } from 'firebase/firestore';
+import { setDocumenValue, snapshotDocumentValue } from '../repositories/utils';
+
 const COLLECTION = 'workoutItems';
 const WORKOUT_ITEMS_ID = 'workoutItems';
 const CHECKED_INDEXES = 'checkedIndexes';
