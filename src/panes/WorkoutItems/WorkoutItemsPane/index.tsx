@@ -1,3 +1,4 @@
+import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { ClearRounded, StopCircleRounded } from '@mui/icons-material';
 import { Container, IconButton } from '@mui/material';
 import React, { useMemo, useEffect, useRef, useState } from 'react';
@@ -5,9 +6,8 @@ import string2PitchesArray from 'string2pitches-array';
 import {
   useHandleWorkoutItems,
   useWorkoutItems,
-  WorkoutItem,
 } from '../../../services/useWorkoutItems';
-import BPMPane from '../../BpmCalcPane/components/BPMPane';
+
 import TimerDisplay from './components/TimerDisplay';
 import WorkoutItemRow from './components/WorkoutItemRow';
 
@@ -92,7 +92,7 @@ const WorkoutItemsPane = () => {
         }}
       >
         {checkedIndexes.length === workoutItems.length && !isRunning ? (
-          <BPMPane bpm={bpm} />
+          <BpmPane bpm={bpm} fontSize={88} />
         ) : (
           <TimerDisplay time={time} />
         )}

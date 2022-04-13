@@ -1,9 +1,10 @@
 import React from 'react';
-import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
+
 import { Container } from '@mui/material';
 
 import BpmPlayer from '../components/BpmPlayer';
 import useBpmTrack from '../../../services/useBpmTrack';
+import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 
 const BpmTrackPane = () => {
   const {

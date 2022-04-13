@@ -1,11 +1,12 @@
 import { Button } from '@mui/material';
-import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
+
 import React, { useRef, useState } from 'react';
 
 import TimePane from './components/TimePane';
 import TimerButton from './components/TimerButton';
 import BPMCulcLabel from './components/BPMCulcLabel';
 import { useBpmCalc, useHandleBpmCalc } from '../../services/useBpmCalc';
+import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 
 export const BpmCulc = () => {
   const { label, beatCount } = useBpmCalc();
