@@ -1,6 +1,6 @@
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { Sync } from '@mui/icons-material';
-import { Container, IconButton } from '@mui/material';
+import { Container, IconButton, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -74,6 +74,7 @@ const WorkoutItemsPane = () => {
               isCurrentChecked={currentCheckedIndex === index}
             />
           ))}
+        {!workoutTime.isRunning && !superCheckedIndexes.length && <ReadySign />}
 
         {workoutTime.isRunning &&
           workoutRound.currentRound !== workoutRound.totalRounds &&
@@ -93,6 +94,23 @@ const WorkoutItemsPane = () => {
 };
 
 export default WorkoutItemsPane;
+
+const ReadySign = () => {
+  const theme = useTheme();
+  return (
+    <div
+      style={{
+        ...(theme.typography as any).lato900,
+        textAlign: 'center',
+        color: '#ccc',
+        fontSize: 88,
+        paddingTop: 120,
+      }}
+    >
+      Ready!!
+    </div>
+  );
+};
 
 const NextRoundButton = ({
   handleClickNextRound,

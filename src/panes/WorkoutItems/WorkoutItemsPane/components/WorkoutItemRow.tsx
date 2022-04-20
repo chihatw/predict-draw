@@ -37,9 +37,6 @@ const WorkoutItemRow = ({
             alignItems: 'center',
           }}
         >
-          <div style={{ fontSize: 14 }}>{`${index + 1}.${
-            workoutItem.text
-          }`}</div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div
               style={{
