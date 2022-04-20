@@ -22,6 +22,7 @@ const PAGE_STATE: { value: PageState; label: string }[] = [
   { value: 'talkingToLiSan', label: '李さんに' },
   { value: 'talkingToKouSan', label: '黄さんに' },
   { value: 'workoutItems', label: 'WorkoutItems' },
+  { value: 'workoutItemsPlayer', label: 'WorkoutItemsPlayer' },
   { value: '', label: '空欄' },
 ];
 

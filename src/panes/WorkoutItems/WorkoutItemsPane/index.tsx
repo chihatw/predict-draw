@@ -1,60 +1,28 @@
-import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
-import { ClearRounded, StopCircleRounded } from '@mui/icons-material';
+import { Sync } from '@mui/icons-material';
 import { Container, IconButton } from '@mui/material';
-import React, { useMemo, useEffect, useRef, useState } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import React, { useEffect, useState } from 'react';
+
 import {
   useHandleWorkoutItems,
   useWorkoutItems,
 } from '../../../services/useWorkoutItems';
-
-import TimerDisplay from './components/TimerDisplay';
 import WorkoutItemRow from './components/WorkoutItemRow';
+import WorkoutStatus from '../components/WorkoutStatus';
 
 const WorkoutItemsPane = () => {
-  const { workoutItems, checkedIndexes: superCheckedIndexes } =
-    useWorkoutItems();
+  const { workoutItems, workoutRound, workoutTime } = useWorkoutItems();
 
-  const beatCount = useMemo(() => {
-    const pitchesArrayLines = workoutItems.map((workoutItem) =>
-      string2PitchesArray(workoutItem.pitchesArray)
-    );
-    return Math.ceil(pitchesArrayLines.flat(2).length / 2);
-  }, [workoutItems]);
-
-  const { setCheckedIndexes: superSetCheckedIndexes } = useHandleWorkoutItems();
+  const { setCheckedIndexes: superSetCheckedIndexes, setWorkoutRound } =
+    useHandleWorkoutItems();
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [currentCheckedIndex, setCurrentCheckedIndex] = useState(-1);
 
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [bpm, setBpm] = useState(0);
-
-  const startAtRef = useRef(0);
-  const rafRef = useRef(0);
-
-  const start = () => {
-    startAtRef.current = performance.now();
-    loop();
-    setIsRunning(true);
-  };
-
-  const loop = () => {
-    const elapsedTime = performance.now() - startAtRef.current;
-    setTime(elapsedTime);
-    rafRef.current = window.requestAnimationFrame(loop);
-  };
-
-  const stop = () => {
-    const elapsedTime = performance.now() - startAtRef.current;
-    setTime(elapsedTime);
-    window.cancelAnimationFrame(rafRef.current);
-    setIsRunning(false);
-  };
-
   useEffect(() => {
-    setCheckedIndexes(superCheckedIndexes);
-  }, [superCheckedIndexes]);
+    if (!workoutTime.isRunning) {
+      setCheckedIndexes([]);
+      setCurrentCheckedIndex(-1);
+    }
+  }, [workoutTime]);
 
   const handleClickCheck = (index: number) => {
     const newCheckedIndexes = [...checkedIndexes];
@@ -62,27 +30,18 @@ const WorkoutItemsPane = () => {
     setCheckedIndexes(newCheckedIndexes);
     setCurrentCheckedIndex(index);
     superSetCheckedIndexes(newCheckedIndexes);
-    if (newCheckedIndexes.length === 1) {
-      start();
-    }
   };
 
-  const handleClickReset = () => {
+  const handleClickNextRound = () => {
+    const { totalRounds, currentRound } = workoutRound;
+    setWorkoutRound({ totalRounds, currentRound: currentRound + 1 });
     setCheckedIndexes([]);
     superSetCheckedIndexes([]);
     setCurrentCheckedIndex(-1);
-    setTime(0);
-    setBpm(0);
-  };
-
-  const handleClickStop = () => {
-    stop();
-    const bpm = Math.floor(beatCount / (time / 1000 / 60));
-    setBpm(bpm);
   };
 
   return (
-    <Container maxWidth='sm'>
+    <Container maxWidth='sm' sx={{ marginTop: 3 }}>
       <div
         style={{
           height: 115,
@@ -91,40 +50,53 @@ const WorkoutItemsPane = () => {
           justifyContent: 'center',
         }}
       >
-        {checkedIndexes.length === workoutItems.length && !isRunning ? (
-          <BpmPane bpm={bpm} fontSize={88} />
-        ) : (
-          <TimerDisplay time={time} />
-        )}
+        <WorkoutStatus />
       </div>
 
       <div style={{ display: 'grid', rowGap: 0 }}>
-        {workoutItems.map((workoutItem, index) => (
-          <WorkoutItemRow
-            key={index}
-            index={index}
-            workoutItem={workoutItem}
-            handleClick={() => handleClickCheck(index)}
-            isChecked={checkedIndexes.includes(index)}
-            isCurrentChecked={currentCheckedIndex === index}
-          />
-        ))}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {isRunning ? (
-            <IconButton onClick={handleClickStop}>
-              <StopCircleRounded sx={{ fontSize: 120, color: '#52a2aa' }} />
-            </IconButton>
-          ) : (
-            !!checkedIndexes.length && (
-              <IconButton onClick={handleClickReset}>
-                <ClearRounded sx={{ fontSize: 120, color: '#52a2aa' }} />
-              </IconButton>
-            )
+        {workoutTime.isRunning &&
+          workoutItems.map((workoutItem, index) => (
+            <WorkoutItemRow
+              key={index}
+              index={index}
+              workoutItem={workoutItem}
+              handleClick={() => handleClickCheck(index)}
+              isChecked={checkedIndexes.includes(index)}
+              isCurrentChecked={currentCheckedIndex === index}
+            />
+          ))}
+
+        {workoutTime.isRunning &&
+          workoutRound.currentRound !== workoutRound.totalRounds &&
+          checkedIndexes.length === workoutItems.length && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <NextRoundButton handleClickNextRound={handleClickNextRound} />
+            </div>
           )}
-        </div>
       </div>
     </Container>
   );
 };
 
 export default WorkoutItemsPane;
+
+const NextRoundButton = ({
+  handleClickNextRound,
+}: {
+  handleClickNextRound: () => void;
+}) => (
+  <IconButton
+    sx={{
+      background: '#52a2aa',
+      ':hover': { background: '#52a2aa' },
+    }}
+    onClick={handleClickNextRound}
+  >
+    <Sync sx={{ fontSize: 82, color: '#fff' }} />
+  </IconButton>
+);

@@ -6,11 +6,11 @@ import Header from './components/Header';
 const HEADER_HEIGHT = 60;
 const PADDING_TOP = 8;
 
-const Layout: React.FC<{ color: 'red' | 'blue' | ''; label?: string }> = ({
-  color,
-  label,
-  children,
-}) => {
+const Layout: React.FC<{
+  color: 'red' | 'blue' | '';
+  label?: string;
+  children: React.ReactNode;
+}> = ({ color, label, children }) => {
   const theme = useTheme();
   const backgroundColor = useMemo(() => {
     let result = '';

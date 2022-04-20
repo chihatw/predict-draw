@@ -12,6 +12,7 @@ export type PageState =
   | 'readTimePerformance'
   | 'writeTimePerformance'
   | 'workoutItems'
+  | 'workoutItemsPlayer'
   | '';
 
 export type Users = {

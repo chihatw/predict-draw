@@ -11,6 +11,7 @@ import WorkoutItemsPane from '../WorkoutItems/WorkoutItemsPane';
 import ReadTimePractice from '../ReadWriteTime/ReadWriteTimePane/ReadTimePractice';
 import ReadTimePerformance from '../ReadWriteTime/ReadWriteTimePane/ReadTimePerformance';
 import WriteTimePerformance from '../ReadWriteTime/ReadWriteTimePane/WriteTimePerformance';
+import WorkoutItemsPlayerPane from '../WorkoutItems/WorkoutItemsPlayerPane';
 
 const UserPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
@@ -49,6 +50,8 @@ const UserPane: React.FC<{ user: string }> = ({ user }) => {
       return <BpmTrackPane />;
     case 'workoutItems':
       return <WorkoutItemsPane />;
+    case 'workoutItemsPlayer':
+      return <WorkoutItemsPlayerPane />;
     default:
       return <div></div>;
   }

@@ -46,6 +46,7 @@ const MngPane: React.FC<{ user: string }> = ({ user }) => {
             case 'readTimePerformance':
               return <MngTimePane />;
             case 'workoutItems':
+            case 'workoutItemsPlayer':
               return <MngWorkoutItemsPane />;
             default:
               return <></>;

@@ -1,6 +1,6 @@
 import { Check } from '@mui/icons-material';
 import { Button, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useHandleWorkoutItems,
   useWorkoutItems,
@@ -8,11 +8,20 @@ import {
 } from '../../../services/useWorkoutItems';
 
 const MngWorkoutItemsPane = () => {
-  const { checkedIndexes } = useWorkoutItems();
-  const { setWorkoutItems: setRemoteWorkoutItems, setCheckedIndexes } =
-    useHandleWorkoutItems();
+  const { checkedIndexes, workoutTime, workoutRound } = useWorkoutItems();
+  const {
+    setWorkoutItems: setRemoteWorkoutItems,
+    setCheckedIndexes,
+    setWorkoutRound,
+  } = useHandleWorkoutItems();
+
   const [workoutItemsStr, setWorkoutItemsStr] = useState('');
   const [workoutItems, setWorkoutItems] = useState<WorkoutItem[]>([]);
+  const [totalRounds, setTotalRounds] = useState(0);
+
+  useEffect(() => {
+    setTotalRounds(workoutRound.totalRounds);
+  }, [workoutRound]);
 
   const handleChangeWorkoutItemsStr = (value: string) => {
     setWorkoutItemsStr(value);
@@ -28,8 +37,19 @@ const MngWorkoutItemsPane = () => {
     setRemoteWorkoutItems(workoutItems);
   };
 
+  const handleChangeTotalRounds = (value: number) => {
+    setTotalRounds(value);
+    const { currentRound } = workoutRound;
+    setWorkoutRound({ totalRounds: value, currentRound });
+  };
+
   return (
     <div style={{ display: 'grid', rowGap: 40, paddingBottom: 80 }}>
+      <TextField
+        type='number'
+        value={totalRounds}
+        onChange={(e) => handleChangeTotalRounds(Number(e.target.value))}
+      />
       <Button
         variant='contained'
         sx={{ color: 'white' }}
@@ -37,6 +57,7 @@ const MngWorkoutItemsPane = () => {
       >
         Reset checked indexes
       </Button>
+      <div>{`bpm: ${workoutTime.bpm}`}</div>
       <div style={{ display: 'grid', rowGap: 8 }}>
         <TextField
           multiline
