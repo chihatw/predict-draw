@@ -1,3 +1,4 @@
+import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { Sync } from '@mui/icons-material';
 import { Container, IconButton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -10,7 +11,12 @@ import WorkoutItemRow from './components/WorkoutItemRow';
 import WorkoutStatus from '../components/WorkoutStatus';
 
 const WorkoutItemsPane = () => {
-  const { workoutItems, workoutRound, workoutTime } = useWorkoutItems();
+  const {
+    workoutItems,
+    workoutRound,
+    workoutTime,
+    checkedIndexes: superCheckedIndexes,
+  } = useWorkoutItems();
 
   const { setCheckedIndexes: superSetCheckedIndexes, setWorkoutRound } =
     useHandleWorkoutItems();
@@ -42,16 +48,19 @@ const WorkoutItemsPane = () => {
 
   return (
     <Container maxWidth='sm' sx={{ marginTop: 3 }}>
-      <div
-        style={{
-          height: 115,
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-        }}
-      >
-        <WorkoutStatus />
-      </div>
+      {!workoutTime.isRunning && !!superCheckedIndexes.length ? (
+        <BpmPane bpm={workoutTime.bpm} fontSize={88} />
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+
+            justifyContent: 'center',
+          }}
+        >
+          <WorkoutStatus />
+        </div>
+      )}
 
       <div style={{ display: 'grid', rowGap: 0 }}>
         {workoutTime.isRunning &&
