@@ -84,7 +84,7 @@ export const getBeatIntervals = ({
   type: string;
   syncopationRatio: number;
 }) => {
-  const intervals: number[] = [];
+  const intervals: [number, number] = [0, 0];
   let interval = 0;
   switch (type) {
     case 'mora':
@@ -92,13 +92,13 @@ export const getBeatIntervals = ({
     case 'syncopation':
       interval = (60 * 1000) / 2 / bpm;
       const _offset = (interval * (100 - syncopationRatio)) / 100;
-      intervals.push(Math.round(interval - _offset));
-      intervals.push(Math.round(interval + _offset));
+      intervals[0] = Math.round(interval - _offset);
+      intervals[1] = Math.round(interval + _offset);
       break;
     case 'syllable':
       interval = (60 * 1000) / bpm;
-      intervals.push(Math.round(interval));
-      intervals.push(Math.round(interval));
+      intervals[0] = Math.round(interval);
+      intervals[1] = Math.round(interval);
       break;
     default:
   }

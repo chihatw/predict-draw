@@ -1,5 +1,5 @@
+import { createRoot } from 'react-dom/client';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
@@ -63,7 +63,11 @@ const theme = createTheme({
   } as ExtendedTypographyOptions,
 });
 
-ReactDOM.render(
+const container = document.getElementById('root');
+if (!container) throw new Error('Fail to find the roote lement');
+const root = createRoot(container);
+
+root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -72,6 +76,5 @@ ReactDOM.render(
         </div>
       </BrowserRouter>
     </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

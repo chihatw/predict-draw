@@ -14,6 +14,8 @@ const WORKOUT_TIME_ID = 'workoutTime';
 const CHECKED_INDEXES = 'checkedIndexes';
 const WORKOUT_ITEMS_ID = 'workoutItems';
 const WORKOUT_ROUND_ID = 'workoutRound';
+const LI_SAN_WORKOUT_ITEMS_STR_ID = 'liSanWorkoutItemsStr';
+const KOU_SAN_WORKOUT_ITEMS_STR_ID = 'kouSanWorkoutItemsStr';
 
 export type WorkoutRound = {
   currentRound: number;
@@ -48,6 +50,8 @@ export const useWorkoutItems = () => {
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [workoutTime, setWorkoutTime] = useState(INITIAL_WORKOUT_TIME);
   const [workoutRound, setWorkoutRound] = useState(INITIAL_WORKOUT_ROUND);
+  const [liSanWorkoutItemsStr, setLiSanWorkoutItemsStr] = useState('');
+  const [kouSanWorkoutItemsStr, setKouSanWorkoutItemsStr] = useState('');
 
   const _snapshotDocument = useMemo(
     () =>
@@ -142,7 +146,38 @@ export const useWorkoutItems = () => {
     };
   }, []);
 
-  return { workoutItems, checkedIndexes, workoutTime, workoutRound };
+  useEffect(() => {
+    const unsub = _snapshotDocument({
+      id: LI_SAN_WORKOUT_ITEMS_STR_ID,
+      initialValue: '',
+      setValue: setLiSanWorkoutItemsStr,
+      buildValue: (doc: DocumentData) => doc.data().value || '',
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsub = _snapshotDocument({
+      id: KOU_SAN_WORKOUT_ITEMS_STR_ID,
+      initialValue: '',
+      setValue: setKouSanWorkoutItemsStr,
+      buildValue: (doc: DocumentData) => doc.data().value || '',
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  return {
+    workoutItems,
+    checkedIndexes,
+    workoutTime,
+    workoutRound,
+    liSanWorkoutItemsStr,
+    kouSanWorkoutItemsStr,
+  };
 };
 
 export const useHandleWorkoutItems = () => {
@@ -183,12 +218,20 @@ export const useHandleWorkoutItems = () => {
   const setWorkoutRound = (workoutRound: WorkoutRound) => {
     _setDocument({ ...workoutRound, id: WORKOUT_ROUND_ID });
   };
+  const setLiSanWorkoutItemsStr = (value: string) => {
+    _setDocument({ value, id: LI_SAN_WORKOUT_ITEMS_STR_ID });
+  };
+  const setKouSanWorkoutItemsStr = (value: string) => {
+    _setDocument({ value, id: KOU_SAN_WORKOUT_ITEMS_STR_ID });
+  };
 
   return {
     setWorkoutItems,
     setCheckedIndexes,
     setWorkoutTime,
     setWorkoutRound,
+    setLiSanWorkoutItemsStr,
+    setKouSanWorkoutItemsStr,
   };
 };
 

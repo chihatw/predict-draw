@@ -8,11 +8,19 @@ import {
 } from '../../../services/useWorkoutItems';
 
 const MngWorkoutItemsPane = () => {
-  const { checkedIndexes, workoutTime, workoutRound } = useWorkoutItems();
+  const {
+    checkedIndexes,
+    workoutTime,
+    workoutRound,
+    liSanWorkoutItemsStr,
+    kouSanWorkoutItemsStr,
+  } = useWorkoutItems();
   const {
     setWorkoutItems: setRemoteWorkoutItems,
     setCheckedIndexes,
     setWorkoutRound,
+    setLiSanWorkoutItemsStr,
+    setKouSanWorkoutItemsStr,
   } = useHandleWorkoutItems();
 
   const [workoutItemsStr, setWorkoutItemsStr] = useState('');
@@ -81,11 +89,51 @@ const MngWorkoutItemsPane = () => {
       >
         送信
       </Button>
+      <WorkoutItemsStrTextField
+        label='liSanWorkoutItemsStr'
+        setDocument={setLiSanWorkoutItemsStr}
+        superInput={liSanWorkoutItemsStr}
+      />
+      <WorkoutItemsStrTextField
+        label='kouSanWorkoutItemsStr'
+        setDocument={setKouSanWorkoutItemsStr}
+        superInput={kouSanWorkoutItemsStr}
+      />
     </div>
   );
 };
 
 export default MngWorkoutItemsPane;
+
+const WorkoutItemsStrTextField = ({
+  label,
+  setDocument,
+  superInput,
+}: {
+  label?: string;
+  superInput?: string;
+  setDocument?: (value: string) => void;
+}) => {
+  const [input, setInput] = useState('');
+
+  useEffect(() => {
+    if (!input) {
+      setInput(superInput || '');
+    }
+  }, [superInput]);
+
+  const handleChangeInput = (input: string) => {
+    setInput(input);
+    !!setDocument && setDocument(input);
+  };
+  return (
+    <TextField
+      label={label}
+      value={input}
+      onChange={(e) => handleChangeInput(e.target.value)}
+    />
+  );
+};
 
 const WorkoutItemRow = ({
   index,
