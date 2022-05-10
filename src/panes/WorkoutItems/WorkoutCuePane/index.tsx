@@ -9,6 +9,7 @@ import { INITIAL_WORKOUT } from '../../../services/useWorkouts';
 import ReadySign from './components/ReadySign';
 import NextButton from './components/NextButton';
 import CueList from './components/CueList';
+import WorkoutLabel from '../components/WorkoutLabel';
 
 const WorkoutCuePane = () => {
   const { workouts, workoutId, workoutTime, checkedIndexes } =
@@ -30,15 +31,7 @@ const WorkoutCuePane = () => {
 
   return (
     <Container maxWidth='sm' sx={{ marginTop: 3 }}>
-      <div
-        style={{
-          color: '#aaa',
-          fontSize: 20,
-          textAlign: 'center',
-        }}
-      >
-        {`${label}（${beatCount}拍）`}
-      </div>
+      <WorkoutLabel label={label} beatCount={beatCount} />
       {!isRunning && !!checkedIndexes.length ? (
         <BpmPane bpm={bpm} fontSize={88} />
       ) : (

@@ -1,9 +1,11 @@
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
+
 import React, { useContext, useRef, useState } from 'react';
 
 import AppContext from '../../../services/context';
 import { useHandleWorkoutItems } from '../../../services/useWorkoutItems';
 import { INITIAL_WORKOUT } from '../../../services/useWorkouts';
+import WorkoutLabel from '../components/WorkoutLabel';
 import WorkoutStatus from '../components/WorkoutStatus';
 import StartReset from './components/StartReset';
 import StopButton from './components/StopButton';
@@ -59,16 +61,8 @@ const WorkoutReadPane = () => {
     setWorkoutRound({ currentRound: 1, totalRounds });
   };
   return (
-    <div style={{ display: 'grid', rowGap: 32, marginTop: 32 }}>
-      <div
-        style={{
-          color: '#aaa',
-          fontSize: 20,
-          textAlign: 'center',
-        }}
-      >
-        {`${label}（${beatCount}拍）`}
-      </div>
+    <div style={{ display: 'grid', rowGap: 32 }}>
+      <WorkoutLabel label={label} beatCount={beatCount} />
       {!isRunning && checkedIndexes.length ? (
         <BpmPane bpm={bpm} fontSize={88} />
       ) : (

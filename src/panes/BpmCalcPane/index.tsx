@@ -1,16 +1,27 @@
 import { Button } from '@mui/material';
 
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import TimePane from './components/TimePane';
 import TimerButton from './components/TimerButton';
 import BPMCulcLabel from './components/BPMCulcLabel';
-import { useBpmCalc, useHandleBpmCalc } from '../../services/useBpmCalc';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
+import AppContext from '../../services/context';
+import { INITIAL_WORKOUT } from '../../services/useWorkouts';
+import {
+  INITIAL_WORKOUT_TIME,
+  useHandleWorkoutItems,
+} from '../../services/useWorkoutItems';
 
 export const BpmCulc = () => {
-  const { label, beatCount } = useBpmCalc();
-  const { startTimer, stopTimer } = useHandleBpmCalc();
+  const { workoutId, workouts, workoutTime } = useContext(AppContext);
+
+  const { setWorkoutTime } = useHandleWorkoutItems();
+
+  const workout =
+    workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
+
+  const { beatCount, label } = workout;
 
   const loopIdRef = useRef(0);
   const startAtRef = useRef(0);
@@ -19,17 +30,9 @@ export const BpmCulc = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [miliSeconds, setMiliSeconds] = useState(0);
 
-  const handleClick = () => {
-    if (isRunning) {
-      stop();
-    } else {
-      start();
-    }
-  };
-
   const start = () => {
     setIsRunning(true);
-    startTimer();
+    setWorkoutTime({ ...workoutTime, isRunning: true });
     startAtRef.current = performance.now();
     loopIdRef.current = requestAnimationFrame(loop);
     setBpm(-1);
@@ -46,12 +49,21 @@ export const BpmCulc = () => {
     cancelAnimationFrame(loopIdRef.current);
     const bpm = calcBpm({ miliSeconds: elapsedTime, beatCount });
     setBpm(bpm);
-    stopTimer(bpm);
+    setWorkoutTime({ time: elapsedTime, bpm, isRunning: false });
+  };
+
+  const handleClick = () => {
+    if (isRunning) {
+      stop();
+    } else {
+      start();
+    }
   };
 
   const handleReset = () => {
     setMiliSeconds(0);
     setBpm(-1);
+    setWorkoutTime(INITIAL_WORKOUT_TIME);
   };
 
   return (

@@ -1,7 +1,6 @@
 import { Container, Divider } from '@mui/material';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import MngBpmCalc from '../../MngBpmCalcPane';
 import AppContext from '../../../services/context';
 import MngTimePane from '../../ReadWriteTime/MngReadWiteTimePane';
 import PageStatePane from './components/PageStatePane';
@@ -39,12 +38,11 @@ const MngPane: React.FC<{ user: string }> = ({ user }) => {
             case 'draw':
             case 'predict':
               return <MngPredictDrawPane />;
-            case 'bpmCalc':
-              return <MngBpmCalc />;
             case 'bpmTrack':
               return <MngBPMTrackPane />;
             case 'readTimePerformance':
               return <MngTimePane />;
+            case 'bpmCalc':
             case 'workoutCue':
             case 'workoutRead':
               return <MngWorkoutPane />;
