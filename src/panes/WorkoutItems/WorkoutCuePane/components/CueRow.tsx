@@ -1,23 +1,23 @@
 import { Check } from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
 import React from 'react';
-import { WorkoutItem } from '../../../../services/useWorkoutItems';
+import CueCell from './CueCell';
 
-const WorkoutItemRow = ({
-  index,
+const CueRow = ({
+  cue,
+  cueType,
   isChecked,
-  workoutItem,
-  isCurrentChecked,
+  isActive,
   handleClick,
 }: {
-  index: number;
+  cue: string;
+  cueType: string;
   isChecked: boolean;
-  workoutItem: WorkoutItem;
-  isCurrentChecked: boolean;
+  isActive: boolean;
   handleClick: () => void;
 }) => {
   return (
-    <Collapse in={!isChecked || isCurrentChecked}>
+    <Collapse in={!isChecked || isActive}>
       <Button
         fullWidth
         sx={{
@@ -38,19 +38,7 @@ const WorkoutItemRow = ({
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div
-              style={{
-                flexGrow: 1,
-                fontSize: 16,
-                color: '#52a2aa',
-                background: isCurrentChecked ? 'lightyellow' : 'transparent',
-                padding: 4,
-                borderRadius: 4,
-                marginRight: 16,
-              }}
-            >
-              {workoutItem.chinese}
-            </div>
+            <CueCell cue={cue} cueType={cueType} isActive={isActive} />
             <Check sx={{ color: isChecked ? '#52a2aa' : '#eee' }} />
           </div>
         </div>
@@ -59,4 +47,4 @@ const WorkoutItemRow = ({
   );
 };
 
-export default WorkoutItemRow;
+export default CueRow;

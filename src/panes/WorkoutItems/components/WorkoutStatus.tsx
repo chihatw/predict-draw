@@ -1,16 +1,32 @@
 import { useTheme } from '@mui/system';
-import React from 'react';
-import { useWorkoutItems } from '../../../services/useWorkoutItems';
+import React, { useContext, useEffect, useState } from 'react';
+import AppContext from '../../../services/context';
+import { INITIAL_WORKOUT } from '../../../services/useWorkouts';
 
 const WorkoutStatus = () => {
-  const { workoutRound, checkedIndexes, workoutItems } = useWorkoutItems();
-  const { totalRounds, currentRound } = workoutRound;
   const theme = useTheme();
+  const { workouts, workoutRound, checkedIndexes, workoutId } =
+    useContext(AppContext);
 
-  const currentIndex =
-    workoutItems.length * (currentRound - 1) + checkedIndexes.length;
+  const workout =
+    workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
+  const workoutItems = workout.items;
 
-  const totalItems = workoutItems.length * totalRounds;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+
+  useEffect(() => {
+    const { currentRound } = workoutRound;
+    const currentIndex =
+      workoutItems.length * (currentRound - 1) + checkedIndexes.length;
+    setCurrentIndex(currentIndex);
+  }, [checkedIndexes, workoutRound]);
+
+  useEffect(() => {
+    const { totalRounds } = workoutRound;
+    const totalItems = workoutItems.length * totalRounds;
+    setTotalItems(totalItems);
+  }, [workoutItems, workoutRound]);
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>

@@ -5,24 +5,19 @@ import {
   FormControl,
   FormControlLabel,
 } from '@mui/material';
-import { useContext, useMemo } from 'react';
-import AppContext, { PageState } from '../../../../services/context';
+import { useMemo } from 'react';
+import { PageState } from '../../../../services/context';
 import usePageState from '../../../../services/usePageState';
 import usePredict from '../../../../services/usePredict';
 
 const PAGE_STATE: { value: PageState; label: string }[] = [
-  { value: 'readTimePractice', label: '時間表示練習' },
-  { value: 'readTimePerformance', label: '時間表示本番' },
-  { value: 'writeTimePerformance', label: '時間入力' },
   { value: 'greeting', label: '挨拶' },
-  { value: 'bpmCalc', label: 'BPMCalc' },
+  { value: 'bpmCalc', label: 'BPM計測' },
   { value: 'bpmTrack', label: 'BPMTrack' },
-  { value: 'predict', label: '質問' },
-  { value: 'draw', label: '返答' },
   { value: 'talkingToLiSan', label: '李さんに' },
   { value: 'talkingToKouSan', label: '黄さんに' },
-  { value: 'workoutItems', label: 'WorkoutItems' },
-  { value: 'workoutItemsPlayer', label: 'WorkoutItemsPlayer' },
+  { value: 'workoutCue', label: 'キュー出し' },
+  { value: 'workoutRead', label: 'キュー受け' },
   { value: '', label: '空欄' },
 ];
 

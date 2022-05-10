@@ -7,7 +7,7 @@ import MngTimePane from '../../ReadWriteTime/MngReadWiteTimePane';
 import PageStatePane from './components/PageStatePane';
 import MngBPMTrackPane from '../../BPMTrack/MngBPMTrackPane';
 import MngPredictDrawPane from '../../PredictDraw/MngPredictDrawPane';
-import MngWorkoutItemsPane from '../../WorkoutItems/MngWorkoutItemsPane';
+import MngWorkoutPane from '../../WorkoutItems/MngWorkoutPane';
 
 const MngPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
@@ -45,9 +45,9 @@ const MngPane: React.FC<{ user: string }> = ({ user }) => {
               return <MngBPMTrackPane />;
             case 'readTimePerformance':
               return <MngTimePane />;
-            case 'workoutItems':
-            case 'workoutItemsPlayer':
-              return <MngWorkoutItemsPane />;
+            case 'workoutCue':
+            case 'workoutRead':
+              return <MngWorkoutPane />;
             default:
               return <></>;
           }

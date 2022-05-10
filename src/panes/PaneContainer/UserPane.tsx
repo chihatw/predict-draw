@@ -7,11 +7,11 @@ import AppContext from '../../services/context';
 import { BpmCulc } from '../BpmCalcPane';
 import BpmTrackPane from '../BPMTrack/BpmTrackPane';
 import { PredictPane } from '../PredictDraw/PredictDrawPane/PredictPane';
-import WorkoutItemsPane from '../WorkoutItems/WorkoutItemsPane';
+import WorkoutCuePane from '../WorkoutItems/WorkoutCuePane';
 import ReadTimePractice from '../ReadWriteTime/ReadWriteTimePane/ReadTimePractice';
 import ReadTimePerformance from '../ReadWriteTime/ReadWriteTimePane/ReadTimePerformance';
 import WriteTimePerformance from '../ReadWriteTime/ReadWriteTimePane/WriteTimePerformance';
-import WorkoutItemsPlayerPane from '../WorkoutItems/WorkoutItemsPlayerPane';
+import WorkoutReadPane from '../WorkoutItems/WorkoutReadPane';
 
 const UserPane: React.FC<{ user: string }> = ({ user }) => {
   const { liSanPageState, kouSanPageState } = useContext(AppContext);
@@ -48,10 +48,10 @@ const UserPane: React.FC<{ user: string }> = ({ user }) => {
       return <Draw />;
     case 'bpmTrack':
       return <BpmTrackPane />;
-    case 'workoutItems':
-      return <WorkoutItemsPane />;
-    case 'workoutItemsPlayer':
-      return <WorkoutItemsPlayerPane />;
+    case 'workoutCue':
+      return <WorkoutCuePane />;
+    case 'workoutRead':
+      return <WorkoutReadPane />;
     default:
       return <div></div>;
   }

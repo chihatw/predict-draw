@@ -10,12 +10,11 @@ import {
 } from '../repositories/utils';
 
 const COLLECTION = 'workoutItems';
+
 const WORKOUT_TIME_ID = 'workoutTime';
 const CHECKED_INDEXES = 'checkedIndexes';
-const WORKOUT_ITEMS_ID = 'workoutItems';
 const WORKOUT_ROUND_ID = 'workoutRound';
-const LI_SAN_WORKOUT_ITEMS_STR_ID = 'liSanWorkoutItemsStr';
-const KOU_SAN_WORKOUT_ITEMS_STR_ID = 'kouSanWorkoutItemsStr';
+const WORKOUT_ID_ID = 'workoutId';
 
 export type WorkoutRound = {
   currentRound: number;
@@ -24,13 +23,7 @@ export type WorkoutRound = {
 
 export const INITIAL_WORKOUT_ROUND: WorkoutRound = {
   currentRound: 1,
-  totalRounds: 0,
-};
-
-export type WorkoutItem = {
-  text: string;
-  chinese: string;
-  pitchesArray: string;
+  totalRounds: 1,
 };
 
 export type WorkoutTime = {
@@ -46,12 +39,10 @@ export const INITIAL_WORKOUT_TIME: WorkoutTime = {
 };
 
 export const useWorkoutItems = () => {
-  const [workoutItems, setWorkoutItems] = useState<WorkoutItem[]>([]);
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [workoutTime, setWorkoutTime] = useState(INITIAL_WORKOUT_TIME);
   const [workoutRound, setWorkoutRound] = useState(INITIAL_WORKOUT_ROUND);
-  const [liSanWorkoutItemsStr, setLiSanWorkoutItemsStr] = useState('');
-  const [kouSanWorkoutItemsStr, setKouSanWorkoutItemsStr] = useState('');
+  const [workoutId, setWorkoutId] = useState('');
 
   const _snapshotDocument = useMemo(
     () =>
@@ -102,17 +93,6 @@ export const useWorkoutItems = () => {
 
   useEffect(() => {
     const unsub = _snapshotDocumentValue({
-      docId: WORKOUT_ITEMS_ID,
-      initialValue: [],
-      setValue: setWorkoutItems,
-    });
-    return () => {
-      unsub();
-    };
-  }, []);
-
-  useEffect(() => {
-    const unsub = _snapshotDocumentValue({
       docId: CHECKED_INDEXES,
       initialValue: [],
       setValue: setCheckedIndexes,
@@ -145,38 +125,22 @@ export const useWorkoutItems = () => {
       unsub();
     };
   }, []);
-
   useEffect(() => {
-    const unsub = _snapshotDocument({
-      id: LI_SAN_WORKOUT_ITEMS_STR_ID,
+    const unsub = _snapshotDocumentValue({
+      docId: WORKOUT_ID_ID,
       initialValue: '',
-      setValue: setLiSanWorkoutItemsStr,
-      buildValue: (doc: DocumentData) => doc.data().value || '',
+      setValue: setWorkoutId,
     });
     return () => {
       unsub();
     };
-  }, []);
-
-  useEffect(() => {
-    const unsub = _snapshotDocument({
-      id: KOU_SAN_WORKOUT_ITEMS_STR_ID,
-      initialValue: '',
-      setValue: setKouSanWorkoutItemsStr,
-      buildValue: (doc: DocumentData) => doc.data().value || '',
-    });
-    return () => {
-      unsub();
-    };
-  }, []);
+  });
 
   return {
-    workoutItems,
-    checkedIndexes,
+    workoutId,
     workoutTime,
     workoutRound,
-    liSanWorkoutItemsStr,
-    kouSanWorkoutItemsStr,
+    checkedIndexes,
   };
 };
 
@@ -205,9 +169,6 @@ export const useHandleWorkoutItems = () => {
     []
   );
 
-  const setWorkoutItems = (value: WorkoutItem[]) =>
-    _setDocumentValue({ value, docId: WORKOUT_ITEMS_ID });
-
   const setCheckedIndexes = (value: number[]) =>
     _setDocumentValue({ value, docId: CHECKED_INDEXES });
 
@@ -218,20 +179,16 @@ export const useHandleWorkoutItems = () => {
   const setWorkoutRound = (workoutRound: WorkoutRound) => {
     _setDocument({ ...workoutRound, id: WORKOUT_ROUND_ID });
   };
-  const setLiSanWorkoutItemsStr = (value: string) => {
-    _setDocument({ value, id: LI_SAN_WORKOUT_ITEMS_STR_ID });
-  };
-  const setKouSanWorkoutItemsStr = (value: string) => {
-    _setDocument({ value, id: KOU_SAN_WORKOUT_ITEMS_STR_ID });
+
+  const setWorkoutId = (workoutId: string) => {
+    _setDocument({ value: workoutId, id: WORKOUT_ID_ID });
   };
 
   return {
-    setWorkoutItems,
-    setCheckedIndexes,
+    setWorkoutId,
     setWorkoutTime,
     setWorkoutRound,
-    setLiSanWorkoutItemsStr,
-    setKouSanWorkoutItemsStr,
+    setCheckedIndexes,
   };
 };
 
