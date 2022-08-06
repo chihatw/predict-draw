@@ -5,31 +5,25 @@ import {
   FormControl,
   FormControlLabel,
 } from '@mui/material';
-import { useMemo } from 'react';
-import { PageState } from '../../../../services/context';
-import usePageState from '../../../../services/usePageState';
-import usePredict from '../../../../services/usePredict';
+import { useContext, useMemo } from 'react';
+import { pages } from '../../../../Model';
+import AppContext from '../../../../services/context';
 
-const PAGE_STATE: { value: PageState; label: string }[] = [
-  { value: 'greeting', label: '挨拶' },
-  { value: 'bpmCalc', label: 'BPM計測' },
-  { value: 'bpmTrack', label: 'BPMTrack' },
-  { value: 'talkingToLiSan', label: '李さんに' },
-  { value: 'talkingToKouSan', label: '黄さんに' },
-  { value: 'workoutCue', label: 'キュー出し' },
-  { value: 'workoutRead', label: 'キュー受け' },
-  { value: '', label: '空欄' },
+import usePageState, { setPageState } from '../../../../services/pageState';
+import { ActionTypes } from '../../../../Update';
+
+const PAGE_STATE: { value: string; label: string }[] = [
+  { value: pages.bpmCalc, label: 'BPM計測' },
+  { value: pages.workoutCue, label: 'キュー出し' },
+  { value: pages.workoutRead, label: 'キュー受け' },
+  { value: pages.blank, label: '空欄' },
 ];
 
 const PageStatePane = ({ user }: { user: string }) => {
-  const {
-    liSanPageState,
-    kouSanPageState,
-    updateLiSanPageState,
-    updateKouSanPageState,
-  } = usePageState();
+  const { dispatch, state } = useContext(AppContext);
+  const { liSanPageState, kouSanPageState } = state;
 
-  const state = useMemo(() => {
+  const _state = useMemo(() => {
     switch (user) {
       case 'liSan':
         return liSanPageState;
@@ -40,16 +34,17 @@ const PageStatePane = ({ user }: { user: string }) => {
     }
   }, [liSanPageState, kouSanPageState, user]);
 
-  const { updatePredict } = usePredict();
-
-  const handleChangeState = (state: PageState) => {
-    updatePredict('');
+  const handleChangeState = (state: string) => {
+    if (!dispatch) return;
     switch (user) {
       case 'liSan':
-        updateLiSanPageState(state);
+        dispatch({ type: ActionTypes.changeLiSanPageState, payload: state });
+        setPageState({ id: 'liSan', state });
         break;
       case 'kouSan':
-        updateKouSanPageState(state);
+        // local
+        dispatch({ type: ActionTypes.changeKouSanPageState, payload: state });
+        setPageState({ id: 'kouSan', state });
         break;
       default:
     }
@@ -60,8 +55,8 @@ const PageStatePane = ({ user }: { user: string }) => {
       <FormLabel sx={{ fontSize: 12 }}>状態</FormLabel>
       <RadioGroup
         row
-        value={state}
-        onChange={(e) => handleChangeState(e.target.value as PageState)}
+        value={_state}
+        onChange={(e) => handleChangeState(e.target.value)}
       >
         {PAGE_STATE.map(({ value, label }, index) => (
           <FormControlLabel

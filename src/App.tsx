@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { INITIAL_STATE } from './Model';
 
 import AppRoutes from './routes/AppRoutes';
 import AppContext from './services/context';
-import usePageState from './services/usePageState';
+import usePageState from './services/pageState';
 import { useWorkoutItems } from './services/useWorkoutItems';
 import { useWorkouts } from './services/useWorkouts';
+import { reducer } from './Update';
 
 function App() {
-  const { liSanPageState, kouSanPageState } = usePageState();
-  const navigate = useNavigate();
-
-  const handleNavigate = (pathname: string) => {
-    navigate(pathname);
-  };
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  usePageState(dispatch);
 
   const { workoutId, workoutRound, workoutTime, checkedIndexes } =
     useWorkoutItems();
@@ -21,14 +19,13 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        liSanPageState,
-        kouSanPageState,
         workouts,
         workoutId,
         workoutRound,
         workoutTime,
         checkedIndexes,
-        handleNavigate,
+        state,
+        dispatch,
       }}
     >
       <AppRoutes />
