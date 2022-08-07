@@ -1,11 +1,12 @@
 import * as R from 'ramda';
-import { State, Workout } from './Model';
+import { NoteState, State, Workout } from './Model';
 
 export const ActionTypes = {
   setRounds: 'setRounds',
   setWokout: 'setWorkout',
   setWorkouts: 'setWorkouts',
   setWorkoutId: 'setWorkoutId',
+  setNoteState: 'setNoteState',
   setWorkoutTime: 'setWorkoutTime',
   setCheckedIndexes: 'setCheckedIndexes',
   setLiSanPageState: 'setLiSanPageState',
@@ -20,6 +21,7 @@ export type Action = {
     | number[]
     | Workout
     | Workout[]
+    | NoteState
     | {
         totalRounds: number;
         currentRound: number;
@@ -36,6 +38,12 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts } = state;
 
   switch (type) {
+    case ActionTypes.setNoteState: {
+      const noteState = payload as NoteState;
+      return R.compose(R.assocPath<NoteState, State>(['note'], noteState))(
+        state
+      );
+    }
     case ActionTypes.setWokout: {
       const workout = payload as Workout;
       let updatedList = [...workouts];

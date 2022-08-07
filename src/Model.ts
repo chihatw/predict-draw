@@ -1,3 +1,5 @@
+import { PitchesArray } from './services/note';
+
 export type WorkoutId = {
   id: string;
   value: string;
@@ -80,16 +82,28 @@ export const INITIAL_WORKOUT_PARAMS: WorkoutParams = {
   checkedIndexes: [],
 };
 
+export type NoteState = {
+  texts: string[];
+  pitches: string[];
+};
+
+export const INITIAL_NOTE_STATE: NoteState = {
+  texts: [],
+  pitches: [],
+};
+
 export type State = {
-  liSanPageState: string;
-  kouSanPageState: string;
+  note: NoteState;
   workouts: Workout[];
   workoutParams: WorkoutParams;
+  liSanPageState: string;
+  kouSanPageState: string;
 };
 
 export const INITIAL_STATE: State = {
+  note: INITIAL_NOTE_STATE,
+  workouts: [],
   liSanPageState: pages.blank,
   kouSanPageState: pages.blank,
-  workouts: [],
   workoutParams: INITIAL_WORKOUT_PARAMS,
 };

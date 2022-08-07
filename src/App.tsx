@@ -8,12 +8,14 @@ import usePageState from './services/pageState';
 import { useWorkoutParams } from './services/workoutParams';
 import { useWorkouts } from './services/workout';
 import { reducer } from './Update';
+import useNote from './services/note';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  usePageState(dispatch);
+  useNote(dispatch);
   useWorkouts(dispatch);
+  usePageState(dispatch);
   useWorkoutParams(dispatch);
 
   return (
