@@ -10,7 +10,7 @@ const TimerButton = ({
   handleClick: () => void;
 }) => (
   <div style={{ display: 'flex', justifyContent: 'center' }}>
-    <IconButton color="primary" onClick={handleClick}>
+    <IconButton color='primary' onClick={handleClick}>
       {isRunning ? (
         <StopCircleRounded sx={{ fontSize: 120 }} />
       ) : (

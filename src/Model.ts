@@ -24,6 +24,17 @@ export type Workout = {
   createdAt: number;
 };
 
+export type WorkoutRound = {
+  currentRound: number;
+  totalRounds: number;
+};
+
+export type WorkoutTime = {
+  time: number;
+  bpm: number;
+  isRunning: boolean;
+};
+
 export const INITIAL_WORKOUT: Workout = {
   id: '',
   items: [],

@@ -2,24 +2,23 @@ import { Button } from '@mui/material';
 
 import React, { useContext, useRef, useState } from 'react';
 
-import TimePane from './components/TimePane';
-import TimerButton from './components/TimerButton';
-import BPMCulcLabel from './components/BPMCulcLabel';
+import TimePane from './TimePane';
+import TimerButton from './TimerButton';
+import BPMCulcLabel from './BPMCulcLabel';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import AppContext from '../../services/context';
 
+import { startBpmCalc, setBpmCalc } from '../../services/workoutParams';
 import {
+  INITIAL_WORKOUT,
   INITIAL_WORKOUT_TIME,
-  useHandleWorkoutItems,
-} from '../../services/workoutParams';
-import { INITIAL_WORKOUT } from '../../Model';
+  WorkoutTime,
+} from '../../Model';
 
 export const BpmCulc = () => {
   const { state } = useContext(AppContext);
   const { workouts, workoutParams } = state;
-  const { workoutId, time, bpm } = workoutParams;
-
-  const { setWorkoutTime } = useHandleWorkoutItems();
+  const { workoutId, bpm, isRunning } = workoutParams;
 
   const workout =
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
@@ -29,16 +28,12 @@ export const BpmCulc = () => {
   const loopIdRef = useRef(0);
   const startAtRef = useRef(0);
 
-  // const [bpm, setBpm] = useState(-1); // -1 で '--' を表示
-  const [isRunning, setIsRunning] = useState(false);
   const [miliSeconds, setMiliSeconds] = useState(0);
 
   const start = () => {
-    setIsRunning(true);
-    setWorkoutTime({ time, bpm, isRunning: true });
+    startBpmCalc();
     startAtRef.current = performance.now();
     loopIdRef.current = requestAnimationFrame(loop);
-    // setBpm(-1);
   };
   const loop = () => {
     const elapsedTime = Math.floor(performance.now() - startAtRef.current);
@@ -46,13 +41,16 @@ export const BpmCulc = () => {
     loopIdRef.current = requestAnimationFrame(loop);
   };
   const stop = () => {
-    setIsRunning(false);
     const elapsedTime = Math.floor(performance.now() - startAtRef.current);
     setMiliSeconds(elapsedTime);
     cancelAnimationFrame(loopIdRef.current);
     const bpm = calcBpm({ miliSeconds: elapsedTime, beatCount });
-    // setBpm(bpm);
-    setWorkoutTime({ time: elapsedTime, bpm, isRunning: false });
+    const newWorkoutTime: WorkoutTime = {
+      bpm,
+      time: elapsedTime,
+      isRunning: false,
+    };
+    setBpmCalc(newWorkoutTime);
   };
 
   const handleClick = () => {
@@ -65,8 +63,7 @@ export const BpmCulc = () => {
 
   const handleReset = () => {
     setMiliSeconds(0);
-    // setBpm(-1);
-    setWorkoutTime(INITIAL_WORKOUT_TIME);
+    setBpmCalc(INITIAL_WORKOUT_TIME);
   };
 
   return (

@@ -1,6 +1,12 @@
 import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import React, { useEffect, useMemo } from 'react';
-import { WorkoutId, WorkoutParams } from '../Model';
+import {
+  INITIAL_WORKOUT_ROUND,
+  INITIAL_WORKOUT_TIME,
+  WorkoutId,
+  WorkoutRound,
+  WorkoutTime,
+} from '../Model';
 
 import { db } from '../repositories/firebase';
 import { setDocument, setDocumenValue } from '../repositories/utils';
@@ -16,28 +22,6 @@ const WORKOUT_TIME_ID = 'workoutTime';
 const CHECKED_INDEXES = 'checkedIndexes';
 const WORKOUT_ROUND_ID = 'workoutRound';
 const WORKOUT_ID_ID = 'workoutId';
-
-export type WorkoutRound = {
-  currentRound: number;
-  totalRounds: number;
-};
-
-export const INITIAL_WORKOUT_ROUND: WorkoutRound = {
-  currentRound: 1,
-  totalRounds: 1,
-};
-
-export type WorkoutTime = {
-  time: number;
-  bpm: number;
-  isRunning: boolean;
-};
-
-export const INITIAL_WORKOUT_TIME: WorkoutTime = {
-  time: 0,
-  bpm: 0,
-  isRunning: false,
-};
 
 export const useWorkoutParams = (dispatch: React.Dispatch<Action> | null) => {
   useEffect(() => {
@@ -178,6 +162,19 @@ export const updateTotalRounds = async (totalRounds: number) => {
   await setDoc(doc(db, COLLECTIONS.workoutItems, 'checkedIndexes'), {
     value: [],
   });
+};
+
+export const startBpmCalc = async () => {
+  console.log('update workoutTime');
+  await setDoc(doc(db, COLLECTIONS.workoutItems, 'workoutTime'), {
+    ...INITIAL_WORKOUT_TIME,
+    isRunning: true,
+  });
+};
+
+export const setBpmCalc = async (workoutTime: WorkoutTime) => {
+  console.log('update workoutTime');
+  await setDoc(doc(db, COLLECTIONS.workoutItems, 'workoutTime'), workoutTime);
 };
 
 const buildWorkoutTime = (doc: DocumentData) => {
