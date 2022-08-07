@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material';
 import React, { useContext } from 'react';
 import { INITIAL_WORKOUT } from '../../../../Model';
 import AppContext from '../../../../services/context';
-import { useHandleWorkoutItems } from '../../../../services/workoutParams';
+import { setCurrentRound } from '../../../../services/workoutParams';
 
 const NextButton = ({
   resetCurrentIndex,
@@ -14,7 +14,6 @@ const NextButton = ({
   const { workouts, workoutParams } = state;
   const { workoutId, isRunning, totalRounds, currentRound, checkedIndexes } =
     workoutParams;
-  const { setCheckedIndexes, setWorkoutRound } = useHandleWorkoutItems();
 
   const workout =
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
@@ -22,8 +21,7 @@ const NextButton = ({
   const { items } = workout;
 
   const handleClickNextRound = () => {
-    setWorkoutRound({ totalRounds, currentRound: currentRound + 1 });
-    setCheckedIndexes([]);
+    setCurrentRound(currentRound + 1, totalRounds);
     resetCurrentIndex();
   };
 

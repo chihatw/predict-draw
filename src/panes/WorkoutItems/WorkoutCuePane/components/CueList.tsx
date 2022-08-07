@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { INITIAL_WORKOUT } from '../../../../Model';
 import AppContext from '../../../../services/context';
-import { useHandleWorkoutItems } from '../../../../services/workoutParams';
+import { setCheckedIndexes } from '../../../../services/workoutParams';
 
 import CueRow from './CueRow';
 
@@ -17,8 +17,6 @@ const CueList = ({
   const { workouts, workoutParams } = state;
   const { workoutId, isRunning, checkedIndexes } = workoutParams;
 
-  const { setCheckedIndexes } = useHandleWorkoutItems();
-
   const workout =
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
 
@@ -26,7 +24,8 @@ const CueList = ({
 
   const handleClickCheck = (index: number) => {
     setCurrentIndex(index);
-    setCheckedIndexes(checkedIndexes.concat([index]));
+    const newCheckedIndexes = checkedIndexes.concat([index]);
+    setCheckedIndexes(newCheckedIndexes);
   };
 
   if (isRunning) {

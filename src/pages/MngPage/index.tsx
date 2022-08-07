@@ -4,7 +4,7 @@ import Layout from '../../Layout';
 import { INITIAL_WORKOUT } from '../../Model';
 import AppContext from '../../services/context';
 import { setPageState } from '../../services/pageState';
-import { updateTotalRounds } from '../../services/workoutParams';
+import { resetWorkoutParams } from '../../services/workoutParams';
 import PageStatePane from './PageStatePane';
 import StatusPane from './StatusPane';
 import WorkoutItemList from './WorkoutItemList';
@@ -21,7 +21,7 @@ const MngPage = () => {
 
   const handleChangeTotalRounds = (totalRounds: number) => {
     if (!dispatch) return;
-    updateTotalRounds(totalRounds);
+    resetWorkoutParams(totalRounds);
   };
 
   const handleChangeLiSanPageState = (state: string) => {

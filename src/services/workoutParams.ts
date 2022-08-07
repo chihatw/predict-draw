@@ -1,209 +1,122 @@
-import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
-import React, { useEffect, useMemo } from 'react';
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  onSnapshot,
+  DocumentData,
+} from 'firebase/firestore';
+import React, { useEffect } from 'react';
 import {
   INITIAL_WORKOUT_ROUND,
   INITIAL_WORKOUT_TIME,
   WorkoutId,
-  WorkoutRound,
+  WorkoutParams,
   WorkoutTime,
 } from '../Model';
 
 import { db } from '../repositories/firebase';
-import { setDocument, setDocumenValue } from '../repositories/utils';
 import { Action, ActionTypes } from '../Update';
 
 const COLLECTIONS = {
-  workoutItems: 'workoutItems',
+  workoutParams: 'workoutParams',
 };
-
-const COLLECTION = 'workoutItems';
-
-const WORKOUT_TIME_ID = 'workoutTime';
-const CHECKED_INDEXES = 'checkedIndexes';
-const WORKOUT_ROUND_ID = 'workoutRound';
-const WORKOUT_ID_ID = 'workoutId';
 
 export const useWorkoutParams = (dispatch: React.Dispatch<Action> | null) => {
   useEffect(() => {
-    const unsubWorkoutId = onSnapshot(
-      doc(db, COLLECTIONS.workoutItems, 'workoutId'),
+    const unsub = onSnapshot(
+      doc(db, COLLECTIONS.workoutParams, 'params'),
       (doc) => {
-        console.log('snapshot workoutId');
+        console.log('snapshot workoutParams');
         if (!doc.exists() || !dispatch) return;
-        const workoutId = buildWorkoutId(doc);
-        dispatch({ type: ActionTypes.setWorkoutId, payload: workoutId });
-      },
-      (err) => {
-        console.warn(err);
-      }
-    );
-    const unsubRounds = onSnapshot(
-      doc(db, COLLECTIONS.workoutItems, 'workoutRound'),
-      (doc) => {
-        console.log('snapshot workoutRound');
-        if (!doc.exists() || !dispatch) return;
-        const { totalRounds, currentRound } = buildWorkoutRound(doc);
+        const workoutParams = buildWorkoutParams(doc);
+        console.log({ workoutParams });
         dispatch({
-          type: ActionTypes.setRounds,
-          payload: { totalRounds, currentRound },
+          type: ActionTypes.setWorkoutParams,
+          payload: workoutParams,
         });
       },
       (err) => {
         console.warn(err);
       }
     );
-    const unsubWorkoutTime = onSnapshot(
-      doc(db, COLLECTIONS.workoutItems, 'workoutTime'),
-      (doc) => {
-        console.log('snapshot workoutTime');
-        if (!doc.exists() || !dispatch) return;
-        const { time, isRunning, bpm } = buildWorkoutTime(doc);
-        dispatch({
-          type: ActionTypes.setWorkoutTime,
-          payload: { time, bpm, isRunning },
-        });
-      },
-      (err) => {
-        console.warn(err);
-      }
-    );
-    const unsubCheckedIndexes = onSnapshot(
-      doc(db, COLLECTIONS.workoutItems, 'checkedIndexes'),
-      (doc) => {
-        console.log('snapshot checkedIndexes');
-        if (!doc.exists() || !dispatch) return;
-        const checkedIndexes = buildCheckedIndexes(doc);
-        dispatch({
-          type: ActionTypes.setCheckedIndexes,
-          payload: checkedIndexes,
-        });
-      },
-      (err) => console.warn(err)
-    );
+
     return () => {
-      unsubWorkoutId();
-      unsubRounds();
-      unsubWorkoutTime();
-      unsubCheckedIndexes();
+      unsub();
     };
   }, []);
 
   return;
 };
 
-export const useHandleWorkoutItems = () => {
-  const _setDocumentValue = useMemo(
-    () =>
-      function <T>({ value, docId }: { value: T; docId: string }) {
-        setDocumenValue({
-          db,
-          value,
-          colId: COLLECTION,
-          docId,
-        });
-      },
-    []
-  );
-  const _setDocument = useMemo(
-    () =>
-      async function <T extends { id: string }>(value: T) {
-        return await setDocument({
-          db,
-          value,
-          colId: COLLECTION,
-        });
-      },
-    []
-  );
-
-  const setCheckedIndexes = (value: number[]) =>
-    _setDocumentValue({ value, docId: CHECKED_INDEXES });
-
-  const setWorkoutTime = (workoutTime: WorkoutTime) => {
-    _setDocument({ ...workoutTime, id: WORKOUT_TIME_ID });
-  };
-
-  const setWorkoutRound = (workoutRound: WorkoutRound) => {
-    _setDocument({ ...workoutRound, id: WORKOUT_ROUND_ID });
-  };
-
-  const setWorkoutId = (workoutId: string) => {
-    _setDocument({ value: workoutId, id: WORKOUT_ID_ID });
-  };
-
-  return {
-    setWorkoutId,
-    setWorkoutTime,
-    setWorkoutRound,
-    setCheckedIndexes,
-  };
+export const setWorkoutId = (workoutId: string) => {
+  console.log('update workoutParams');
+  updateDoc(doc(db, COLLECTIONS.workoutParams, 'params'), {
+    workoutId,
+  });
 };
 
-export const setWorkoutId = (workoutId: WorkoutId) => {
-  const { id, ...omitted } = workoutId;
-  console.log('set workoutId');
-  setDoc(doc(db, COLLECTIONS.workoutItems, id), { ...omitted });
-};
-
-export const updateTotalRounds = async (totalRounds: number) => {
-  console.log('update workoutRound');
-  await setDoc(doc(db, COLLECTIONS.workoutItems, 'workoutRound'), {
+export const resetWorkoutParams = async (totalRounds: number) => {
+  console.log('update workoutParams');
+  await updateDoc(doc(db, COLLECTIONS.workoutParams, 'params'), {
+    ...INITIAL_WORKOUT_TIME,
     ...INITIAL_WORKOUT_ROUND,
     totalRounds,
-  });
-
-  console.log('update workoutTime');
-  await setDoc(
-    doc(db, COLLECTIONS.workoutItems, 'workoutTime'),
-    INITIAL_WORKOUT_TIME
-  );
-
-  console.log('update checkedIndexes');
-  await setDoc(doc(db, COLLECTIONS.workoutItems, 'checkedIndexes'), {
-    value: [],
+    checkedIndexes: [],
   });
 };
 
-export const startBpmCalc = async () => {
-  console.log('update workoutTime');
-  await setDoc(doc(db, COLLECTIONS.workoutItems, 'workoutTime'), {
+export const startRunning = async () => {
+  console.log('update workoutParams');
+  await updateDoc(doc(db, COLLECTIONS.workoutParams, 'params'), {
     ...INITIAL_WORKOUT_TIME,
     isRunning: true,
   });
 };
 
-export const setBpmCalc = async (workoutTime: WorkoutTime) => {
-  console.log('update workoutTime');
-  await setDoc(doc(db, COLLECTIONS.workoutItems, 'workoutTime'), workoutTime);
+export const setWorkoutTime = async (workoutTime: WorkoutTime) => {
+  console.log('update workoutParams');
+  await updateDoc(doc(db, COLLECTIONS.workoutParams, 'params'), {
+    ...workoutTime,
+  });
 };
 
-const buildWorkoutTime = (doc: DocumentData) => {
-  const {
-    time,
-    bpm,
-    isRunning,
-  }: { time: number; bpm: number; isRunning: boolean } = doc.data();
-  return { time: time || 0, bpm: bpm || -1, isRunning: isRunning || false };
+export const setCheckedIndexes = async (checkedIndexes: number[]) => {
+  console.log('update workoutParams');
+  await updateDoc(doc(db, COLLECTIONS.workoutParams, 'params'), {
+    checkedIndexes,
+  });
 };
 
-const buildWorkoutRound = (doc: DocumentData) => {
-  const {
-    totalRounds,
+export const setCurrentRound = async (
+  currentRound: number,
+  totalRounds: number
+) => {
+  console.log('update workoutParams');
+  await updateDoc(doc(db, COLLECTIONS.workoutParams, 'params'), {
     currentRound,
-  }: { totalRounds: number; currentRound: number } = doc.data();
+    totalRounds,
+    checkedIndexes: [],
+  });
+};
 
-  return {
+const buildWorkoutParams = (doc: DocumentData): WorkoutParams => {
+  const {
+    bpm,
+    checkedIndexes,
+    currentRound,
+    isRunning,
+    time,
+    totalRounds,
+    workoutId,
+  } = doc.data();
+  const workoutParams: WorkoutParams = {
+    bpm: bpm || -1,
+    checkedIndexes: checkedIndexes || [],
+    currentRound: currentRound || 1,
+    isRunning: isRunning || false,
+    time: time || 0,
     totalRounds: totalRounds || 0,
-    currentRound: currentRound || 0,
+    workoutId: workoutId || '',
   };
-};
-
-const buildWorkoutId = (doc: DocumentData) => {
-  const { value }: { value: string } = doc.data();
-  return value || '';
-};
-
-const buildCheckedIndexes = (doc: DocumentData) => {
-  const { value }: { value: number[] } = doc.data();
-  return value || [];
+  return workoutParams;
 };

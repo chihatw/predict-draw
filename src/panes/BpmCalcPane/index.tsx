@@ -8,7 +8,7 @@ import BPMCulcLabel from './BPMCulcLabel';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import AppContext from '../../services/context';
 
-import { startBpmCalc, setBpmCalc } from '../../services/workoutParams';
+import { startRunning, setWorkoutTime } from '../../services/workoutParams';
 import {
   INITIAL_WORKOUT,
   INITIAL_WORKOUT_TIME,
@@ -31,7 +31,7 @@ export const BpmCulc = () => {
   const [miliSeconds, setMiliSeconds] = useState(0);
 
   const start = () => {
-    startBpmCalc();
+    startRunning();
     startAtRef.current = performance.now();
     loopIdRef.current = requestAnimationFrame(loop);
   };
@@ -50,7 +50,7 @@ export const BpmCulc = () => {
       time: elapsedTime,
       isRunning: false,
     };
-    setBpmCalc(newWorkoutTime);
+    setWorkoutTime(newWorkoutTime);
   };
 
   const handleClick = () => {
@@ -63,7 +63,7 @@ export const BpmCulc = () => {
 
   const handleReset = () => {
     setMiliSeconds(0);
-    setBpmCalc(INITIAL_WORKOUT_TIME);
+    setWorkoutTime(INITIAL_WORKOUT_TIME);
   };
 
   return (

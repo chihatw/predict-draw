@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useContext } from 'react';
 import { IconButton } from '@mui/material';
 import AppContext from '../../services/context';
-import { updateTotalRounds } from '../../services/workoutParams';
+import { resetWorkoutParams } from '../../services/workoutParams';
 
 const StatusPane = () => {
   const { state } = useContext(AppContext);
@@ -10,7 +10,7 @@ const StatusPane = () => {
   const { totalRounds } = workoutParams;
 
   const handleReset = () => {
-    updateTotalRounds(totalRounds);
+    resetWorkoutParams(totalRounds);
   };
 
   return (

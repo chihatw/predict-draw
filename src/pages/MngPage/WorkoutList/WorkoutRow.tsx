@@ -18,7 +18,7 @@ const WorkoutRow = ({ index }: { index: number }) => {
   const [open, setOpen] = useState(false);
 
   const handleCheck = () => {
-    setWorkoutId({ id: 'workoutId', value: workoutId });
+    setWorkoutId(workoutId);
   };
   const handleDelete = () => {
     deleteWorkout(workoutId);

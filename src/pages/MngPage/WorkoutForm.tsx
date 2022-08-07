@@ -101,7 +101,7 @@ const WorkoutForm = ({
       beatCount,
       createdAt: workout?.createdAt || Date.now(),
     };
-    dispatch({ type: ActionTypes.setWokout, payload: newWorkout });
+    dispatch({ type: ActionTypes.setWorkout, payload: newWorkout });
     workoutDispatch({
       type: WorkoutActionTypes.initialize,
       payload: INITIAL_WORKOUT_STATE,
