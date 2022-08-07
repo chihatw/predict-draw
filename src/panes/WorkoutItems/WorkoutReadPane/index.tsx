@@ -1,10 +1,10 @@
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 
 import React, { useContext, useRef, useState } from 'react';
+import { INITIAL_WORKOUT } from '../../../Model';
 
 import AppContext from '../../../services/context';
-import { useHandleWorkoutItems } from '../../../services/useWorkoutItems';
-import { INITIAL_WORKOUT } from '../../../services/useWorkouts';
+import { useHandleWorkoutItems } from '../../../services/workoutParams';
 import WorkoutLabel from '../components/WorkoutLabel';
 import WorkoutStatus from '../components/WorkoutStatus';
 import StartReset from './components/StartReset';
@@ -12,8 +12,9 @@ import StopButton from './components/StopButton';
 import TimeDisplay from './components/TimeDisplay';
 
 const WorkoutReadPane = () => {
-  const { workoutTime, workoutRound, checkedIndexes, workouts, workoutId } =
-    useContext(AppContext);
+  const { state } = useContext(AppContext);
+  const { workouts, workoutParams } = state;
+  const { workoutId, bpm, time, totalRounds, checkedIndexes } = workoutParams;
   const workout =
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
   const { beatCount, label } = workout;
@@ -21,8 +22,8 @@ const WorkoutReadPane = () => {
   const { setWorkoutTime, setCheckedIndexes, setWorkoutRound } =
     useHandleWorkoutItems();
   const [isRunning, setIsRunning] = useState(false);
-  const [bpm, setBpm] = useState(0);
-  const [time, setTime] = useState(0);
+  // const [bpm, setBpm] = useState(0);
+  // const [time, setTime] = useState(0);
 
   const startAtRef = useRef(0);
   const rafIdRef = useRef(0);
@@ -32,16 +33,16 @@ const WorkoutReadPane = () => {
   };
   const loop = () => {
     const elapsedTime = performance.now() - startAtRef.current;
-    setTime(elapsedTime);
+    // setTime(elapsedTime);
     rafIdRef.current = window.requestAnimationFrame(loop);
   };
   const stop = () => {
     window.cancelAnimationFrame(rafIdRef.current);
 
     const elapsedTime = performance.now() - startAtRef.current;
-    setTime(elapsedTime);
+    // setTime(elapsedTime);
     const bpm = Math.floor(beatCount / (elapsedTime / 1000 / 60));
-    setBpm(bpm);
+    // setBpm(bpm);
     setWorkoutTime({ time: elapsedTime, bpm, isRunning: false });
   };
   const handleClickStop = () => {
@@ -51,13 +52,13 @@ const WorkoutReadPane = () => {
   const handleClickStart = () => {
     start();
     setIsRunning(true);
-    setWorkoutTime({ ...workoutTime, isRunning: true });
+    // setWorkoutTime({ ...workoutTime, isRunning: true });
   };
   const handleClickReset = () => {
-    setTime(0);
+    // setTime(0);
     setCheckedIndexes([]);
 
-    const { totalRounds } = workoutRound;
+    // const { totalRounds } = workoutRound;
     setWorkoutRound({ currentRound: 1, totalRounds });
   };
   return (

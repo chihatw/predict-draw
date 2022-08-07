@@ -3,28 +3,25 @@ import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Collapse, IconButton } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import AppContext from '../../../../services/context';
-import {
-  useHandleWorkoutItems,
-  WorkoutRound,
-} from '../../../../services/useWorkoutItems';
-import { useHandleWorkouts, Workout } from '../../../../services/useWorkouts';
-import FormPane from './FormPane';
+import AppContext from '../../../services/context';
+import { setWorkoutId } from '../../../services/workoutParams';
+import { deleteWorkout } from '../../../services/workout';
+import WorkoutForm from '../WorkoutForm';
 
-const WorkoutRow = ({ workout }: { workout: Workout }) => {
-  const { label, id } = workout;
-  const { workoutId } = useContext(AppContext);
-
-  const { deleteWorkout } = useHandleWorkouts();
-  const { setWorkoutId, setWorkoutRound } = useHandleWorkoutItems();
+const WorkoutRow = ({ index }: { index: number }) => {
+  const { state } = useContext(AppContext);
+  const { workoutParams, workouts } = state;
+  const workout = workouts[index];
+  const { label, id: workoutId } = workout;
+  const { workoutId: selectedWotkoutId } = workoutParams;
 
   const [open, setOpen] = useState(false);
 
   const handleCheck = () => {
-    setWorkoutId(id);
+    setWorkoutId({ id: 'workoutId', value: workoutId });
   };
   const handleDelete = () => {
-    deleteWorkout(id);
+    deleteWorkout(workoutId);
   };
 
   const handleOpen = () => {
@@ -37,7 +34,7 @@ const WorkoutRow = ({ workout }: { workout: Workout }) => {
         <div>
           <IconButton
             onClick={handleCheck}
-            sx={{ color: workoutId === id ? '#52a2aa' : 'grey' }}
+            sx={{ color: selectedWotkoutId === workoutId ? '#52a2aa' : 'grey' }}
           >
             <CheckIcon />
           </IconButton>
@@ -55,7 +52,7 @@ const WorkoutRow = ({ workout }: { workout: Workout }) => {
         </div>
       </div>
       <Collapse in={open}>
-        <FormPane workout={workout} callback={() => setOpen(false)} />
+        <WorkoutForm workout={workout} callback={() => setOpen(false)} />
       </Collapse>
     </div>
   );

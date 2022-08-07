@@ -5,15 +5,17 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import WorkoutStatus from '../components/WorkoutStatus';
 import AppContext from '../../../services/context';
-import { INITIAL_WORKOUT } from '../../../services/useWorkouts';
 import ReadySign from './components/ReadySign';
 import NextButton from './components/NextButton';
 import CueList from './components/CueList';
 import WorkoutLabel from '../components/WorkoutLabel';
+import { INITIAL_WORKOUT } from '../../../Model';
 
 const WorkoutCuePane = () => {
-  const { workouts, workoutId, workoutTime, checkedIndexes } =
-    useContext(AppContext);
+  const { state } = useContext(AppContext);
+
+  const { workouts, workoutParams } = state;
+  const { workoutId, isRunning, bpm, checkedIndexes } = workoutParams;
 
   const [currentIndex, setCurrentIndex] = useState(-1);
 
@@ -21,7 +23,6 @@ const WorkoutCuePane = () => {
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
 
   const { label, beatCount } = workout;
-  const { isRunning, bpm } = workoutTime;
 
   useEffect(() => {
     if (!isRunning) {

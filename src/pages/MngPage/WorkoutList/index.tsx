@@ -1,14 +1,12 @@
-import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Collapse } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import AppContext from '../../../../services/context';
-import FormPane from './FormPane';
+import AppContext from '../../../services/context';
+import WorkoutForm from '../WorkoutForm';
 import WorkoutRow from './WorkoutRow';
 
-const WorkoutsPane = () => {
-  const { workouts } = useContext(AppContext);
+const WorkoutList = () => {
+  const { state } = useContext(AppContext);
+  const { workouts } = state;
   const [openForm, setOpenForm] = useState(false);
 
   const handleClickAdd = () => {
@@ -22,11 +20,11 @@ const WorkoutsPane = () => {
           {openForm ? 'Cancel' : 'Create New Workout'}
         </Button>
         <Collapse in={openForm}>
-          <FormPane callback={() => setOpenForm(false)} />
+          <WorkoutForm callback={() => setOpenForm(false)} />
         </Collapse>
         <div style={{ display: 'grid', rowGap: 8 }}>
-          {workouts.map((workout, index) => (
-            <WorkoutRow workout={workout} key={index} />
+          {workouts.map((_, index) => (
+            <WorkoutRow key={index} index={index} />
           ))}
         </div>
       </div>
@@ -34,4 +32,4 @@ const WorkoutsPane = () => {
   );
 };
 
-export default WorkoutsPane;
+export default WorkoutList;

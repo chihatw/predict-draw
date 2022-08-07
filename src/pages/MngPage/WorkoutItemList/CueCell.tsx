@@ -1,38 +1,7 @@
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { WorkoutItem } from 'workout-items';
-import { CUE_TYPES } from '../../../../services/useWorkouts';
-import WorkoutItemRow from '../../components/WorkoutItemRow';
-
-const WorkoutItemList = ({
-  workoutItems,
-  cues,
-  cueType,
-}: {
-  workoutItems: WorkoutItem[];
-  cues: string[];
-  cueType: string;
-}) => {
-  return (
-    <div style={{ display: 'grid', rowGap: 16 }}>
-      {workoutItems.map((workoutItem, index) => (
-        <div
-          key={index}
-          style={{ display: 'grid', gridTemplateColumns: '20px 1fr 4fr' }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', fontSize: 12 }}>
-            {index + 1}
-          </div>
-          <CueCell cue={cues[index]} cueType={cueType} />
-          <WorkoutItemRow workoutItem={workoutItem} />
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default WorkoutItemList;
+import { CUE_TYPES } from '../../../services/workout';
 
 const CueCell = ({ cue, cueType }: { cue: string; cueType: string }) => {
   switch (cueType) {
@@ -67,3 +36,5 @@ const CueCell = ({ cue, cueType }: { cue: string; cueType: string }) => {
       return <div></div>;
   }
 };
+
+export default CueCell;

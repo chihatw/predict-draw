@@ -7,14 +7,17 @@ import TimerButton from './components/TimerButton';
 import BPMCulcLabel from './components/BPMCulcLabel';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import AppContext from '../../services/context';
-import { INITIAL_WORKOUT } from '../../services/useWorkouts';
+
 import {
   INITIAL_WORKOUT_TIME,
   useHandleWorkoutItems,
-} from '../../services/useWorkoutItems';
+} from '../../services/workoutParams';
+import { INITIAL_WORKOUT } from '../../Model';
 
 export const BpmCulc = () => {
-  const { workoutId, workouts, workoutTime } = useContext(AppContext);
+  const { state } = useContext(AppContext);
+  const { workouts, workoutParams } = state;
+  const { workoutId, time, bpm } = workoutParams;
 
   const { setWorkoutTime } = useHandleWorkoutItems();
 
@@ -26,16 +29,16 @@ export const BpmCulc = () => {
   const loopIdRef = useRef(0);
   const startAtRef = useRef(0);
 
-  const [bpm, setBpm] = useState(-1); // -1 で '--' を表示
+  // const [bpm, setBpm] = useState(-1); // -1 で '--' を表示
   const [isRunning, setIsRunning] = useState(false);
   const [miliSeconds, setMiliSeconds] = useState(0);
 
   const start = () => {
     setIsRunning(true);
-    setWorkoutTime({ ...workoutTime, isRunning: true });
+    setWorkoutTime({ time, bpm, isRunning: true });
     startAtRef.current = performance.now();
     loopIdRef.current = requestAnimationFrame(loop);
-    setBpm(-1);
+    // setBpm(-1);
   };
   const loop = () => {
     const elapsedTime = Math.floor(performance.now() - startAtRef.current);
@@ -48,7 +51,7 @@ export const BpmCulc = () => {
     setMiliSeconds(elapsedTime);
     cancelAnimationFrame(loopIdRef.current);
     const bpm = calcBpm({ miliSeconds: elapsedTime, beatCount });
-    setBpm(bpm);
+    // setBpm(bpm);
     setWorkoutTime({ time: elapsedTime, bpm, isRunning: false });
   };
 
@@ -62,7 +65,7 @@ export const BpmCulc = () => {
 
   const handleReset = () => {
     setMiliSeconds(0);
-    setBpm(-1);
+    // setBpm(-1);
     setWorkoutTime(INITIAL_WORKOUT_TIME);
   };
 

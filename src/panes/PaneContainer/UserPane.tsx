@@ -6,7 +6,7 @@ import { BpmCulc } from '../BpmCalcPane';
 import WorkoutCuePane from '../WorkoutItems/WorkoutCuePane';
 import WorkoutReadPane from '../WorkoutItems/WorkoutReadPane';
 
-const UserPane: React.FC<{ user: string }> = ({ user }) => {
+const UserPane = ({ user }: { user: string }) => {
   const { state } = useContext(AppContext);
 
   const { liSanPageState, kouSanPageState } = state;

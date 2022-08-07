@@ -1,82 +1,59 @@
 import {
+  collection,
+  deleteDoc,
+  doc,
   DocumentData,
   limit,
+  onSnapshot,
   orderBy,
-  QueryConstraint,
-  Unsubscribe,
+  query,
+  setDoc,
 } from 'firebase/firestore';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { workoutItems2String } from 'workout-items';
+import { Workout } from '../Model';
+import { WorkoutState } from '../pages/MngPage/Model';
 
 import { db } from '../repositories/firebase';
 import {
   addDocument,
   deleteDocument,
-  snapshotCollection,
   updateDocument,
 } from '../repositories/utils';
-import { WorkoutItem } from 'workout-items';
+import { Action, ActionTypes } from '../Update';
 
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
 
-export type Workout = {
-  id: string;
-  cues: string[];
-  items: WorkoutItem[];
-  label: string;
-  cueType: string;
-  beatCount: number;
-  createdAt: number;
-};
-
-export const INITIAL_WORKOUT: Workout = {
-  id: '',
-  items: [],
-  label: '',
-  beatCount: 0,
-  createdAt: 0,
-  cueType: '',
-  cues: [],
-};
+const COLLECTIONS = { workouts: 'workouts' };
 
 const COLLECTION = 'workouts';
 
-export const useWorkouts = () => {
-  const [workouts, setWorkouts] = useState<Workout[]>([]);
-
-  const _snapshotCollection = useMemo(
-    () =>
-      function <T>({
-        queries,
-        setValues,
-        buildValue,
-      }: {
-        queries?: QueryConstraint[];
-        setValues: (value: T[]) => void;
-        buildValue: (value: DocumentData) => T;
-      }): Unsubscribe {
-        return snapshotCollection({
-          db,
-          colId: COLLECTION,
-          queries,
-          setValues,
-          buildValue,
-        });
-      },
-    []
-  );
-
+export const useWorkouts = (dispatch: React.Dispatch<Action> | null) => {
   useEffect(() => {
-    const unsub = _snapshotCollection({
-      queries: [orderBy('createdAt', 'desc'), limit(6)],
-      setValues: setWorkouts,
-      buildValue: buildWorkout,
-    });
-    return () => {
-      unsub();
-    };
+    const q = query(
+      collection(db, COLLECTIONS.workouts),
+      orderBy('createdAt', 'desc'),
+      limit(6)
+    );
+    const unsub = onSnapshot(
+      q,
+      (querySnapshot) => {
+        console.log('snapshot workouts');
+        if (!dispatch) return;
+        let workouts: Workout[] = [];
+        querySnapshot.forEach((doc) => {
+          workouts.push(buildWorkout(doc));
+        });
+        dispatch({ type: ActionTypes.setWorkouts, payload: workouts });
+      },
+      (err) => {
+        console.warn(err);
+      }
+    );
+    return () => unsub();
   }, []);
 
-  return { workouts };
+  return;
 };
 
 export const useHandleWorkouts = () => {
@@ -121,6 +98,17 @@ export const useHandleWorkouts = () => {
   return { addWorkout, updateWorkout, deleteWorkout };
 };
 
+export const setWorkout = async (workout: Workout) => {
+  const { id, ...omitted } = workout;
+  console.log('set workout');
+  setDoc(doc(db, COLLECTIONS.workouts, id), { ...omitted });
+};
+
+export const deleteWorkout = async (workoutId: string) => {
+  console.log('delete workout');
+  deleteDoc(doc(db, COLLECTIONS.workouts, workoutId));
+};
+
 const buildWorkout = (doc: DocumentData) => {
   const { id } = doc;
   const { createdAt, label, items, beatCount, cues, cueType } = doc.data();
@@ -134,4 +122,18 @@ const buildWorkout = (doc: DocumentData) => {
     createdAt: createdAt || 0,
   };
   return workout;
+};
+
+export const buildInitialWorkoutState = (workout: Workout): WorkoutState => {
+  const { cueType, cues, items: workoutItems, beatCount, label } = workout;
+
+  return {
+    cues,
+    label,
+    cueStr: cues.join('\n'),
+    cueType,
+    beatCount,
+    workoutItems,
+    workoutItemStr: workoutItems2String(workoutItems),
+  };
 };

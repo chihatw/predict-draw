@@ -1,25 +1,25 @@
 import SyncIcon from '@mui/icons-material/Sync';
 import { IconButton } from '@mui/material';
 import React, { useContext } from 'react';
+import { INITIAL_WORKOUT } from '../../../../Model';
 import AppContext from '../../../../services/context';
-import { useHandleWorkoutItems } from '../../../../services/useWorkoutItems';
-import { INITIAL_WORKOUT } from '../../../../services/useWorkouts';
+import { useHandleWorkoutItems } from '../../../../services/workoutParams';
 
 const NextButton = ({
   resetCurrentIndex,
 }: {
   resetCurrentIndex: () => void;
 }) => {
-  const { workouts, workoutId, workoutTime, workoutRound, checkedIndexes } =
-    useContext(AppContext);
+  const { state } = useContext(AppContext);
+  const { workouts, workoutParams } = state;
+  const { workoutId, isRunning, totalRounds, currentRound, checkedIndexes } =
+    workoutParams;
   const { setCheckedIndexes, setWorkoutRound } = useHandleWorkoutItems();
 
   const workout =
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
 
   const { items } = workout;
-  const { isRunning } = workoutTime;
-  const { totalRounds, currentRound } = workoutRound;
 
   const handleClickNextRound = () => {
     setWorkoutRound({ totalRounds, currentRound: currentRound + 1 });

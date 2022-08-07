@@ -1,12 +1,14 @@
 import { useTheme } from '@mui/system';
 import React, { useContext, useEffect, useState } from 'react';
+import { INITIAL_WORKOUT } from '../../../Model';
 import AppContext from '../../../services/context';
-import { INITIAL_WORKOUT } from '../../../services/useWorkouts';
 
 const WorkoutStatus = () => {
   const theme = useTheme();
-  const { workouts, workoutRound, checkedIndexes, workoutId } =
-    useContext(AppContext);
+  const { state } = useContext(AppContext);
+  const { workouts, workoutParams } = state;
+  const { workoutId, checkedIndexes, currentRound, totalRounds } =
+    workoutParams;
 
   const workout =
     workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
@@ -16,17 +18,15 @@ const WorkoutStatus = () => {
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
-    const { currentRound } = workoutRound;
     const currentIndex =
       workoutItems.length * (currentRound - 1) + checkedIndexes.length;
     setCurrentIndex(currentIndex);
-  }, [checkedIndexes, workoutRound]);
+  }, [checkedIndexes, currentRound]);
 
   useEffect(() => {
-    const { totalRounds } = workoutRound;
     const totalItems = workoutItems.length * totalRounds;
     setTotalItems(totalItems);
-  }, [workoutItems, workoutRound]);
+  }, [workoutItems, totalRounds]);
 
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>

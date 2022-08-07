@@ -5,25 +5,20 @@ import { INITIAL_STATE } from './Model';
 import AppRoutes from './routes/AppRoutes';
 import AppContext from './services/context';
 import usePageState from './services/pageState';
-import { useWorkoutItems } from './services/useWorkoutItems';
-import { useWorkouts } from './services/useWorkouts';
+import { useWorkoutParams } from './services/workoutParams';
+import { useWorkouts } from './services/workout';
 import { reducer } from './Update';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  usePageState(dispatch);
 
-  const { workoutId, workoutRound, workoutTime, checkedIndexes } =
-    useWorkoutItems();
-  const { workouts } = useWorkouts();
+  usePageState(dispatch);
+  useWorkouts(dispatch);
+  useWorkoutParams(dispatch);
+
   return (
     <AppContext.Provider
       value={{
-        workouts,
-        workoutId,
-        workoutRound,
-        workoutTime,
-        checkedIndexes,
         state,
         dispatch,
       }}

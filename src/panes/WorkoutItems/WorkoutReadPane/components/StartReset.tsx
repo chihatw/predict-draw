@@ -11,7 +11,9 @@ const StartReset = ({
   handleClickReset: () => void;
   handleClickStart: () => void;
 }) => {
-  const { checkedIndexes } = useContext(AppContext);
+  const { state } = useContext(AppContext);
+  const { workoutParams } = state;
+  const { checkedIndexes } = workoutParams;
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {checkedIndexes.length ? (

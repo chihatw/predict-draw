@@ -4,8 +4,10 @@ import AppContext from '../../../../services/context';
 
 const ReadySign = () => {
   const theme = useTheme();
-  const { workoutTime, checkedIndexes } = useContext(AppContext);
-  const { isRunning } = workoutTime;
+  const { state } = useContext(AppContext);
+  const { workoutParams } = state;
+  const { isRunning, checkedIndexes } = workoutParams;
+
   if (!isRunning && !checkedIndexes.length) {
     return (
       <div

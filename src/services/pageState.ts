@@ -17,7 +17,7 @@ const usePageState = (dispatch: React.Dispatch<Action> | null) => {
         console.log('snapshot liSanPageState');
         if (!doc.exists() || !dispatch) return;
         const state = buildState(doc);
-        dispatch({ type: ActionTypes.changeLiSanPageState, payload: state });
+        dispatch({ type: ActionTypes.setLiSanPageState, payload: state });
       },
       (err) => {
         console.log(err);
@@ -29,7 +29,7 @@ const usePageState = (dispatch: React.Dispatch<Action> | null) => {
         console.log('snapshot kouSanPageState');
         if (!doc.exists() || !dispatch) return;
         const state = buildState(doc);
-        dispatch({ type: ActionTypes.changeKouSanPageState, payload: state });
+        dispatch({ type: ActionTypes.setKouSanPageState, payload: state });
       },
       (err) => {
         console.log(err);
