@@ -3,13 +3,13 @@ import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import { Container } from '@mui/material';
 import React, { useEffect, useState, useContext } from 'react';
 
-import WorkoutStatus from '../components/WorkoutStatus';
-import AppContext from '../../../services/context';
+import WorkoutStatus from '../commons/WorkoutStatus';
+import AppContext from '../../../../services/context';
 import ReadySign from './components/ReadySign';
 import NextButton from './components/NextButton';
 import CueList from './components/CueList';
-import WorkoutLabel from '../components/WorkoutLabel';
-import { INITIAL_WORKOUT } from '../../../Model';
+import WorkoutLabel from '../commons/WorkoutLabel';
+import { INITIAL_WORKOUT } from '../../../../Model';
 
 const WorkoutCuePane = () => {
   const { state } = useContext(AppContext);

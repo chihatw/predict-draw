@@ -2,7 +2,7 @@ import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import PlayCircleRoundedIcon from '@mui/icons-material/PlayCircleRounded';
 import { IconButton } from '@mui/material';
 import React, { useContext } from 'react';
-import AppContext from '../../../../services/context';
+import AppContext from '../../../../../services/context';
 
 const StartReset = ({
   handleClickReset,

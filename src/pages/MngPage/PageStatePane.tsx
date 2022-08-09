@@ -11,6 +11,7 @@ const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.bpmCalc, label: 'BPM計測' },
   { value: pages.workoutCue, label: 'キュー出し' },
   { value: pages.workoutRead, label: 'キュー受け' },
+  { value: pages.randomWorkout, label: 'ランダム' },
   { value: pages.blank, label: '空欄' },
 ];
 

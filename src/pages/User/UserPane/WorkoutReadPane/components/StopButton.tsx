@@ -1,8 +1,8 @@
 import StopCircleRoundedIcon from '@mui/icons-material/StopCircleRounded';
 import { IconButton } from '@mui/material';
 import React, { useContext } from 'react';
-import { INITIAL_WORKOUT } from '../../../../Model';
-import AppContext from '../../../../services/context';
+import { INITIAL_WORKOUT } from '../../../../../Model';
+import AppContext from '../../../../../services/context';
 
 const StopButton = ({ handleClickStop }: { handleClickStop: () => void }) => {
   const { state } = useContext(AppContext);

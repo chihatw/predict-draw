@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/system';
 import React, { useContext, useEffect, useState } from 'react';
-import { INITIAL_WORKOUT } from '../../../Model';
-import AppContext from '../../../services/context';
+import { INITIAL_WORKOUT } from '../../../../Model';
+import AppContext from '../../../../services/context';
 
 const WorkoutStatus = () => {
   const theme = useTheme();

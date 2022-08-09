@@ -6,14 +6,17 @@ import TimePane from './TimePane';
 import TimerButton from './TimerButton';
 import BPMCulcLabel from './BPMCulcLabel';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
-import AppContext from '../../services/context';
+import AppContext from '../../../../services/context';
 
-import { startRunning, setWorkoutTime } from '../../services/workoutParams';
+import {
+  startRunning,
+  setWorkoutTime,
+} from '../../../../services/workoutParams';
 import {
   INITIAL_WORKOUT,
   INITIAL_WORKOUT_TIME,
   WorkoutTime,
-} from '../../Model';
+} from '../../../../Model';
 
 export const BpmCulc = () => {
   const { state } = useContext(AppContext);

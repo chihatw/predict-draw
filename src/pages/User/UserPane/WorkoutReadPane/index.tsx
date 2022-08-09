@@ -1,17 +1,17 @@
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 
 import React, { useContext, useRef, useState } from 'react';
-import { INITIAL_WORKOUT } from '../../../Model';
+import { INITIAL_WORKOUT } from '../../../../Model';
 
-import AppContext from '../../../services/context';
+import AppContext from '../../../../services/context';
 import {
   resetWorkoutParams,
   setWorkoutTime,
   startRunning,
-} from '../../../services/workoutParams';
+} from '../../../../services/workoutParams';
 
-import WorkoutLabel from '../components/WorkoutLabel';
-import WorkoutStatus from '../components/WorkoutStatus';
+import WorkoutLabel from '../commons/WorkoutLabel';
+import WorkoutStatus from '../commons/WorkoutStatus';
 import StartReset from './components/StartReset';
 import StopButton from './components/StopButton';
 import TimeDisplay from './components/TimeDisplay';

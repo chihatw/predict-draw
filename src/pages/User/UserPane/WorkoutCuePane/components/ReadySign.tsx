@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/system';
 import React, { useContext } from 'react';
-import AppContext from '../../../../services/context';
+import AppContext from '../../../../../services/context';
 
 const ReadySign = () => {
   const theme = useTheme();

@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import TopPage from '../pages/TopPage';
-import LisanPage from '../pages/LiSanPage';
-import KouSanPage from '../pages/KouSanPage';
+import LisanPage from '../pages/User/LiSanPage';
+import KouSanPage from '../pages/User/KouSanPage';
 import MngPage from '../pages/MngPage';
-import NotePage from '../pages/NotePage';
-import MngNotePage from '../pages/MngNotePage';
+import NotePage from '../pages/Note/NotePage';
+import MngNotePage from '../pages/Note/MngNotePage';
 import RandomWorkoutEditPage from '../pages/RandomWorkout/RandomWorkoutEditPage';
 import RandomWorkoutListPage from '../pages/RandomWorkout/RandomWorkoutListPage';
 

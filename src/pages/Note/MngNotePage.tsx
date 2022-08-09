@@ -1,9 +1,9 @@
 import { Container, TextField } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 
-import Layout from '../Layout';
-import AppContext from '../services/context';
-import { buildInput, buildPitchList, setNote } from '../services/note';
+import Layout from '../../Layout';
+import AppContext from '../../services/context';
+import { buildInput, buildPitchList, setNote } from '../../services/note';
 
 const MngNotePage = () => {
   const { state } = useContext(AppContext);

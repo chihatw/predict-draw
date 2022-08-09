@@ -52,6 +52,7 @@ export const pages = {
   bpmCalc: 'bpmCalc',
   workoutCue: 'workoutCue',
   workoutRead: 'workoutRead',
+  randomWorkout: 'randomWorkout',
 };
 
 export type WorkoutParams = {

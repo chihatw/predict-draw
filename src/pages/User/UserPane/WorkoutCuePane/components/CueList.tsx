@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { INITIAL_WORKOUT } from '../../../../Model';
-import AppContext from '../../../../services/context';
-import { setCheckedIndexes } from '../../../../services/workoutParams';
+import { INITIAL_WORKOUT } from '../../../../../Model';
+import AppContext from '../../../../../services/context';
+import { setCheckedIndexes } from '../../../../../services/workoutParams';
 
 import CueRow from './CueRow';
 
