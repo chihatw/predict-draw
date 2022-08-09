@@ -6,6 +6,8 @@ import KouSanPage from '../pages/KouSanPage';
 import MngPage from '../pages/MngPage';
 import NotePage from '../pages/NotePage';
 import MngNotePage from '../pages/MngNotePage';
+import RandomWorkoutEditPage from '../pages/RandomWorkout/RandomWorkoutEditPage';
+import RandomWorkoutListPage from '../pages/RandomWorkout/RandomWorkoutListPage';
 
 const AppRoutes = () => {
   return (
@@ -13,9 +15,16 @@ const AppRoutes = () => {
       <Route path='/' element={<TopPage />} />
       <Route path='/liSan' element={<LisanPage />} />
       <Route path='/kouSan' element={<KouSanPage />} />
-      <Route path='/mng' element={<MngPage />} />
-      <Route path='/note' element={<NotePage />} />
-      <Route path='/mng/note' element={<MngNotePage />} />
+      <Route path='note' element={<NotePage />} />
+      <Route path='/mng'>
+        <Route index element={<MngPage />} />
+        <Route path='note' element={<MngNotePage />} />
+        <Route path='random'>
+          <Route index element={<RandomWorkoutListPage />} />
+          <Route path='new' element={<RandomWorkoutEditPage />} />
+          <Route path=':workoutId' element={<RandomWorkoutEditPage />} />
+        </Route>
+      </Route>
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );

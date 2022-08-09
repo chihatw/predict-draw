@@ -1,15 +1,8 @@
-import {
-  doc,
-  setDoc,
-  updateDoc,
-  onSnapshot,
-  DocumentData,
-} from 'firebase/firestore';
+import { doc, updateDoc, onSnapshot, DocumentData } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import {
   INITIAL_WORKOUT_ROUND,
   INITIAL_WORKOUT_TIME,
-  WorkoutId,
   WorkoutParams,
   WorkoutTime,
 } from '../Model';
@@ -29,7 +22,6 @@ export const useWorkoutParams = (dispatch: React.Dispatch<Action> | null) => {
         console.log('snapshot workoutParams');
         if (!doc.exists() || !dispatch) return;
         const workoutParams = buildWorkoutParams(doc);
-        console.log({ workoutParams });
         dispatch({
           type: ActionTypes.setWorkoutParams,
           payload: workoutParams,

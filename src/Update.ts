@@ -1,11 +1,18 @@
 import * as R from 'ramda';
-import { NoteState, State, Workout, WorkoutParams } from './Model';
+import {
+  NoteState,
+  RandomWorkout,
+  State,
+  Workout,
+  WorkoutParams,
+} from './Model';
 
 export const ActionTypes = {
   setWorkout: 'setWorkout',
   setWorkouts: 'setWorkouts',
   setNoteState: 'setNoteState',
   setWorkoutParams: 'setWorkoutParams',
+  setRandomWorkouts: 'setRandomWorkouts',
   setLiSanPageState: 'setLiSanPageState',
   setKouSanPageState: 'setKouSanPageState',
 };
@@ -20,6 +27,8 @@ export type Action = {
     | Workout[]
     | NoteState
     | WorkoutParams
+    | RandomWorkout
+    | { [workoutId: string]: RandomWorkout }
     | {
         totalRounds: number;
         currentRound: number;
@@ -36,6 +45,15 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts } = state;
 
   switch (type) {
+    case ActionTypes.setRandomWorkouts: {
+      const randomWorkouts = payload as { [workoutId: string]: RandomWorkout };
+      return R.compose(
+        R.assocPath<{ [workoutId: string]: RandomWorkout }, State>(
+          ['randomWorkout', 'workouts'],
+          randomWorkouts
+        )
+      )(state);
+    }
     case ActionTypes.setWorkoutParams: {
       const workoutParams = payload as WorkoutParams;
       return R.compose(
