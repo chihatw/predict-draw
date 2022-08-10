@@ -1,5 +1,3 @@
-import { PitchesArray } from './services/note';
-
 export type WorkoutId = {
   id: string;
   value: string;
@@ -100,6 +98,13 @@ export type Cue = {
   imagePath: string;
 };
 
+export const INITIAL_CUE: Cue = {
+  id: '',
+  label: '',
+  pitchStr: '',
+  imagePath: '',
+};
+
 export type RandomWorkout = {
   id: string;
   cues: Cue[];
@@ -147,6 +152,9 @@ export type RandomWotkoutState = {
   blobs: {
     [workoutId: string]: Blob | null;
   };
+  blobURLs: {
+    [imagePath: string]: string;
+  };
 };
 
 export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
@@ -154,6 +162,7 @@ export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
   params: INITIAL_RANDOM_WORKOUT_PARAMS,
   workouts: {},
   blobs: {},
+  blobURLs: {},
 };
 
 export type State = {

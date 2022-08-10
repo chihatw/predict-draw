@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { pages } from '../../../Model';
 import AppContext from '../../../services/context';
 import { BpmCulc } from './BpmCalcPane';
+import RandomWorkoutPane from './RandomWorkoutPane';
 import WorkoutCuePane from './WorkoutCuePane';
 import WorkoutReadPane from './WorkoutReadPane';
 
@@ -16,6 +17,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <WorkoutCuePane />;
     case pages.workoutRead:
       return <WorkoutReadPane />;
+    case pages.randomWorkout:
+      return <RandomWorkoutPane />;
     default:
       return <div></div>;
   }

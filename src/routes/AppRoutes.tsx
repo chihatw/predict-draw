@@ -6,8 +6,7 @@ import KouSanPage from '../pages/User/KouSanPage';
 import MngPage from '../pages/MngPage';
 import NotePage from '../pages/Note/NotePage';
 import MngNotePage from '../pages/Note/MngNotePage';
-import RandomWorkoutEditPage from '../pages/RandomWorkout/RandomWorkoutEditPage';
-import RandomWorkoutListPage from '../pages/RandomWorkout/RandomWorkoutListPage';
+import RandomWorkoutEditPage from '../pages/RandomWorkoutEditPage';
 
 const AppRoutes = () => {
   return (
@@ -20,7 +19,6 @@ const AppRoutes = () => {
         <Route index element={<MngPage />} />
         <Route path='note' element={<MngNotePage />} />
         <Route path='random'>
-          <Route index element={<RandomWorkoutListPage />} />
           <Route path='new' element={<RandomWorkoutEditPage />} />
           <Route path=':workoutId' element={<RandomWorkoutEditPage />} />
         </Route>

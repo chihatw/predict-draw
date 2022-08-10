@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { calcBeatCount, cuesStrToCues } from '../../../services/randomWorkout';
+import { calcBeatCount, cuesStrToCues } from '../../services/randomWorkout';
 import { RandomWorkoutEditState } from './Model';
 import { RandomWorkoutEditAction, RandomWorkoutActionTypes } from './Update';
 

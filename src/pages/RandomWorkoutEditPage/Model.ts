@@ -1,4 +1,4 @@
-import { INITIAL_RANDOM_WORKOUT, RandomWorkout } from '../../../Model';
+import { INITIAL_RANDOM_WORKOUT, RandomWorkout } from '../../Model';
 
 export type RandomWorkoutEditState = Omit<
   RandomWorkout,

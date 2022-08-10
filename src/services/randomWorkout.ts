@@ -6,33 +6,43 @@ import {
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { Cue, RandomWorkout, State } from '../Model';
+import {
+  Cue,
+  INITIAL_RANDOM_WORKOUT_PARAMS,
+  RandomWorkout,
+  RandomWorkoutParams,
+  State,
+} from '../Model';
 import {
   INITIAL_RANDOM_WORKOUT_EDIT_STATE,
   RandomWorkoutEditState,
-} from '../pages/RandomWorkout/RandomWorkoutEditPage/Model';
+} from '../pages/RandomWorkoutEditPage/Model';
 import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 
-const COLLECTIONS = { randomWorkouts: 'randomWorkouts' };
+const COLLECTIONS = {
+  randomWorkouts: 'randomWorkouts',
+  randomWorkoutParams: 'randomWorkoutParams',
+};
 
 export const useRandomWorkouts = (dispatch: React.Dispatch<Action>) => {
   useEffect(() => {
     const q = query(collection(db, COLLECTIONS.randomWorkouts));
     const unsub = onSnapshot(
       q,
-      (querySnapshot) => {
+      async (querySnapshot) => {
         console.log('snapshot randomWorkouts');
         const randomWorkouts: { [workoutId: string]: RandomWorkout } = {};
         querySnapshot.forEach((doc) => {
           const workout = buildRandomWorkout(doc);
           randomWorkouts[workout.id] = workout;
         });
-        console.log({ randomWorkouts });
+
         dispatch({
           type: ActionTypes.setRandomWorkouts,
           payload: randomWorkouts,
@@ -47,6 +57,27 @@ export const useRandomWorkouts = (dispatch: React.Dispatch<Action>) => {
   return;
 };
 
+export const useRandomWorkoutParams = (dispatch: React.Dispatch<Action>) => {
+  useEffect(() => {
+    const unsub = onSnapshot(
+      doc(db, COLLECTIONS.randomWorkoutParams, 'params'),
+      (doc) => {
+        console.log('snapshot randomWorkoutParams');
+        if (!doc.exists()) return;
+        const { workoutId, params } = buildRandomWorkoutParams(doc);
+        dispatch({
+          type: ActionTypes.setRandomWorkoutParams,
+          payload: { params, workoutId },
+        });
+      },
+      (err) => {
+        console.warn(err);
+      }
+    );
+    return () => unsub();
+  }, []);
+};
+
 export const setRandomWorkout = async (workout: RandomWorkout) => {
   const { id, ...omitted } = workout;
   console.log('set randomWorkout');
@@ -56,6 +87,50 @@ export const setRandomWorkout = async (workout: RandomWorkout) => {
 export const deleteRandomWorkout = async (workoutId: string) => {
   console.log('delete randomWorkout');
   await deleteDoc(doc(db, COLLECTIONS.randomWorkouts, workoutId));
+};
+
+export const setRandomWorkoutId = async (
+  workoutId: string,
+  cueIds: string[]
+) => {
+  console.log('update randomWorkoutParams');
+  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
+    workoutId,
+    cueIds,
+  });
+};
+
+export const setRandomWorkoutIsRunning = async (isRunning: boolean) => {
+  console.log('update randomWorkoutParams');
+  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
+    isRunning,
+  });
+};
+
+export const startRandomWorkout = async (cueIds: string[]) => {
+  console.log('update randomWorkoutParams');
+  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
+    ...INITIAL_RANDOM_WORKOUT_PARAMS,
+    cueIds,
+    isRunning: true,
+  });
+};
+
+export const resetRandomWorkout = async () => {
+  console.log('update randomWorkoutParams');
+  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
+    time: 0,
+    isRunning: false,
+    currentIndex: 0,
+    isChecked: false,
+  });
+};
+
+export const nextCue = async (currentIndex: number) => {
+  console.log('update randomWorkoutParams');
+  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
+    currentIndex,
+  });
 };
 
 export const buildRandomWorkoutEditInitialState = (
@@ -130,4 +205,19 @@ const buildRandomWorkout = (doc: DocumentData): RandomWorkout => {
     title: title || '',
   };
   return randomWorkout;
+};
+
+const buildRandomWorkoutParams = (
+  doc: DocumentData
+): { params: RandomWorkoutParams; workoutId: string } => {
+  const { time, cueIds, isRunning, currentIndex, isChecked, workoutId } =
+    doc.data();
+  let params: RandomWorkoutParams = {
+    time: time || 0,
+    cueIds: cueIds || [],
+    isRunning: isRunning || false,
+    currentIndex: currentIndex || 0,
+    isChecked: isChecked || false,
+  };
+  return { params, workoutId: workoutId || '' };
 };

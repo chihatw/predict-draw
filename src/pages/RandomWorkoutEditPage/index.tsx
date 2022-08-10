@@ -2,13 +2,12 @@ import { Container } from '@mui/material';
 import { nanoid } from 'nanoid';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { RandomWorkout } from '../../../Model';
-import AppContext from '../../../services/context';
+import { RandomWorkout } from '../../Model';
+import AppContext from '../../services/context';
 import {
   buildRandomWorkoutEditInitialState,
   setRandomWorkout,
-} from '../../../services/randomWorkout';
-import { ActionTypes } from '../../../Update';
+} from '../../services/randomWorkout';
 import { INITIAL_RANDOM_WORKOUT_EDIT_STATE } from './Model';
 import RandomWorkoutForm from './RandomWorkoutForm';
 import { RandomWorkoutActionTypes, randomWorkoutEditReducer } from './Update';
@@ -50,7 +49,7 @@ const RandomWorkoutEditPage = () => {
       }
     }
     await setRandomWorkout(workout);
-    navigate('/mng/random');
+    navigate('/mng');
   };
 
   return (

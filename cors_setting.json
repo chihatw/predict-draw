@@ -1,0 +1,12 @@
+[
+  {
+    "maxAgeSeconds": 3600, 
+    "method": ["GET"], 
+    "origin": 
+      [
+        "http://localhost:3000",
+        "https://predict-draw.vercel.app/"
+      ],
+    "responseHeader": ["Content-Type"]  
+  }
+]

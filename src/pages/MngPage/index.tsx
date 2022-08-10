@@ -6,6 +6,7 @@ import AppContext from '../../services/context';
 import { setPageState } from '../../services/pageState';
 import { resetWorkoutParams } from '../../services/workoutParams';
 import PageStatePane from './PageStatePane';
+import RandomWorkoutList from './RandomWorkoutList';
 import StatusPane from './StatusPane';
 import WorkoutItemList from './WorkoutItemList';
 import WorkoutList from './WorkoutList';
@@ -70,6 +71,7 @@ const MngPage = () => {
             )}
 
             <WorkoutList />
+            <RandomWorkoutList />
           </div>
         </div>
       </Container>

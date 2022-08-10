@@ -4,7 +4,7 @@ import React, { useContext, useRef, useState } from 'react';
 
 import TimePane from './TimePane';
 import TimerButton from './TimerButton';
-import BPMCulcLabel from './BPMCulcLabel';
+import BPMCulcLabel from '../commons/BPMCulcLabel';
 import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import AppContext from '../../../../services/context';
 

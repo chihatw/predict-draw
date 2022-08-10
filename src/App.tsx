@@ -9,7 +9,10 @@ import { useWorkoutParams } from './services/workoutParams';
 import { useWorkouts } from './services/workout';
 import { reducer } from './Update';
 import useNote from './services/note';
-import { useRandomWorkouts } from './services/randomWorkout';
+import {
+  useRandomWorkoutParams,
+  useRandomWorkouts,
+} from './services/randomWorkout';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -19,6 +22,7 @@ function App() {
   usePageState(dispatch);
   useWorkoutParams(dispatch);
   useRandomWorkouts(dispatch);
+  useRandomWorkoutParams(dispatch);
 
   return (
     <AppContext.Provider

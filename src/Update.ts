@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import {
   NoteState,
   RandomWorkout,
+  RandomWorkoutParams,
   State,
   Workout,
   WorkoutParams,
@@ -15,6 +16,8 @@ export const ActionTypes = {
   setRandomWorkouts: 'setRandomWorkouts',
   setLiSanPageState: 'setLiSanPageState',
   setKouSanPageState: 'setKouSanPageState',
+  setRandomWorkoutParams: 'setRandomWorkoutParams',
+  setRandomWorkoutBlobURL: 'setRandomWorkoutBlobURL',
 };
 
 export type Action = {
@@ -28,7 +31,9 @@ export type Action = {
     | NoteState
     | WorkoutParams
     | RandomWorkout
+    | { imagePath: string; blobURL: string }
     | { [workoutId: string]: RandomWorkout }
+    | { params: RandomWorkoutParams; workoutId: string }
     | {
         totalRounds: number;
         currentRound: number;
@@ -45,6 +50,31 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts } = state;
 
   switch (type) {
+    case ActionTypes.setRandomWorkoutBlobURL: {
+      const { imagePath, blobURL } = payload as {
+        imagePath: string;
+        blobURL: string;
+      };
+      return R.compose(
+        R.assocPath<string, State>(
+          ['randomWorkout', 'blobURLs', imagePath],
+          blobURL
+        )
+      )(state);
+    }
+    case ActionTypes.setRandomWorkoutParams: {
+      const { params, workoutId } = payload as {
+        params: RandomWorkoutParams;
+        workoutId: string;
+      };
+      return R.compose(
+        R.assocPath<string, State>(['randomWorkout', 'workoutId'], workoutId),
+        R.assocPath<RandomWorkoutParams, State>(
+          ['randomWorkout', 'params'],
+          params
+        )
+      )(state);
+    }
     case ActionTypes.setRandomWorkouts: {
       const randomWorkouts = payload as { [workoutId: string]: RandomWorkout };
       return R.compose(

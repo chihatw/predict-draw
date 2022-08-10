@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { Cue } from '../../../Model';
+import { Cue } from '../../Model';
 import { RandomWorkoutEditState } from './Model';
 
 export const RandomWorkoutActionTypes = {

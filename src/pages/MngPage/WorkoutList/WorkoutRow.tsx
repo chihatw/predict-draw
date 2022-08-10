@@ -7,13 +7,14 @@ import AppContext from '../../../services/context';
 import { setWorkoutId } from '../../../services/workoutParams';
 import { deleteWorkout } from '../../../services/workout';
 import WorkoutForm from '../WorkoutForm';
+import { WorkoutParams } from '../../../Model';
 
 const WorkoutRow = ({ index }: { index: number }) => {
   const { state } = useContext(AppContext);
   const { workoutParams, workouts } = state;
   const workout = workouts[index];
-  const { label, id: workoutId } = workout;
-  const { workoutId: selectedWotkoutId } = workoutParams;
+  const { label, id: workoutId, cues } = workout;
+  const { workoutId: selectedWotkoutId, totalRounds } = workoutParams;
 
   const [open, setOpen] = useState(false);
 
