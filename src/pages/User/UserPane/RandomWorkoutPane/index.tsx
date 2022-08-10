@@ -1,134 +1,105 @@
-import React, { useContext, useRef, useState } from 'react';
-
-import { Cue, INITIAL_CUE, INITIAL_RANDOM_WORKOUT } from '../../../../Model';
+import Delete from '@mui/icons-material/Delete';
+import { Container, IconButton, useTheme } from '@mui/material';
+import React, { useContext, useMemo } from 'react';
+import BlobSlider from '../../../../commons/BlobSlider';
+import { INITIAL_RANDOM_WORKOUT, RandomWorkout } from '../../../../Model';
+import { deleteStorage } from '../../../../repositories/storage';
 import AppContext from '../../../../services/context';
-import RandomWorkoutHeader from './RandomWorkoutHeader';
-import RandomWorkoutTime from './RandomWorkoutTime';
 import {
-  nextCue,
   resetRandomWorkout,
-  startRandomWorkout,
-  stopRandomWorkout,
+  setRandomWorkout,
 } from '../../../../services/randomWorkout';
-import { shuffle } from '../../../../services/utils';
-import RandomWorkoutTimerButton from './RandomWorkoutTimerButton';
-import RandomWorkoutCard from './RandomWorkoutCard';
-import RandomWorkoutResetButton from './RandomWorkoutResetButton';
-
-import TouchMe from './TouchMe';
-import RandomWorkoutCheckPane from './RandomWorkoutCheckPane';
+import RandomWorkoutRecordingPane from './RandomWorkoutRecordingPane';
+import RandomWorkoutTime from './RandomWorkoutTime';
 
 const RandomWorkoutPane = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const { randomWorkout, audioContext } = state;
-  const { workoutId, workouts, params, blobs } = randomWorkout;
+  const { state } = useContext(AppContext);
+  const { randomWorkout } = state;
+  const { workoutId, workouts, blobs } = randomWorkout;
   const workout = workouts[workoutId] || INITIAL_RANDOM_WORKOUT;
   const workoutBlob = blobs[workoutId] || null;
-  // debug workoutBlob がある場合の画面作成
-
-  const { cues, roundCount } = workout;
-  const { cueIds, isRunning, currentIndex } = params;
-
-  const [miliSeconds, setMiliSeconds] = useState(0);
-  const loopIdRef = useRef(0);
-  const startAtRef = useRef(0);
-
-  const [blob, setBlob] = useState<Blob | null>(null);
-
-  // streamと連携してマイクを切るため
-  const micAudioElemRef = useRef(new Audio());
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-
-  const start = async () => {
-    // localhost の場合、 ios chrome では navigator が取得できない
-    if (!navigator.mediaDevices || !audioContext || !dispatch) return;
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: false,
-    });
-
-    const mediaRecorder = new MediaRecorder(stream);
-    // データが入力された時の処理
-    mediaRecorder.ondataavailable = async (event: BlobEvent) => {
-      setBlob(event.data);
-    };
-    mediaRecorder.start();
-
-    mediaRecorderRef.current = mediaRecorder;
-    // AudioElementと stream を連携
-    micAudioElemRef.current.srcObject = stream;
-
-    let shuffledCueIds: string[] = [];
-    const cueIds = cues.map(({ id }) => id);
-    for (let i = 0; i < roundCount; i++) {
-      shuffledCueIds = shuffledCueIds.concat(shuffle(cueIds));
-    }
-    startRandomWorkout(shuffledCueIds);
-    startAtRef.current = performance.now();
-    loopIdRef.current = window.requestAnimationFrame(loop);
-  };
-  const loop = () => {
-    const elapsedTime = Math.floor(performance.now() - startAtRef.current);
-    setMiliSeconds(elapsedTime);
-    loopIdRef.current = window.requestAnimationFrame(loop);
-  };
-  const next = () => {
-    nextCue(currentIndex + 1);
-  };
-  const stop = () => {
-    window.cancelAnimationFrame(loopIdRef.current);
-    const elapsedTime = Math.floor(performance.now() - startAtRef.current);
-    stopRandomWorkout(elapsedTime);
-    setMiliSeconds(0);
-
-    // 実際に録音ストップは 500ms後
-    setTimeout(() => {
-      let mediaRecorder = mediaRecorderRef.current;
-      let audioElem = micAudioElemRef.current;
-      if (!mediaRecorder) return;
-      mediaRecorder.stop();
-      const stream = audioElem.srcObject as MediaStream;
-      stream.getTracks().forEach((track) => {
-        track.stop();
-      });
-      // ブラウザのマイク使用中の表示を消すために必要
-      audioElem.srcObject = null;
-      mediaRecorder = null;
-    }, 500);
-  };
-  const reset = () => {
-    window.cancelAnimationFrame(loopIdRef.current);
-    resetRandomWorkout();
-    setMiliSeconds(0);
-  };
-
-  if (!audioContext) return <TouchMe />;
 
   if (!workout.id) return <></>;
 
-  const cue =
-    cues.find((item) => item.id === cueIds[currentIndex]) || INITIAL_CUE;
+  if (!!workoutBlob) return <RandomWorkoutResultPane />;
 
-  return (
-    <div>
-      <RandomWorkoutHeader workout={workout} />
-      <RandomWorkoutTime miliSeconds={miliSeconds} />
-      <div style={{ height: 320 }}>
-        {isRunning && <RandomWorkoutCard cue={cue} />}
-      </div>
-      <RandomWorkoutTimerButton
-        start={start}
-        stop={stop}
-        next={next}
-        isRunning={isRunning}
-        hasNext={currentIndex !== cueIds.length - 1}
-      />
-      <div style={{ height: 24 }} />
-      <RandomWorkoutResetButton reset={reset} />
-      <div style={{ height: 120 }} />
-      <RandomWorkoutCheckPane blob={blob} />
-    </div>
-  );
+  return <RandomWorkoutRecordingPane />;
 };
 
 export default RandomWorkoutPane;
+
+const RandomWorkoutResultPane = () => {
+  const theme = useTheme();
+  const { state } = useContext(AppContext);
+  const { randomWorkout, audioContext } = state;
+  const { workouts, workoutId, blobs } = randomWorkout;
+  const workout = workouts[workoutId];
+  const blob = blobs[workoutId];
+  const { title, roundCount, time, beatCount, storagePath } = workout;
+  const bpm = useMemo(() => {
+    if (!time) return 0;
+    const totalBeatCount = roundCount * beatCount;
+    const bps = totalBeatCount / time;
+    const bpm = Math.round(bps * 60 * 2);
+    return bpm;
+  }, [time, roundCount, beatCount]);
+
+  const handleDelete = () => {
+    if (window.confirm('録音ファイルを削除しますか？')) {
+      deleteStorage(storagePath);
+      const updatedWorkout: RandomWorkout = {
+        ...workout,
+        time: 0,
+        storagePath: '',
+      };
+      setRandomWorkout(updatedWorkout);
+      resetRandomWorkout();
+    }
+  };
+
+  return (
+    <Container maxWidth='sm' sx={{ paddingTop: 3 }}>
+      <div
+        style={{
+          ...(theme.typography as any).mRounded300,
+          fontSize: 20,
+          display: 'grid',
+          rowGap: 8,
+          textAlign: 'center',
+        }}
+      >
+        <div>
+          <span style={{ fontSize: 24 }}>{title}</span>
+          <span style={{ fontSize: 18 }}>{`（${roundCount}周）`}</span>
+        </div>
+        <RandomWorkoutTime miliSeconds={time * 1000} />
+        <div
+          style={{
+            ...(theme.typography as any).mRounded300,
+            fontSize: 48,
+            textAlign: 'center',
+          }}
+        >
+          <span style={{ fontSize: 16 }}>BPM: </span>
+          <span>{bpm}</span>
+        </div>
+      </div>
+      <div style={{ height: 64 }} />
+      {!!blob && !!audioContext && (
+        <BlobSlider
+          blob={blob}
+          spacer={5}
+          duration={time + 0.3}
+          audioContext={audioContext}
+        />
+      )}
+      <div style={{ height: 180 }} />
+      <div style={{ textAlign: 'center' }}>
+        <IconButton onClick={handleDelete}>
+          <Delete sx={{ fontSize: 80 }} />
+        </IconButton>
+      </div>
+      <div style={{ height: 180 }} />
+    </Container>
+  );
+};

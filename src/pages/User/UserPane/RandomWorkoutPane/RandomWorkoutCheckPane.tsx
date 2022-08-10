@@ -39,8 +39,11 @@ const RandomWorkoutCheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
       storagePath,
     };
     await uploadStorage(blob, storagePath);
-    await setRandomWorkout(updatedWorkout);
-    await resetRandomWorkout();
+    // uploadを少し待つ
+    setTimeout(async () => {
+      await setRandomWorkout(updatedWorkout);
+      await resetRandomWorkout();
+    }, 500);
   };
   const handleCancel = () => {
     resetRandomWorkout();
