@@ -11,10 +11,11 @@ import { INITIAL_CUE, RandomWorkout } from '../../../../Model';
 import RandomWorkoutTime from './RandomWorkoutTime';
 import BlobSlider from '../../../../commons/BlobSlider';
 import { uploadStorage } from '../../../../repositories/storage';
+import { ActionTypes } from '../../../../Update';
 
 const RandomWorkoutCheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
   const theme = useTheme();
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const { randomWorkout, audioContext } = state;
   const { params, workoutId, workouts } = randomWorkout;
   const workout = workouts[workoutId];
@@ -26,24 +27,29 @@ const RandomWorkoutCheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
   const bpm = useMemo(() => {
     if (!time) return 0;
     const totalBeatCount = roundCount * beatCount;
-    const bps = (totalBeatCount * 1000) / time;
+    const seconds =
+      Math.floor(time / 1000) + Math.floor((time % 1000) / 100) / 10;
+    const bps = totalBeatCount / seconds;
     const bpm = Math.round(bps * 60 * 2);
     return bpm;
   }, [time, roundCount, beatCount]);
 
   const handleSave = async () => {
-    if (!blob) return;
+    if (!blob || !dispatch) return;
+    const seconds =
+      Math.floor(time / 1000) + Math.floor((time % 1000) / 100) / 10;
     const updatedWorkout: RandomWorkout = {
       ...workout,
-      time: Math.round((time * 10) / 1000) / 10,
+      time: seconds,
       storagePath,
     };
     await uploadStorage(blob, storagePath);
-    // uploadを少し待つ
-    setTimeout(async () => {
-      await setRandomWorkout(updatedWorkout);
-      await resetRandomWorkout();
-    }, 500);
+    await setRandomWorkout(updatedWorkout);
+    await resetRandomWorkout();
+    dispatch({
+      type: ActionTypes.saveRandomWorkoutBlob,
+      payload: { workout: updatedWorkout, blob },
+    });
   };
   const handleCancel = () => {
     resetRandomWorkout();

@@ -17,6 +17,7 @@ export const ActionTypes = {
   setRandomWorkouts: 'setRandomWorkouts',
   setLiSanPageState: 'setLiSanPageState',
   setKouSanPageState: 'setKouSanPageState',
+  saveRandomWorkoutBlob: 'saveRandomWorkoutBlob',
   setRandomWorkoutParams: 'setRandomWorkoutParams',
   setRandomWorkoutBlobURL: 'setRandomWorkoutBlobURL',
 };
@@ -33,6 +34,7 @@ export type Action = {
     | WorkoutParams
     | RandomWorkout
     | AudioContext
+    | { workout: RandomWorkout; blob: Blob }
     | { imagePath: string; blobURL: string }
     | { params: RandomWorkoutParams; workoutId: string }
     | {
@@ -56,6 +58,23 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts } = state;
 
   switch (type) {
+    case ActionTypes.saveRandomWorkoutBlob: {
+      const { workout, blob } = payload as {
+        workout: RandomWorkout;
+        blob: Blob;
+      };
+      return R.compose(
+        R.assocPath<Blob, State>(['randomWorkout', 'blobs', workout.id], blob),
+        R.assocPath<RandomWorkout, State>(
+          ['randomWorkout', 'workouts', workout.id],
+          workout
+        ),
+        R.assocPath<boolean, State>(
+          ['randomWorkout', 'params', 'isChecking'],
+          false
+        )
+      )(state);
+    }
     case ActionTypes.setAudioContext: {
       const audioContext = payload as AudioContext;
       return R.compose(
