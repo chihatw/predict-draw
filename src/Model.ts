@@ -132,7 +132,8 @@ export type RandomWorkoutParams = {
   cueIds: string[];
   isRunning: boolean;
   currentIndex: number;
-  isChecked: boolean;
+  isChecking: boolean;
+  blob: Blob | null;
 };
 
 export const INITIAL_RANDOM_WORKOUT_PARAMS: RandomWorkoutParams = {
@@ -140,7 +141,8 @@ export const INITIAL_RANDOM_WORKOUT_PARAMS: RandomWorkoutParams = {
   cueIds: [],
   isRunning: false,
   currentIndex: 0,
-  isChecked: false,
+  isChecking: false,
+  blob: null,
 };
 
 export type RandomWotkoutState = {
@@ -166,6 +168,7 @@ export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
 };
 
 export type State = {
+  audioContext: AudioContext | null;
   note: NoteState;
   workouts: Workout[];
   workoutParams: WorkoutParams;
@@ -175,6 +178,7 @@ export type State = {
 };
 
 export const INITIAL_STATE: State = {
+  audioContext: null,
   note: INITIAL_NOTE_STATE,
   workouts: [],
   liSanPageState: pages.blank,

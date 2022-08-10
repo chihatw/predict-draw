@@ -8,6 +8,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { getDownloadURL, ref } from 'firebase/storage';
 import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 import string2PitchesArray from 'string2pitches-array';
@@ -22,7 +23,7 @@ import {
   INITIAL_RANDOM_WORKOUT_EDIT_STATE,
   RandomWorkoutEditState,
 } from '../pages/RandomWorkoutEditPage/Model';
-import { db } from '../repositories/firebase';
+import { db, storage } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 
 const COLLECTIONS = {
@@ -38,14 +39,58 @@ export const useRandomWorkouts = (dispatch: React.Dispatch<Action>) => {
       async (querySnapshot) => {
         console.log('snapshot randomWorkouts');
         const randomWorkouts: { [workoutId: string]: RandomWorkout } = {};
+        const blobs: { [workoutId: string]: Blob | null } = {};
+        const imagePaths: string[] = [];
+        const blobURLs: { [imagePath: string]: string } = {};
+
         querySnapshot.forEach((doc) => {
           const workout = buildRandomWorkout(doc);
           randomWorkouts[workout.id] = workout;
+          const { cues } = workout;
+          for (const cue of cues) {
+            const { imagePath } = cue;
+            if (!!imagePath) {
+              if (!imagePaths.includes(imagePath)) {
+                imagePaths.push(imagePath);
+              }
+            }
+          }
         });
 
+        // blobs
+        await Promise.all(
+          Object.values(randomWorkouts).map(async (workout) => {
+            const { storagePath, id } = workout;
+            if (storagePath) {
+              // ダウンロード URL を取得
+              const url = await getDownloadURL(ref(storage, storagePath));
+              console.log('create randomWorkoutBlob');
+              // HTTP レスポンスを取得
+              const response = await fetch(url);
+              // HTTP レスポンス全体から Blob を取得
+              const blob = await response.blob();
+
+              blobs[id] = blob;
+            } else {
+              blobs[id] = null;
+            }
+          })
+        );
+
+        // blobURL
+        await Promise.all(
+          imagePaths.map(async (imagePath) => {
+            console.log('get imageBlob');
+            const downloadURL = await getDownloadURL(ref(storage, imagePath));
+            const response = await fetch(downloadURL);
+            const blob = await response.blob();
+            const blobURL = window.URL.createObjectURL(blob);
+            blobURLs[imagePath] = blobURL;
+          })
+        );
         dispatch({
           type: ActionTypes.setRandomWorkouts,
-          payload: randomWorkouts,
+          payload: { randomWorkouts, blobs, blobURLs },
         });
       },
       (err) => {
@@ -100,13 +145,6 @@ export const setRandomWorkoutId = async (
   });
 };
 
-export const setRandomWorkoutIsRunning = async (isRunning: boolean) => {
-  console.log('update randomWorkoutParams');
-  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
-    isRunning,
-  });
-};
-
 export const startRandomWorkout = async (cueIds: string[]) => {
   console.log('update randomWorkoutParams');
   await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
@@ -116,13 +154,22 @@ export const startRandomWorkout = async (cueIds: string[]) => {
   });
 };
 
+export const stopRandomWorkout = async (time: number) => {
+  console.log('update randomWorkoutParams');
+  await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
+    time,
+    isRunning: false,
+    isChecking: true,
+  });
+};
+
 export const resetRandomWorkout = async () => {
   console.log('update randomWorkoutParams');
   await updateDoc(doc(db, COLLECTIONS.randomWorkoutParams, 'params'), {
     time: 0,
     isRunning: false,
     currentIndex: 0,
-    isChecked: false,
+    isChecking: false,
   });
 };
 
@@ -210,14 +257,15 @@ const buildRandomWorkout = (doc: DocumentData): RandomWorkout => {
 const buildRandomWorkoutParams = (
   doc: DocumentData
 ): { params: RandomWorkoutParams; workoutId: string } => {
-  const { time, cueIds, isRunning, currentIndex, isChecked, workoutId } =
+  const { time, cueIds, isRunning, currentIndex, workoutId, isChecking } =
     doc.data();
-  let params: RandomWorkoutParams = {
+  const params: RandomWorkoutParams = {
     time: time || 0,
     cueIds: cueIds || [],
     isRunning: isRunning || false,
     currentIndex: currentIndex || 0,
-    isChecked: isChecked || false,
+    isChecking: isChecking || false,
+    blob: null,
   };
   return { params, workoutId: workoutId || '' };
 };

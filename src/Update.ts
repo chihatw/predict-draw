@@ -12,6 +12,7 @@ export const ActionTypes = {
   setWorkout: 'setWorkout',
   setWorkouts: 'setWorkouts',
   setNoteState: 'setNoteState',
+  setAudioContext: 'setAudioContext',
   setWorkoutParams: 'setWorkoutParams',
   setRandomWorkouts: 'setRandomWorkouts',
   setLiSanPageState: 'setLiSanPageState',
@@ -31,8 +32,8 @@ export type Action = {
     | NoteState
     | WorkoutParams
     | RandomWorkout
+    | AudioContext
     | { imagePath: string; blobURL: string }
-    | { [workoutId: string]: RandomWorkout }
     | { params: RandomWorkoutParams; workoutId: string }
     | {
         totalRounds: number;
@@ -42,6 +43,11 @@ export type Action = {
         time: number;
         bpm: number;
         isRunning: boolean;
+      }
+    | {
+        blobs: { [workoutId: string]: Blob | null };
+        blobURLs: { [imagePath: string]: string };
+        randomWorkouts: { [workoutId: string]: RandomWorkout };
       };
 };
 
@@ -50,6 +56,12 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts } = state;
 
   switch (type) {
+    case ActionTypes.setAudioContext: {
+      const audioContext = payload as AudioContext;
+      return R.compose(
+        R.assocPath<AudioContext, State>(['audioContext'], audioContext)
+      )(state);
+    }
     case ActionTypes.setRandomWorkoutBlobURL: {
       const { imagePath, blobURL } = payload as {
         imagePath: string;
@@ -76,11 +88,23 @@ export const reducer = (state: State, action: Action): State => {
       )(state);
     }
     case ActionTypes.setRandomWorkouts: {
-      const randomWorkouts = payload as { [workoutId: string]: RandomWorkout };
+      const { randomWorkouts, blobs, blobURLs } = payload as {
+        randomWorkouts: { [workoutId: string]: RandomWorkout };
+        blobs: { [workoutId: string]: Blob | null };
+        blobURLs: { [imagePath: string]: string };
+      };
       return R.compose(
         R.assocPath<{ [workoutId: string]: RandomWorkout }, State>(
           ['randomWorkout', 'workouts'],
           randomWorkouts
+        ),
+        R.assocPath<{ [workoutId: string]: Blob | null }, State>(
+          ['randomWorkout', 'blobs'],
+          blobs
+        ),
+        R.assocPath<{ [imagePath: string]: string }, State>(
+          ['randomWorkout', 'blobURLs'],
+          blobURLs
         )
       )(state);
     }

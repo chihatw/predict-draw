@@ -9,17 +9,13 @@ import {
   query,
   setDoc,
 } from 'firebase/firestore';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { workoutItems2String } from 'workout-items';
 import { Workout } from '../Model';
 import { WorkoutState } from '../pages/MngPage/Model';
 
 import { db } from '../repositories/firebase';
-import {
-  addDocument,
-  deleteDocument,
-  updateDocument,
-} from '../repositories/utils';
+
 import { Action, ActionTypes } from '../Update';
 
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
@@ -54,48 +50,6 @@ export const useWorkouts = (dispatch: React.Dispatch<Action> | null) => {
   }, []);
 
   return;
-};
-
-export const useHandleWorkouts = () => {
-  const _addDocument = useMemo(
-    () =>
-      async function <T extends { id: string }>(
-        value: Omit<T, 'id'>
-      ): Promise<T | null> {
-        return await addDocument({
-          db,
-          colId: COLLECTION,
-          value,
-        });
-      },
-    []
-  );
-
-  const _updateDocument = useMemo(
-    () =>
-      async function <T extends { id: string }>(value: T): Promise<T | null> {
-        return await updateDocument({
-          db,
-          colId: COLLECTION,
-          value,
-        });
-      },
-    []
-  );
-
-  const _deleteDocument = useCallback(async (id: string) => {
-    return await deleteDocument({ db, colId: COLLECTION, id });
-  }, []);
-  const addWorkout = async (workout: Omit<Workout, 'id'>) => {
-    return await _addDocument(workout);
-  };
-  const updateWorkout = async (workout: Workout) => {
-    return await _updateDocument(workout);
-  };
-  const deleteWorkout = async (id: string) => {
-    return await _deleteDocument(id);
-  };
-  return { addWorkout, updateWorkout, deleteWorkout };
 };
 
 export const setWorkout = async (workout: Workout) => {
