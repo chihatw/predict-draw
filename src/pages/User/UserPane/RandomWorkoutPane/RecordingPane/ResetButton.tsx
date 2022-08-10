@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 
-const RandomWorkoutResetButton = ({ reset }: { reset: () => void }) => {
+const ResetButton = ({ reset }: { reset: () => void }) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Button variant='outlined' sx={{ width: 260 }} onClick={reset}>
@@ -11,4 +11,4 @@ const RandomWorkoutResetButton = ({ reset }: { reset: () => void }) => {
   );
 };
 
-export default RandomWorkoutResetButton;
+export default ResetButton;

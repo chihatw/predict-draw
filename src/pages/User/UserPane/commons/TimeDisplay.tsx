@@ -3,7 +3,7 @@ import React from 'react';
 
 const WIDTH = 200;
 
-const RandomWorkoutTime = ({ miliSeconds }: { miliSeconds: number }) => {
+const TimeDisplay = ({ miliSeconds }: { miliSeconds: number }) => {
   const theme = useTheme();
   const width = WIDTH;
   const seconds = String(Math.floor(miliSeconds / 1000));
@@ -30,4 +30,4 @@ const RandomWorkoutTime = ({ miliSeconds }: { miliSeconds: number }) => {
   );
 };
 
-export default RandomWorkoutTime;
+export default TimeDisplay;

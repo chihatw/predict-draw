@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Cue } from '../../../../Model';
+import { Cue } from '../../../../../Model';
 
-import AppContext from '../../../../services/context';
+import AppContext from '../../../../../services/context';
 
-const RandomWorkoutCard = React.memo(({ cue }: { cue: Cue }) => {
+const Card = React.memo(({ cue }: { cue: Cue }) => {
   const { label, imagePath } = cue;
   const { state } = useContext(AppContext);
   const { randomWorkout } = state;
@@ -28,4 +28,4 @@ const RandomWorkoutCard = React.memo(({ cue }: { cue: Cue }) => {
   );
 });
 
-export default RandomWorkoutCard;
+export default Card;

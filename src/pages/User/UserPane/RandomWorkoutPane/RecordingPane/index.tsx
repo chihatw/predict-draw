@@ -1,24 +1,25 @@
 import React, { useContext, useRef, useState } from 'react';
+import AppContext from '../../../../../services/context';
 
-import { INITIAL_CUE, INITIAL_RANDOM_WORKOUT } from '../../../../Model';
-import AppContext from '../../../../services/context';
-import RandomWorkoutHeader from './RandomWorkoutHeader';
-import RandomWorkoutTime from './RandomWorkoutTime';
+import { INITIAL_CUE, INITIAL_RANDOM_WORKOUT } from '../../../../../Model';
 import {
   nextCue,
   resetRandomWorkout,
   startRandomWorkout,
   stopRandomWorkout,
-} from '../../../../services/randomWorkout';
-import { shuffle } from '../../../../services/utils';
-import RandomWorkoutTimerButton from './RandomWorkoutTimerButton';
-import RandomWorkoutCard from './RandomWorkoutCard';
-import RandomWorkoutResetButton from './RandomWorkoutResetButton';
+} from '../../../../../services/randomWorkout';
+import { shuffle } from '../../../../../services/utils';
+
+import TimeDisplay from '../../commons/TimeDisplay';
 
 import TouchMe from './TouchMe';
-import RandomWorkoutCheckPane from './RandomWorkoutCheckPane';
+import Card from './Card';
+import CheckPane from './CheckPane';
+import Header from './Header';
+import ResetButton from './ResetButton';
+import PlayButton from './PlayButton';
 
-const RandomWorkoutRecordingPane = () => {
+const RecordingPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const { randomWorkout, audioContext } = state;
   const { workoutId, workouts, params } = randomWorkout;
@@ -105,12 +106,10 @@ const RandomWorkoutRecordingPane = () => {
 
   return (
     <div>
-      <RandomWorkoutHeader workout={workout} />
-      <RandomWorkoutTime miliSeconds={miliSeconds} />
-      <div style={{ height: 320 }}>
-        {isRunning && <RandomWorkoutCard cue={cue} />}
-      </div>
-      <RandomWorkoutTimerButton
+      <Header workout={workout} />
+      <TimeDisplay miliSeconds={miliSeconds} />
+      <div style={{ height: 320 }}>{isRunning && <Card cue={cue} />}</div>
+      <PlayButton
         start={start}
         stop={stop}
         next={next}
@@ -118,11 +117,11 @@ const RandomWorkoutRecordingPane = () => {
         hasNext={currentIndex !== cueIds.length - 1}
       />
       <div style={{ height: 24 }} />
-      <RandomWorkoutResetButton reset={reset} />
+      <ResetButton reset={reset} />
       <div style={{ height: 120 }} />
-      <RandomWorkoutCheckPane blob={blob} />
+      <CheckPane blob={blob} />
     </div>
   );
 };
 
-export default RandomWorkoutRecordingPane;
+export default RecordingPane;

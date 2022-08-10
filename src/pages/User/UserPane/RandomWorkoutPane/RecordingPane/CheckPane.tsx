@@ -2,18 +2,18 @@ import { Button, Container, Modal, useTheme } from '@mui/material';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 import React, { useContext, useMemo } from 'react';
-import AppContext from '../../../../services/context';
+import AppContext from '../../../../../services/context';
 import {
   resetRandomWorkout,
   setRandomWorkout,
-} from '../../../../services/randomWorkout';
-import { INITIAL_CUE, RandomWorkout } from '../../../../Model';
-import RandomWorkoutTime from './RandomWorkoutTime';
-import BlobSlider from '../../../../commons/BlobSlider';
-import { uploadStorage } from '../../../../repositories/storage';
-import { ActionTypes } from '../../../../Update';
+} from '../../../../../services/randomWorkout';
+import { INITIAL_CUE, RandomWorkout } from '../../../../../Model';
+import TimeDisplay from '../../commons/TimeDisplay';
+import BlobSlider from '../../../../../commons/BlobSlider';
+import { uploadStorage } from '../../../../../repositories/storage';
+import { ActionTypes } from '../../../../../Update';
 
-const RandomWorkoutCheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
+const CheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
   const theme = useTheme();
   const { state, dispatch } = useContext(AppContext);
   const { randomWorkout, audioContext } = state;
@@ -69,7 +69,7 @@ const RandomWorkoutCheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
       >
         <Container maxWidth='sm'>
           <div style={{ display: 'grid', rowGap: 16 }}>
-            <RandomWorkoutTime miliSeconds={time} />
+            <TimeDisplay miliSeconds={time} />
             <div
               style={{
                 ...(theme.typography as any).mRounded300,
@@ -152,4 +152,4 @@ const RandomWorkoutCheckPane = React.memo(({ blob }: { blob: Blob | null }) => {
   );
 });
 
-export default RandomWorkoutCheckPane;
+export default CheckPane;

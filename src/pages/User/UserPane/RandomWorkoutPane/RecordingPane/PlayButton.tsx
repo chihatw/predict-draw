@@ -15,7 +15,7 @@ const rotate = keyframes`
   }
 `;
 
-const RandomWorkoutTimerButton = ({
+const PlayButton = ({
   start,
   stop,
   next,
@@ -69,4 +69,4 @@ const RandomWorkoutTimerButton = ({
   );
 };
 
-export default RandomWorkoutTimerButton;
+export default PlayButton;
