@@ -12,6 +12,7 @@ const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.workoutCue, label: 'キュー出し' },
   { value: pages.workoutRead, label: 'キュー受け' },
   { value: pages.randomWorkout, label: 'ランダム' },
+  { value: pages.cueWorkout, label: '助詞の練習' },
   { value: pages.blank, label: '空欄' },
 ];
 

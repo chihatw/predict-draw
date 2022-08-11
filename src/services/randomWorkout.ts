@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { nanoid } from 'nanoid';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import {
   Cue,
@@ -77,20 +77,9 @@ export const useRandomWorkouts = (dispatch: React.Dispatch<Action>) => {
           })
         );
 
-        // blobURL
-        await Promise.all(
-          imagePaths.map(async (imagePath) => {
-            console.log('get imageBlob');
-            const downloadURL = await getDownloadURL(ref(storage, imagePath));
-            const response = await fetch(downloadURL);
-            const blob = await response.blob();
-            const blobURL = window.URL.createObjectURL(blob);
-            blobURLs[imagePath] = blobURL;
-          })
-        );
         dispatch({
           type: ActionTypes.setRandomWorkouts,
-          payload: { randomWorkouts, blobs, blobURLs },
+          payload: { randomWorkouts, blobs },
         });
       },
       (err) => {

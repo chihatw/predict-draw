@@ -14,6 +14,7 @@ import {
   useRandomWorkouts,
 } from './services/randomWorkout';
 import { createAudioContext } from './services/utils';
+import { useCueWorkout } from './services/cueWorkout';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -21,6 +22,7 @@ function App() {
   useNote(dispatch);
   useWorkouts(dispatch);
   usePageState(dispatch);
+  useCueWorkout(dispatch);
   useWorkoutParams(dispatch);
   useRandomWorkouts(dispatch);
   useRandomWorkoutParams(dispatch);

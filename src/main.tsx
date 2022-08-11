@@ -68,13 +68,14 @@ if (!container) throw new Error('Fail to find the roote lement');
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <div style={{ height: '100vh' }}>
-          <App />
-        </div>
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+  // strikt mode は useEffect が 2回実行される
+  // <React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <div style={{ height: '100vh' }}>
+        <App />
+      </div>
+    </BrowserRouter>
+  </ThemeProvider>
+  // </React.StrictMode>
 );

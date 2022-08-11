@@ -48,6 +48,7 @@ export const INITIAL_WORKOUT: Workout = {
 export const pages = {
   blank: 'blank',
   bpmCalc: 'bpmCalc',
+  cueWorkout: 'cueWorkout',
   workoutCue: 'workoutCue',
   workoutRead: 'workoutRead',
   randomWorkout: 'randomWorkout',
@@ -154,9 +155,6 @@ export type RandomWotkoutState = {
   blobs: {
     [workoutId: string]: Blob | null;
   };
-  blobURLs: {
-    [imagePath: string]: string;
-  };
 };
 
 export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
@@ -164,7 +162,59 @@ export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
   params: INITIAL_RANDOM_WORKOUT_PARAMS,
   workouts: {},
   blobs: {},
-  blobURLs: {},
+};
+
+export type CueWorkoutCard = {
+  id: string;
+  pitchStr: string;
+  imagePath: string;
+  hasTailAccent: boolean;
+};
+
+export type CueWorkoutCue = {
+  hasWo: boolean;
+  hasNi: boolean;
+  colors: string[];
+  verb: string;
+  isInverse: boolean;
+};
+
+export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
+  hasWo: false,
+  hasNi: false,
+  colors: [],
+  verb: '',
+  isInverse: false,
+};
+
+export type CueWorkoutParams = {
+  time: number;
+  isRunning: boolean;
+  points: number;
+  colors: string[];
+  verbs: string[];
+  isRandom: boolean;
+};
+
+export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
+  time: 0,
+  isRunning: false,
+  points: 0,
+  colors: [],
+  verbs: [],
+  isRandom: false,
+};
+
+export type CueWorkoutState = {
+  cards: { [id: string]: CueWorkoutCard };
+  params: CueWorkoutParams;
+  cue: CueWorkoutCue;
+};
+
+const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
+  cards: {},
+  cue: INITIAL_CUE_WORKOUT_CUE,
+  params: INITIAL_CUE_WORKOUT_PARAMS,
 };
 
 export type State = {
@@ -175,6 +225,10 @@ export type State = {
   liSanPageState: string;
   kouSanPageState: string;
   randomWorkout: RandomWotkoutState;
+  cueWorkout: CueWorkoutState;
+  blobURLs: {
+    [imagePath: string]: string;
+  };
 };
 
 export const INITIAL_STATE: State = {
@@ -183,6 +237,8 @@ export const INITIAL_STATE: State = {
   workouts: [],
   liSanPageState: pages.blank,
   kouSanPageState: pages.blank,
+  cueWorkout: INITIAL_CUE_WORKOUT_STATE,
   workoutParams: INITIAL_WORKOUT_PARAMS,
   randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
+  blobURLs: {},
 };

@@ -5,6 +5,7 @@ import { INITIAL_WORKOUT } from '../../Model';
 import AppContext from '../../services/context';
 import { setPageState } from '../../services/pageState';
 import { resetWorkoutParams } from '../../services/workoutParams';
+import CueWorkoutList from './CueWorkoutList';
 import PageStatePane from './PageStatePane';
 import RandomWorkoutList from './RandomWorkoutList';
 import StatusPane from './StatusPane';
@@ -72,6 +73,7 @@ const MngPage = () => {
 
             <WorkoutList />
             <RandomWorkoutList />
+            <CueWorkoutList />
           </div>
         </div>
       </Container>

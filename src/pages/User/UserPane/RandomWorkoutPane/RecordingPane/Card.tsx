@@ -6,8 +6,7 @@ import AppContext from '../../../../../services/context';
 const Card = React.memo(({ cue }: { cue: Cue }) => {
   const { label, imagePath } = cue;
   const { state } = useContext(AppContext);
-  const { randomWorkout } = state;
-  const { blobURLs } = randomWorkout;
+  const { blobURLs } = state;
   const blobURL = blobURLs[imagePath] || '';
 
   return (
