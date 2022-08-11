@@ -2,7 +2,11 @@ import { Button, TextField } from '@mui/material';
 import React, { useContext } from 'react';
 import { CueWorkoutParams } from '../../Model';
 import AppContext from '../../services/context';
-import { setCueWorkoutParams } from '../../services/cueWorkout';
+import {
+  createCueFromParams,
+  setCueWorkoutCue,
+  setCueWorkoutParams,
+} from '../../services/cueWorkout';
 
 const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
 const VERBS = [
@@ -18,7 +22,8 @@ const CueWorkoutList = () => {
   const { state } = useContext(AppContext);
   const { cueWorkout } = state;
   const { params } = cueWorkout;
-  const { colors, verbs, points, time, isRandom, isRunning } = params;
+  const { colors, verbs, points, time, isRandom, isRunning, isInverse } =
+    params;
 
   const handleClickColor = async (color: string) => {
     let updatedColors = [...colors];
@@ -32,11 +37,13 @@ const CueWorkoutList = () => {
       colors: updatedColors,
     };
     await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
   };
   const handleClickVerb = async (verb: string) => {
     let updatedVerbs = [...verbs];
     if (verbs.includes(verb)) {
-      updatedVerbs = colors.filter((item) => item !== verb);
+      updatedVerbs = verbs.filter((item) => item !== verb);
     } else {
       updatedVerbs.push(verb);
     }
@@ -45,6 +52,8 @@ const CueWorkoutList = () => {
       verbs: updatedVerbs,
     };
     await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
   };
 
   const handleChangeTime = async (time: number) => {
@@ -61,6 +70,18 @@ const CueWorkoutList = () => {
       isRandom: !isRandom,
     };
     await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
+  };
+
+  const handleChangeIsInverse = async () => {
+    const updatedParams: CueWorkoutParams = {
+      ...params,
+      isInverse: !isInverse,
+    };
+    await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
   };
 
   const handleReset = async () => {
@@ -70,6 +91,8 @@ const CueWorkoutList = () => {
       isRunning: false,
     };
     await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
   };
 
   return (
@@ -147,6 +170,13 @@ const CueWorkoutList = () => {
         value={time}
         onChange={(e) => handleChangeTime(Number(e.target.value))}
       />
+      <h4>Is Inverse</h4>
+      <Button
+        color={isInverse ? 'primary' : 'secondary'}
+        onClick={handleChangeIsInverse}
+      >
+        isInverse
+      </Button>
       <h4>Is Random</h4>
       <Button
         color={isRandom ? 'primary' : 'secondary'}

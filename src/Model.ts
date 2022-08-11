@@ -171,17 +171,20 @@ export type CueWorkoutCard = {
   hasTailAccent: boolean;
 };
 
+export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
+  id: '',
+  pitchStr: '',
+  imagePath: '',
+  hasTailAccent: false,
+};
+
 export type CueWorkoutCue = {
-  hasWo: boolean;
-  hasNi: boolean;
   colors: string[];
   verb: string;
   isInverse: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
-  hasWo: false,
-  hasNi: false,
   colors: [],
   verb: '',
   isInverse: false,
@@ -194,6 +197,7 @@ export type CueWorkoutParams = {
   colors: string[];
   verbs: string[];
   isRandom: boolean;
+  isInverse: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
@@ -203,6 +207,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   colors: [],
   verbs: [],
   isRandom: false,
+  isInverse: false,
 };
 
 export type CueWorkoutState = {
