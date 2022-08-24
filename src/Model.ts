@@ -52,6 +52,7 @@ export const pages = {
   workoutCue: 'workoutCue',
   workoutRead: 'workoutRead',
   randomWorkout: 'randomWorkout',
+  workingMemory: 'workingMemory',
 };
 
 export type WorkoutParams = {
@@ -222,6 +223,46 @@ const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
   params: INITIAL_CUE_WORKOUT_PARAMS,
 };
 
+export type WorkingMemoryCue = {
+  id: string;
+  pitchStr: string;
+  start: number;
+  end: number;
+};
+
+export const INITIAL_WORKING_MEMORY_CUE: WorkingMemoryCue = {
+  id: '',
+  pitchStr: '',
+  start: 0,
+  end: 0,
+};
+
+export type WorkingMemoryAnswer = {
+  createdAt: number;
+  cuePitchStrs: string[];
+  inputPitchStrs: string[];
+  score: number;
+  offset: number;
+};
+
+export type WorkingMemory = {
+  id: string;
+  offset: number;
+  cueCount: number;
+  storagePath: string;
+  cues: { [id: string]: WorkingMemoryCue };
+  cueIds: string[]; // for monitor
+};
+
+export const INITIAL_WORKING_MEMORY: WorkingMemory = {
+  id: '',
+  offset: 0,
+  cueCount: 0,
+  storagePath: '',
+  cues: {},
+  cueIds: [],
+};
+
 export type State = {
   audioContext: AudioContext | null;
   note: NoteState;
@@ -231,6 +272,11 @@ export type State = {
   kouSanPageState: string;
   randomWorkout: RandomWotkoutState;
   cueWorkout: CueWorkoutState;
+  workingMemory: WorkingMemory;
+  workingMemoryAnswerIds: string[];
+  blobs: {
+    [audioPath: string]: Blob;
+  };
   blobURLs: {
     [imagePath: string]: string;
   };
@@ -245,5 +291,8 @@ export const INITIAL_STATE: State = {
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
   workoutParams: INITIAL_WORKOUT_PARAMS,
   randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
+  workingMemory: INITIAL_WORKING_MEMORY,
+  workingMemoryAnswerIds: [],
+  blobs: {},
   blobURLs: {},
 };

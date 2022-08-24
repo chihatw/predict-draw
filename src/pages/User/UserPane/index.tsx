@@ -1,9 +1,11 @@
+import { path } from 'ramda';
 import React, { useContext } from 'react';
 import { pages } from '../../../Model';
 import AppContext from '../../../services/context';
 import { BpmCulc } from './BpmCalcPane';
 import CueWorkoutPane from './CueWorkoutPane';
 import RandomWorkoutPane from './RandomWorkoutPane';
+import WorkingMemoryPane from './WorkingMemoryPane';
 import WorkoutCuePane from './WorkoutCuePane';
 import WorkoutReadPane from './WorkoutReadPane';
 
@@ -22,6 +24,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <RandomWorkoutPane />;
     case pages.cueWorkout:
       return <CueWorkoutPane />;
+    case pages.workingMemory:
+      return <WorkingMemoryPane />;
     default:
       return <div></div>;
   }

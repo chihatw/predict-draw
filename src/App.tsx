@@ -15,6 +15,7 @@ import {
 } from './services/randomWorkout';
 import { createAudioContext } from './services/utils';
 import { useCueWorkout } from './services/cueWorkout';
+import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -26,6 +27,7 @@ function App() {
   useWorkoutParams(dispatch);
   useRandomWorkouts(dispatch);
   useRandomWorkoutParams(dispatch);
+  useWorkingMemoryWorkout(dispatch);
 
   useEffect(() => {
     const { audioContext } = state;
@@ -52,17 +54,3 @@ function App() {
 }
 
 export default App;
-
-// class AudioContextFactory {
-//   create() {
-//     const audioContext = new window.AudioContext();
-//     const osc = audioContext.createOscillator();
-//     const gainNode = audioContext.createGain();
-//     osc.connect(gainNode);
-//     gainNode.connect(audioContext.destination);
-//     gainNode.gain.value = 0;
-//     osc.start(audioContext.currentTime);
-//     osc.stop(audioContext.currentTime + 0.1);
-//     return audioContext;
-//   }
-// }

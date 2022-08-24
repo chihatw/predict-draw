@@ -100,6 +100,18 @@ const RecordingPane = () => {
     window.cancelAnimationFrame(loopIdRef.current);
     resetRandomWorkout();
     setMiliSeconds(0);
+
+    let mediaRecorder = mediaRecorderRef.current;
+    let audioElem = micAudioElemRef.current;
+    if (!mediaRecorder) return;
+    mediaRecorder.stop();
+    const stream = audioElem.srcObject as MediaStream;
+    stream.getTracks().forEach((track) => {
+      track.stop();
+    });
+    // ブラウザのマイク使用中の表示を消すために必要
+    audioElem.srcObject = null;
+    mediaRecorder = null;
   };
 
   if (!audioContext) return <TouchMe />;

@@ -7,6 +7,7 @@ import {
   RandomWorkout,
   RandomWorkoutParams,
   State,
+  WorkingMemory,
   Workout,
   WorkoutParams,
 } from './Model';
@@ -17,22 +18,25 @@ export const ActionTypes = {
   setWorkouts: 'setWorkouts',
   setNoteState: 'setNoteState',
   setAudioContext: 'setAudioContext',
+  setCueWorkoutCue: 'setCueWorkoutCue',
+  setWorkingMemory: 'setWorkingMemory',
   setWorkoutParams: 'setWorkoutParams',
   setRandomWorkouts: 'setRandomWorkouts',
   setLiSanPageState: 'setLiSanPageState',
+  setCueWorkoutCards: 'setCueWorkoutCards',
   setKouSanPageState: 'setKouSanPageState',
+  setCueWorkoutParams: 'setCueWorkoutParams',
   saveRandomWorkoutBlob: 'saveRandomWorkoutBlob',
   setRandomWorkoutParams: 'setRandomWorkoutParams',
   setRandomWorkoutBlobURL: 'setRandomWorkoutBlobURL',
-  setCueWorkoutCue: 'setCueWorkoutCue',
-  setCueWorkoutCards: 'setCueWorkoutCards',
-  setCueWorkoutParams: 'setCueWorkoutParams',
+  setWorkingMemoryAnswerIds: 'setWorkingMemoryAnswerIds',
 };
 
 export type Action = {
   type: string;
   payload?:
     | string
+    | string[]
     | number
     | number[]
     | Workout
@@ -43,6 +47,7 @@ export type Action = {
     | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
+    | { workingMemory: WorkingMemory; blob: Blob }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
     | { workout: RandomWorkout; blob: Blob }
@@ -68,6 +73,25 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setWorkingMemoryAnswerIds: {
+      const answerIds = payload as string[];
+      return R.assocPath<string[], State>(
+        ['workingMemoryAnswerIds'],
+        answerIds
+      )(state);
+    }
+    case ActionTypes.setWorkingMemory: {
+      const { workingMemory, blob } = payload as {
+        workingMemory: WorkingMemory;
+        blob: Blob;
+      };
+      const updatedBlobs = { ...state.blobs };
+      updatedBlobs[workingMemory.storagePath] = blob;
+      return R.compose(
+        R.assocPath<WorkingMemory, State>(['workingMemory'], workingMemory),
+        R.assocPath<{ [path: string]: Blob }, State>(['blobs'], updatedBlobs)
+      )(state);
+    }
     case ActionTypes.setCueWorkoutCards: {
       const cards = payload as { [id: string]: CueWorkoutCard };
       return R.compose(
