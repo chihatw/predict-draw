@@ -1,16 +1,47 @@
+import { css } from '@emotion/css';
 import { PlayCircleRounded } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import React from 'react';
+import { Button, IconButton } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 import { createSourceNode } from '../../../../../services/utils';
 import { WorkingMemoryFormState } from '../Model';
 
-const PlayButton = ({ state }: { state: WorkingMemoryFormState }) => {
+const PlayButton = ({
+  state,
+  dispatch,
+}: {
+  state: WorkingMemoryFormState;
+  dispatch: React.Dispatch<WorkingMemoryFormState>;
+}) => {
+  const [initialize, setInitialize] = useState(true);
+  const AnimationElemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialize) {
+      const AnswerList = AnimationElemRef.current;
+      if (!AnswerList) return;
+      AnswerList.classList.add('initial');
+      setInitialize(false);
+      setTimeout(() => {
+        AnswerList.classList.remove('initial');
+      }, 0);
+    }
+  }, [initialize]);
+
   const currentCueId = state.cueIds[state.currentIndex];
   const currentCue = state.cues[currentCueId];
   const play = async () => {
     if (!state.blob || !state.audioContext) return;
     const sourceNode = await createSourceNode(state.blob, state.audioContext);
     sourceNode.start(0, currentCue.start, currentCue.end - currentCue.start);
+  };
+
+  const handleClick = () => {
+    const updatedState: WorkingMemoryFormState = {
+      ...state,
+      currentIndex: state.currentIndex + 1,
+    };
+    setInitialize(true);
+    dispatch(updatedState);
   };
 
   return (
@@ -31,15 +62,35 @@ const PlayButton = ({ state }: { state: WorkingMemoryFormState }) => {
         </div>
       </div>
       <div
-        style={{
+        ref={AnimationElemRef}
+        className={css({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-        }}
+          opacity: 1,
+          transition: 'all 0.3s ease-in-out',
+          transform: 'translateY(0%)',
+          '&.initial': {
+            opacity: 0,
+            transition: '0s',
+            transform: 'translateY(50%)',
+          },
+        })}
       >
         <IconButton color='primary' onClick={play}>
           <PlayCircleRounded sx={{ fontSize: 120 }} />
         </IconButton>
+      </div>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', paddingTop: 80 }}
+      >
+        <Button
+          sx={{ color: 'white', width: 240 }}
+          variant='contained'
+          onClick={handleClick}
+        >
+          記住了
+        </Button>
       </div>
     </div>
   );

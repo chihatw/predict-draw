@@ -14,6 +14,7 @@ import {
 } from '../pages/User/UserPane/WorkingMemoryPane/Model';
 import { db, storage } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
+import { getRandomInt } from './utils';
 
 const COLLECTIONS = {
   workingMemoryWorkouts: 'workingMemoryWorkouts',
@@ -121,8 +122,4 @@ export const buildCueIds = (ids: string[], cueCount: number) => {
     cueIds.push(ids[index]);
   }
   return cueIds;
-};
-
-const getRandomInt = (max: number) => {
-  return Math.floor(Math.random() * max);
 };

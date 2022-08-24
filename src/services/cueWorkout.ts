@@ -15,7 +15,7 @@ import {
 import { CUE_CARDS } from '../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { db, storage } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
-import { shuffle } from './utils';
+import { getRandomInt, shuffle } from './utils';
 
 const COLLECTIONS = {
   cueWorkout: 'cueWorkout',
@@ -152,10 +152,6 @@ export const createCueFromParams = (
   };
   return cue;
 };
-
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
 
 export const getCueString = (cue: CueWorkoutCue): string => {
   const { colors, verb, isInverse } = cue;

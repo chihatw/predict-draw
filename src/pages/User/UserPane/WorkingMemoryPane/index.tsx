@@ -15,7 +15,6 @@ const WorkingMemoryPane = () => {
 
   useEffect(() => {
     const workingMemoryFormState = buildWorkingMemoryFormState(state);
-    console.log({ workingMemoryFormState });
     workingMemoryFormDispatch(workingMemoryFormState);
   }, [state.audioContext, state.workingMemory]);
 

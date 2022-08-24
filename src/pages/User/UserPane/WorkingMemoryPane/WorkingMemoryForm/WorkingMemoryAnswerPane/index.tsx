@@ -30,7 +30,7 @@ const WorkingMemoryAnswerPane = ({
       setInitialize(false);
       setTimeout(() => {
         AnswerList.classList.remove('initial');
-      }, 300);
+      }, 0);
     }
   }, [initialize]);
 
@@ -76,7 +76,7 @@ const WorkingMemoryAnswerPane = ({
           overflowY: 'scroll',
           justifyContent: 'center',
           opacity: 1,
-          transition: 'all 0.1s ease-in',
+          transition: 'all 0.3s ease-in-out',
           transform: 'translateY(0%)',
           '&.initial': {
             opacity: 0.1,

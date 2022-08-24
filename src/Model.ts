@@ -225,9 +225,9 @@ const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
 
 export type WorkingMemoryCue = {
   id: string;
-  pitchStr: string;
-  start: number;
   end: number;
+  start: number;
+  pitchStr: string;
 };
 
 export const INITIAL_WORKING_MEMORY_CUE: WorkingMemoryCue = {
