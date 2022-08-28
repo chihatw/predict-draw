@@ -5,14 +5,13 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { getDownloadURL, ref } from 'firebase/storage';
 import React, { useEffect } from 'react';
 import { INITIAL_WORKING_MEMORY, State, WorkingMemory } from '../Model';
 import {
   INITIAL_WORKING_MEMORY_FORM_STATE,
   WorkingMemoryFormState,
 } from '../pages/User/UserPane/WorkingMemoryPane/Model';
-import { db, storage } from '../repositories/firebase';
+import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 import { getRandomInt } from './utils';
 
@@ -28,18 +27,9 @@ export const useWorkingMemoryWorkout = (dispatch: React.Dispatch<Action>) => {
         console.log('snapshot workingMemoryWorkout');
         if (!doc.exists()) return;
         const workingMemory = buildWorkingMemory(doc);
-
-        console.log('get downloadURL');
-        let downloadURL = await getDownloadURL(
-          ref(storage, workingMemory.storagePath)
-        );
-
-        console.log('fetch blob');
-        const response = await fetch(downloadURL);
-        const blob = await response.blob();
         dispatch({
           type: ActionTypes.setWorkingMemory,
-          payload: { workingMemory, blob },
+          payload: { workingMemory, blob: null },
         });
       }
     );

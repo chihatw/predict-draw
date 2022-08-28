@@ -19,7 +19,10 @@ const Card = ({ cardId, isActive }: { cardId: string; isActive: boolean }) => {
         justifyContent: 'center',
       }}
     >
-      <img src={blobURL} width={40} height={40} style={{ borderRadius: 8 }} />
+      {blobURL && (
+        <img src={blobURL} width={40} height={40} style={{ borderRadius: 8 }} />
+      )}
+
       <div
         style={{
           visibility: isActive ? 'hidden' : 'visible',

@@ -22,6 +22,7 @@ import {
 import { createAudioContext } from './services/utils';
 import { useCueWorkout } from './services/cueWorkout';
 import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
+import { useRhythmList } from './services/rhythmList';
 
 const INITIAL_STATE: State = {
   audioContext: null,
@@ -37,6 +38,10 @@ const INITIAL_STATE: State = {
   randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
   workingMemory: INITIAL_WORKING_MEMORY,
   workingMemoryAnswerIds: [],
+  rhythmList: {
+    tapped: [],
+    mora: 1,
+  },
   blobs: {},
   blobURLs: {},
 };
@@ -55,6 +60,7 @@ function App() {
   useNote(dispatch);
   useWorkouts(dispatch);
   usePageState(dispatch);
+  useRhythmList(dispatch);
   useCueWorkout(dispatch);
   useWorkoutParams(dispatch);
   useRandomWorkouts(dispatch);

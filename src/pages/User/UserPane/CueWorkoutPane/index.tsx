@@ -14,8 +14,12 @@ import {
   setCueWorkoutParams,
   stopCueWorkout,
 } from '../../../../services/cueWorkout';
-import { CueWorkoutParams } from '../../../../Model';
+import { CueWorkoutParams, State } from '../../../../Model';
 import PlayButton from './PlayButton';
+import { CUE_CARDS } from './CUE_CARDS';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../../../../repositories/firebase';
+import { ActionTypes } from '../../../../Update';
 
 const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
 const VERBS = [
@@ -28,11 +32,42 @@ const VERBS = [
 ];
 
 const CueWorkoutPane = () => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const { cueWorkout } = state;
   const { params, cue } = cueWorkout;
   const { colors, verbs, isRunning, time, points } = params;
   const [miliSeconds, setMiliSeconds] = useState(0);
+  const [initializing, setInitializing] = useState(true);
+
+  useEffect(() => {
+    if (!initializing) return;
+    const fetchData = async () => {
+      const _blobURLs: { [imagePath: string]: string } = {};
+      await Promise.all(
+        Object.values(CUE_CARDS).map(async (cueCard) => {
+          const { imagePath } = cueCard;
+
+          let _blobURL = '';
+
+          if (state.blobURLs[imagePath]) {
+            _blobURL = state.blobURLs[imagePath];
+          } else {
+            console.log('get imageBlob');
+            const downloadURL = await getDownloadURL(ref(storage, imagePath));
+            const response = await fetch(downloadURL);
+            const blob = await response.blob();
+            _blobURL = window.URL.createObjectURL(blob);
+          }
+          _blobURLs[imagePath] = _blobURL;
+        })
+      );
+      const updatedBlobURLs = { ...state.blobURLs, ..._blobURLs };
+      const updatedState: State = { ...state, blobURLs: updatedBlobURLs };
+      dispatch({ type: ActionTypes.setState, payload: updatedState });
+      setInitializing(false);
+    };
+    fetchData();
+  }, [initializing]);
 
   const startAtRef = useRef(0);
   const loopIdRef = useRef(0);

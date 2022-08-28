@@ -5,7 +5,6 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { getDownloadURL, ref } from 'firebase/storage';
 import React, { useEffect } from 'react';
 import {
   CueWorkoutCue,
@@ -13,7 +12,7 @@ import {
   INITIAL_CUE_WORKOUT_CUE,
 } from '../Model';
 import { CUE_CARDS } from '../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
-import { db, storage } from '../repositories/firebase';
+import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 import { getRandomInt, shuffle } from './utils';
 
@@ -45,22 +44,6 @@ export const useCueWorkout = (dispatch: React.Dispatch<Action>) => {
         dispatch({ type: ActionTypes.setCueWorkoutParams, payload: params });
       }
     );
-    const fetchData = async () => {
-      const blobURLs: { [imagePath: string]: string } = {};
-      await Promise.all(
-        Object.values(CUE_CARDS).map(async (cueCard) => {
-          const { imagePath } = cueCard;
-          console.log('get imageBlob');
-          const downloadURL = await getDownloadURL(ref(storage, imagePath));
-          const response = await fetch(downloadURL);
-          const blob = await response.blob();
-          const blobURL = window.URL.createObjectURL(blob);
-          blobURLs[imagePath] = blobURL;
-        })
-      );
-      dispatch({ type: ActionTypes.setBlobURLs, payload: blobURLs });
-    };
-    fetchData();
     return () => {
       unsubCue();
       unsubParams();

@@ -7,6 +7,7 @@ import { BpmCulc } from './BpmCalcPane';
 import CueWorkoutPane from './CueWorkoutPane';
 import NotePane from './NotePane';
 import RandomWorkoutPane from './RandomWorkoutPane';
+import RhythmListPane from './RhythmListPane';
 import WorkingMemoryPane from './WorkingMemoryPane';
 import WorkoutCuePane from './WorkoutCuePane';
 import WorkoutReadPane from './WorkoutReadPane';
@@ -37,6 +38,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <WorkingMemoryPane />;
     case pages.note:
       return <NotePane />;
+    case pages.rhythmList:
+      return <RhythmListPane />;
     default:
       return <div></div>;
   }

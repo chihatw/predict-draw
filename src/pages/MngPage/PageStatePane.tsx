@@ -15,6 +15,7 @@ const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.cueWorkout, label: '助詞の練習' },
   { value: pages.workingMemory, label: '音韻記憶' },
   { value: pages.note, label: 'ノート' },
+  { value: pages.rhythmList, label: 'リズムリスト' },
   { value: pages.blank, label: '空欄' },
 ];
 const LABELS: { [key: string]: string } = {

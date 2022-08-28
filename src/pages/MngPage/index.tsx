@@ -1,4 +1,4 @@
-import { Container, Divider, TextField } from '@mui/material';
+import { Container, Divider, IconButton, TextField } from '@mui/material';
 
 import React, { useContext } from 'react';
 
@@ -15,6 +15,10 @@ import WorkingMemoryPane from './WorkingMemoryPane';
 import WorkoutList from './WorkoutList';
 import WorkoutPane from './WorkoutPane';
 import NotePane from './NotePane';
+import { RhythmListState } from '../../Model';
+import { setRhythmList } from '../../services/rhythmList';
+import Delete from '@mui/icons-material/Delete';
+import RhythmListPane from './RhythmListPane';
 
 const MngPage = () => {
   const { state } = useContext(AppContext);
@@ -56,7 +60,7 @@ const MngPage = () => {
               value={state.workoutParams.totalRounds}
               onChange={(e) => handleChangeTotalRounds(Number(e.target.value))}
             />
-
+            <RhythmListPane />
             <NotePane />
             <WorkoutPane />
             <WorkoutList />

@@ -49,6 +49,7 @@ export const pages = {
   note: 'note',
   blank: 'blank',
   bpmCalc: 'bpmCalc',
+  rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
   workoutCue: 'workoutCue',
   workoutRead: 'workoutRead',
@@ -264,18 +265,24 @@ export const INITIAL_WORKING_MEMORY: WorkingMemory = {
   cueIds: [],
 };
 
+export type RhythmListState = {
+  tapped: string[];
+  mora: number;
+};
+
 export type State = {
   audioContext: AudioContext | null;
-  note: NoteState;
-  workouts: Workout[];
-  workoutParams: WorkoutParams;
   pageStates: {
     liSan: string;
     kouSan: string;
     chinSan: string;
   };
-  randomWorkout: RandomWotkoutState;
+  note: NoteState;
+  workouts: Workout[];
+  rhythmList: RhythmListState;
   cueWorkout: CueWorkoutState;
+  workoutParams: WorkoutParams;
+  randomWorkout: RandomWotkoutState;
   workingMemory: WorkingMemory;
   workingMemoryAnswerIds: string[];
   blobs: {

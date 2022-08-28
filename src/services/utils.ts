@@ -1,3 +1,6 @@
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../repositories/firebase';
+
 export const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max);
 };
@@ -41,4 +44,19 @@ export const createSourceNode = async (
   sourceNode.buffer = await blobToAudioBuffer(blob, audioContext);
   sourceNode.connect(audioContext.destination);
   return sourceNode;
+};
+
+export const getBlob = async (downloadURL: string) => {
+  let blob = null;
+
+  if (downloadURL) {
+    const header = downloadURL.slice(0, 4);
+    if (header !== 'http') {
+      downloadURL = await getDownloadURL(ref(storage, downloadURL));
+    }
+    console.log('create blob');
+    const response = await fetch(downloadURL);
+    blob = await response.blob();
+  }
+  return blob;
 };

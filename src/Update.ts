@@ -6,6 +6,7 @@ import {
   NoteState,
   RandomWorkout,
   RandomWorkoutParams,
+  RhythmListState,
   State,
   WorkingMemory,
   Workout,
@@ -13,11 +14,13 @@ import {
 } from './Model';
 
 export const ActionTypes = {
+  setState: 'setState',
   setWorkout: 'setWorkout',
   setBlobURLs: 'setBlobURLs',
   setWorkouts: 'setWorkouts',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
+  setRhythmList: 'setRhythmList',
   setAudioContext: 'setAudioContext',
   setCueWorkoutCue: 'setCueWorkoutCue',
   setWorkingMemory: 'setWorkingMemory',
@@ -34,6 +37,7 @@ export const ActionTypes = {
 export type Action = {
   type: string;
   payload?:
+    | State
     | string
     | string[]
     | number
@@ -46,8 +50,9 @@ export type Action = {
     | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
+    | RhythmListState
     | { user: string; pageState: string }
-    | { workingMemory: WorkingMemory; blob: Blob }
+    | { workingMemory: WorkingMemory; blob: Blob | null }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
     | { workout: RandomWorkout; blob: Blob }
@@ -73,6 +78,16 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setRhythmList: {
+      const rhythmList = payload as RhythmListState;
+      return R.assocPath<RhythmListState, State>(
+        ['rhythmList'],
+        rhythmList
+      )(state);
+    }
+    case ActionTypes.setState: {
+      return payload as State;
+    }
     case ActionTypes.setPageState: {
       const { user, pageState } = payload as {
         user: string;
@@ -90,10 +105,12 @@ export const reducer = (state: State, action: Action): State => {
     case ActionTypes.setWorkingMemory: {
       const { workingMemory, blob } = payload as {
         workingMemory: WorkingMemory;
-        blob: Blob;
+        blob: Blob | null;
       };
       const updatedBlobs = { ...state.blobs };
-      updatedBlobs[workingMemory.storagePath] = blob;
+      if (blob) {
+        updatedBlobs[workingMemory.storagePath] = blob;
+      }
       return R.compose(
         R.assocPath<WorkingMemory, State>(['workingMemory'], workingMemory),
         R.assocPath<{ [path: string]: Blob }, State>(['blobs'], updatedBlobs)
