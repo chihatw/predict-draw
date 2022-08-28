@@ -1,13 +1,19 @@
-import React, { useEffect, useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { INITIAL_STATE } from './Model';
+import React, { createContext, useEffect, useReducer } from 'react';
+import {
+  INITIAL_CUE_WORKOUT_STATE,
+  INITIAL_NOTE_STATE,
+  INITIAL_RANDOM_WORKOUT_STATE,
+  INITIAL_WORKING_MEMORY,
+  INITIAL_WORKOUT_PARAMS,
+  pages,
+  State,
+} from './Model';
 
 import AppRoutes from './routes/AppRoutes';
-import AppContext from './services/context';
 import usePageState from './services/pageState';
 import { useWorkoutParams } from './services/workoutParams';
 import { useWorkouts } from './services/workout';
-import { ActionTypes, reducer } from './Update';
+import { Action, ActionTypes, reducer } from './Update';
 import useNote from './services/note';
 import {
   useRandomWorkoutParams,
@@ -16,6 +22,32 @@ import {
 import { createAudioContext } from './services/utils';
 import { useCueWorkout } from './services/cueWorkout';
 import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
+
+const INITIAL_STATE: State = {
+  audioContext: null,
+  note: INITIAL_NOTE_STATE,
+  workouts: [],
+  pageStates: {
+    liSan: '',
+    kouSan: '',
+    chinSan: '',
+  },
+  cueWorkout: INITIAL_CUE_WORKOUT_STATE,
+  workoutParams: INITIAL_WORKOUT_PARAMS,
+  randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
+  workingMemory: INITIAL_WORKING_MEMORY,
+  workingMemoryAnswerIds: [],
+  blobs: {},
+  blobURLs: {},
+};
+
+export const AppContext = createContext<{
+  state: State;
+  dispatch: React.Dispatch<Action>;
+}>({
+  state: INITIAL_STATE,
+  dispatch: () => null,
+});
 
 function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);

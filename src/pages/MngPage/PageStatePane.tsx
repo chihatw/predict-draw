@@ -14,25 +14,31 @@ const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.randomWorkout, label: 'ランダム' },
   { value: pages.cueWorkout, label: '助詞の練習' },
   { value: pages.workingMemory, label: '音韻記憶' },
+  { value: pages.note, label: 'ノート' },
   { value: pages.blank, label: '空欄' },
 ];
+const LABELS: { [key: string]: string } = {
+  liSan: '李さん',
+  kouSan: '黄さん',
+  chinSan: '陳さん',
+};
 
 const PageStatePane = ({
-  label,
+  user,
   value,
   handleChange,
 }: {
-  label: string;
+  user: string;
   value: string;
-  handleChange: (value: string) => void;
+  handleChange: (user: string, state: string) => void;
 }) => {
   return (
     <FormControl>
-      <FormLabel sx={{ fontSize: 12 }}>{label}</FormLabel>
+      <FormLabel sx={{ fontSize: 12 }}>{LABELS[user] || '??'}</FormLabel>
       <RadioGroup
         row
         value={value}
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChange(user, e.target.value)}
       >
         {PAGE_STATE.map(({ value, label }, index) => (
           <FormControlLabel

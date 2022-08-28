@@ -17,14 +17,13 @@ export const ActionTypes = {
   setBlobURLs: 'setBlobURLs',
   setWorkouts: 'setWorkouts',
   setNoteState: 'setNoteState',
+  setPageState: 'setPageState',
   setAudioContext: 'setAudioContext',
   setCueWorkoutCue: 'setCueWorkoutCue',
   setWorkingMemory: 'setWorkingMemory',
   setWorkoutParams: 'setWorkoutParams',
   setRandomWorkouts: 'setRandomWorkouts',
-  setLiSanPageState: 'setLiSanPageState',
   setCueWorkoutCards: 'setCueWorkoutCards',
-  setKouSanPageState: 'setKouSanPageState',
   setCueWorkoutParams: 'setCueWorkoutParams',
   saveRandomWorkoutBlob: 'saveRandomWorkoutBlob',
   setRandomWorkoutParams: 'setRandomWorkoutParams',
@@ -47,6 +46,7 @@ export type Action = {
     | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
+    | { user: string; pageState: string }
     | { workingMemory: WorkingMemory; blob: Blob }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
@@ -73,6 +73,13 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setPageState: {
+      const { user, pageState } = payload as {
+        user: string;
+        pageState: string;
+      };
+      return R.assocPath<string, State>(['pageStates', user], pageState)(state);
+    }
     case ActionTypes.setWorkingMemoryAnswerIds: {
       const answerIds = payload as string[];
       return R.assocPath<string[], State>(
@@ -216,18 +223,6 @@ export const reducer = (state: State, action: Action): State => {
       return R.compose(R.assocPath<Workout[], State>(['workouts'], workouts))(
         state
       );
-    }
-    case ActionTypes.setLiSanPageState: {
-      const pageState = payload as string;
-      return R.compose(
-        R.assocPath<string, State>(['liSanPageState'], pageState)
-      )(state);
-    }
-    case ActionTypes.setKouSanPageState: {
-      const pageState = payload as string;
-      return R.compose(
-        R.assocPath<string, State>(['kouSanPageState'], pageState)
-      )(state);
     }
     default:
       return R.compose(R.identity)(state);

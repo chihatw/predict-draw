@@ -2,7 +2,7 @@ import { Container, TextField } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 
 import Layout from '../../Layout';
-import AppContext from '../../services/context';
+import { AppContext } from '../../App';
 import { buildInput, buildPitchList, setNote } from '../../services/note';
 
 const MngNotePage = () => {

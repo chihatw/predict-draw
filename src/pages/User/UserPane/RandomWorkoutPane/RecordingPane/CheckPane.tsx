@@ -2,7 +2,7 @@ import { Button, Container, Modal, useTheme } from '@mui/material';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 import React, { useContext, useMemo } from 'react';
-import AppContext from '../../../../../services/context';
+import { AppContext } from '../../../../../App';
 import {
   resetRandomWorkout,
   setRandomWorkout,

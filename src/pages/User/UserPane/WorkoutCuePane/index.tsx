@@ -4,7 +4,7 @@ import { Container } from '@mui/material';
 import React, { useEffect, useState, useContext } from 'react';
 
 import WorkoutStatus from '../commons/WorkoutStatus';
-import AppContext from '../../../../services/context';
+import { AppContext } from '../../../../App';
 import ReadySign from './components/ReadySign';
 import NextButton from './components/NextButton';
 import CueList from './components/CueList';

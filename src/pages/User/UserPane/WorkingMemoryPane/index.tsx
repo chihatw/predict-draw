@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from 'react';
-import AppContext from '../../../../services/context';
+import { AppContext } from '../../../../App';
 import { buildWorkingMemoryFormState } from '../../../../services/workingMemoryWorkout';
 import { INITIAL_WORKING_MEMORY_FORM_STATE } from './Model';
 import { workingMemoryReducer } from './Update';

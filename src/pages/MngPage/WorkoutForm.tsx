@@ -13,7 +13,7 @@ import {
 import { WorkoutActionTypes, workoutReducer } from './Update';
 import WorkoutItemList from './WorkoutItemList';
 import { ActionTypes } from '../../Update';
-import AppContext from '../../services/context';
+import { AppContext } from '../../App';
 import { INITIAL_WORKOUT_STATE } from './Model';
 
 const WorkoutForm = ({

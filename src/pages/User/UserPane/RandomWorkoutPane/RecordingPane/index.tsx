@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import AppContext from '../../../../../services/context';
+import { AppContext } from '../../../../../App';
 
 import { INITIAL_CUE, INITIAL_RANDOM_WORKOUT } from '../../../../../Model';
 import {

@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material';
 import React, { useContext } from 'react';
 import { RandomWorkout, RandomWorkoutParams } from '../../../../../Model';
-import AppContext from '../../../../../services/context';
+import { AppContext } from '../../../../../App';
 
 const Header = ({ workout }: { workout: RandomWorkout }) => {
   const theme = useTheme();

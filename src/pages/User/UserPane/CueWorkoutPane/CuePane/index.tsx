@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { INITIAL_CUE_WORKOUT_CARD } from '../../../../../Model';
-import AppContext from '../../../../../services/context';
+import { AppContext } from '../../../../../App';
 import CueCard from './CueCard';
 
 const COLOR_LABELS: { [key: string]: string } = {

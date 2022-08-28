@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Cue } from '../../../../../Model';
 
-import AppContext from '../../../../../services/context';
+import { AppContext } from '../../../../../App';
 
 const Card = React.memo(({ cue }: { cue: Cue }) => {
   const { label, imagePath } = cue;

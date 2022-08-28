@@ -2,7 +2,7 @@ import Delete from '@mui/icons-material/Delete';
 import { Container, IconButton, useTheme } from '@mui/material';
 import React, { useContext, useMemo } from 'react';
 
-import AppContext from '../../../../services/context';
+import { AppContext } from '../../../../App';
 import { INITIAL_RANDOM_WORKOUT } from '../../../../Model';
 
 import ResultPane from './ResultPane';

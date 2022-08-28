@@ -7,6 +7,7 @@ import MngPage from '../pages/MngPage';
 import NotePage from '../pages/Note/NotePage';
 import MngNotePage from '../pages/Note/MngNotePage';
 import RandomWorkoutEditPage from '../pages/RandomWorkoutEditPage';
+import ChinSanPage from '../pages/User/UserPane/ChinSanPage';
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
       <Route path='/' element={<TopPage />} />
       <Route path='/liSan' element={<LisanPage />} />
       <Route path='/kouSan' element={<KouSanPage />} />
+      <Route path='/chinSan' element={<ChinSanPage />} />
       <Route path='note' element={<NotePage />} />
       <Route path='/mng'>
         <Route index element={<MngPage />} />

@@ -9,8 +9,8 @@ import {
   TableCell,
   TableRow,
 } from '@mui/material';
-import React, { useContext } from 'react';
-import AppContext from '../../services/context';
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../../App';
 import {
   deleteRandomWorkout,
   setRandomWorkoutId,
@@ -22,6 +22,7 @@ const RandomWorkoutList = () => {
   const { state, dispatch } = useContext(AppContext);
   const { randomWorkout } = state;
   const { workoutId, workouts } = randomWorkout;
+  const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
   const openCreatePage = () => {
@@ -53,43 +54,56 @@ const RandomWorkoutList = () => {
   };
   return (
     <div>
-      <h3>RandomWorkout</h3>
-      <Button onClick={openCreatePage}>新規作成</Button>
-      <Table>
-        <TableBody>
-          {Object.values(workouts).map((workout) => (
-            <TableRow key={workout.id}>
-              <TableCell>
-                <IconButton
-                  onClick={() => handleCheck(workout.id)}
-                  sx={{
-                    color: workout.id === workoutId ? '#52a2aa' : '#555',
-                  }}
-                >
-                  <Check />
-                </IconButton>
-              </TableCell>
-              <TableCell>{workout.title}</TableCell>
-              <TableCell>
-                <IconButton
-                  size='small'
-                  onClick={() => openEditPage(workout.id)}
-                >
-                  <Edit />
-                </IconButton>
-              </TableCell>
-              <TableCell>
-                <IconButton
-                  size='small'
-                  onClick={() => handleDelete(workout.id)}
-                >
-                  <Delete />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <h3>RandomWorkout</h3>
+        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
+      </div>
+      {open && (
+        <>
+          <Button onClick={openCreatePage}>新規作成</Button>
+          <Table>
+            <TableBody>
+              {Object.values(workouts).map((workout) => (
+                <TableRow key={workout.id}>
+                  <TableCell>
+                    <IconButton
+                      onClick={() => handleCheck(workout.id)}
+                      sx={{
+                        color: workout.id === workoutId ? '#52a2aa' : '#555',
+                      }}
+                    >
+                      <Check />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell>{workout.title}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      size='small'
+                      onClick={() => openEditPage(workout.id)}
+                    >
+                      <Edit />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      size='small'
+                      onClick={() => handleDelete(workout.id)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </>
+      )}
     </div>
   );
 };

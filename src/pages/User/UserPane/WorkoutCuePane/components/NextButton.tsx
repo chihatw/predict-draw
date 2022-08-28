@@ -2,7 +2,7 @@ import SyncIcon from '@mui/icons-material/Sync';
 import { IconButton } from '@mui/material';
 import React, { useContext } from 'react';
 import { INITIAL_WORKOUT } from '../../../../../Model';
-import AppContext from '../../../../../services/context';
+import { AppContext } from '../../../../../App';
 import { setCurrentRound } from '../../../../../services/workoutParams';
 
 const NextButton = ({

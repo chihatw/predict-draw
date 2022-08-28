@@ -9,15 +9,18 @@ const COLLECTIONS = {
   pageStates: 'pageStates',
 };
 
-const usePageState = (dispatch: React.Dispatch<Action> | null) => {
+const usePageState = (dispatch: React.Dispatch<Action>) => {
   useEffect(() => {
     const unsubLiSanPageState = onSnapshot(
       doc(db, COLLECTIONS.pageStates, 'liSan'),
       (doc) => {
         console.log('snapshot liSanPageState');
         if (!doc.exists() || !dispatch) return;
-        const state = buildState(doc);
-        dispatch({ type: ActionTypes.setLiSanPageState, payload: state });
+        const pageState = buildState(doc);
+        dispatch({
+          type: ActionTypes.setPageState,
+          payload: { user: 'liSan', pageState },
+        });
       },
       (err) => {
         console.log(err);
@@ -27,17 +30,33 @@ const usePageState = (dispatch: React.Dispatch<Action> | null) => {
       doc(db, COLLECTIONS.pageStates, 'kouSan'),
       (doc) => {
         console.log('snapshot kouSanPageState');
-        if (!doc.exists() || !dispatch) return;
-        const state = buildState(doc);
-        dispatch({ type: ActionTypes.setKouSanPageState, payload: state });
+        if (!doc.exists()) return;
+        const pageState = buildState(doc);
+        dispatch({
+          type: ActionTypes.setPageState,
+          payload: { user: 'kouSan', pageState },
+        });
       },
       (err) => {
         console.log(err);
       }
     );
+    const unsubChinSanPageState = onSnapshot(
+      doc(db, COLLECTIONS.pageStates, 'chinSan'),
+      (doc) => {
+        console.log('snapshot chinSanPageState');
+        if (!doc.exists()) return;
+        const pageState = buildState(doc);
+        dispatch({
+          type: ActionTypes.setPageState,
+          payload: { user: 'chinSan', pageState },
+        });
+      }
+    );
     return () => {
       unsubLiSanPageState();
       unsubKouSanPageState();
+      unsubChinSanPageState();
     };
   }, []);
 };

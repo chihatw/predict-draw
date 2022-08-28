@@ -2,7 +2,7 @@ import Delete from '@mui/icons-material/Delete';
 import { Container, IconButton, useTheme } from '@mui/material';
 import React, { useContext, useMemo } from 'react';
 
-import AppContext from '../../../../services/context';
+import { AppContext } from '../../../../App';
 import { deleteStorage } from '../../../../repositories/storage';
 import { RandomWorkout } from '../../../../Model';
 import {

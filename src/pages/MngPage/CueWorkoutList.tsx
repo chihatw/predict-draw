@@ -1,7 +1,8 @@
 import { Button, TextField } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CueWorkoutParams } from '../../Model';
-import AppContext from '../../services/context';
+import { AppContext } from '../../App';
+
 import {
   createCueFromParams,
   setCueWorkoutCue,
@@ -20,6 +21,7 @@ const VERBS = [
 
 const CueWorkoutList = () => {
   const { state } = useContext(AppContext);
+  const [open, setOpen] = useState(true);
   const { cueWorkout } = state;
   const { params } = cueWorkout;
   const { colors, verbs, points, time, isRandom, isRunning, isInverse } =
@@ -97,93 +99,106 @@ const CueWorkoutList = () => {
 
   return (
     <div>
-      <h3>CueWorkout</h3>
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 80px)',
+          display: 'flex',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          margin: '-20px 0',
         }}
       >
-        <h4>Points</h4>
-        <div>{points}</div>
+        <h3>CueWorkout</h3>
+        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 100px)',
-          alignItems: 'center',
-          margin: '-20px 0',
-        }}
-      >
-        <h4>IsRunning</h4>
-        <div>{String(isRunning)}</div>
-      </div>
-      <div style={{ height: 20 }} />
-      <Button fullWidth variant='outlined' onClick={handleReset}>
-        reset
-      </Button>
-      <h4>Colors</h4>
-      <div
-        style={{
-          display: 'grid',
-          columnGap: 8,
-          gridTemplateColumns: 'repeat(6, 80px)',
-        }}
-      >
-        {COLORS.map((color) => (
-          <Button
-            key={color}
-            color={colors.includes(color) ? 'primary' : 'secondary'}
-            onClick={() => handleClickColor(color)}
+      {open && (
+        <>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 80px)',
+              alignItems: 'center',
+              margin: '-20px 0',
+            }}
           >
-            {color}
-          </Button>
-        ))}
-      </div>
-      <h4>Verbs</h4>
-      <div
-        style={{
-          display: 'grid',
-          columnGap: 8,
-          gridTemplateColumns: 'repeat(6, 80px)',
-        }}
-      >
-        {VERBS.map((verb) => (
-          <Button
-            key={verb}
-            color={verbs.includes(verb) ? 'primary' : 'secondary'}
-            onClick={() => handleClickVerb(verb)}
+            <h4>Points</h4>
+            <div>{points}</div>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 100px)',
+              alignItems: 'center',
+              margin: '-20px 0',
+            }}
           >
-            <span style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-              {verb}
-            </span>
+            <h4>IsRunning</h4>
+            <div>{String(isRunning)}</div>
+          </div>
+          <div style={{ height: 20 }} />
+          <Button fullWidth variant='outlined' onClick={handleReset}>
+            reset
           </Button>
-        ))}
-      </div>
-      <h4>Time</h4>
-      <TextField
-        fullWidth
-        size='small'
-        type='number'
-        value={time}
-        onChange={(e) => handleChangeTime(Number(e.target.value))}
-      />
-      <h4>Is Inverse</h4>
-      <Button
-        color={isInverse ? 'primary' : 'secondary'}
-        onClick={handleChangeIsInverse}
-      >
-        isInverse
-      </Button>
-      <h4>Is Random</h4>
-      <Button
-        color={isRandom ? 'primary' : 'secondary'}
-        onClick={handleChangeIsRandom}
-      >
-        isRandom
-      </Button>
+          <h4>Colors</h4>
+          <div
+            style={{
+              display: 'grid',
+              columnGap: 8,
+              gridTemplateColumns: 'repeat(6, 80px)',
+            }}
+          >
+            {COLORS.map((color) => (
+              <Button
+                key={color}
+                color={colors.includes(color) ? 'primary' : 'secondary'}
+                onClick={() => handleClickColor(color)}
+              >
+                {color}
+              </Button>
+            ))}
+          </div>
+          <h4>Verbs</h4>
+          <div
+            style={{
+              display: 'grid',
+              columnGap: 8,
+              gridTemplateColumns: 'repeat(6, 80px)',
+            }}
+          >
+            {VERBS.map((verb) => (
+              <Button
+                key={verb}
+                color={verbs.includes(verb) ? 'primary' : 'secondary'}
+                onClick={() => handleClickVerb(verb)}
+              >
+                <span style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                  {verb}
+                </span>
+              </Button>
+            ))}
+          </div>
+          <h4>Time</h4>
+          <TextField
+            fullWidth
+            size='small'
+            type='number'
+            value={time}
+            onChange={(e) => handleChangeTime(Number(e.target.value))}
+          />
+          <h4>Is Inverse</h4>
+          <Button
+            color={isInverse ? 'primary' : 'secondary'}
+            onClick={handleChangeIsInverse}
+          >
+            isInverse
+          </Button>
+          <h4>Is Random</h4>
+          <Button
+            color={isRandom ? 'primary' : 'secondary'}
+            onClick={handleChangeIsRandom}
+          >
+            isRandom
+          </Button>
+        </>
+      )}
     </div>
   );
 };

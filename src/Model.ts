@@ -46,6 +46,7 @@ export const INITIAL_WORKOUT: Workout = {
 };
 
 export const pages = {
+  note: 'note',
   blank: 'blank',
   bpmCalc: 'bpmCalc',
   cueWorkout: 'cueWorkout',
@@ -217,7 +218,7 @@ export type CueWorkoutState = {
   cue: CueWorkoutCue;
 };
 
-const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
+export const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
   cards: {},
   cue: INITIAL_CUE_WORKOUT_CUE,
   params: INITIAL_CUE_WORKOUT_PARAMS,
@@ -268,8 +269,11 @@ export type State = {
   note: NoteState;
   workouts: Workout[];
   workoutParams: WorkoutParams;
-  liSanPageState: string;
-  kouSanPageState: string;
+  pageStates: {
+    liSan: string;
+    kouSan: string;
+    chinSan: string;
+  };
   randomWorkout: RandomWotkoutState;
   cueWorkout: CueWorkoutState;
   workingMemory: WorkingMemory;
@@ -280,19 +284,4 @@ export type State = {
   blobURLs: {
     [imagePath: string]: string;
   };
-};
-
-export const INITIAL_STATE: State = {
-  audioContext: null,
-  note: INITIAL_NOTE_STATE,
-  workouts: [],
-  liSanPageState: pages.blank,
-  kouSanPageState: pages.blank,
-  cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  workoutParams: INITIAL_WORKOUT_PARAMS,
-  randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
-  workingMemory: INITIAL_WORKING_MEMORY,
-  workingMemoryAnswerIds: [],
-  blobs: {},
-  blobURLs: {},
 };

@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import AppContext from '../../../../services/context';
+import { AppContext } from '../../../../App';
 
 import TimeDisplay from '../commons/TimeDisplay';
 

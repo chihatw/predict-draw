@@ -3,7 +3,7 @@ import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
 import React, { useContext, useRef, useState } from 'react';
 import { INITIAL_WORKOUT } from '../../../../Model';
 
-import AppContext from '../../../../services/context';
+import { AppContext } from '../../../../App';
 import {
   resetWorkoutParams,
   setWorkoutTime,

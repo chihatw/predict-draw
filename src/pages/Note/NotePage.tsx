@@ -10,7 +10,7 @@ import React, { useContext } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 
 import Layout from '../../Layout';
-import AppContext from '../../services/context';
+import { AppContext } from '../../App';
 
 const NotePage = () => {
   const { state } = useContext(AppContext);

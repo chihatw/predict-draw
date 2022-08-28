@@ -3,11 +3,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Collapse, IconButton } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import AppContext from '../../../services/context';
+import { AppContext } from '../../../App';
 import { setWorkoutId } from '../../../services/workoutParams';
 import { deleteWorkout } from '../../../services/workout';
 import WorkoutForm from '../WorkoutForm';
-import { WorkoutParams } from '../../../Model';
 
 const WorkoutRow = ({ index }: { index: number }) => {
   const { state } = useContext(AppContext);

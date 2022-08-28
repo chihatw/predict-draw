@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useContext } from 'react';
 import { IconButton } from '@mui/material';
-import AppContext from '../../services/context';
+import { AppContext } from '../../App';
 import { resetWorkoutParams } from '../../services/workoutParams';
 
 const StatusPane = () => {

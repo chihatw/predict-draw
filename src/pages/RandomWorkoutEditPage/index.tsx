@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RandomWorkout } from '../../Model';
-import AppContext from '../../services/context';
+import { AppContext } from '../../App';
 import {
   buildRandomWorkoutEditInitialState,
   setRandomWorkout,
