@@ -55,6 +55,7 @@ export const pages = {
   workoutRead: 'workoutRead',
   randomWorkout: 'randomWorkout',
   workingMemory: 'workingMemory',
+  rhythmListening: 'rhythmListening',
 };
 
 export type WorkoutParams = {
@@ -270,6 +271,12 @@ export type RhythmListState = {
   mora: number;
 };
 
+export type RhythmListening = {
+  mora: number;
+  cueIds: string[];
+  cueCount: number;
+};
+
 export type State = {
   audioContext: AudioContext | null;
   pageStates: {
@@ -284,6 +291,8 @@ export type State = {
   workoutParams: WorkoutParams;
   randomWorkout: RandomWotkoutState;
   workingMemory: WorkingMemory;
+  rhythmListening: RhythmListening;
+  rhythmListeningAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
   blobs: {
     [audioPath: string]: Blob;

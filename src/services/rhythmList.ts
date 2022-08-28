@@ -9,7 +9,7 @@ const COLLECTION = 'rhythmList';
 export const useRhythmList = async (dispatch: React.Dispatch<Action>) => {
   useEffect(() => {
     const unsub = onSnapshot(doc(db, COLLECTION, 'params'), (doc) => {
-      console.log('snapshot rhyhhmList');
+      console.log('snapshot rhythmList');
       if (!doc.exists()) return;
       const rhythmList = buildRhythmList(doc);
       dispatch({ type: ActionTypes.setRhythmList, payload: rhythmList });
@@ -27,6 +27,6 @@ const buildRhythmList = (doc: DocumentData): RhythmListState => {
   const { tapped, mora } = doc.data();
   return {
     tapped: tapped || [],
-    mora: mora || 0,
+    mora: mora || 1,
   };
 };

@@ -75,6 +75,7 @@ const RhythmListPane = () => {
             size='small'
             label='mora'
             type='number'
+            autoComplete='off'
             value={state.rhythmList.mora}
             onChange={(e) => handleChangeMora(Number(e.target.value))}
           />

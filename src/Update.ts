@@ -6,6 +6,7 @@ import {
   NoteState,
   RandomWorkout,
   RandomWorkoutParams,
+  RhythmListening,
   RhythmListState,
   State,
   WorkingMemory,
@@ -32,6 +33,8 @@ export const ActionTypes = {
   setRandomWorkoutParams: 'setRandomWorkoutParams',
   setRandomWorkoutBlobURL: 'setRandomWorkoutBlobURL',
   setWorkingMemoryAnswerIds: 'setWorkingMemoryAnswerIds',
+  setRhythmListening: 'setRhythmListening',
+  setRhythmListeningAnswers: 'setRhythmListeningAnswers',
 };
 
 export type Action = {
@@ -51,6 +54,8 @@ export type Action = {
     | CueWorkoutCue
     | CueWorkoutParams
     | RhythmListState
+    | RhythmListening
+    | { [index: number]: string[] }
     | { user: string; pageState: string }
     | { workingMemory: WorkingMemory; blob: Blob | null }
     | { [id: string]: CueWorkoutCard }
@@ -78,6 +83,20 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setRhythmListening: {
+      const rhythmListening = payload as RhythmListening;
+      return R.assocPath<RhythmListening, State>(
+        ['rhythmListening'],
+        rhythmListening
+      )(state);
+    }
+    case ActionTypes.setRhythmListeningAnswers: {
+      const answers = payload as { [index: number]: string[] };
+      return R.assocPath<{ [index: number]: string[] }, State>(
+        ['rhythmListeningAnswers'],
+        answers
+      )(state);
+    }
     case ActionTypes.setRhythmList: {
       const rhythmList = payload as RhythmListState;
       return R.assocPath<RhythmListState, State>(
