@@ -8,7 +8,7 @@ const WorkoutList = () => {
   const { state } = useContext(AppContext);
   const { workouts } = state;
   const [openForm, setOpenForm] = useState(false);
-  const [openWorkoutList, setOpenWorkoutList] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleClickAdd = () => {
     setOpenForm(!openForm);
@@ -23,11 +23,9 @@ const WorkoutList = () => {
         }}
       >
         <h3>Workouts</h3>
-        <Button onClick={() => setOpenWorkoutList(!openWorkoutList)}>
-          {openWorkoutList ? 'hide' : 'open'}
-        </Button>
+        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
-      {openWorkoutList && (
+      {open && (
         <div style={{ display: 'grid', rowGap: 8 }}>
           <Button
             onClick={handleClickAdd}

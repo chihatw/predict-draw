@@ -22,7 +22,7 @@ const RandomWorkoutList = () => {
   const { state, dispatch } = useContext(AppContext);
   const { randomWorkout } = state;
   const { workoutId, workouts } = randomWorkout;
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
   const openCreatePage = () => {

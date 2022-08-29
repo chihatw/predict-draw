@@ -6,7 +6,7 @@ import WorkoutItemList from './WorkoutItemList';
 
 const WorkoutPane = ({}: {}) => {
   const { state } = useContext(AppContext);
-  const [openWorkoutItemList, setOpenWorkoutItemList] = useState(true);
+  const [open, setOpen] = useState(false);
   const workout = state.workouts.find(
     (workout) => workout.id === state.workoutParams.workoutId
   );
@@ -21,12 +21,10 @@ const WorkoutPane = ({}: {}) => {
         }}
       >
         <h3>{workout.label}</h3>
-        <Button onClick={() => setOpenWorkoutItemList(!openWorkoutItemList)}>
-          {openWorkoutItemList ? 'hide' : 'open'}
-        </Button>
+        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
 
-      {!!openWorkoutItemList && (
+      {!!open && (
         <>
           <div>{`beatCount: ${workout.beatCount}`}</div>
           <WorkoutItemList

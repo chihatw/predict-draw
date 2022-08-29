@@ -1,6 +1,6 @@
 import { Button, Container, Divider, TextField } from '@mui/material';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import Layout from '../../Layout';
 
@@ -58,6 +58,9 @@ const MngPage = () => {
           />
           <Divider />
           <div style={{ display: 'grid', rowGap: 16, paddingBottom: 80 }}>
+            <NotePane />
+            <RhythmListPane />
+            <RhythmListeningPane />
             <StatusPane />
             <TextField
               size='small'
@@ -66,9 +69,7 @@ const MngPage = () => {
               value={state.workoutParams.totalRounds}
               onChange={(e) => handleChangeTotalRounds(Number(e.target.value))}
             />
-            <RhythmListeningPane />
-            <RhythmListPane />
-            <NotePane />
+
             <WorkoutPane />
             <WorkoutList />
             <RandomWorkoutList />

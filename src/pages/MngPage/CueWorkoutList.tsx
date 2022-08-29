@@ -21,7 +21,7 @@ const VERBS = [
 
 const CueWorkoutList = () => {
   const { state } = useContext(AppContext);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { cueWorkout } = state;
   const { params } = cueWorkout;
   const { colors, verbs, points, time, isRandom, isRunning, isInverse } =

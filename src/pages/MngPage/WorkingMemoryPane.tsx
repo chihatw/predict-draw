@@ -15,7 +15,7 @@ import {
 
 const WorkingMemoryPane = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const blob = state.blobs[state.workingMemory.storagePath];
   const handleChangeCueCount = (cueCount: number) => {

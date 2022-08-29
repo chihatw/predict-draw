@@ -4,7 +4,9 @@ import {
   RadioGroup,
   FormControl,
   FormControlLabel,
+  Button,
 } from '@mui/material';
+import { useState } from 'react';
 import { pages } from '../../Model';
 
 const PAGE_STATE: { value: string; label: string }[] = [
@@ -34,23 +36,37 @@ const PageStatePane = ({
   value: string;
   handleChange: (user: string, state: string) => void;
 }) => {
+  const [open, setOpen] = useState(false);
   return (
     <FormControl>
-      <FormLabel sx={{ fontSize: 12 }}>{LABELS[user] || '??'}</FormLabel>
-      <RadioGroup
-        row
-        value={value}
-        onChange={(e) => handleChange(user, e.target.value)}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
       >
-        {PAGE_STATE.map(({ value, label }, index) => (
-          <FormControlLabel
-            key={index}
-            value={value}
-            control={<Radio size='small' />}
-            label={label}
-          />
-        ))}
-      </RadioGroup>
+        <FormLabel sx={{ fontSize: 12 }}>{LABELS[user] || '??'}</FormLabel>
+        <Button size='small' onClick={() => setOpen(!open)}>
+          {open ? 'hide' : 'open'}
+        </Button>
+      </div>
+      {open && (
+        <RadioGroup
+          row
+          value={value}
+          onChange={(e) => handleChange(user, e.target.value)}
+        >
+          {PAGE_STATE.map(({ value, label }, index) => (
+            <FormControlLabel
+              key={index}
+              value={value}
+              control={<Radio size='small' />}
+              label={label}
+            />
+          ))}
+        </RadioGroup>
+      )}
     </FormControl>
   );
 };
