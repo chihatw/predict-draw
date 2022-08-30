@@ -3,9 +3,9 @@ import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Button, IconButton, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../../../../../App';
+import { PITCHES } from '../../../../../pitch';
 import { setRhythmListeningAnswers } from '../../../../../services/rhythmListening';
 import { createSourceNode } from '../../../../../services/utils';
-import { CARDS } from '../../RhythmListPane';
 import { RhythmListeningFormState } from '../Model';
 import RhythmListeningAnswerRow from './RhythmListeningAnswerRow';
 
@@ -24,7 +24,7 @@ const RhythmListeningAnswer = ({
   const AnimationElemRef = useRef<HTMLDivElement>(null);
 
   const currentCueId = state.cueIds[state.currentIndex];
-  const currentCue = CARDS[currentCueId];
+  const currentCue = PITCHES[currentCueId];
   const play = async () => {
     if (!state.blob || !state.audioContext) return;
     const sourceNode = await createSourceNode(state.blob, state.audioContext);
@@ -116,7 +116,7 @@ const RhythmListeningAnswer = ({
           paddingTop: 24,
         }}
       >
-        {Object.values(CARDS)
+        {Object.values(PITCHES)
           .filter((item) => state.cueIds.includes(item.id))
           .map((card, index) => (
             <RhythmListeningAnswerRow

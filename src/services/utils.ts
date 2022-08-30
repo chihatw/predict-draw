@@ -60,3 +60,9 @@ export const getBlob = async (downloadURL: string) => {
   }
   return blob;
 };
+
+export const getBlobFromAssets = async (path: string) => {
+  const response = await fetch(path);
+  const blob = await response.blob();
+  return blob;
+};

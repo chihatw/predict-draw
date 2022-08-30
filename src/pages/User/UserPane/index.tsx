@@ -5,6 +5,7 @@ import { pages } from '../../../Model';
 
 import { BpmCulc } from './BpmCalcPane';
 import CueWorkoutPane from './CueWorkoutPane';
+import KanaCardsPane from './KanaCardsPane';
 import NotePane from './NotePane';
 import RandomWorkoutPane from './RandomWorkoutPane';
 import RhythmListeningPane from './RhythmListeningPane';
@@ -43,6 +44,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <RhythmListPane />;
     case pages.rhythmListening:
       return <RhythmListeningPane />;
+    case pages.kanaCards:
+      return <KanaCardsPane />;
     default:
       return <div></div>;
   }

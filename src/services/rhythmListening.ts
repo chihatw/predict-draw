@@ -1,11 +1,8 @@
+import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { RhythmListening, State } from '../Model';
-import {
-  INITIAL_RHYTHM_LISTENING_FORM_STATE,
-  RhythmListeningFormState,
-} from '../pages/User/UserPane/RhythmListeningPane/Model';
-import { AUDIO_PATH } from '../pages/User/UserPane/RhythmListPane';
+import { RhythmListeningFormState } from '../pages/User/UserPane/RhythmListeningPane/Model';
 import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 import { shuffle } from './utils';
@@ -87,7 +84,7 @@ export const buildCueIds = (mora: number, cueCount: number): string[] => {
 
 export const buildFormState = (state: State): RhythmListeningFormState => {
   return {
-    blob: state.blobs[AUDIO_PATH],
+    blob: state.blobs[downpitch_120],
     mora: state.rhythmListening.mora,
     cueIds: state.rhythmListening.cueIds,
     answerIds: [],

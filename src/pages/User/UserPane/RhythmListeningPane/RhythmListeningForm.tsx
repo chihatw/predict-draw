@@ -1,13 +1,12 @@
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import { css } from '@emotion/css';
-import { Circle, Clear } from '@mui/icons-material';
+import { Clear } from '@mui/icons-material';
 import Check from '@mui/icons-material/Check';
-import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
-import { Button, Container, IconButton, useTheme } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+
+import { Container, useTheme } from '@mui/material';
+import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { createSourceNode } from '../../../../services/utils';
-import { CARDS } from '../RhythmListPane';
+import { PITCHES } from '../../../../pitch';
+
 import { RhythmListeningFormState } from './Model';
 import RhythmListeningAnswer from './RhythmListeningAnswer';
 
@@ -94,9 +93,9 @@ const RhythmListeningResult = ({
             </div>
           </div>
           {state.cueIds.map((cueId, index) => {
-            const cue = CARDS[cueId];
+            const cue = PITCHES[cueId];
             const answerId = state.answerIds[index];
-            const answer = CARDS[answerId];
+            const answer = PITCHES[answerId];
             const isCorrect = cueId == answerId;
             return (
               <div

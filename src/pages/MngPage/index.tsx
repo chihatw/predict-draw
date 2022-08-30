@@ -1,6 +1,7 @@
+import downpitch_120 from '../../assets/audios/downpitch_120.mp3';
 import { Button, Container, Divider, TextField } from '@mui/material';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import Layout from '../../Layout';
 
@@ -22,12 +23,21 @@ import {
   setRhythmListening,
   setRhythmListeningAnswers,
 } from '../../services/rhythmListening';
-import { CARDS } from '../User/UserPane/RhythmListPane';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
+import { PITCHES } from '../../pitch';
 
 const MngPage = () => {
   const { state } = useContext(AppContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(downpitch_120);
+      const blob = await response.blob();
+      console.log({ blob });
+    };
+    fetchData();
+  }, []);
 
   const handleChangeTotalRounds = (totalRounds: number) => {
     resetWorkoutParams(totalRounds);
@@ -169,7 +179,7 @@ const RhythmListeningPane = () => {
           Shuffle
         </Button>
         {state.rhythmListening.cueIds.map((cueId, index) => {
-          const cueCard = CARDS[cueId];
+          const cueCard = PITCHES[cueId];
           return (
             <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flexBasis: 40, textAlign: 'center' }}>

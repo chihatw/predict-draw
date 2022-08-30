@@ -1,3 +1,5 @@
+export type Card = { id: string; start: number; end: number; pitchStr: string };
+
 export type WorkoutId = {
   id: string;
   value: string;
@@ -49,6 +51,7 @@ export const pages = {
   note: 'note',
   blank: 'blank',
   bpmCalc: 'bpmCalc',
+  kanaCards: 'kanakanaCards',
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
   workoutCue: 'workoutCue',
