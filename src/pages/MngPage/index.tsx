@@ -1,7 +1,14 @@
+import getMoras from 'get-moras';
 import downpitch_120 from '../../assets/audios/downpitch_120.mp3';
-import { Button, Container, Divider, TextField } from '@mui/material';
+import {
+  Button,
+  Container,
+  Divider,
+  IconButton,
+  TextField,
+} from '@mui/material';
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Layout from '../../Layout';
 
@@ -17,7 +24,7 @@ import WorkoutList from './WorkoutList';
 import WorkoutPane from './WorkoutPane';
 import NotePane from './NotePane';
 import RhythmListPane from './RhythmListPane';
-import { RhythmListening } from '../../Model';
+import { KanaCards, RhythmListening } from '../../Model';
 import {
   buildCueIds,
   setRhythmListening,
@@ -26,6 +33,9 @@ import {
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 import { PITCHES } from '../../pitch';
+import RhythmListeningPane from './RhythmListeningPane';
+import { setKanaCards } from '../../services/kanaCard';
+import Delete from '@mui/icons-material/Delete';
 
 const MngPage = () => {
   const { state } = useContext(AppContext);
@@ -34,7 +44,6 @@ const MngPage = () => {
     const fetchData = async () => {
       const response = await fetch(downpitch_120);
       const blob = await response.blob();
-      console.log({ blob });
     };
     fetchData();
   }, []);
@@ -68,6 +77,7 @@ const MngPage = () => {
           />
           <Divider />
           <div style={{ display: 'grid', rowGap: 16, paddingBottom: 80 }}>
+            <KanaCardsPane />
             <NotePane />
             <RhythmListPane />
             <RhythmListeningPane />
@@ -94,124 +104,61 @@ const MngPage = () => {
 
 export default MngPage;
 
-const RhythmListeningPane = () => {
+const KanaCardsPane = () => {
   const { state } = useContext(AppContext);
-
-  const handleChangeMora = (mora: number) => {
-    mora = Math.min(Math.max(mora, 1), 3);
-    if (mora === state.rhythmListening.mora) return;
-
-    let cueCount = 0;
-    switch (mora) {
-      case 2:
-        cueCount = 7;
-        break;
-      case 3:
-        cueCount = 16;
-        break;
-      default:
-        cueCount = 4;
-    }
-    const cueIds = buildCueIds(mora, cueCount);
-    const updatedRhythmListening: RhythmListening = {
-      cueCount,
-      cueIds,
-      mora,
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState('');
+  const handleChangeInput = (input: string) => {
+    setInput(input);
+    let moras = getMoras(input);
+    moras = moras.filter((item) => item !== '\n');
+    const updatedKanaCards: KanaCards = {
+      ...state.kanaCards,
+      kanas: moras,
     };
-    setRhythmListening(updatedRhythmListening);
-    setRhythmListeningAnswers({});
-  };
-  const handleChangeCueCount = (cueCount: number) => {
-    switch (state.rhythmListening.mora) {
-      case 2:
-        cueCount = Math.min(7, cueCount);
-        break;
-      case 3:
-        cueCount = Math.min(16, cueCount);
-        break;
-      default:
-        cueCount = Math.min(4, cueCount);
-    }
-    const cueIds = buildCueIds(state.rhythmListening.mora, cueCount);
-    const updatedRhythmListening: RhythmListening = {
-      ...state.rhythmListening,
-      cueCount,
-      cueIds,
-    };
-    setRhythmListening(updatedRhythmListening);
-    setRhythmListeningAnswers({});
+    setKanaCards(updatedKanaCards);
   };
 
-  const handleShuffle = () => {
-    const cueIds = buildCueIds(
-      state.rhythmListening.mora,
-      state.rhythmListening.cueCount
-    );
-    const updatedRhythmListening: RhythmListening = {
-      ...state.rhythmListening,
-      cueIds,
+  const handleClearTapped = () => {
+    const updatedKanaCards: KanaCards = {
+      ...state.kanaCards,
+      tapped: [],
     };
-    setRhythmListening(updatedRhythmListening);
-    setRhythmListeningAnswers({});
+    setKanaCards(updatedKanaCards);
   };
 
   return (
-    <div>
-      <h3>Rhythm Listening</h3>
-      <div style={{ display: 'grid', rowGap: 8 }}>
-        <TextField
-          label='mora'
-          size='small'
-          type='number'
-          autoComplete='off'
-          value={state.rhythmListening.mora}
-          onChange={(e) => handleChangeMora(Number(e.target.value))}
-        />
-        <TextField
-          label='cueCount'
-          size='small'
-          type='number'
-          autoComplete='off'
-          value={state.rhythmListening.cueCount}
-          onChange={(e) => handleChangeCueCount(Number(e.target.value))}
-        />
-        <Button variant='outlined' onClick={handleShuffle}>
-          Shuffle
-        </Button>
-        {state.rhythmListening.cueIds.map((cueId, index) => {
-          const cueCard = PITCHES[cueId];
-          return (
-            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flexBasis: 40, textAlign: 'center' }}>
-                {index + 1}
-              </div>
-              <SentencePitchLine
-                pitchesArray={string2PitchesArray(cueCard.pitchStr)}
-              />
-              <div>
-                {(state.rhythmListeningAnswers[index] || []).map(
-                  (item, itemIndex) => {
-                    const isLast =
-                      state.rhythmListeningAnswers[index].length - 1 ===
-                      itemIndex;
-                    return (
-                      <span
-                        key={itemIndex}
-                        style={{
-                          paddingLeft: 10,
-                          color: isLast ? 'red' : '#ccc',
-                        }}
-                      >
-                        {item}
-                      </span>
-                    );
-                  }
-                )}
-              </div>
-            </div>
-          );
-        })}
+    <div style={{ display: 'grid', rowGap: 8 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <h3>Kana Cards</h3>
+        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
+      {open && (
+        <div style={{ display: 'grid', rowGap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+              <h4 style={{ flexBasis: 80 }}>tapped</h4>
+              <div>{state.kanaCards.tapped.join(', ')}</div>
+            </div>
+            <IconButton onClick={handleClearTapped}>
+              <Delete />
+            </IconButton>
+          </div>
+          <TextField
+            label='kanas string'
+            multiline
+            rows={2}
+            value={input}
+            onChange={(e) => handleChangeInput(e.target.value)}
+          />
+        </div>
+      )}
     </div>
   );
 };

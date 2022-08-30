@@ -28,7 +28,7 @@ const KANAS: { [key: string]: string } = {
 
 const RhythmListPane = () => {
   const { state } = useContext(AppContext);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleChangeMora = (mora: number) => {
     mora = Math.min(Math.max(1, mora), 3);
     if (state.rhythmList.mora !== mora) {

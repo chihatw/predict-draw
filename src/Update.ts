@@ -3,6 +3,7 @@ import {
   CueWorkoutCard,
   CueWorkoutCue,
   CueWorkoutParams,
+  KanaCards,
   NoteState,
   RandomWorkout,
   RandomWorkoutParams,
@@ -19,6 +20,7 @@ export const ActionTypes = {
   setWorkout: 'setWorkout',
   setBlobURLs: 'setBlobURLs',
   setWorkouts: 'setWorkouts',
+  setKanaCards: 'setKanaCards',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
   setRhythmList: 'setRhythmList',
@@ -48,6 +50,7 @@ export type Action = {
     | Workout
     | Workout[]
     | NoteState
+    | KanaCards
     | WorkoutParams
     | RandomWorkout
     | AudioContext
@@ -83,6 +86,10 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setKanaCards: {
+      const kanaCards = payload as KanaCards;
+      return R.assocPath<KanaCards, State>(['kanaCards'], kanaCards)(state);
+    }
     case ActionTypes.setRhythmListening: {
       const rhythmListening = payload as RhythmListening;
       return R.assocPath<RhythmListening, State>(

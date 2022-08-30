@@ -1,18 +1,16 @@
 import downpitch_120 from '../../../assets/audios/downpitch_120.mp3';
 import * as R from 'ramda';
-import { Card as MuiCard, CardContent, Container } from '@mui/material';
+import { Card, CardContent, Container } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../App';
 import { createSourceNode, getBlobFromAssets } from '../../../services/utils';
-import { Card, RhythmListState, State } from '../../../Model';
+import { PitchCard, RhythmListState, State } from '../../../Model';
 import { ActionTypes } from '../../../Update';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 import TouchMe from './RandomWorkoutPane/RecordingPane/TouchMe';
 import { setRhythmList } from '../../../services/rhythmList';
 import { PITCHES } from '../../../pitch';
-
-// export const AUDIO_PATH = '/audios/downpitch_120.mp3';
 
 const RhythmListPane = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -120,7 +118,7 @@ const RhythmRow = ({
   card,
   handleTapped,
 }: {
-  card: Card;
+  card: PitchCard;
   handleTapped: (id: string) => void;
 }) => {
   const { state } = useContext(AppContext);
@@ -136,7 +134,7 @@ const RhythmRow = ({
     sourceNode.start(0, card.start, card.end - card.start);
   };
   return (
-    <MuiCard
+    <Card
       sx={{ cursor: 'pointer', height: 80, background: '#eee' }}
       elevation={1}
       onClick={handleClick}
@@ -152,6 +150,6 @@ const RhythmRow = ({
       >
         <SentencePitchLine pitchesArray={string2PitchesArray(card.pitchStr)} />
       </CardContent>
-    </MuiCard>
+    </Card>
   );
 };

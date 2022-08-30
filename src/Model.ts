@@ -1,4 +1,9 @@
-export type Card = { id: string; start: number; end: number; pitchStr: string };
+export type PitchCard = {
+  id: string;
+  start: number;
+  end: number;
+  pitchStr: string;
+};
 
 export type WorkoutId = {
   id: string;
@@ -280,6 +285,11 @@ export type RhythmListening = {
   cueCount: number;
 };
 
+export type KanaCards = {
+  kanas: string[];
+  tapped: string[];
+};
+
 export type State = {
   audioContext: AudioContext | null;
   pageStates: {
@@ -289,6 +299,7 @@ export type State = {
   };
   note: NoteState;
   workouts: Workout[];
+  kanaCards: KanaCards;
   rhythmList: RhythmListState;
   cueWorkout: CueWorkoutState;
   workoutParams: WorkoutParams;

@@ -23,6 +23,7 @@ import { useCueWorkout } from './services/cueWorkout';
 import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
 import { useRhythmList } from './services/rhythmList';
 import { useRhythmListening } from './services/rhythmListening';
+import { useKanaCards } from './services/kanaCard';
 
 const INITIAL_STATE: State = {
   audioContext: null,
@@ -41,6 +42,7 @@ const INITIAL_STATE: State = {
   rhythmListening: { mora: 1, cueIds: [], cueCount: 0 },
   rhythmListeningAnswers: {},
   rhythmList: { tapped: [], mora: 1 },
+  kanaCards: { tapped: [], kanas: [] },
   blobs: {},
   blobURLs: {},
 };
@@ -58,6 +60,7 @@ function App() {
 
   useNote(dispatch);
   useWorkouts(dispatch);
+  useKanaCards(dispatch);
   usePageState(dispatch);
   useRhythmList(dispatch);
   useCueWorkout(dispatch);

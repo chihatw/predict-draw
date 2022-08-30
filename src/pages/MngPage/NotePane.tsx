@@ -5,7 +5,7 @@ import { NoteState } from '../../Model';
 import { setNote } from '../../services/note';
 
 const NotePane = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const handleInput = (input: string) => {
     setInput(input);
