@@ -60,6 +60,7 @@ export const pages = {
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
   workoutCue: 'workoutCue',
+  kanaWorkout: 'kanaWorkout',
   workoutRead: 'workoutRead',
   randomWorkout: 'randomWorkout',
   workingMemory: 'workingMemory',
