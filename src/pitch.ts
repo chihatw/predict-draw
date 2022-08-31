@@ -1,6 +1,6 @@
-import { Card } from './Model';
+import { PitchCard } from './Model';
 
-export const PITCHES: { [id: string]: Card } = {
+export const PITCHES: { [id: string]: PitchCard } = {
   ta: { id: 'ta', start: 0.6, end: 1.3, pitchStr: 'タ＼ッ' },
   taa: { id: 'taa', start: 1.8, end: 2.7, pitchStr: 'タ＼ー' },
   tan: { id: 'tan', start: 3.1, end: 3.7, pitchStr: 'タ＼ン' },
