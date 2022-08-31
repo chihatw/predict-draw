@@ -22,7 +22,7 @@ import { createAudioContext } from './services/utils';
 import { useCueWorkout } from './services/cueWorkout';
 import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
 import { useRhythmList } from './services/rhythmList';
-import { useRhythmListening } from './services/rhythmListening';
+import { useRhythmWorkout } from './services/rhythmWorkout';
 import { useKanaCards } from './services/kanaCard';
 
 const INITIAL_STATE: State = {
@@ -39,10 +39,17 @@ const INITIAL_STATE: State = {
   randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
   workingMemory: INITIAL_WORKING_MEMORY,
   workingMemoryAnswerIds: [],
-  rhythmListening: { mora: 1, cueIds: [], cueCount: 0 },
-  rhythmListeningAnswers: {},
+  rhythmWorkout: { mora: 1, cueIds: [], cueCount: 0 },
+  rhythmWorkoutAnswers: {},
   rhythmList: { tapped: [], mora: 1 },
   kanaCards: { tapped: [], kanas: [] },
+  params: {
+    kanaWorkout: {
+      kanas: [],
+      currentIndex: 0,
+      answers: {},
+    },
+  },
   blobs: {},
   blobURLs: {},
 };
@@ -66,7 +73,7 @@ function App() {
   useCueWorkout(dispatch);
   useWorkoutParams(dispatch);
   useRandomWorkouts(dispatch);
-  useRhythmListening(dispatch);
+  useRhythmWorkout(dispatch);
   useRandomWorkoutParams(dispatch);
   useWorkingMemoryWorkout(dispatch);
 

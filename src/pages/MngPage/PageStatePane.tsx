@@ -18,8 +18,9 @@ const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.workingMemory, label: '音韻記憶' },
   { value: pages.note, label: 'ノート' },
   { value: pages.rhythmList, label: 'リズムリスト' },
-  { value: pages.rhythmListening, label: 'リズム聞き取り' },
+  { value: pages.rhythmWorkout, label: 'リズム聞き取り' },
   { value: pages.kanaCards, label: 'かな表示' },
+  { value: pages.kanaWorkout, label: 'かな練習' },
   { value: pages.blank, label: '空欄' },
 ];
 const LABELS: { [key: string]: string } = {

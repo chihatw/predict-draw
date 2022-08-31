@@ -2,21 +2,21 @@ import { css } from '@emotion/css';
 import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Button, IconButton, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from '../../../../../App';
-import { PITCHES } from '../../../../../pitch';
-import { setRhythmListeningAnswers } from '../../../../../services/rhythmListening';
-import { createSourceNode } from '../../../../../services/utils';
-import { RhythmListeningFormState } from '../Model';
-import RhythmListeningAnswerRow from './RhythmListeningAnswerRow';
+import { AppContext } from '../../../../../../App';
+import { PITCHES } from '../../../../../../pitch';
+import { setRhythmWorkoutAnswers } from '../../../../../../services/rhythmWorkout';
+import { createSourceNode } from '../../../../../../services/utils';
+import { RhythmLWorkoutFormState } from '../../Model';
+import RhythmWorkoutAnswerRow from './RhythmWorkoutAnswerRow';
 
-const RhythmListeningAnswer = ({
+const RhythmWorkoutAnswer = ({
   state,
   dispatch,
 }: {
-  state: RhythmListeningFormState;
-  dispatch: React.Dispatch<RhythmListeningFormState>;
+  state: RhythmLWorkoutFormState;
+  dispatch: React.Dispatch<RhythmLWorkoutFormState>;
 }) => {
-  const { state: appState, dispatch: appDispatch } = useContext(AppContext);
+  const { state: appState } = useContext(AppContext);
   const theme = useTheme();
 
   const [initialize, setInitialize] = useState(true);
@@ -38,20 +38,20 @@ const RhythmListeningAnswer = ({
     setSelectedId(cueId);
 
     let updatedTapped: string[] = [];
-    if (appState.rhythmListeningAnswers[state.currentIndex]) {
-      updatedTapped = appState.rhythmListeningAnswers[state.currentIndex];
+    if (appState.rhythmWorkoutAnswers[state.currentIndex]) {
+      updatedTapped = appState.rhythmWorkoutAnswers[state.currentIndex];
     }
     updatedTapped.push(cueId);
     const updatedRhythmListeningAnswers: { [index: number]: string[] } = {
-      ...appState.rhythmListeningAnswers,
+      ...appState.rhythmWorkoutAnswers,
     };
     updatedRhythmListeningAnswers[state.currentIndex] = updatedTapped;
-    setRhythmListeningAnswers(updatedRhythmListeningAnswers);
+    setRhythmWorkoutAnswers(updatedRhythmListeningAnswers);
   };
   const handleNext = () => {
     const updatedAnswerIds: string[] = [...state.answerIds];
     updatedAnswerIds.push(selectedId);
-    const updatedState: RhythmListeningFormState = {
+    const updatedState: RhythmLWorkoutFormState = {
       ...state,
       answerIds: updatedAnswerIds,
       currentIndex: state.currentIndex + 1,
@@ -119,7 +119,7 @@ const RhythmListeningAnswer = ({
         {Object.values(PITCHES)
           .filter((item) => state.cueIds.includes(item.id))
           .map((card, index) => (
-            <RhythmListeningAnswerRow
+            <RhythmWorkoutAnswerRow
               key={index}
               pitchStr={card.pitchStr}
               isSelected={selectedId === card.id}
@@ -143,4 +143,4 @@ const RhythmListeningAnswer = ({
   );
 };
 
-export default RhythmListeningAnswer;
+export default RhythmWorkoutAnswer;

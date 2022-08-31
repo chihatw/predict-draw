@@ -7,12 +7,13 @@ import {
   NoteState,
   RandomWorkout,
   RandomWorkoutParams,
-  RhythmListening,
+  RhythmWorkout,
   RhythmListState,
   State,
   WorkingMemory,
   Workout,
   WorkoutParams,
+  KanaWorkoutParams,
 } from './Model';
 
 export const ActionTypes = {
@@ -35,8 +36,9 @@ export const ActionTypes = {
   setRandomWorkoutParams: 'setRandomWorkoutParams',
   setRandomWorkoutBlobURL: 'setRandomWorkoutBlobURL',
   setWorkingMemoryAnswerIds: 'setWorkingMemoryAnswerIds',
-  setRhythmListening: 'setRhythmListening',
-  setRhythmListeningAnswers: 'setRhythmListeningAnswers',
+  setRhythmWorkout: 'setRhythmWorkout',
+  setRhythmWorkoutAnswers: 'setRhythmWorkoutAnswers',
+  setKanaWorkoutParams: 'setKanaWorkoutParams',
 };
 
 export type Action = {
@@ -57,7 +59,8 @@ export type Action = {
     | CueWorkoutCue
     | CueWorkoutParams
     | RhythmListState
-    | RhythmListening
+    | RhythmWorkout
+    | KanaWorkoutParams
     | { [index: number]: string[] }
     | { user: string; pageState: string }
     | { workingMemory: WorkingMemory; blob: Blob | null }
@@ -86,21 +89,28 @@ export const reducer = (state: State, action: Action): State => {
   const { workouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setKanaWorkoutParams: {
+      const kanaWorkoutParams = payload as KanaWorkoutParams;
+      return R.assocPath<KanaWorkoutParams, State>(
+        ['params', 'kanaWorkout'],
+        kanaWorkoutParams
+      )(state);
+    }
     case ActionTypes.setKanaCards: {
       const kanaCards = payload as KanaCards;
       return R.assocPath<KanaCards, State>(['kanaCards'], kanaCards)(state);
     }
-    case ActionTypes.setRhythmListening: {
-      const rhythmListening = payload as RhythmListening;
-      return R.assocPath<RhythmListening, State>(
-        ['rhythmListening'],
-        rhythmListening
+    case ActionTypes.setRhythmWorkout: {
+      const rhythmWorkout = payload as RhythmWorkout;
+      return R.assocPath<RhythmWorkout, State>(
+        ['rhythmWorkout'],
+        rhythmWorkout
       )(state);
     }
-    case ActionTypes.setRhythmListeningAnswers: {
+    case ActionTypes.setRhythmWorkoutAnswers: {
       const answers = payload as { [index: number]: string[] };
       return R.assocPath<{ [index: number]: string[] }, State>(
-        ['rhythmListeningAnswers'],
+        ['rhythmWorkoutAnswers'],
         answers
       )(state);
     }

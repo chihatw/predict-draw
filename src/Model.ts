@@ -64,7 +64,7 @@ export const pages = {
   workoutRead: 'workoutRead',
   randomWorkout: 'randomWorkout',
   workingMemory: 'workingMemory',
-  rhythmListening: 'rhythmListening',
+  rhythmWorkout: 'rhythmWorkout',
 };
 
 export type WorkoutParams = {
@@ -280,7 +280,7 @@ export type RhythmListState = {
   mora: number;
 };
 
-export type RhythmListening = {
+export type RhythmWorkout = {
   mora: number;
   cueIds: string[];
   cueCount: number;
@@ -289,6 +289,16 @@ export type RhythmListening = {
 export type KanaCards = {
   kanas: string[];
   tapped: string[];
+};
+
+export type KanaWorkoutParams = {
+  kanas: string[];
+  answers: { [index: number]: string[] };
+  currentIndex: number;
+};
+
+export type Params = {
+  kanaWorkout: KanaWorkoutParams;
 };
 
 export type State = {
@@ -306,9 +316,10 @@ export type State = {
   workoutParams: WorkoutParams;
   randomWorkout: RandomWotkoutState;
   workingMemory: WorkingMemory;
-  rhythmListening: RhythmListening;
-  rhythmListeningAnswers: { [index: number]: string[] };
+  rhythmWorkout: RhythmWorkout;
+  rhythmWorkoutAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
+  params: Params;
   blobs: {
     [audioPath: string]: Blob;
   };

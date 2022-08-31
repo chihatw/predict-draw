@@ -1,4 +1,4 @@
-export type RhythmListeningFormState = {
+export type RhythmLWorkoutFormState = {
   blob: Blob | null;
   mora: number;
   cueIds: string[];
@@ -7,7 +7,7 @@ export type RhythmListeningFormState = {
   audioContext: AudioContext | null;
 };
 
-export const INITIAL_RHYTHM_LISTENING_FORM_STATE: RhythmListeningFormState = {
+export const INITIAL_RHYTHM_WORKOUT_FORM_STATE: RhythmLWorkoutFormState = {
   blob: null,
   mora: 1,
   cueIds: [],

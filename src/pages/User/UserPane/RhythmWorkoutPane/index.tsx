@@ -3,34 +3,32 @@ import * as R from 'ramda';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { AppContext } from '../../../../App';
 import { State } from '../../../../Model';
-import { buildFormState } from '../../../../services/rhythmListening';
+import { buildFormState } from '../../../../services/rhythmWorkout';
 import { getBlobFromAssets } from '../../../../services/utils';
 import { ActionTypes } from '../../../../Update';
 import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
 
 import {
-  INITIAL_RHYTHM_LISTENING_FORM_STATE,
-  RhythmListeningFormState,
+  INITIAL_RHYTHM_WORKOUT_FORM_STATE,
+  RhythmLWorkoutFormState,
 } from './Model';
-import RhythmListeningForm from './RhythmListeningForm';
+import RhythmWorkoutForm from './RhythmWorkoutForm';
 
 const reducer = (
-  state: RhythmListeningFormState,
-  action: RhythmListeningFormState
-) => {
-  return action;
-};
+  state: RhythmLWorkoutFormState,
+  action: RhythmLWorkoutFormState
+) => action;
 
-const RhythmListeningPane = () => {
+const RhythmWorkoutPane = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [rhythmListeningFormState, rhythmListeningFormDispatch] = useReducer(
+  const [rhythmWorkoutFormState, rhythmWorkoutFormDispatch] = useReducer(
     reducer,
-    INITIAL_RHYTHM_LISTENING_FORM_STATE
+    INITIAL_RHYTHM_WORKOUT_FORM_STATE
   );
 
   useEffect(() => {
     const fetchData = async () => {
-      let _blob: Blob | null = state.blobs[downpitch_120]
+      const _blob: Blob | null = state.blobs[downpitch_120]
         ? state.blobs[downpitch_120]
         : await getBlobFromAssets(downpitch_120);
       const updatedState = R.assocPath<Blob | null, State>(
@@ -45,16 +43,16 @@ const RhythmListeningPane = () => {
 
   useEffect(() => {
     const formState = buildFormState(state);
-    rhythmListeningFormDispatch(formState);
-  }, [state.rhythmListening.cueIds, state.audioContext, state.blobs]);
+    rhythmWorkoutFormDispatch(formState);
+  }, [state.rhythmWorkout.cueIds, state.audioContext, state.blobs]);
 
   if (!state.audioContext) return <TouchMe />;
   return (
-    <RhythmListeningForm
-      state={rhythmListeningFormState}
-      dispatch={rhythmListeningFormDispatch}
+    <RhythmWorkoutForm
+      state={rhythmWorkoutFormState}
+      dispatch={rhythmWorkoutFormDispatch}
     />
   );
 };
 
-export default RhythmListeningPane;
+export default RhythmWorkoutPane;

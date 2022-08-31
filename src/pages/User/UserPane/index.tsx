@@ -1,4 +1,3 @@
-import { path } from 'ramda';
 import React, { useContext } from 'react';
 import { AppContext } from '../../../App';
 import { pages } from '../../../Model';
@@ -6,9 +5,10 @@ import { pages } from '../../../Model';
 import { BpmCulc } from './BpmCalcPane';
 import CueWorkoutPane from './CueWorkoutPane';
 import KanaCardsPane from './KanaCardsPane';
+import KanaWorkoutPane from './KanaWorkoutPane';
 import NotePane from './NotePane';
 import RandomWorkoutPane from './RandomWorkoutPane';
-import RhythmListeningPane from './RhythmListeningPane';
+import RhythmWorkoutPane from './RhythmWorkoutPane';
 import RhythmListPane from './RhythmListPane';
 import WorkingMemoryPane from './WorkingMemoryPane';
 import WorkoutCuePane from './WorkoutCuePane';
@@ -42,10 +42,12 @@ const UserPane = ({ user }: { user: string }) => {
       return <NotePane />;
     case pages.rhythmList:
       return <RhythmListPane />;
-    case pages.rhythmListening:
-      return <RhythmListeningPane />;
+    case pages.rhythmWorkout:
+      return <RhythmWorkoutPane />;
     case pages.kanaCards:
       return <KanaCardsPane />;
+    case pages.kanaWorkout:
+      return <KanaWorkoutPane />;
     default:
       return <div></div>;
   }

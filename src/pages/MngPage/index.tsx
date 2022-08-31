@@ -1,17 +1,7 @@
-import getMoras from 'get-moras';
 import downpitch_120 from '../../assets/audios/downpitch_120.mp3';
-import {
-  Button,
-  Container,
-  Divider,
-  IconButton,
-  TextField,
-} from '@mui/material';
-
-import React, { useContext, useEffect, useState } from 'react';
-
+import { Container, Divider, TextField } from '@mui/material';
+import React, { useContext, useEffect } from 'react';
 import Layout from '../../Layout';
-
 import { AppContext } from '../../App';
 import { setPageState } from '../../services/pageState';
 import { resetWorkoutParams } from '../../services/workoutParams';
@@ -24,18 +14,8 @@ import WorkoutList from './WorkoutList';
 import WorkoutPane from './WorkoutPane';
 import NotePane from './NotePane';
 import RhythmListPane from './RhythmListPane';
-import { KanaCards, RhythmListening } from '../../Model';
-import {
-  buildCueIds,
-  setRhythmListening,
-  setRhythmListeningAnswers,
-} from '../../services/rhythmListening';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import string2PitchesArray from 'string2pitches-array';
-import { PITCHES } from '../../pitch';
-import RhythmListeningPane from './RhythmListeningPane';
-import { setKanaCards } from '../../services/kanaCard';
-import Delete from '@mui/icons-material/Delete';
+import RhythmWorkoutPane from './RhythmListeningPane';
+import KanaCardsPane from './KanaCardsPane';
 
 const MngPage = () => {
   const { state } = useContext(AppContext);
@@ -80,7 +60,7 @@ const MngPage = () => {
             <KanaCardsPane />
             <NotePane />
             <RhythmListPane />
-            <RhythmListeningPane />
+            <RhythmWorkoutPane />
             <StatusPane />
             <TextField
               size='small'
@@ -103,62 +83,3 @@ const MngPage = () => {
 };
 
 export default MngPage;
-
-const KanaCardsPane = () => {
-  const { state } = useContext(AppContext);
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState('');
-  const handleChangeInput = (input: string) => {
-    setInput(input);
-    let moras = getMoras(input);
-    moras = moras.filter((item) => item !== '\n');
-    const updatedKanaCards: KanaCards = {
-      ...state.kanaCards,
-      kanas: moras,
-    };
-    setKanaCards(updatedKanaCards);
-  };
-
-  const handleClearTapped = () => {
-    const updatedKanaCards: KanaCards = {
-      ...state.kanaCards,
-      tapped: [],
-    };
-    setKanaCards(updatedKanaCards);
-  };
-
-  return (
-    <div style={{ display: 'grid', rowGap: 8 }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <h3>Kana Cards</h3>
-        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
-      </div>
-      {open && (
-        <div style={{ display: 'grid', rowGap: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-              <h4 style={{ flexBasis: 80 }}>tapped</h4>
-              <div>{state.kanaCards.tapped.join(', ')}</div>
-            </div>
-            <IconButton onClick={handleClearTapped}>
-              <Delete />
-            </IconButton>
-          </div>
-          <TextField
-            label='kanas string'
-            multiline
-            rows={2}
-            value={input}
-            onChange={(e) => handleChangeInput(e.target.value)}
-          />
-        </div>
-      )}
-    </div>
-  );
-};

@@ -4,24 +4,24 @@ import React, { useContext, useState } from 'react';
 
 import { AppContext } from '../../App';
 
-import { RhythmListening } from '../../Model';
+import { RhythmWorkout } from '../../Model';
 import {
   buildCueIds,
-  setRhythmListening,
-  setRhythmListeningAnswers,
-} from '../../services/rhythmListening';
+  setRhythmWorkout,
+  setRhythmWorkoutAnswers,
+} from '../../services/rhythmWorkout';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 import { PITCHES } from '../../pitch';
 
-const RhythmListeningPane = () => {
+const RhythmWorkoutPane = () => {
   const { state } = useContext(AppContext);
 
   const [open, setOpen] = useState(false);
 
   const handleChangeMora = (mora: number) => {
     mora = Math.min(Math.max(mora, 1), 3);
-    if (mora === state.rhythmListening.mora) return;
+    if (mora === state.rhythmWorkout.mora) return;
 
     let cueCount = 0;
     switch (mora) {
@@ -35,16 +35,16 @@ const RhythmListeningPane = () => {
         cueCount = 4;
     }
     const cueIds = buildCueIds(mora, cueCount);
-    const updatedRhythmListening: RhythmListening = {
+    const updatedRhythmListening: RhythmWorkout = {
       cueCount,
       cueIds,
       mora,
     };
-    setRhythmListening(updatedRhythmListening);
-    setRhythmListeningAnswers({});
+    setRhythmWorkout(updatedRhythmListening);
+    setRhythmWorkoutAnswers({});
   };
   const handleChangeCueCount = (cueCount: number) => {
-    switch (state.rhythmListening.mora) {
+    switch (state.rhythmWorkout.mora) {
       case 2:
         cueCount = Math.min(7, cueCount);
         break;
@@ -54,27 +54,27 @@ const RhythmListeningPane = () => {
       default:
         cueCount = Math.min(4, cueCount);
     }
-    const cueIds = buildCueIds(state.rhythmListening.mora, cueCount);
-    const updatedRhythmListening: RhythmListening = {
-      ...state.rhythmListening,
+    const cueIds = buildCueIds(state.rhythmWorkout.mora, cueCount);
+    const updatedRhythmListening: RhythmWorkout = {
+      ...state.rhythmWorkout,
       cueCount,
       cueIds,
     };
-    setRhythmListening(updatedRhythmListening);
-    setRhythmListeningAnswers({});
+    setRhythmWorkout(updatedRhythmListening);
+    setRhythmWorkoutAnswers({});
   };
 
   const handleShuffle = () => {
     const cueIds = buildCueIds(
-      state.rhythmListening.mora,
-      state.rhythmListening.cueCount
+      state.rhythmWorkout.mora,
+      state.rhythmWorkout.cueCount
     );
-    const updatedRhythmListening: RhythmListening = {
-      ...state.rhythmListening,
+    const updatedRhythmListening: RhythmWorkout = {
+      ...state.rhythmWorkout,
       cueIds,
     };
-    setRhythmListening(updatedRhythmListening);
-    setRhythmListeningAnswers({});
+    setRhythmWorkout(updatedRhythmListening);
+    setRhythmWorkoutAnswers({});
   };
 
   return (
@@ -96,7 +96,7 @@ const RhythmListeningPane = () => {
             size='small'
             type='number'
             autoComplete='off'
-            value={state.rhythmListening.mora}
+            value={state.rhythmWorkout.mora}
             onChange={(e) => handleChangeMora(Number(e.target.value))}
           />
           <TextField
@@ -104,13 +104,13 @@ const RhythmListeningPane = () => {
             size='small'
             type='number'
             autoComplete='off'
-            value={state.rhythmListening.cueCount}
+            value={state.rhythmWorkout.cueCount}
             onChange={(e) => handleChangeCueCount(Number(e.target.value))}
           />
           <Button variant='outlined' onClick={handleShuffle}>
             Shuffle
           </Button>
-          {state.rhythmListening.cueIds.map((cueId, index) => {
+          {state.rhythmWorkout.cueIds.map((cueId, index) => {
             const cueCard = PITCHES[cueId];
             return (
               <div
@@ -124,10 +124,10 @@ const RhythmListeningPane = () => {
                   pitchesArray={string2PitchesArray(cueCard.pitchStr)}
                 />
                 <div>
-                  {(state.rhythmListeningAnswers[index] || []).map(
+                  {(state.rhythmWorkoutAnswers[index] || []).map(
                     (item, itemIndex) => {
                       const isLast =
-                        state.rhythmListeningAnswers[index].length - 1 ===
+                        state.rhythmWorkoutAnswers[index].length - 1 ===
                         itemIndex;
                       return (
                         <span
@@ -152,4 +152,4 @@ const RhythmListeningPane = () => {
   );
 };
 
-export default RhythmListeningPane;
+export default RhythmWorkoutPane;

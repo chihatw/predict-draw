@@ -1,41 +1,13 @@
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Clear } from '@mui/icons-material';
 import Check from '@mui/icons-material/Check';
-
-import { Container, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { PITCHES } from '../../../../pitch';
+import { PITCHES } from '../../../../../pitch';
+import { RhythmLWorkoutFormState } from '../Model';
 
-import { RhythmListeningFormState } from './Model';
-import RhythmListeningAnswer from './RhythmListeningAnswer';
-
-const RhythmListeningForm = ({
-  state,
-  dispatch,
-}: {
-  state: RhythmListeningFormState;
-  dispatch: React.Dispatch<RhythmListeningFormState>;
-}) => {
-  return (
-    <Container maxWidth='xs' sx={{ paddingTop: 2 }}>
-      {(() => {
-        if (state.currentIndex !== state.cueIds.length) {
-          return <RhythmListeningAnswer state={state} dispatch={dispatch} />;
-        }
-        return <RhythmListeningResult state={state} />;
-      })()}
-    </Container>
-  );
-};
-
-export default RhythmListeningForm;
-
-const RhythmListeningResult = ({
-  state,
-}: {
-  state: RhythmListeningFormState;
-}) => {
+const RhythmWorkoutResult = ({ state }: { state: RhythmLWorkoutFormState }) => {
   const theme = useTheme();
   let correctCount = 0;
   state.answerIds.forEach((answerId, index) => {
@@ -160,3 +132,5 @@ const RhythmListeningResult = ({
     </div>
   );
 };
+
+export default RhythmWorkoutResult;
