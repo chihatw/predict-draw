@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { WorkoutItem } from '../../Model';
+import { SpeedWorkoutItem } from '../../Model';
 
 import { WorkoutState } from './Model';
 
@@ -21,7 +21,7 @@ export type WorkoutAction = {
     | { cues: string[]; cueStr: string }
     | {
         workoutItemStr: string;
-        workoutItems: WorkoutItem[];
+        workoutItems: SpeedWorkoutItem[];
         beatCount: number;
         cues: string[];
         cueStr: string;
@@ -53,7 +53,7 @@ export const workoutReducer = (
           cues: string[];
           cueStr: string;
           beatCount: number;
-          workoutItems: WorkoutItem[];
+          workoutItems: SpeedWorkoutItem[];
           workoutItemStr: string;
         };
       return R.compose(
@@ -61,7 +61,10 @@ export const workoutReducer = (
         R.assocPath<string, WorkoutState>(['cueStr'], cueStr),
         R.assocPath<number, WorkoutState>(['beatCount'], beatCount),
         R.assocPath<string, WorkoutState>(['workoutItemStr'], workoutItemStr),
-        R.assocPath<WorkoutItem[], WorkoutState>(['workoutItems'], workoutItems)
+        R.assocPath<SpeedWorkoutItem[], WorkoutState>(
+          ['workoutItems'],
+          workoutItems
+        )
       )(state);
     }
     case WorkoutActionTypes.changeLabel: {

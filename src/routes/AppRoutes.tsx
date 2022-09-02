@@ -8,6 +8,7 @@ import NotePage from '../pages/Note/NotePage';
 import MngNotePage from '../pages/Note/MngNotePage';
 import RandomWorkoutEditPage from '../pages/RandomWorkoutEditPage';
 import ChinSanPage from '../pages/User/UserPane/ChinSanPage';
+import SpeedWorkoutEditPage from '../pages/SpeedWorkoutEditPage';
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,10 @@ const AppRoutes = () => {
       <Route path='/mng'>
         <Route index element={<MngPage />} />
         <Route path='note' element={<MngNotePage />} />
+        <Route path='speed'>
+          <Route path='new' element={<SpeedWorkoutEditPage />} />
+          <Route path=':workoutId' element={<SpeedWorkoutEditPage />} />
+        </Route>
         <Route path='random'>
           <Route path='new' element={<RandomWorkoutEditPage />} />
           <Route path=':workoutId' element={<RandomWorkoutEditPage />} />

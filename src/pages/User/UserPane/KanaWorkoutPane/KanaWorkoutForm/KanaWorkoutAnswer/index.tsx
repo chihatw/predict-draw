@@ -56,7 +56,6 @@ const KanaWorkoutAnswer = ({
     setSelectedKana(kana);
 
     if (!kana) return;
-    // debug
     let updatedAnswer: string[] = [];
 
     if (appState.params.kanaWorkout.answers[state.currentIndex]) {

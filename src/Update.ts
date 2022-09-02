@@ -11,24 +11,22 @@ import {
   RhythmListState,
   State,
   WorkingMemory,
-  Workout,
-  WorkoutParams,
+  SpeedWorkout,
   KanaWorkoutParams,
+  SpeedWorkoutParams,
 } from './Model';
 
 export const ActionTypes = {
   setState: 'setState',
-  setWorkout: 'setWorkout',
   setBlobURLs: 'setBlobURLs',
-  setWorkouts: 'setWorkouts',
   setKanaCards: 'setKanaCards',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
   setRhythmList: 'setRhythmList',
   setAudioContext: 'setAudioContext',
+  setSpeedWorkouts: 'setSpeedWorkouts',
   setCueWorkoutCue: 'setCueWorkoutCue',
   setWorkingMemory: 'setWorkingMemory',
-  setWorkoutParams: 'setWorkoutParams',
   setRandomWorkouts: 'setRandomWorkouts',
   setCueWorkoutCards: 'setCueWorkoutCards',
   setCueWorkoutParams: 'setCueWorkoutParams',
@@ -39,6 +37,7 @@ export const ActionTypes = {
   setRhythmWorkout: 'setRhythmWorkout',
   setRhythmWorkoutAnswers: 'setRhythmWorkoutAnswers',
   setKanaWorkoutParams: 'setKanaWorkoutParams',
+  setSpeedWorkoutParams: 'setSpeedWorkoutParams',
 };
 
 export type Action = {
@@ -49,11 +48,10 @@ export type Action = {
     | string[]
     | number
     | number[]
-    | Workout
-    | Workout[]
+    | SpeedWorkout
+    | { [id: string]: SpeedWorkout }
     | NoteState
     | KanaCards
-    | WorkoutParams
     | RandomWorkout
     | AudioContext
     | CueWorkoutCue
@@ -61,6 +59,7 @@ export type Action = {
     | RhythmListState
     | RhythmWorkout
     | KanaWorkoutParams
+    | SpeedWorkoutParams
     | { [index: number]: string[] }
     | { user: string; pageState: string }
     | { workingMemory: WorkingMemory; blob: Blob | null }
@@ -86,9 +85,17 @@ export type Action = {
 
 export const reducer = (state: State, action: Action): State => {
   const { type, payload } = action;
-  const { workouts, blobURLs } = state;
+  const { speedWorkouts, blobURLs } = state;
 
   switch (type) {
+    case ActionTypes.setSpeedWorkoutParams: {
+      const params = payload as SpeedWorkoutParams;
+      return R.assocPath<SpeedWorkoutParams, State>(
+        ['params', 'speedWorkout'],
+        params
+      )(state);
+    }
+
     case ActionTypes.setKanaWorkoutParams: {
       const kanaWorkoutParams = payload as KanaWorkoutParams;
       return R.assocPath<KanaWorkoutParams, State>(
@@ -243,39 +250,20 @@ export const reducer = (state: State, action: Action): State => {
         )
       )(state);
     }
-    case ActionTypes.setWorkoutParams: {
-      const workoutParams = payload as WorkoutParams;
-      return R.compose(
-        R.assocPath<WorkoutParams, State>(['workoutParams'], workoutParams)
-      )(state);
-    }
     case ActionTypes.setNoteState: {
       const noteState = payload as NoteState;
       return R.compose(R.assocPath<NoteState, State>(['note'], noteState))(
         state
       );
     }
-    case ActionTypes.setWorkout: {
-      const workout = payload as Workout;
-      let updatedList = [...workouts];
-      const isCreateNew = !updatedList.find((item) => item.id === workout.id);
-      if (isCreateNew) {
-        updatedList.unshift(workout);
-      } else {
-        updatedList = updatedList.map((item) =>
-          item.id === workout.id ? workout : item
-        );
-      }
-
+    case ActionTypes.setSpeedWorkouts: {
+      const workouts = payload as { [id: string]: SpeedWorkout };
       return R.compose(
-        R.assocPath<Workout[], State>(['workouts'], updatedList)
+        R.assocPath<{ [id: string]: SpeedWorkout }, State>(
+          ['speedWorkouts'],
+          workouts
+        )
       )(state);
-    }
-    case ActionTypes.setWorkouts: {
-      const workouts = payload as Workout[];
-      return R.compose(R.assocPath<Workout[], State>(['workouts'], workouts))(
-        state
-      );
     }
     default:
       return R.compose(R.identity)(state);

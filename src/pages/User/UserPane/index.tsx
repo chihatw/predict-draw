@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../../App';
 import { pages } from '../../../Model';
 
-import { BpmCulc } from './BpmCalcPane';
+import { SpeedWorkoutPane } from './SpeedWorkoutPane';
 import CueWorkoutPane from './CueWorkoutPane';
 import KanaCardsPane from './KanaCardsPane';
 import KanaWorkoutPane from './KanaWorkoutPane';
@@ -11,8 +11,8 @@ import RandomWorkoutPane from './RandomWorkoutPane';
 import RhythmWorkoutPane from './RhythmWorkoutPane';
 import RhythmListPane from './RhythmListPane';
 import WorkingMemoryPane from './WorkingMemoryPane';
-import WorkoutCuePane from './WorkoutCuePane';
-import WorkoutReadPane from './WorkoutReadPane';
+import SpeedWorkoutCuePane from './SpeedWorkoutCuePane';
+import SpeedWorkoutReadPane from './SpeedWorkoutReadPane';
 
 const UserPane = ({ user }: { user: string }) => {
   const { state } = useContext(AppContext);
@@ -26,12 +26,12 @@ const UserPane = ({ user }: { user: string }) => {
   const pageState = userStates[user] || '';
 
   switch (pageState) {
-    case pages.bpmCalc:
-      return <BpmCulc />;
-    case pages.workoutCue:
-      return <WorkoutCuePane />;
-    case pages.workoutRead:
-      return <WorkoutReadPane />;
+    case pages.speedWorkoutSolo:
+      return <SpeedWorkoutPane />;
+    case pages.speedWorkoutCue:
+      return <SpeedWorkoutCuePane />;
+    case pages.speedWorkoutRead:
+      return <SpeedWorkoutReadPane />;
     case pages.randomWorkout:
       return <RandomWorkoutPane />;
     case pages.cueWorkout:

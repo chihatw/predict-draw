@@ -1,3 +1,20 @@
+export const pages = {
+  note: 'note',
+  blank: 'blank',
+  kanaCards: 'kanakanaCards',
+  rhythmList: 'rhythmList',
+  cueWorkout: 'cueWorkout',
+  kanaWorkout: 'kanaWorkout',
+  randomWorkout: 'randomWorkout',
+  workingMemory: 'workingMemory',
+  rhythmWorkout: 'rhythmWorkout',
+  speedWorkoutCue: 'speedWorkoutCue',
+  speedWorkoutRead: 'speedWorkoutRead',
+  speedWorkoutSolo: 'speedWorkoutSolo',
+};
+
+export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
+
 export type PitchCard = {
   id: string;
   start: number;
@@ -5,26 +22,21 @@ export type PitchCard = {
   pitchStr: string;
 };
 
-export type WorkoutId = {
-  id: string;
-  value: string;
-};
-
 export type PageState = {
   id: string;
   state: string;
 };
 
-export type WorkoutItem = {
+export type SpeedWorkoutItem = {
   text: string;
   chinese: string;
   pitchesArray: string;
 };
 
-export type Workout = {
+export type SpeedWorkout = {
   id: string;
   cues: string[];
-  items: WorkoutItem[];
+  items: SpeedWorkoutItem[];
   label: string;
   cueType: string;
   beatCount: number;
@@ -36,63 +48,21 @@ export type WorkoutRound = {
   totalRounds: number;
 };
 
+// todo will delete
 export type WorkoutTime = {
   time: number;
   bpm: number;
   isRunning: boolean;
 };
 
-export const INITIAL_WORKOUT: Workout = {
+export const INITIAL_WORKOUT: SpeedWorkout = {
   id: '',
+  cues: [],
   items: [],
   label: '',
-  beatCount: 0,
-  createdAt: 0,
   cueType: '',
-  cues: [],
-};
-
-export const pages = {
-  note: 'note',
-  blank: 'blank',
-  bpmCalc: 'bpmCalc',
-  kanaCards: 'kanakanaCards',
-  rhythmList: 'rhythmList',
-  cueWorkout: 'cueWorkout',
-  workoutCue: 'workoutCue',
-  kanaWorkout: 'kanaWorkout',
-  workoutRead: 'workoutRead',
-  randomWorkout: 'randomWorkout',
-  workingMemory: 'workingMemory',
-  rhythmWorkout: 'rhythmWorkout',
-};
-
-export type WorkoutParams = {
-  workoutId: string;
-  currentRound: number;
-  totalRounds: number;
-  time: number;
-  bpm: number;
-  isRunning: boolean;
-  checkedIndexes: number[];
-};
-
-export const INITIAL_WORKOUT_ROUND = {
-  currentRound: 1,
-  totalRounds: 0,
-};
-
-export const INITIAL_WORKOUT_TIME = {
-  time: 0,
-  bpm: -1,
-  isRunning: false,
-};
-
-export const INITIAL_WORKOUT_PARAMS: WorkoutParams = {
-  ...INITIAL_WORKOUT_TIME,
-  ...INITIAL_WORKOUT_ROUND,
-  workoutId: '',
-  checkedIndexes: [],
+  createdAt: 0,
+  beatCount: 0,
 };
 
 export type NoteState = {
@@ -297,8 +267,19 @@ export type KanaWorkoutParams = {
   currentIndex: number;
 };
 
+export type SpeedWorkoutParams = {
+  bpm: number;
+  checkedIndexes: number[];
+  updatedAt: number;
+  isRunning: boolean;
+  selectedId: string;
+  totalRounds: number;
+  currentRound: number;
+};
+
 export type Params = {
   kanaWorkout: KanaWorkoutParams;
+  speedWorkout: SpeedWorkoutParams;
 };
 
 export type State = {
@@ -309,11 +290,10 @@ export type State = {
     chinSan: string;
   };
   note: NoteState;
-  workouts: Workout[];
   kanaCards: KanaCards;
   rhythmList: RhythmListState;
   cueWorkout: CueWorkoutState;
-  workoutParams: WorkoutParams;
+  speedWorkouts: { [id: string]: SpeedWorkout };
   randomWorkout: RandomWotkoutState;
   workingMemory: WorkingMemory;
   rhythmWorkout: RhythmWorkout;

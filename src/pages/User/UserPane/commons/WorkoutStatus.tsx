@@ -1,33 +1,19 @@
 import { useTheme } from '@mui/system';
-import React, { useContext, useEffect, useState } from 'react';
-import { INITIAL_WORKOUT } from '../../../../Model';
-import { AppContext } from '../../../../App';
+import React from 'react';
+import { SpeedWorkout } from '../../../../Model';
 
-const WorkoutStatus = () => {
+const WorkoutStatus = ({
+  workout,
+  checkedIndexes,
+  totalRounds,
+  currentRound,
+}: {
+  workout: SpeedWorkout;
+  checkedIndexes: number[];
+  totalRounds: number;
+  currentRound: number;
+}) => {
   const theme = useTheme();
-  const { state } = useContext(AppContext);
-  const { workouts, workoutParams } = state;
-  const { workoutId, checkedIndexes, currentRound, totalRounds } =
-    workoutParams;
-
-  const workout =
-    workouts.find((workout) => workout.id === workoutId) || INITIAL_WORKOUT;
-  const workoutItems = workout.items;
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [totalItems, setTotalItems] = useState(0);
-
-  useEffect(() => {
-    const currentIndex =
-      workoutItems.length * (currentRound - 1) + checkedIndexes.length;
-    setCurrentIndex(currentIndex);
-  }, [checkedIndexes, currentRound]);
-
-  useEffect(() => {
-    const totalItems = workoutItems.length * totalRounds;
-    setTotalItems(totalItems);
-  }, [workoutItems, totalRounds]);
-
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <div>
@@ -37,14 +23,14 @@ const WorkoutStatus = () => {
             fontSize: 90,
           }}
         >
-          {currentIndex}
+          {checkedIndexes.length + workout.items.length * (currentRound - 1)}
         </span>
         <span
           style={{
             ...(theme.typography as any).lato900,
             fontSize: 48,
           }}
-        >{`/${totalItems}`}</span>
+        >{`/${workout.items.length * totalRounds}`}</span>
       </div>
     </div>
   );

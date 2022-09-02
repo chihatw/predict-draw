@@ -4,14 +4,11 @@ import {
   INITIAL_NOTE_STATE,
   INITIAL_RANDOM_WORKOUT_STATE,
   INITIAL_WORKING_MEMORY,
-  INITIAL_WORKOUT_PARAMS,
   State,
 } from './Model';
 
 import AppRoutes from './routes/AppRoutes';
 import usePageState from './services/pageState';
-import { useWorkoutParams } from './services/workoutParams';
-import { useWorkouts } from './services/workout';
 import { Action, ActionTypes, reducer } from './Update';
 import useNote from './services/note';
 import {
@@ -24,18 +21,19 @@ import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
 import { useRhythmList } from './services/rhythmList';
 import { useRhythmWorkout } from './services/rhythmWorkout';
 import { useKanaCards } from './services/kanaCard';
+import { useSpeedWorkout } from './services/speedWorkout';
 
 const INITIAL_STATE: State = {
   audioContext: null,
   note: INITIAL_NOTE_STATE,
-  workouts: [],
+  speedWorkouts: {},
   pageStates: {
     liSan: '',
     kouSan: '',
     chinSan: '',
   },
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  workoutParams: INITIAL_WORKOUT_PARAMS,
+  // workoutParams: INITIAL_WORKOUT_PARAMS,
   randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
   workingMemory: INITIAL_WORKING_MEMORY,
   workingMemoryAnswerIds: [],
@@ -48,6 +46,15 @@ const INITIAL_STATE: State = {
       kanas: [],
       currentIndex: 0,
       answers: {},
+    },
+    speedWorkout: {
+      bpm: 0,
+      isRunning: false,
+      selectedId: '',
+      updatedAt: 0,
+      totalRounds: 1,
+      checkedIndexes: [],
+      currentRound: 1,
     },
   },
   blobs: {},
@@ -66,14 +73,13 @@ function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   useNote(dispatch);
-  useWorkouts(dispatch);
   useKanaCards(dispatch);
   usePageState(dispatch);
   useRhythmList(dispatch);
   useCueWorkout(dispatch);
-  useWorkoutParams(dispatch);
-  useRandomWorkouts(dispatch);
+  useSpeedWorkout(dispatch);
   useRhythmWorkout(dispatch);
+  useRandomWorkouts(dispatch);
   useRandomWorkoutParams(dispatch);
   useWorkingMemoryWorkout(dispatch);
 

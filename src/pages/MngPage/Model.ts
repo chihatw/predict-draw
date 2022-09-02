@@ -1,11 +1,10 @@
-import { WorkoutItem } from '../../Model';
-import { CUE_TYPES } from '../../services/workout';
+import { CUE_TYPES, SpeedWorkoutItem } from '../../Model';
 
 export type WorkoutState = {
   label: string;
   beatCount: number;
   workoutItemStr: string;
-  workoutItems: WorkoutItem[];
+  workoutItems: SpeedWorkoutItem[];
   cueType: string;
   cueStr: string;
   cues: string[];
