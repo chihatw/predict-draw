@@ -2,6 +2,7 @@ import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import { INITIAL_WORKING_MEMORY_CUE } from '../../../../../../../Model';
+import { PITCHES } from '../../../../../../../pitch';
 import { WorkingMemoryFormState } from '../../../Model';
 import AnswerRowPlayButton from './AnswerRowPlayButton';
 
@@ -13,9 +14,9 @@ const AnswerRow = ({
   index: number;
 }) => {
   const cueId = state.cueIds[index] || '';
-  const cue = state.cues[cueId] || INITIAL_WORKING_MEMORY_CUE;
+  const cue = PITCHES[cueId] || INITIAL_WORKING_MEMORY_CUE;
   const answerId = state.answerIds[index] || '';
-  const answer = state.cues[answerId] || INITIAL_WORKING_MEMORY_CUE;
+  const answer = PITCHES[answerId] || INITIAL_WORKING_MEMORY_CUE;
   return (
     <div
       key={index}

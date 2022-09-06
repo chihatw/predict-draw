@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import { PITCHES } from '../../../../../../pitch';
 import { createSourceNode } from '../../../../../../services/utils';
 import { setWorkingMemoryAnswerIds } from '../../../../../../services/workingMemoryWorkout';
 import { WorkingMemoryFormState } from '../../Model';
@@ -50,7 +51,9 @@ const WorkingMemoryAnswerPane = ({
   const play = async () => {
     if (!state.blob || !state.audioContext) return;
     const sourceNode = await createSourceNode(state.blob, state.audioContext);
-    sourceNode.start(0, currentCue.start, currentCue.end - currentCue.start);
+    const pitch = PITCHES[currentCue.id];
+
+    sourceNode.start(0, pitch.start, pitch.end - pitch.start);
   };
 
   const handleNext = () => {
