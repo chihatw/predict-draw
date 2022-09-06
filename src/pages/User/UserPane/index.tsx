@@ -32,8 +32,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <SpeedWorkoutCuePane />;
     case pages.speedWorkoutRead:
       return <SpeedWorkoutReadPane />;
-    case pages.randomWorkout:
-      return <RandomWorkoutPane />;
+    // case pages.randomWorkout:
+    //   return <RandomWorkoutPane />;
     case pages.cueWorkout:
       return <CueWorkoutPane />;
     case pages.workingMemory:
