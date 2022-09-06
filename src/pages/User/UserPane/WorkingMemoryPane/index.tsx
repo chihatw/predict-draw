@@ -1,7 +1,9 @@
+import * as R from 'ramda';
+import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { AppContext } from '../../../../App';
 import { State } from '../../../../Model';
-import { getBlob } from '../../../../services/utils';
+import { getBlob, getBlobFromAssets } from '../../../../services/utils';
 import { buildWorkingMemoryFormState } from '../../../../services/workingMemoryWorkout';
 import { ActionTypes } from '../../../../Update';
 import { INITIAL_WORKING_MEMORY_FORM_STATE } from './Model';
@@ -15,17 +17,14 @@ const WorkingMemoryPane = () => {
   useEffect(() => {
     if (!initializing) return;
     const fetchData = async () => {
-      let _blob: Blob | null = null;
-      if (state.blobs[state.workingMemory.storagePath]) {
-        _blob = state.blobs[state.workingMemory.storagePath];
-      } else {
-        _blob = await getBlob(state.workingMemory.storagePath);
-      }
-      const updatedBlobs = { ...state.blobs };
-      if (_blob) {
-        updatedBlobs[state.workingMemory.storagePath] = _blob;
-      }
-      const updatedState: State = { ...state, blobs: updatedBlobs };
+      const _blob: Blob | null = state.blobs[downpitch_120]
+        ? state.blobs[downpitch_120]
+        : await getBlobFromAssets(downpitch_120);
+      console.log(_blob);
+      const updatedState = R.assocPath<Blob | null, State>(
+        ['blobs', downpitch_120],
+        _blob
+      )(state);
       dispatch({ type: ActionTypes.setState, payload: updatedState });
 
       setInitializing(false);

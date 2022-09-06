@@ -106,17 +106,16 @@ const CueWorkoutList = () => {
           alignItems: 'center',
         }}
       >
-        <h3>CueWorkout</h3>
+        <h3>紙コップ</h3>
         <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
       {open && (
-        <>
+        <div style={{ display: 'grid', rowGap: 8 }}>
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 80px)',
               alignItems: 'center',
-              margin: '-20px 0',
             }}
           >
             <h4>Points</h4>
@@ -127,13 +126,11 @@ const CueWorkoutList = () => {
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 100px)',
               alignItems: 'center',
-              margin: '-20px 0',
             }}
           >
             <h4>IsRunning</h4>
             <div>{String(isRunning)}</div>
           </div>
-          <div style={{ height: 20 }} />
           <Button fullWidth variant='outlined' onClick={handleReset}>
             reset
           </Button>
@@ -197,7 +194,7 @@ const CueWorkoutList = () => {
           >
             isRandom
           </Button>
-        </>
+        </div>
       )}
     </div>
   );

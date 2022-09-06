@@ -1,7 +1,9 @@
+import { PITCHES } from '../../../../../pitch';
 import { css } from '@emotion/css';
 import { PlayCircleRounded } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import { WorkingMemoryCue } from '../../../../../Model';
 import { createSourceNode } from '../../../../../services/utils';
 import { WorkingMemoryFormState } from '../Model';
 
@@ -30,9 +32,15 @@ const PlayButton = ({
   const currentCueId = state.cueIds[state.currentIndex];
   const currentCue = state.cues[currentCueId];
   const play = async () => {
+    console.log(state.blob);
     if (!state.blob || !state.audioContext) return;
+
+    const id = currentCue.id;
+
+    const pitch = PITCHES[id];
+    console.log(id, pitch);
     const sourceNode = await createSourceNode(state.blob, state.audioContext);
-    sourceNode.start(0, currentCue.start, currentCue.end - currentCue.start);
+    sourceNode.start(0, pitch.start, pitch.end - pitch.start);
   };
 
   const handleClick = () => {

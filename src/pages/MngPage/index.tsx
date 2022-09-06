@@ -55,7 +55,7 @@ const MngPage = () => {
             <NotePane />
             <RhythmListPane />
             <RhythmWorkoutPane />
-            <RandomWorkoutList />
+            {/* <RandomWorkoutList /> */}
             <CueWorkoutList />
             <WorkingMemoryPane />
           </div>

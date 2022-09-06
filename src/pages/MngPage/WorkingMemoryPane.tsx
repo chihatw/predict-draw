@@ -71,7 +71,7 @@ const WorkingMemoryPane = () => {
           alignItems: 'center',
         }}
       >
-        <h3>WorkingMemoryWorkout</h3>
+        <h3>ワーキングメモリ</h3>
         <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
       {open && (

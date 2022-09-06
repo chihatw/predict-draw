@@ -1,3 +1,4 @@
+import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import {
   doc,
   DocumentData,
@@ -79,7 +80,7 @@ export const buildWorkingMemoryFormState = (
   const workingMemoryFormState: WorkingMemoryFormState = {
     ...state.workingMemory,
     audioContext: state.audioContext,
-    blob: state.blobs[state.workingMemory.storagePath],
+    blob: state.blobs[downpitch_120],
     answerIds: [],
     currentIndex: 0,
   };

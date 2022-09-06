@@ -5,7 +5,7 @@ export const pages = {
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
   kanaWorkout: 'kanaWorkout',
-  randomWorkout: 'randomWorkout',
+  // randomWorkout: 'randomWorkout',
   workingMemory: 'workingMemory',
   rhythmWorkout: 'rhythmWorkout',
   speedWorkoutCue: 'speedWorkoutCue',

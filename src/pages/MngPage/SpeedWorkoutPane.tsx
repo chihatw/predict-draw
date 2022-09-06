@@ -58,7 +58,7 @@ const SpeedWorkoutPane = () => {
   return (
     <div style={{ display: 'grid', rowGap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <h3>Speed</h3>
+        <h3>速読練習</h3>
         <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
       {open && (
