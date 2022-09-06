@@ -56,7 +56,6 @@ const RhythmWorkoutAnswer = ({
       answerIds: updatedAnswerIds,
       currentIndex: state.currentIndex + 1,
     };
-    console.log(updatedState);
     dispatch(updatedState);
     setSelectedId('');
     setInitialize(true);
@@ -75,18 +74,17 @@ const RhythmWorkoutAnswer = ({
   }, [initialize]);
   return (
     <div style={{ display: 'grid', rowGap: 8 }}>
-      <div style={{ textAlign: 'center', display: 'grid', rowGap: 8 }}>
-        <div
-          style={{
-            ...(theme.typography as any).lato100,
-            color: '#555',
-            fontSize: 40,
-          }}
-        >
-          <span>{state.currentIndex + 1}</span>
-          <span style={{ fontSize: 32 }}> / </span>
-          <span>{state.cueIds.length}</span>
-        </div>
+      <div
+        style={{
+          ...(theme.typography as any).lato100,
+          color: '#555',
+          fontSize: 40,
+          textAlign: 'center',
+        }}
+      >
+        <span>{state.currentIndex + 1}</span>
+        <span style={{ fontSize: 32 }}> / </span>
+        <span>{state.cueIds.length}</span>
       </div>
       <div
         ref={AnimationElemRef}

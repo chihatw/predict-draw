@@ -1,7 +1,7 @@
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { SpeedWorkoutItem } from '../../../Model';
+import { SpeedWorkoutItem } from '../../../../Model';
 import CueCell from './CueCell';
 
 const WorkoutItemList = ({

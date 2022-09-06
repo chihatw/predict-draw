@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import gojuuon from '../../../../assets/audios/gojuuon.mp3';
-import { Button, Card, CardContent, Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
 import { KanaCard, KANAS } from '../../../../kana';
