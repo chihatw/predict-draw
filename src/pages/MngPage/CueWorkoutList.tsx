@@ -10,6 +10,7 @@ import {
 } from '../../services/cueWorkout';
 
 const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
+const HANDS = ['mine', 'yours'];
 const VERBS = [
   'motsu',
   'yubisasu',
@@ -24,13 +25,11 @@ const CueWorkoutList = () => {
   const [open, setOpen] = useState(false);
   const { cueWorkout } = state;
   const { params } = cueWorkout;
-  const { colors, verbs, points, time, isRandom, isRunning, isInverse } =
-    params;
 
   const handleClickColor = async (color: string) => {
-    let updatedColors = [...colors];
-    if (colors.includes(color)) {
-      updatedColors = colors.filter((item) => item !== color);
+    let updatedColors = [...params.colors];
+    if (params.colors.includes(color)) {
+      updatedColors = params.colors.filter((item) => item !== color);
     } else {
       updatedColors.push(color);
     }
@@ -42,10 +41,27 @@ const CueWorkoutList = () => {
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
   };
+
+  const handleClickHand = async (hand: string) => {
+    let updatedHands = [...params.hands];
+    if (params.hands.includes(hand)) {
+      updatedHands = params.hands.filter((item) => item !== hand);
+    } else {
+      updatedHands.push(hand);
+    }
+    const updatedParams: CueWorkoutParams = {
+      ...params,
+      hands: updatedHands,
+    };
+    await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
+  };
+
   const handleClickVerb = async (verb: string) => {
-    let updatedVerbs = [...verbs];
-    if (verbs.includes(verb)) {
-      updatedVerbs = verbs.filter((item) => item !== verb);
+    let updatedVerbs = [...params.verbs];
+    if (params.verbs.includes(verb)) {
+      updatedVerbs = params.verbs.filter((item) => item !== verb);
     } else {
       updatedVerbs.push(verb);
     }
@@ -69,7 +85,7 @@ const CueWorkoutList = () => {
   const handleChangeIsRandom = async () => {
     const updatedParams: CueWorkoutParams = {
       ...params,
-      isRandom: !isRandom,
+      isRandom: !params.isRandom,
     };
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
@@ -79,7 +95,7 @@ const CueWorkoutList = () => {
   const handleChangeIsInverse = async () => {
     const updatedParams: CueWorkoutParams = {
       ...params,
-      isInverse: !isInverse,
+      isInverse: !params.isInverse,
     };
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
@@ -106,7 +122,7 @@ const CueWorkoutList = () => {
           alignItems: 'center',
         }}
       >
-        <h3>紙コップ</h3>
+        <h3>紙コップ(CueWorkout)</h3>
         <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
       {open && (
@@ -119,7 +135,7 @@ const CueWorkoutList = () => {
             }}
           >
             <h4>Points</h4>
-            <div>{points}</div>
+            <div>{params.points}</div>
           </div>
           <div
             style={{
@@ -129,7 +145,7 @@ const CueWorkoutList = () => {
             }}
           >
             <h4>IsRunning</h4>
-            <div>{String(isRunning)}</div>
+            <div>{String(params.isRunning)}</div>
           </div>
           <Button fullWidth variant='outlined' onClick={handleReset}>
             reset
@@ -145,10 +161,28 @@ const CueWorkoutList = () => {
             {COLORS.map((color) => (
               <Button
                 key={color}
-                color={colors.includes(color) ? 'primary' : 'secondary'}
+                color={params.colors.includes(color) ? 'primary' : 'secondary'}
                 onClick={() => handleClickColor(color)}
               >
                 {color}
+              </Button>
+            ))}
+          </div>
+          <h4>Hands</h4>
+          <div
+            style={{
+              display: 'grid',
+              columnGap: 8,
+              gridTemplateColumns: 'repeat(6, 80px)',
+            }}
+          >
+            {HANDS.map((hand) => (
+              <Button
+                key={hand}
+                color={params.hands.includes(hand) ? 'primary' : 'secondary'}
+                onClick={() => handleClickHand(hand)}
+              >
+                {hand}
               </Button>
             ))}
           </div>
@@ -163,7 +197,7 @@ const CueWorkoutList = () => {
             {VERBS.map((verb) => (
               <Button
                 key={verb}
-                color={verbs.includes(verb) ? 'primary' : 'secondary'}
+                color={params.verbs.includes(verb) ? 'primary' : 'secondary'}
                 onClick={() => handleClickVerb(verb)}
               >
                 <span style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
@@ -177,19 +211,19 @@ const CueWorkoutList = () => {
             fullWidth
             size='small'
             type='number'
-            value={time}
+            value={params.time}
             onChange={(e) => handleChangeTime(Number(e.target.value))}
           />
           <h4>Is Inverse</h4>
           <Button
-            color={isInverse ? 'primary' : 'secondary'}
+            color={params.isInverse ? 'primary' : 'secondary'}
             onClick={handleChangeIsInverse}
           >
             isInverse
           </Button>
           <h4>Is Random</h4>
           <Button
-            color={isRandom ? 'primary' : 'secondary'}
+            color={params.isRandom ? 'primary' : 'secondary'}
             onClick={handleChangeIsRandom}
           >
             isRandom

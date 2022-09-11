@@ -1,6 +1,13 @@
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../repositories/firebase';
 
+/**
+ *
+ * @example
+ * getRandomInt(1) // 0;
+ * getRandomInt(2) // 0,1;
+ *
+ */
 export const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max);
 };

@@ -73,4 +73,16 @@ export const CUE_CARDS: { [key: string]: CueWorkoutCard } = {
     imagePath: '/images/yubisasu.png',
     hasTailAccent: false,
   },
+  mine: {
+    id: 'mine',
+    pitchStr: 'わたしのて',
+    imagePath: '',
+    hasTailAccent: true,
+  },
+  yours: {
+    id: 'yours',
+    pitchStr: 'じぶんのて',
+    imagePath: '',
+    hasTailAccent: true,
+  },
 };

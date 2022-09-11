@@ -22,6 +22,7 @@ import { storage } from '../../../../repositories/firebase';
 import { ActionTypes } from '../../../../Update';
 
 const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
+const HANDS = ['mine', 'yours'];
 const VERBS = [
   'motsu',
   'yubisasu',
@@ -33,9 +34,6 @@ const VERBS = [
 
 const CueWorkoutPane = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { cueWorkout } = state;
-  const { params, cue } = cueWorkout;
-  const { colors, verbs, isRunning, time, points } = params;
   const [miliSeconds, setMiliSeconds] = useState(0);
   const [initializing, setInitializing] = useState(true);
 
@@ -45,20 +43,22 @@ const CueWorkoutPane = () => {
       const _blobURLs: { [imagePath: string]: string } = {};
       await Promise.all(
         Object.values(CUE_CARDS).map(async (cueCard) => {
-          const { imagePath } = cueCard;
+          if (!!cueCard.imagePath) {
+            let _blobURL = '';
 
-          let _blobURL = '';
-
-          if (state.blobURLs[imagePath]) {
-            _blobURL = state.blobURLs[imagePath];
-          } else {
-            console.log('get imageBlob');
-            const downloadURL = await getDownloadURL(ref(storage, imagePath));
-            const response = await fetch(downloadURL);
-            const blob = await response.blob();
-            _blobURL = window.URL.createObjectURL(blob);
+            if (state.blobURLs[cueCard.imagePath]) {
+              _blobURL = state.blobURLs[cueCard.imagePath];
+            } else {
+              console.log('get imageBlob');
+              const downloadURL = await getDownloadURL(
+                ref(storage, cueCard.imagePath)
+              );
+              const response = await fetch(downloadURL);
+              const blob = await response.blob();
+              _blobURL = window.URL.createObjectURL(blob);
+            }
+            _blobURLs[cueCard.imagePath] = _blobURL;
           }
-          _blobURLs[imagePath] = _blobURL;
         })
       );
       const updatedBlobURLs = { ...state.blobURLs, ..._blobURLs };
@@ -73,23 +73,23 @@ const CueWorkoutPane = () => {
   const loopIdRef = useRef(0);
 
   useEffect(() => {
-    if (isRunning) return;
-    const miliSeconds = time * 1000;
+    if (state.cueWorkout.params.isRunning) return;
+    const miliSeconds = state.cueWorkout.params.time * 1000;
     setMiliSeconds(miliSeconds);
-  }, [time, isRunning]);
+  }, [state.cueWorkout.params.time, state.cueWorkout.params.isRunning]);
 
   const start = async () => {
     startAtRef.current = performance.now();
     loop();
     const newParams: CueWorkoutParams = {
-      ...params,
+      ...state.cueWorkout.params,
       isRunning: true,
     };
     await setCueWorkoutParams(newParams);
   };
   const loop = () => {
     const elapsedTime = performance.now() - startAtRef.current;
-    const miliSeconds = time * 1000 - elapsedTime;
+    const miliSeconds = state.cueWorkout.params.time * 1000 - elapsedTime;
     if (miliSeconds > 0) {
       setMiliSeconds(miliSeconds);
       loopIdRef.current = window.requestAnimationFrame(loop);
@@ -99,14 +99,15 @@ const CueWorkoutPane = () => {
   };
 
   const next = async () => {
-    let updatedCue = cue;
-    while (getCueString(updatedCue) === getCueString(cue)) {
-      updatedCue = createCueFromParams(params);
+    let updatedCue = state.cueWorkout.cue;
+
+    while (getCueString(updatedCue) === getCueString(state.cueWorkout.cue)) {
+      updatedCue = createCueFromParams(state.cueWorkout.params);
     }
     await setCueWorkoutCue(updatedCue);
     const newParams: CueWorkoutParams = {
-      ...params,
-      points: points + 1,
+      ...state.cueWorkout.params,
+      points: state.cueWorkout.params.points + 1,
     };
     await setCueWorkoutParams(newParams);
   };
@@ -120,15 +121,25 @@ const CueWorkoutPane = () => {
   return (
     <Container maxWidth='sm' sx={{ paddingTop: 0 }}>
       <div style={{ display: 'grid', rowGap: 8 }}>
-        <CardList list={COLORS} columns={6} selectedList={colors} />
-        <CardList list={VERBS} columns={6} selectedList={verbs} />
+        <CardList
+          list={COLORS}
+          columns={6}
+          selectedList={state.cueWorkout.params.colors}
+        />
+        <CardList
+          list={VERBS}
+          columns={6}
+          selectedList={state.cueWorkout.params.verbs}
+        />
 
         <div style={{ marginBottom: -20, marginTop: 20 }}>
           <Points />
         </div>
         <TimeDisplay miliSeconds={miliSeconds} />
         <div style={{ margin: '16px 0', height: 200 }}>
-          {isRunning && <CuePane />}
+          {state.cueWorkout.params.isRunning && (
+            <CuePane cueWorkout={state.cueWorkout} />
+          )}
         </div>
         <PlayButton start={start} next={next} />
       </div>

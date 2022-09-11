@@ -161,14 +161,19 @@ export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
   hasTailAccent: false,
 };
 
+/**
+ * nouns: ２つの名詞を持つ
+ * verb: 1つの動詞を持つ
+ * isInverse: 「を」「に」の順番が、逆順かどうか
+ */
 export type CueWorkoutCue = {
-  colors: string[];
+  nouns: string[];
   verb: string;
   isInverse: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
-  colors: [],
+  nouns: [],
   verb: '',
   isInverse: false,
 };
@@ -181,6 +186,7 @@ export type CueWorkoutParams = {
   verbs: string[];
   isRandom: boolean;
   isInverse: boolean;
+  hands: string[];
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
@@ -189,6 +195,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   points: 0,
   colors: [],
   verbs: [],
+  hands: [],
   isRandom: false,
   isInverse: false,
 };

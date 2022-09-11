@@ -6,8 +6,7 @@ const Card = ({ cardId, isActive }: { cardId: string; isActive: boolean }) => {
   const { cueWorkout, blobURLs } = state;
   const { cards } = cueWorkout;
   const card = cards[cardId];
-  const { imagePath } = card;
-  const blobURL = blobURLs[imagePath] || '';
+  const blobURL = blobURLs[card.imagePath] || '';
   return (
     <div
       style={{
