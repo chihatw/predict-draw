@@ -1,16 +1,15 @@
-import downpitch_120 from '../../../assets/audios/downpitch_120.mp3';
 import * as R from 'ramda';
-import { Card, CardContent, Container } from '@mui/material';
+import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../App';
-import { createSourceNode, getBlobFromAssets } from '../../../services/utils';
-import { PitchCard, RhythmListState, State } from '../../../Model';
-import { ActionTypes } from '../../../Update';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import string2PitchesArray from 'string2pitches-array';
-import TouchMe from './RandomWorkoutPane/RecordingPane/TouchMe';
-import { setRhythmList } from '../../../services/rhythmList';
-import { PITCHES } from '../../../pitch';
+import { AppContext } from '../../../../App';
+import { getBlobFromAssets } from '../../../../services/utils';
+import { RhythmListState, State } from '../../../../Model';
+import { ActionTypes } from '../../../../Update';
+import TouchMe from '../WorkingMemoryPane/WorkingMemoryForm/TouchMe';
+import { setRhythmList } from '../../../../services/rhythmList';
+import { Container } from '@mui/material';
+import { PITCHES } from '../../../../pitch';
+import RhythmRow from './RhythmRow';
 
 const RhythmListPane = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -23,14 +22,14 @@ const RhythmListPane = () => {
       case 2:
         setCardIds([
           'tatta',
-          'tatax',
+          // 'tatax',
           'taata',
-          'tataa',
+          // 'tataa',
           'tanta',
-          'tatan',
+          // 'tatan',
           'tatata',
         ]);
-        setGridTemplateColumns('1fr 1fr');
+        // setGridTemplateColumns('1fr 1fr');
         break;
       case 3:
         setCardIds([
@@ -90,7 +89,7 @@ const RhythmListPane = () => {
 
   return (
     <Container
-      maxWidth={state.rhythmList.mora === 1 ? 'xs' : 'sm'}
+      maxWidth={state.rhythmList.mora < 3 ? 'xs' : 'sm'}
       sx={{ paddingTop: 10 }}
     >
       <div
@@ -113,43 +112,3 @@ const RhythmListPane = () => {
 };
 
 export default RhythmListPane;
-
-const RhythmRow = ({
-  card,
-  handleTapped,
-}: {
-  card: PitchCard;
-  handleTapped: (id: string) => void;
-}) => {
-  const { state } = useContext(AppContext);
-  const blob = state.blobs[downpitch_120];
-
-  const handleClick = () => {
-    handleTapped(card.id);
-    play();
-  };
-  const play = async () => {
-    if (!state.audioContext || !blob) return;
-    const sourceNode = await createSourceNode(blob, state.audioContext);
-    sourceNode.start(0, card.start, card.end - card.start);
-  };
-  return (
-    <Card
-      sx={{ cursor: 'pointer', height: 80, background: '#eee' }}
-      elevation={1}
-      onClick={handleClick}
-    >
-      <CardContent
-        sx={{
-          height: '100%',
-          display: 'flex',
-          position: 'relative',
-          paddingTop: 3,
-          justifyContent: 'center',
-        }}
-      >
-        <SentencePitchLine pitchesArray={string2PitchesArray(card.pitchStr)} />
-      </CardContent>
-    </Card>
-  );
-};

@@ -61,7 +61,8 @@ export const buildCueIds = (mora: number, cueCount: number): string[] => {
 
   switch (mora) {
     case 2:
-      cueIds = ['tatta', 'tatax', 'taata', 'tataa', 'tanta', 'tatan', 'tatata'];
+      cueIds = ['tatta', 'taata', 'tanta', 'tatata'];
+      // cueIds = ['tatta', 'tatax', 'taata', 'tataa', 'tanta', 'tatan', 'tatata'];
       break;
     case 3:
       cueIds = [
