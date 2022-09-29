@@ -22,14 +22,13 @@ import { storage } from '../../../../repositories/firebase';
 import { ActionTypes } from '../../../../Update';
 
 const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-const HANDS = ['mine', 'yours'];
 const VERBS = [
   'motsu',
-  'yubisasu',
-  'hikkurikaesu',
   'ireru',
   'noseru',
+  'yubisasu',
   'kabuseru',
+  'hikkurikaesu',
 ];
 
 const CueWorkoutPane = () => {

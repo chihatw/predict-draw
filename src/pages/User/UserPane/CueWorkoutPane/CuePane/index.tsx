@@ -16,6 +16,8 @@ const NOUN_LABELS: { [key: string]: string } = {
   orange: 'オレンジ',
   mine: '私の手',
   yours: '自分の手',
+  right: '一番右の',
+  left: '一番左の',
 };
 
 const VERB_LABELS: { [key: string]: string } = {

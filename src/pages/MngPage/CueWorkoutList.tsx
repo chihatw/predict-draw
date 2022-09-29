@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { CueWorkoutParams } from '../../Model';
 import { AppContext } from '../../App';
@@ -11,6 +11,7 @@ import {
 
 const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
 const HANDS = ['mine', 'yours'];
+const POSITION = ['right', 'left'];
 const VERBS = [
   'motsu',
   'yubisasu',
@@ -52,6 +53,16 @@ const CueWorkoutList = () => {
     const updatedParams: CueWorkoutParams = {
       ...params,
       hands: updatedHands,
+    };
+    await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
+  };
+
+  const handleChangePosition = async (hasPosition: boolean) => {
+    const updatedParams: CueWorkoutParams = {
+      ...params,
+      hasPosition,
     };
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
@@ -186,6 +197,11 @@ const CueWorkoutList = () => {
               </Button>
             ))}
           </div>
+          <h4>Position</h4>
+          <Switch
+            value={params.hasPosition}
+            onChange={(_, checked) => handleChangePosition(checked)}
+          />
           <h4>Verbs</h4>
           <div
             style={{

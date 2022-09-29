@@ -16,6 +16,17 @@ import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 import { getRandomInt, shuffle } from './utils';
 
+const POSITIONS = ['right', 'left'];
+
+const VERB_WEIGHT: { [key: string]: number } = {
+  motsu: 2,
+  yubisasu: 1,
+  hikkurikaesu: 1,
+  ireru: 4,
+  noseru: 4,
+  kabuseru: 4,
+};
+
 const COLLECTIONS = {
   cueWorkout: 'cueWorkout',
 };
@@ -79,8 +90,17 @@ const buildCue = (doc: DocumentData) => {
 };
 
 const buildParams = (doc: DocumentData) => {
-  const { colors, isRandom, isRunning, points, time, verbs, isInverse, hands } =
-    doc.data();
+  const {
+    time,
+    verbs,
+    hands,
+    colors,
+    points,
+    hasPosition,
+    isRandom,
+    isRunning,
+    isInverse,
+  } = doc.data();
   const params: CueWorkoutParams = {
     time: time || 0,
     verbs: verbs || [],
@@ -90,6 +110,7 @@ const buildParams = (doc: DocumentData) => {
     isRandom: isRandom || false,
     isRunning: isRunning || false,
     isInverse: isInverse || false,
+    hasPosition: hasPosition || false,
   };
   return params;
 };
@@ -107,29 +128,31 @@ export const createCueFromParams = (
   let nouns: string[] = [];
   let isInverse = false; // 「をに」が逆順
 
-  const verbIndex = getRandomInt(params.verbs.length);
-  verb = params.verbs[verbIndex];
+  const weightedVerbArray = getWeightedVerbArray(params.verbs);
+  const verbIndex = getRandomInt(weightedVerbArray.length);
+  verb = weightedVerbArray[verbIndex];
 
-  // motsu, kabuseru は「手」を使わない
+  // motsu, kabuseru の時は「手」を使わない
   if (['motsu', 'kabuseru'].includes(verb)) {
     hasHands = false;
   }
 
-  // isInverse
+  // isInverse　助詞の順番入れ替えをするかどうか設定
   switch (verb) {
-    case 'motsu':
-    case 'yubisasu':
-    case 'hikkurikaesu':
-      break;
+    // 複数目的語の動詞の場合（単独目的語は無関係）
     case 'ireru':
     case 'noseru':
     case 'kabuseru':
+      // ランダムの場合は、ランダム
       if (params.isRandom) {
         isInverse = !!getRandomInt(2);
-      } else if (params.isInverse) {
-        isInverse = true;
+        break;
       }
-      break;
+      //  入れ替え指定がある場合は、入れ替え
+      if (params.isInverse) {
+        isInverse = true;
+        break;
+      }
     default:
   }
 
@@ -189,7 +212,24 @@ export const createCueFromParams = (
       case 'ireru':
       case 'noseru':
       case 'kabuseru':
-        nouns = shuffle(params.colors).slice(0, 2);
+        const shuffledColors = shuffle(params.colors);
+        const shuffledPositions = shuffle(POSITIONS);
+
+        if (!!params.hasPosition) {
+          // 33% で 第1項目に位置詞を入れる
+          let rand = Math.floor(Math.random() * 100);
+          if (rand < 33) {
+            shuffledColors[0] = shuffledPositions[0];
+          }
+
+          // 33% で 第2項目に位置詞を入れる
+          rand = Math.floor(Math.random() * 100);
+          if (rand < 33) {
+            shuffledColors[1] = shuffledPositions[1];
+          }
+        }
+
+        nouns = shuffledColors.slice(0, 2);
         break;
       default:
     }
@@ -225,4 +265,14 @@ export const getCueString = (cue: CueWorkoutCue): string => {
       return cue.nouns[0] + 'wo' + cue.nouns[1] + 'ni' + cue.verb;
   }
   return '';
+};
+
+const getWeightedVerbArray = (verbs: string[]) => {
+  let weightedVerbArray = [];
+  for (const verb of verbs) {
+    for (let i = 0; i < VERB_WEIGHT[verb]; i++) {
+      weightedVerbArray.push(verb);
+    }
+  }
+  return shuffle(weightedVerbArray);
 };

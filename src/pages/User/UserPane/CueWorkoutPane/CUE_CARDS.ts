@@ -85,4 +85,16 @@ export const CUE_CARDS: { [key: string]: CueWorkoutCard } = {
     imagePath: '',
     hasTailAccent: true,
   },
+  right: {
+    id: 'right',
+    pitchStr: 'いちばん　みぎの',
+    imagePath: '',
+    hasTailAccent: true,
+  },
+  left: {
+    id: 'left',
+    pitchStr: 'いちばん　ひだりの',
+    imagePath: '',
+    hasTailAccent: true,
+  },
 };

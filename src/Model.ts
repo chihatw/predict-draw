@@ -187,6 +187,7 @@ export type CueWorkoutParams = {
   isRandom: boolean;
   isInverse: boolean;
   hands: string[];
+  hasPosition: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
@@ -196,6 +197,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   colors: [],
   verbs: [],
   hands: [],
+  hasPosition: false,
   isRandom: false,
   isInverse: false,
 };
