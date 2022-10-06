@@ -1,25 +1,21 @@
-import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
+import * as R from 'ramda';
+import { Button, MenuItem, Select, Switch, TextField } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import { CueWorkoutParams } from '../../Model';
+import {
+  HANDS,
+  VERBS,
+  COLORS,
+  TOPIC_MODE,
+  CueWorkoutParams,
+  JOSHI_ORDER,
+  NEGATIVE_SENTENCE,
+} from '../../Model';
 import { AppContext } from '../../App';
-
 import {
   createCueFromParams,
   setCueWorkoutCue,
   setCueWorkoutParams,
 } from '../../services/cueWorkout';
-
-const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-const HANDS = ['mine', 'yours'];
-const POSITION = ['right', 'left'];
-const VERBS = [
-  'motsu',
-  'yubisasu',
-  'hikkurikaesu',
-  'ireru',
-  'noseru',
-  'kabuseru',
-];
 
 const CueWorkoutList = () => {
   const { state } = useContext(AppContext);
@@ -50,20 +46,38 @@ const CueWorkoutList = () => {
     } else {
       updatedHands.push(hand);
     }
-    const updatedParams: CueWorkoutParams = {
-      ...params,
-      hands: updatedHands,
-    };
+    let updatedParams = R.assocPath<string[], CueWorkoutParams>(
+      ['hands'],
+      updatedHands
+    )(params);
+
+    // 手を含める場合、トピックは使わない
+    if (!!updatedHands.length) {
+      updatedParams = R.assocPath<string, CueWorkoutParams>(
+        ['topicMode'],
+        TOPIC_MODE.noTopic
+      )(updatedParams);
+    }
+
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
   };
 
   const handleChangePosition = async (hasPosition: boolean) => {
-    const updatedParams: CueWorkoutParams = {
-      ...params,
-      hasPosition,
-    };
+    let updatedParams = R.assocPath<boolean, CueWorkoutParams>(
+      ['hasPosition'],
+      hasPosition
+    )(params);
+
+    // 位置指定を含める場合、トピックは使わない
+    if (hasPosition) {
+      updatedParams = R.assocPath<string, CueWorkoutParams>(
+        ['topicMode'],
+        TOPIC_MODE.noTopic
+      )(updatedParams);
+    }
+
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
@@ -93,21 +107,39 @@ const CueWorkoutList = () => {
     await setCueWorkoutParams(updatedParams);
   };
 
-  const handleChangeIsRandom = async () => {
-    const updatedParams: CueWorkoutParams = {
-      ...params,
-      isRandom: !params.isRandom,
-    };
+  const handleChangeJoshiOrder = async (joshiOrder: string) => {
+    let updatedParams = R.assocPath<string, CueWorkoutParams>(
+      ['joshiOrder'],
+      joshiOrder
+    )(params);
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
   };
 
-  const handleChangeIsInverse = async () => {
-    const updatedParams: CueWorkoutParams = {
-      ...params,
-      isInverse: !params.isInverse,
-    };
+  const handleChangeTopicMode = async (topicMode: string) => {
+    let updatedParams = R.assocPath<string, CueWorkoutParams>(
+      ['topicMode'],
+      topicMode
+    )(params);
+    // トピックの練習をするときは、手と位置は含めない
+    if (topicMode !== TOPIC_MODE.noTopic) {
+      console.log('!!');
+      updatedParams = R.compose(
+        R.assocPath<string[], CueWorkoutParams>(['hands'], []),
+        R.assocPath<boolean, CueWorkoutParams>(['hasPosition'], false)
+      )(updatedParams);
+    }
+    await setCueWorkoutParams(updatedParams);
+    const cue = createCueFromParams(updatedParams);
+    await setCueWorkoutCue(cue);
+  };
+
+  const handleChangeNegativeSentence = async (negativeSentence: string) => {
+    let updatedParams = R.assocPath<string, CueWorkoutParams>(
+      ['negativeSentence'],
+      negativeSentence
+    )(params);
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
@@ -161,7 +193,7 @@ const CueWorkoutList = () => {
           <Button fullWidth variant='outlined' onClick={handleReset}>
             reset
           </Button>
-          <h4>Colors</h4>
+          <h4>色</h4>
           <div
             style={{
               display: 'grid',
@@ -179,7 +211,7 @@ const CueWorkoutList = () => {
               </Button>
             ))}
           </div>
-          <h4>Hands</h4>
+          <h4>自分の手・私の手（Hands）</h4>
           <div
             style={{
               display: 'grid',
@@ -197,9 +229,9 @@ const CueWorkoutList = () => {
               </Button>
             ))}
           </div>
-          <h4>Position</h4>
+          <h4>一番右・一番左（Position）</h4>
           <Switch
-            value={params.hasPosition}
+            checked={params.hasPosition}
             onChange={(_, checked) => handleChangePosition(checked)}
           />
           <h4>Verbs</h4>
@@ -230,20 +262,42 @@ const CueWorkoutList = () => {
             value={params.time}
             onChange={(e) => handleChangeTime(Number(e.target.value))}
           />
-          <h4>Is Inverse</h4>
-          <Button
-            color={params.isInverse ? 'primary' : 'secondary'}
-            onClick={handleChangeIsInverse}
+          <h4>助詞順序</h4>
+          <Select
+            value={params.joshiOrder}
+            size='small'
+            onChange={(e) => handleChangeJoshiOrder(e.target.value)}
           >
-            isInverse
-          </Button>
-          <h4>Is Random</h4>
-          <Button
-            color={params.isRandom ? 'primary' : 'secondary'}
-            onClick={handleChangeIsRandom}
+            {Object.values(JOSHI_ORDER).map((item, index) => (
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+          <h4>トピック</h4>
+          <Select
+            value={params.topicMode}
+            size='small'
+            onChange={(e) => handleChangeTopicMode(e.target.value)}
           >
-            isRandom
-          </Button>
+            {Object.values(TOPIC_MODE).map((item, index) => (
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+          <h4>否定</h4>
+          <Select
+            value={params.negativeSentence}
+            size='small'
+            onChange={(e) => handleChangeNegativeSentence(e.target.value)}
+          >
+            {Object.values(NEGATIVE_SENTENCE).map((item, index) => (
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
         </div>
       )}
     </div>

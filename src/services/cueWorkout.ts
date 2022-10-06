@@ -7,9 +7,12 @@ import {
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import {
+  TOPIC_MODE,
   CueWorkoutCue,
   CueWorkoutParams,
   INITIAL_CUE_WORKOUT_CUE,
+  JOSHI_ORDER,
+  NEGATIVE_SENTENCE,
 } from '../Model';
 import { CUE_CARDS } from '../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { db } from '../repositories/firebase';
@@ -80,11 +83,13 @@ export const setCueWorkoutCue = async (cue: CueWorkoutCue) => {
 };
 
 const buildCue = (doc: DocumentData) => {
-  const { nouns, isInverse, verb } = doc.data();
+  const { nouns, isInverse, verb, hasTopic, isNegative } = doc.data();
   const cue: CueWorkoutCue = {
-    nouns: nouns || [],
-    isInverse: isInverse || false,
     verb: verb || '',
+    nouns: nouns || [],
+    hasTopic: hasTopic || false,
+    isInverse: isInverse || false,
+    isNegative: isNegative || false,
   };
   return cue;
 };
@@ -96,10 +101,11 @@ const buildParams = (doc: DocumentData) => {
     hands,
     colors,
     points,
-    hasPosition,
-    isRandom,
+    topicMode,
     isRunning,
-    isInverse,
+    joshiOrder,
+    hasPosition,
+    negativeSentence,
   } = doc.data();
   const params: CueWorkoutParams = {
     time: time || 0,
@@ -107,10 +113,11 @@ const buildParams = (doc: DocumentData) => {
     hands: hands || [],
     points: points || 0,
     colors: colors || [],
-    isRandom: isRandom || false,
+    topicMode: topicMode || TOPIC_MODE.noTopic,
     isRunning: isRunning || false,
-    isInverse: isInverse || false,
+    joshiOrder: joshiOrder || JOSHI_ORDER.default,
     hasPosition: hasPosition || false,
+    negativeSentence: negativeSentence || NEGATIVE_SENTENCE.never,
   };
   return params;
 };
@@ -126,6 +133,28 @@ export const createCueFromParams = (
 
   let verb = '';
   let nouns: string[] = [];
+  const hasTopic = (() => {
+    switch (params.topicMode) {
+      case TOPIC_MODE.hasTopic:
+        return true;
+      case TOPIC_MODE.random:
+        // ランダムの時は、50% で true
+        return !!getRandomInt(2);
+      default:
+        return false;
+    }
+  })();
+  const isNegative = (() => {
+    switch (params.negativeSentence) {
+      case NEGATIVE_SENTENCE.always:
+        return true;
+      case NEGATIVE_SENTENCE.random:
+        return !!getRandomInt(2);
+      default:
+        return false;
+    }
+  })();
+
   let isInverse = false; // 「をに」が逆順
 
   const weightedVerbArray = getWeightedVerbArray(params.verbs);
@@ -143,15 +172,14 @@ export const createCueFromParams = (
     case 'ireru':
     case 'noseru':
     case 'kabuseru':
-      // ランダムの場合は、ランダム
-      if (params.isRandom) {
-        isInverse = !!getRandomInt(2);
-        break;
-      }
-      //  入れ替え指定がある場合は、入れ替え
-      if (params.isInverse) {
-        isInverse = true;
-        break;
+      switch (params.joshiOrder) {
+        case JOSHI_ORDER.random:
+          isInverse = !!getRandomInt(2);
+          break;
+        case JOSHI_ORDER.inverse:
+          isInverse = true;
+          break;
+        default:
       }
     default:
   }
@@ -238,7 +266,9 @@ export const createCueFromParams = (
   const cue: CueWorkoutCue = {
     nouns,
     verb,
+    hasTopic,
     isInverse,
+    isNegative,
   };
   return cue;
 };

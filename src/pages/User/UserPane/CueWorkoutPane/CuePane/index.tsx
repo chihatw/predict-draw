@@ -29,13 +29,38 @@ const VERB_LABELS: { [key: string]: string } = {
   kabuseru: 'かぶせる',
 };
 
+const NEGATIVE_VERB_LABELS: { [key: string]: string } = {
+  motsu: '持たない',
+  yubisasu: '指差さない',
+  hikkurikaesu: 'ひっくり返さない',
+  ireru: '入れない',
+  noseru: 'のせない',
+  kabuseru: 'かぶせない',
+};
+
+const NEGATIVE_VERB_PITCH_STR: { [key: string]: string } = {
+  motsu: 'もた＼ない',
+  yubisasu: 'ゆびささ＼ない',
+  hikkurikaesu: 'ひっくりかえさ＼ない',
+  ireru: 'いれない',
+  noseru: 'のせない',
+  kabuseru: 'かぶせ＼ない',
+};
+
 const CuePane = React.memo(
   ({ cueWorkout }: { cueWorkout: CueWorkoutState }) => {
     const { cards, cue } = cueWorkout;
-    const { nouns, verb, isInverse } = cue;
-    const verbCard = cards[verb] || INITIAL_CUE_WORKOUT_CARD;
+    const verbCard = cards[cue.verb] || INITIAL_CUE_WORKOUT_CARD;
 
-    let cueCards = nouns.map((noun) => cards[noun]);
+    const verbLabel = cue.isNegative
+      ? NEGATIVE_VERB_LABELS[verbCard.id]
+      : VERB_LABELS[verbCard.id];
+
+    const verbPitchStr = cue.isNegative
+      ? NEGATIVE_VERB_PITCH_STR[verbCard.id]
+      : verbCard.pitchStr;
+
+    let cueCards = cue.nouns.map((noun) => cards[noun]);
     if (cue.isInverse) {
       cueCards = R.reverse(cueCards);
     }
@@ -47,22 +72,30 @@ const CuePane = React.memo(
             let pitchStr = '';
             switch (index) {
               case 0:
-                if (isInverse) {
+                if (cue.hasTopic) {
+                  label = NOUN_LABELS[cueCard.id] + 'は';
+                  pitchStr =
+                    cueCard.pitchStr +
+                    (cueCard.hasTailAccent ? '＼' : '') +
+                    'は';
+                  break;
+                }
+                if (cue.isInverse) {
                   label = NOUN_LABELS[cueCard.id] + 'に';
                   pitchStr =
                     cueCard.pitchStr +
                     (cueCard.hasTailAccent ? '＼' : '') +
                     'に';
-                } else {
-                  label = NOUN_LABELS[cueCard.id] + 'を';
-                  pitchStr =
-                    cueCard.pitchStr +
-                    (cueCard.hasTailAccent ? '＼' : '') +
-                    'を';
+                  break;
                 }
+
+                label = NOUN_LABELS[cueCard.id] + 'を';
+                pitchStr =
+                  cueCard.pitchStr + (cueCard.hasTailAccent ? '＼' : '') + 'を';
+
                 break;
               case 1:
-                if (isInverse) {
+                if (cue.isInverse) {
                   label = NOUN_LABELS[cueCard.id] + 'を';
                   pitchStr =
                     cueCard.pitchStr +
@@ -78,12 +111,16 @@ const CuePane = React.memo(
                 break;
               default:
             }
-            return <CueCard key={index} label={label} pitchStr={pitchStr} />;
+            return (
+              <div style={{ display: 'grid', rowGap: 16 }}>
+                <CueCard key={index} label={label} pitchStr={pitchStr} />
+                {cueCards.length > 1 && index === 0 && (
+                  <div style={{ height: 4, borderTop: '8px hotpink dashed' }} />
+                )}
+              </div>
+            );
           })}
-          <CueCard
-            label={VERB_LABELS[verbCard.id]}
-            pitchStr={verbCard.pitchStr}
-          />
+          <CueCard label={verbLabel} pitchStr={verbPitchStr} />
         </div>
       </div>
     );

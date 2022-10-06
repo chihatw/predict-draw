@@ -5,7 +5,6 @@ export const pages = {
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
   kanaWorkout: 'kanaWorkout',
-  // randomWorkout: 'randomWorkout',
   workingMemory: 'workingMemory',
   rhythmWorkout: 'rhythmWorkout',
   speedWorkoutCue: 'speedWorkoutCue',
@@ -13,7 +12,35 @@ export const pages = {
   speedWorkoutSolo: 'speedWorkoutSolo',
 };
 
+export const NEGATIVE_SENTENCE: { [id: string]: string } = {
+  never: 'never',
+  always: 'always',
+  random: 'random',
+};
+
+export const JOSHI_ORDER: { [id: string]: string } = {
+  default: 'default',
+  inverse: 'inverse',
+  random: 'random',
+};
+export const TOPIC_MODE: { [id: string]: string } = {
+  hasTopic: 'hasTopic',
+  noTopic: 'noTopic',
+  random: 'random',
+};
+
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
+
+export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
+export const HANDS = ['mine', 'yours'];
+export const VERBS = [
+  'motsu',
+  'yubisasu',
+  'hikkurikaesu',
+  'ireru',
+  'noseru',
+  'kabuseru',
+];
 
 export type PitchCard = {
   id: string;
@@ -165,41 +192,48 @@ export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
  * nouns: ２つの名詞を持つ
  * verb: 1つの動詞を持つ
  * isInverse: 「を」「に」の順番が、逆順かどうか
+ * hasTopic: 先頭を「は」にする
  */
 export type CueWorkoutCue = {
   nouns: string[];
   verb: string;
+  hasTopic: boolean;
   isInverse: boolean;
+  isNegative: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   nouns: [],
   verb: '',
+  hasTopic: false,
   isInverse: false,
+  isNegative: false,
 };
 
 export type CueWorkoutParams = {
   time: number;
-  isRunning: boolean;
+  hands: string[];
+  verbs: string[];
   points: number;
   colors: string[];
-  verbs: string[];
-  isRandom: boolean;
-  isInverse: boolean;
-  hands: string[];
+  isRunning: boolean;
+  topicMode: string;
+  joshiOrder: string;
   hasPosition: boolean;
+  negativeSentence: string;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   time: 0,
-  isRunning: false,
-  points: 0,
-  colors: [],
   verbs: [],
   hands: [],
+  colors: [],
+  points: 0,
+  isRunning: false,
+  topicMode: TOPIC_MODE.noTopic,
+  joshiOrder: JOSHI_ORDER.default,
   hasPosition: false,
-  isRandom: false,
-  isInverse: false,
+  negativeSentence: NEGATIVE_SENTENCE.never,
 };
 
 export type CueWorkoutState = {

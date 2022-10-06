@@ -17,14 +17,6 @@ import SpeedWorkoutPane from './SpeedWorkoutPane';
 const MngPage = () => {
   const { state } = useContext(AppContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(downpitch_120);
-      const blob = await response.blob();
-    };
-    fetchData();
-  }, []);
-
   const handleChangePageState = (user: string, state: string) => {
     setPageState({ id: user, state });
   };
@@ -55,7 +47,6 @@ const MngPage = () => {
             <NotePane />
             <RhythmListPane />
             <RhythmWorkoutPane />
-            {/* <RandomWorkoutList /> */}
             <CueWorkoutList />
             <WorkingMemoryPane />
           </div>
