@@ -12,17 +12,11 @@ import createCueFromParams from '../../../services/cueWorkout/createCueFromParam
 const SelectTopicMode = () => {
   const { state } = useContext(AppContext);
   const handleChangeTopicMode = async (topicMode: string) => {
-    let updatedParams = R.assocPath<string, CueWorkoutParams>(
+    const updatedParams = R.assocPath<string, CueWorkoutParams>(
       ['topicMode'],
       topicMode
     )(state.cueWorkout.params);
-    // トピックの練習をするときは、手と位置は含めない
-    if (topicMode !== TOPIC_MODE.noTopic) {
-      updatedParams = R.compose(
-        R.assocPath<string[], CueWorkoutParams>(['hands'], []),
-        R.assocPath<boolean, CueWorkoutParams>(['hasPosition'], false)
-      )(updatedParams);
-    }
+
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);

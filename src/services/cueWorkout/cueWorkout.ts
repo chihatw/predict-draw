@@ -91,6 +91,7 @@ const buildParams = (doc: DocumentData) => {
     isRunning,
     joshiOrder,
     hasPosition,
+    isPoliteType,
     negativeSentence,
   } = doc.data();
   const params: CueWorkoutParams = {
@@ -103,6 +104,7 @@ const buildParams = (doc: DocumentData) => {
     isRunning: isRunning || false,
     joshiOrder: joshiOrder || JOSHI_ORDER.default,
     hasPosition: hasPosition || false,
+    isPoliteType: isPoliteType || false,
     negativeSentence: negativeSentence || NEGATIVE_SENTENCE.never,
   };
   return params;

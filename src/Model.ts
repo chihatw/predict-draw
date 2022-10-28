@@ -223,6 +223,7 @@ export type CueWorkoutParams = {
   topicMode: string;
   joshiOrder: string;
   hasPosition: boolean;
+  isPoliteType: boolean;
   negativeSentence: string;
 };
 
@@ -236,6 +237,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   topicMode: TOPIC_MODE.noTopic,
   joshiOrder: JOSHI_ORDER.default,
   hasPosition: false,
+  isPoliteType: false,
   negativeSentence: NEGATIVE_SENTENCE.never,
 };
 

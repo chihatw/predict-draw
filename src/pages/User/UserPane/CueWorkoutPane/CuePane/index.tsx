@@ -1,31 +1,10 @@
-// import * as R from 'ramda';
 import React from 'react';
-import {
-  CueWorkoutState,
-  // INITIAL_CUE_WORKOUT_CARD,
-} from '../../../../../Model';
-import { CUE_CARDS } from '../CUE_CARDS';
+import { CueWorkoutState } from '../../../../../Model';
 
 import CueCard from './CueCard';
 
-// const NOUN_LABELS: { [key: string]: string } = {
-//   red: '赤',
-//   blue: '青',
-//   yellow: '黄色',
-//   green: '緑',
-//   pink: 'ピンク',
-//   orange: 'オレンジ',
-//   mine: '私の手',
-//   yours: '自分の手',
-//   right: '一番右の',
-//   left: '一番左の',
-// };
-
 const CuePane = React.memo(
   ({ cueWorkout }: { cueWorkout: CueWorkoutState }) => {
-    /** cue.nouns から cueCards の作成 */
-    // let cueCards = cueWorkout.cue.nouns.map((noun) => cueWorkout.cards[noun]);
-
     return (
       <div style={{ height: 200 }}>
         <div style={{ display: 'grid', rowGap: 16, flexGrow: 1 }}>

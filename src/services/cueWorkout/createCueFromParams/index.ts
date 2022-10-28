@@ -30,6 +30,7 @@ const createCueFromParams = (params: CueWorkoutParams): CueWorkoutCue => {
     hasTopic,
     isInverse,
     isNegative,
+    isPoliteType: params.isPoliteType,
   });
   return cue;
 };

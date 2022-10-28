@@ -8,6 +8,7 @@ import SelectColors from './SelectColors';
 import SelectJoshiOrder from './SelectJoshiOrder';
 import SelectTopicMode from './SelectTopicMode';
 import SelectNegativeMode from './SelectNegativeMode';
+import SelectPoliteType from './SelectPoliteType';
 // import SelectHand from './SelectHand';
 // import SelectPosition from './SelectPosition';
 
@@ -29,13 +30,14 @@ const CueWorkoutList = () => {
         <div style={{ display: 'grid', rowGap: 8 }}>
           <ShowStatus />
           <SetTime />
+          <SelectPoliteType />
           <SelectColors />
           <SelectVerbs />
           {/* <SelectHand /> */}
           {/* <SelectPosition /> */}
           <SelectJoshiOrder />
-          <SelectTopicMode />
           <SelectNegativeMode />
+          <SelectTopicMode />
         </div>
       )}
     </div>

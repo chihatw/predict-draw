@@ -16,7 +16,7 @@ const CueCard = ({ label, pitchStr }: { label: string; pitchStr: string }) => {
       }}
     >
       <CardCellContainer>
-        <span style={{ fontSize: 24 }}>{label}</span>
+        <span style={{ fontSize: 16 }}>{label}</span>
       </CardCellContainer>
       <CardCellContainer>
         <SentencePitchLine pitchesArray={string2PitchesArray(pitchStr)} />

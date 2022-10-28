@@ -9,14 +9,16 @@ const buildCueWorkoutCue = ({
   hasTopic,
   isInverse,
   isNegative,
+  isPoliteType,
 }: {
   verbId: string;
   nounIds: string[];
   hasTopic: boolean;
   isInverse: boolean;
   isNegative: boolean;
+  isPoliteType: boolean;
 }) => {
-  const verb = buildVerbCardProps(verbId, isNegative);
+  const verb = buildVerbCardProps(verbId, isNegative, isPoliteType);
 
   if (isInverse) {
     nounIds = R.reverse(nounIds);
