@@ -73,3 +73,6 @@ export const getBlobFromAssets = async (path: string) => {
   const blob = await response.blob();
   return blob;
 };
+
+export const toggleElement = (arr: string[], val: string) =>
+  arr.includes(val) ? arr.filter((el) => el !== val) : [...arr, val];

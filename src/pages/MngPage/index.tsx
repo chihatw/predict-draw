@@ -1,17 +1,10 @@
-import downpitch_120 from '../../assets/audios/downpitch_120.mp3';
 import { Container, Divider } from '@mui/material';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Layout from '../../Layout';
 import { AppContext } from '../../App';
 import { setPageState } from '../../services/pageState';
 import CueWorkoutList from './CueWorkoutList';
 import PageStatePane from './PageStatePane';
-import RandomWorkoutList from './RandomWorkoutList';
-import WorkingMemoryPane from './WorkingMemoryPane';
-import NotePane from './NotePane';
-import RhythmListPane from './RhythmListPane';
-import RhythmWorkoutPane from './RhythmListeningPane';
-import KanaCardsPane from './KanaCardsPane';
 import SpeedWorkoutPane from './SpeedWorkoutPane';
 
 const MngPage = () => {
@@ -43,12 +36,12 @@ const MngPage = () => {
           <Divider />
           <div style={{ display: 'grid', rowGap: 16, paddingBottom: 80 }}>
             <SpeedWorkoutPane />
-            <KanaCardsPane />
-            <NotePane />
-            <RhythmListPane />
-            <RhythmWorkoutPane />
+            {/* <KanaCardsPane /> */}
+            {/* <NotePane /> */}
+            {/* <RhythmListPane /> */}
+            {/* <RhythmWorkoutPane /> */}
             <CueWorkoutList />
-            <WorkingMemoryPane />
+            {/* <WorkingMemoryPane /> */}
           </div>
         </div>
       </Container>

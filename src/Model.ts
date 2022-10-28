@@ -176,6 +176,7 @@ export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
 
 export type CueWorkoutCard = {
   id: string;
+  label: string;
   pitchStr: string;
   imagePath: string;
   hasTailAccent: boolean;
@@ -183,31 +184,33 @@ export type CueWorkoutCard = {
 
 export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
   id: '',
+  label: '',
   pitchStr: '',
   imagePath: '',
   hasTailAccent: false,
 };
 
-/**
- * nouns: ２つの名詞を持つ
- * verb: 1つの動詞を持つ
- * isInverse: 「を」「に」の順番が、逆順かどうか
- * hasTopic: 先頭を「は」にする
- */
+export type CueCardProps = {
+  label: string;
+  pitchStr: string;
+  hasBorder?: boolean;
+};
+
+export const INITIAL_CUE_CARD_PROPS: CueCardProps = {
+  label: '',
+  pitchStr: '',
+};
+
 export type CueWorkoutCue = {
-  nouns: string[];
-  verb: string;
-  hasTopic: boolean;
-  isInverse: boolean;
-  isNegative: boolean;
+  nouns: CueCardProps[];
+  verb: CueCardProps;
+  text: string;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   nouns: [],
-  verb: '',
-  hasTopic: false,
-  isInverse: false,
-  isNegative: false,
+  verb: INITIAL_CUE_CARD_PROPS,
+  text: '',
 };
 
 export type CueWorkoutParams = {
@@ -237,14 +240,14 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
 };
 
 export type CueWorkoutState = {
+  cue: CueWorkoutCue;
   cards: { [id: string]: CueWorkoutCard };
   params: CueWorkoutParams;
-  cue: CueWorkoutCue;
 };
 
 export const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
-  cards: {},
   cue: INITIAL_CUE_WORKOUT_CUE,
+  cards: {},
   params: INITIAL_CUE_WORKOUT_PARAMS,
 };
 

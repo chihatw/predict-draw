@@ -1,67 +1,37 @@
+import * as R from 'ramda';
 import { Container } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../../../../App';
-
 import TimeDisplay from '../commons/TimeDisplay';
-
-import CardList from './CardList';
 import CuePane from './CuePane';
-import Points from './Points';
 import {
-  createCueFromParams,
-  getCueString,
   setCueWorkoutCue,
   setCueWorkoutParams,
   stopCueWorkout,
-} from '../../../../services/cueWorkout';
+} from '../../../../services/cueWorkout/cueWorkout';
 import { CueWorkoutParams, State } from '../../../../Model';
 import PlayButton from './PlayButton';
-import { CUE_CARDS } from './CUE_CARDS';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '../../../../repositories/firebase';
 import { ActionTypes } from '../../../../Update';
-
-const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-const VERBS = [
-  'motsu',
-  'ireru',
-  'noseru',
-  'yubisasu',
-  'kabuseru',
-  'hikkurikaesu',
-];
+import ColorList from './CardList/ColorList';
+import VerbList from './CardList/VerbList';
+import getImages from './CuePane/getImages';
+import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
 
 const CueWorkoutPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const [miliSeconds, setMiliSeconds] = useState(0);
   const [initializing, setInitializing] = useState(true);
 
+  /** 画像の読み込み */
   useEffect(() => {
     if (!initializing) return;
     const fetchData = async () => {
-      const _blobURLs: { [imagePath: string]: string } = {};
-      await Promise.all(
-        Object.values(CUE_CARDS).map(async (cueCard) => {
-          if (!!cueCard.imagePath) {
-            let _blobURL = '';
-
-            if (state.blobURLs[cueCard.imagePath]) {
-              _blobURL = state.blobURLs[cueCard.imagePath];
-            } else {
-              console.log('get imageBlob');
-              const downloadURL = await getDownloadURL(
-                ref(storage, cueCard.imagePath)
-              );
-              const response = await fetch(downloadURL);
-              const blob = await response.blob();
-              _blobURL = window.URL.createObjectURL(blob);
-            }
-            _blobURLs[cueCard.imagePath] = _blobURL;
-          }
-        })
-      );
-      const updatedBlobURLs = { ...state.blobURLs, ..._blobURLs };
-      const updatedState: State = { ...state, blobURLs: updatedBlobURLs };
+      const blobURLs = await getImages(state.blobURLs);
+      const updatedBlobURLs = { ...state.blobURLs, ...blobURLs };
+      const updatedState = R.assocPath<{ [imagePath: string]: string }, State>(
+        ['blobURLs'],
+        updatedBlobURLs
+      )(state);
       dispatch({ type: ActionTypes.setState, payload: updatedState });
       setInitializing(false);
     };
@@ -77,33 +47,38 @@ const CueWorkoutPane = () => {
     setMiliSeconds(miliSeconds);
   }, [state.cueWorkout.params.time, state.cueWorkout.params.isRunning]);
 
-  const start = async () => {
+  const startTimer = async () => {
     startAtRef.current = performance.now();
-    loop();
+    timerLoop();
+
+    /** 開始フラグ */
     const newParams: CueWorkoutParams = {
       ...state.cueWorkout.params,
       isRunning: true,
     };
     await setCueWorkoutParams(newParams);
   };
-  const loop = () => {
+
+  const timerLoop = () => {
     const elapsedTime = performance.now() - startAtRef.current;
     const miliSeconds = state.cueWorkout.params.time * 1000 - elapsedTime;
     if (miliSeconds > 0) {
       setMiliSeconds(miliSeconds);
-      loopIdRef.current = window.requestAnimationFrame(loop);
+      loopIdRef.current = window.requestAnimationFrame(timerLoop);
       return;
     }
-    stop();
+    stopTimer();
   };
 
-  const next = async () => {
+  const showNextCue = async () => {
+    /** 新しい Cue の作成 */
     let updatedCue = state.cueWorkout.cue;
-
-    while (getCueString(updatedCue) === getCueString(state.cueWorkout.cue)) {
+    while (updatedCue.text === state.cueWorkout.cue.text) {
       updatedCue = createCueFromParams(state.cueWorkout.params);
     }
     await setCueWorkoutCue(updatedCue);
+
+    /** ポイント加算 */
     const newParams: CueWorkoutParams = {
       ...state.cueWorkout.params,
       points: state.cueWorkout.params.points + 1,
@@ -111,7 +86,7 @@ const CueWorkoutPane = () => {
     await setCueWorkoutParams(newParams);
   };
 
-  const stop = async () => {
+  const stopTimer = async () => {
     setMiliSeconds(0);
     window.cancelAnimationFrame(loopIdRef.current);
     await stopCueWorkout();
@@ -120,27 +95,15 @@ const CueWorkoutPane = () => {
   return (
     <Container maxWidth='sm' sx={{ paddingTop: 0 }}>
       <div style={{ display: 'grid', rowGap: 8 }}>
-        <CardList
-          list={COLORS}
-          columns={6}
-          selectedList={state.cueWorkout.params.colors}
-        />
-        <CardList
-          list={VERBS}
-          columns={6}
-          selectedList={state.cueWorkout.params.verbs}
-        />
-
-        <div style={{ marginBottom: -20, marginTop: 20 }}>
-          <Points />
-        </div>
+        <ColorList />
+        <VerbList />
         <TimeDisplay miliSeconds={miliSeconds} />
         <div style={{ margin: '16px 0', height: 200 }}>
           {state.cueWorkout.params.isRunning && (
             <CuePane cueWorkout={state.cueWorkout} />
           )}
         </div>
-        <PlayButton start={start} next={next} />
+        <PlayButton startTimer={startTimer} showNextCue={showNextCue} />
       </div>
     </Container>
   );

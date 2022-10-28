@@ -16,11 +16,11 @@ const rotate = keyframes`
 `;
 
 const PlayButton = ({
-  start,
-  next,
+  startTimer,
+  showNextCue,
 }: {
-  start: () => void;
-  next: () => void;
+  startTimer: () => void;
+  showNextCue: () => void;
 }) => {
   const { state } = useContext(AppContext);
   const { cueWorkout } = state;
@@ -28,7 +28,7 @@ const PlayButton = ({
   const { isRunning, points } = params;
 
   const handleClick = () => {
-    isRunning ? next() : start();
+    isRunning ? showNextCue() : startTimer();
   };
   return (
     <div

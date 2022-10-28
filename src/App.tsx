@@ -16,7 +16,7 @@ import {
   useRandomWorkouts,
 } from './services/randomWorkout';
 import { createAudioContext } from './services/utils';
-import { useCueWorkout } from './services/cueWorkout';
+import { useCueWorkout } from './services/cueWorkout/cueWorkout';
 import { useWorkingMemoryWorkout } from './services/workingMemoryWorkout';
 import { useRhythmList } from './services/rhythmList';
 import { useRhythmWorkout } from './services/rhythmWorkout';
