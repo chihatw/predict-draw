@@ -9,6 +9,7 @@ import SelectJoshiOrder from './SelectJoshiOrder';
 import SelectTopicMode from './SelectTopicMode';
 import SelectNegativeMode from './SelectNegativeMode';
 import SelectPoliteType from './SelectPoliteType';
+import SelectHasHeader from './SelectHasHeader';
 // import SelectHand from './SelectHand';
 // import SelectPosition from './SelectPosition';
 
@@ -31,6 +32,7 @@ const CueWorkoutList = () => {
           <ShowStatus />
           <SetTime />
           <SelectPoliteType />
+          <SelectHasHeader />
           <SelectColors />
           <SelectVerbs />
           {/* <SelectHand /> */}

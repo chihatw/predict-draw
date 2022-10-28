@@ -202,15 +202,17 @@ export const INITIAL_CUE_CARD_PROPS: CueCardProps = {
 };
 
 export type CueWorkoutCue = {
-  nouns: CueCardProps[];
-  verb: CueCardProps;
   text: string;
+  verb: CueCardProps;
+  nouns: CueCardProps[];
+  header: CueCardProps;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   nouns: [],
   verb: INITIAL_CUE_CARD_PROPS,
   text: '',
+  header: INITIAL_CUE_CARD_PROPS,
 };
 
 export type CueWorkoutParams = {
@@ -221,6 +223,7 @@ export type CueWorkoutParams = {
   colors: string[];
   isRunning: boolean;
   topicMode: string;
+  hasHeader: boolean;
   joshiOrder: string;
   hasPosition: boolean;
   isPoliteType: boolean;
@@ -235,6 +238,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   points: 0,
   isRunning: false,
   topicMode: TOPIC_MODE.noTopic,
+  hasHeader: false,
   joshiOrder: JOSHI_ORDER.default,
   hasPosition: false,
   isPoliteType: false,

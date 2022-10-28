@@ -28,6 +28,7 @@ const createCueFromParams = (params: CueWorkoutParams): CueWorkoutCue => {
     verbId,
     nounIds,
     hasTopic,
+    hasHeader: params.hasHeader,
     isInverse,
     isNegative,
     isPoliteType: params.isPoliteType,

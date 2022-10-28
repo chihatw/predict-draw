@@ -98,7 +98,7 @@ const CueWorkoutPane = () => {
         <ColorList />
         <VerbList />
         <TimeDisplay miliSeconds={miliSeconds} />
-        <div style={{ margin: '16px 0', height: 200 }}>
+        <div style={{ margin: '16px 0', height: 300 }}>
           {state.cueWorkout.params.isRunning && (
             <CuePane cueWorkout={state.cueWorkout} />
           )}

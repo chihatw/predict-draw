@@ -1,5 +1,6 @@
 import * as R from 'ramda';
-import { CueCardProps } from '../../../../Model';
+import { CueCardProps, INITIAL_CUE_CARD_PROPS } from '../../../../Model';
+import buildHeaderCardProps from './buildHeaderCardProps';
 import buildNounCardProps from './buildNounCardProps';
 import buildVerbCardProps from './buildVerbCardProps';
 
@@ -7,6 +8,7 @@ const buildCueWorkoutCue = ({
   verbId,
   nounIds,
   hasTopic,
+  hasHeader,
   isInverse,
   isNegative,
   isPoliteType,
@@ -14,6 +16,7 @@ const buildCueWorkoutCue = ({
   verbId: string;
   nounIds: string[];
   hasTopic: boolean;
+  hasHeader: boolean;
   isInverse: boolean;
   isNegative: boolean;
   isPoliteType: boolean;
@@ -27,9 +30,12 @@ const buildCueWorkoutCue = ({
   const nouns: CueCardProps[] = nounIds.map((nounId, index) =>
     buildNounCardProps(nounId, index, isInverse, hasTopic, nounIds.length === 2)
   );
+  const header = buildHeaderCardProps(hasHeader, nounIds);
 
-  const text = nouns.map((noun) => noun.label).join('') + verb.label;
-  return { text, verb, nouns };
+  const text =
+    header.label + nouns.map((noun) => noun.label).join('') + verb.label;
+
+  return { text, verb, nouns, header };
 };
 
 export default buildCueWorkoutCue;

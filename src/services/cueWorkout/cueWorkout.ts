@@ -71,11 +71,12 @@ export const setCueWorkoutCue = async (cue: CueWorkoutCue) => {
 };
 
 const buildCue = (doc: DocumentData) => {
-  const { nouns, verb, text } = doc.data();
+  const { nouns, verb, text, header } = doc.data();
   const cue: CueWorkoutCue = {
     verb: verb || INITIAL_CUE_CARD_PROPS,
-    nouns: nouns || [],
     text: text || '',
+    nouns: nouns || [],
+    header: header || INITIAL_CUE_CARD_PROPS,
   };
   return cue;
 };
@@ -89,6 +90,7 @@ const buildParams = (doc: DocumentData) => {
     points,
     topicMode,
     isRunning,
+    hasHeader,
     joshiOrder,
     hasPosition,
     isPoliteType,
@@ -100,6 +102,7 @@ const buildParams = (doc: DocumentData) => {
     hands: hands || [],
     points: points || 0,
     colors: colors || [],
+    hasHeader: hasHeader || false,
     topicMode: topicMode || TOPIC_MODE.noTopic,
     isRunning: isRunning || false,
     joshiOrder: joshiOrder || JOSHI_ORDER.default,

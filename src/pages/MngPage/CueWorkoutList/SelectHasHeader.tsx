@@ -9,36 +9,34 @@ import {
 } from '../../../services/cueWorkout/cueWorkout';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 
-const POLITE_MODES = [
-  { value: true, label: '丁寧体' },
-  { value: false, label: '普通体' },
+const HEADER_MODES = [
+  { value: true, label: '前置き有り' },
+  { value: false, label: '前置き無し' },
 ];
 
-const SelectPoliteType = () => {
+const SelectHasHeader = () => {
   const { state } = useContext(AppContext);
-
-  const handleChangePoliteType = async (politeType: boolean) => {
+  const handleChangeHasHeader = async (hasHeader: boolean) => {
     const updatedParams = R.assocPath<boolean, CueWorkoutParams>(
-      ['isPoliteType'],
-      politeType
+      ['hasHeader'],
+      hasHeader
     )(state.cueWorkout.params);
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
   };
-
   return (
     <>
-      <h4>文体</h4>
+      <h4>前置き</h4>
       <Select
-        value={String(state.cueWorkout.params.isPoliteType)}
+        value={String(state.cueWorkout.params.hasHeader)}
         size='small'
         onChange={(e) => {
-          const isPoliteType = e.target.value === 'true';
-          handleChangePoliteType(isPoliteType);
+          const hasHeader = e.target.value === 'true';
+          handleChangeHasHeader(hasHeader);
         }}
       >
-        {Object.values(POLITE_MODES).map((item, index) => (
+        {Object.values(HEADER_MODES).map((item, index) => (
           <MenuItem key={index} value={String(item.value)}>
             {item.label}
           </MenuItem>
@@ -48,4 +46,4 @@ const SelectPoliteType = () => {
   );
 };
 
-export default SelectPoliteType;
+export default SelectHasHeader;

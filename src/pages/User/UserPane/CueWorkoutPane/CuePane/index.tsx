@@ -8,6 +8,22 @@ const CuePane = React.memo(
     return (
       <div style={{ height: 200 }}>
         <div style={{ display: 'grid', rowGap: 16, flexGrow: 1 }}>
+          {cueWorkout.params.hasHeader && (
+            <>
+              <CueCard
+                label={cueWorkout.cue.header.label}
+                pitchStr={cueWorkout.cue.header.pitchStr}
+              />
+
+              <div
+                style={{
+                  height: 4,
+                  borderTop: '8px #52a2aa dashed',
+                  marginTop: 24,
+                }}
+              />
+            </>
+          )}
           {cueWorkout.cue.nouns.map((cueCard, index) => {
             return (
               <div style={{ display: 'grid', rowGap: 16 }} key={index}>
