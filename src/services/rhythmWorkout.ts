@@ -60,10 +60,9 @@ export const buildCueIds = (mora: number, cueCount: number): string[] => {
   let cueIds: string[] = [];
 
   switch (mora) {
-    // OPTIMIZE 2拍制限中
     case 2:
-      cueIds = ['tatta', 'taata', 'tanta', 'tatata'];
-      // cueIds = ['tatta', 'tatax', 'taata', 'tataa', 'tanta', 'tatan', 'tatata'];
+      // cueIds = ['tatta', 'taata', 'tanta', 'tatata']; 2拍制限中
+      cueIds = ['tatta', 'tatax', 'taata', 'tataa', 'tanta', 'tatan', 'tatata'];
       break;
     case 3:
       cueIds = [

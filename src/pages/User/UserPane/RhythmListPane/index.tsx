@@ -19,18 +19,17 @@ const RhythmListPane = () => {
 
   useEffect(() => {
     switch (state.rhythmList.mora) {
-      // OPTIMIZE ２拍制限中
       case 2:
         setCardIds([
           'tatta',
-          // 'tatax',
+          'tatax',
           'taata',
-          // 'tataa',
+          'tataa',
           'tanta',
-          // 'tatan',
+          'tatan',
           'tatata',
         ]);
-        // setGridTemplateColumns('1fr 1fr');
+        setGridTemplateColumns('1fr 1fr');
         break;
       case 3:
         setCardIds([
