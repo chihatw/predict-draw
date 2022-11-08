@@ -19,6 +19,7 @@ const RhythmListPane = () => {
 
   useEffect(() => {
     switch (state.rhythmList.mora) {
+      // OPTIMIZE ２拍制限中
       case 2:
         setCardIds([
           'tatta',

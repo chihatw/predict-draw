@@ -6,6 +6,8 @@ import { setPageState } from '../../services/pageState';
 import CueWorkoutList from './CueWorkoutList';
 import PageStatePane from './PageStatePane';
 import SpeedWorkoutPane from './SpeedWorkoutPane';
+import RhythmListPane from './RhythmListPane';
+import RhythmWorkoutPane from './RhythmListeningPane';
 
 const MngPage = () => {
   const { state } = useContext(AppContext);
@@ -38,8 +40,8 @@ const MngPage = () => {
             <SpeedWorkoutPane />
             {/* <KanaCardsPane /> */}
             {/* <NotePane /> */}
-            {/* <RhythmListPane /> */}
-            {/* <RhythmWorkoutPane /> */}
+            <RhythmListPane />
+            <RhythmWorkoutPane />
             <CueWorkoutList />
             {/* <WorkingMemoryPane /> */}
           </div>
