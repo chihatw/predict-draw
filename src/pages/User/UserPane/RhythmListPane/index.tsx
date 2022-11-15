@@ -21,18 +21,19 @@ const RhythmListPane = () => {
     switch (state.rhythmList.mora) {
       case 2:
         setCardIds([
+          'tatata',
           'tatta',
           'tatax',
           'taata',
           'tataa',
           'tanta',
           'tatan',
-          'tatata',
         ]);
         setGridTemplateColumns('1fr 1fr');
         break;
       case 3:
         setCardIds([
+          'tatatata',
           'tattata',
           'tatatta',
           'tatatax',
@@ -48,7 +49,6 @@ const RhythmListPane = () => {
           'tatatan',
           'tantaa',
           'tantan',
-          'tatatata',
         ]);
         setGridTemplateColumns('1fr 1fr 1fr 1fr 1fr');
         break;
@@ -103,7 +103,12 @@ const RhythmListPane = () => {
         {cardIds.map((cardId, index) => {
           const card = PITCHES[cardId];
           return (
-            <RhythmRow card={card} key={index} handleTapped={handleTapped} />
+            <RhythmRow
+              card={card}
+              key={index}
+              handleTapped={handleTapped}
+              index={index}
+            />
           );
         })}
       </div>

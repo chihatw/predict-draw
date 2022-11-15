@@ -15,7 +15,7 @@ const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.speedWorkoutRead, label: '速読練習' },
   { value: pages.cueWorkout, label: '紙コップ' },
   // { value: pages.workingMemory, label: 'ワーキングメモリ' },
-  // { value: pages.note, label: 'ノート' },
+  { value: pages.note, label: 'ノート' },
   { value: pages.rhythmList, label: 'リズム表示' },
   { value: pages.rhythmWorkout, label: 'リズム練習' },
   // { value: pages.kanaCards, label: 'かな表示' },

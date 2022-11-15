@@ -9,8 +9,10 @@ import { createSourceNode } from '../../../../services/utils';
 
 const RhythmRow = ({
   card,
+  index,
   handleTapped,
 }: {
+  index: number;
   card: PitchCard;
   handleTapped: (id: string) => void;
 }) => {
@@ -34,14 +36,21 @@ const RhythmRow = ({
     >
       <CardContent
         sx={{
-          height: '100%',
+          // height: '100%',
           display: 'flex',
           position: 'relative',
           paddingTop: 3,
           justifyContent: 'center',
         }}
       >
-        <SentencePitchLine pitchesArray={string2PitchesArray(card.pitchStr)} />
+        <div style={{ display: 'flex', columnGap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', fontSize: 12 }}>
+            {index + 1}
+          </div>
+          <SentencePitchLine
+            pitchesArray={string2PitchesArray(card.pitchStr)}
+          />
+        </div>
       </CardContent>
     </Card>
   );
