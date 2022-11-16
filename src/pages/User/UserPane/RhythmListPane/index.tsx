@@ -19,7 +19,7 @@ const RhythmListPane = () => {
 
   useEffect(() => {
     switch (state.rhythmList.mora) {
-      case 2:
+      case 3:
         setCardIds([
           'tatata',
           'tatta',
@@ -31,7 +31,7 @@ const RhythmListPane = () => {
         ]);
         setGridTemplateColumns('1fr 1fr');
         break;
-      case 3:
+      case 4:
         setCardIds([
           'tatatata',
           'tattata',

@@ -7,12 +7,13 @@ import CueWorkoutPane from './CueWorkoutPane';
 import KanaCardsPane from './KanaCardsPane';
 import KanaWorkoutPane from './KanaWorkoutPane';
 import NotePane from './NotePane';
-import RandomWorkoutPane from './RandomWorkoutPane';
 import RhythmWorkoutPane from './RhythmWorkoutPane';
 import RhythmListPane from './RhythmListPane';
 import WorkingMemoryPane from './WorkingMemoryPane';
 import SpeedWorkoutCuePane from './SpeedWorkoutCuePane';
 import SpeedWorkoutReadPane from './SpeedWorkoutReadPane';
+import PitchListPane from './PitchListPane';
+import PitchWorkoutPane from './PitchWorkoutPane';
 
 const UserPane = ({ user }: { user: string }) => {
   const { state } = useContext(AppContext);
@@ -40,6 +41,10 @@ const UserPane = ({ user }: { user: string }) => {
       return <WorkingMemoryPane />;
     case pages.note:
       return <NotePane />;
+    case pages.pitchList:
+      return <PitchListPane />;
+    case pages.pitchWorkout:
+      return <PitchWorkoutPane />;
     case pages.rhythmList:
       return <RhythmListPane />;
     case pages.rhythmWorkout:

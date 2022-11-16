@@ -2,15 +2,34 @@ export const pages = {
   note: 'note',
   blank: 'blank',
   kanaCards: 'kanakanaCards',
+  pitchList: 'pitchList',
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
   kanaWorkout: 'kanaWorkout',
+  pitchWorkout: 'pitchWorkout',
   workingMemory: 'workingMemory',
   rhythmWorkout: 'rhythmWorkout',
   speedWorkoutCue: 'speedWorkoutCue',
   speedWorkoutRead: 'speedWorkoutRead',
   speedWorkoutSolo: 'speedWorkoutSolo',
 };
+
+export const PAGE_STATE: { value: string; label: string }[] = [
+  { value: pages.speedWorkoutSolo, label: '速読ソロ' },
+  { value: pages.speedWorkoutCue, label: '速読キュー' },
+  { value: pages.speedWorkoutRead, label: '速読練習' },
+  { value: pages.cueWorkout, label: '紙コップ' },
+  // { value: pages.workingMemory, label: 'ワーキングメモリ' },
+  { value: pages.note, label: 'ノート' },
+  { value: pages.rhythmList, label: 'リズム表示' },
+  { value: pages.rhythmWorkout, label: 'リズム練習' },
+  { value: pages.pitchList, label: 'ピッチ表示' },
+  { value: pages.pitchWorkout, label: 'ピッチ練習' },
+  // { value: pages.kanaCards, label: 'かな表示' },
+  // { value: pages.kanaWorkout, label: 'かな練習' },
+  { value: pages.blank, label: '空欄' },
+  // { value: pages.randomWorkout, label: 'ランダム（実演用）' },
+];
 
 export const NEGATIVE_SENTENCE: { [id: string]: string } = {
   never: 'never',
@@ -302,6 +321,11 @@ export type RhythmListState = {
   mora: number;
 };
 
+export type PitchListState = {
+  tapped: string[];
+  mora: number;
+};
+
 export type RhythmWorkout = {
   mora: number;
   cueIds: string[];
@@ -344,6 +368,7 @@ export type State = {
   note: NoteState;
   kanaCards: KanaCards;
   rhythmList: RhythmListState;
+  pitchList: PitchListState;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
   randomWorkout: RandomWotkoutState;
@@ -358,4 +383,43 @@ export type State = {
   blobURLs: {
     [imagePath: string]: string;
   };
+};
+
+export const INITIAL_STATE: State = {
+  audioContext: null,
+  note: INITIAL_NOTE_STATE,
+  speedWorkouts: {},
+  pageStates: {
+    liSan: '',
+    kouSan: '',
+    chinSan: '',
+  },
+  cueWorkout: INITIAL_CUE_WORKOUT_STATE,
+  // workoutParams: INITIAL_WORKOUT_PARAMS,
+  randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
+  workingMemory: INITIAL_WORKING_MEMORY,
+  workingMemoryAnswerIds: [],
+  rhythmWorkout: { mora: 1, cueIds: [], cueCount: 0 },
+  rhythmWorkoutAnswers: {},
+  rhythmList: { tapped: [], mora: 2 },
+  pitchList: { tapped: [], mora: 2 },
+  kanaCards: { tapped: [], kanas: [] },
+  params: {
+    kanaWorkout: {
+      kanas: [],
+      currentIndex: 0,
+      answers: {},
+    },
+    speedWorkout: {
+      bpm: 0,
+      isRunning: false,
+      selectedId: '',
+      updatedAt: 0,
+      totalRounds: 1,
+      checkedIndexes: [],
+      currentRound: 1,
+    },
+  },
+  blobs: {},
+  blobURLs: {},
 };

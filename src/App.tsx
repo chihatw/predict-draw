@@ -3,6 +3,7 @@ import {
   INITIAL_CUE_WORKOUT_STATE,
   INITIAL_NOTE_STATE,
   INITIAL_RANDOM_WORKOUT_STATE,
+  INITIAL_STATE,
   INITIAL_WORKING_MEMORY,
   State,
 } from './Model';
@@ -22,44 +23,7 @@ import { useRhythmList } from './services/rhythmList';
 import { useRhythmWorkout } from './services/rhythmWorkout';
 import { useKanaCards } from './services/kanaCard';
 import { useSpeedWorkout } from './services/speedWorkout';
-
-const INITIAL_STATE: State = {
-  audioContext: null,
-  note: INITIAL_NOTE_STATE,
-  speedWorkouts: {},
-  pageStates: {
-    liSan: '',
-    kouSan: '',
-    chinSan: '',
-  },
-  cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  // workoutParams: INITIAL_WORKOUT_PARAMS,
-  randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
-  workingMemory: INITIAL_WORKING_MEMORY,
-  workingMemoryAnswerIds: [],
-  rhythmWorkout: { mora: 1, cueIds: [], cueCount: 0 },
-  rhythmWorkoutAnswers: {},
-  rhythmList: { tapped: [], mora: 1 },
-  kanaCards: { tapped: [], kanas: [] },
-  params: {
-    kanaWorkout: {
-      kanas: [],
-      currentIndex: 0,
-      answers: {},
-    },
-    speedWorkout: {
-      bpm: 0,
-      isRunning: false,
-      selectedId: '',
-      updatedAt: 0,
-      totalRounds: 1,
-      checkedIndexes: [],
-      currentRound: 1,
-    },
-  },
-  blobs: {},
-  blobURLs: {},
-};
+import { usePitchList } from './services/pitchList';
 
 export const AppContext = createContext<{
   state: State;
@@ -76,6 +40,7 @@ function App() {
   useKanaCards(dispatch);
   usePageState(dispatch);
   useRhythmList(dispatch);
+  usePitchList(dispatch);
   useCueWorkout(dispatch);
   useSpeedWorkout(dispatch);
   useRhythmWorkout(dispatch);

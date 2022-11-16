@@ -7,22 +7,8 @@ import {
   Button,
 } from '@mui/material';
 import { useState } from 'react';
-import { pages } from '../../Model';
+import { PAGE_STATE } from '../../Model';
 
-const PAGE_STATE: { value: string; label: string }[] = [
-  { value: pages.speedWorkoutSolo, label: '速読ソロ' },
-  { value: pages.speedWorkoutCue, label: '速読キュー' },
-  { value: pages.speedWorkoutRead, label: '速読練習' },
-  { value: pages.cueWorkout, label: '紙コップ' },
-  // { value: pages.workingMemory, label: 'ワーキングメモリ' },
-  { value: pages.note, label: 'ノート' },
-  { value: pages.rhythmList, label: 'リズム表示' },
-  { value: pages.rhythmWorkout, label: 'リズム練習' },
-  // { value: pages.kanaCards, label: 'かな表示' },
-  // { value: pages.kanaWorkout, label: 'かな練習' },
-  { value: pages.blank, label: '空欄' },
-  // { value: pages.randomWorkout, label: 'ランダム（実演用）' },
-];
 const LABELS: { [key: string]: string } = {
   liSan: '李さん',
   kouSan: '黄さん',

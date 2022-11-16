@@ -14,12 +14,14 @@ import {
   SpeedWorkout,
   KanaWorkoutParams,
   SpeedWorkoutParams,
+  PitchListState,
 } from './Model';
 
 export const ActionTypes = {
   setState: 'setState',
   setBlobURLs: 'setBlobURLs',
   setKanaCards: 'setKanaCards',
+  setPitchList: 'setPitchList',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
   setRhythmList: 'setRhythmList',
@@ -57,6 +59,7 @@ export type Action = {
     | CueWorkoutCue
     | CueWorkoutParams
     | RhythmListState
+    | PitchListState
     | RhythmWorkout
     | KanaWorkoutParams
     | SpeedWorkoutParams
@@ -85,7 +88,7 @@ export type Action = {
 
 export const reducer = (state: State, action: Action): State => {
   const { type, payload } = action;
-  const { speedWorkouts, blobURLs } = state;
+  const { blobURLs } = state;
 
   switch (type) {
     case ActionTypes.setSpeedWorkoutParams: {
@@ -126,6 +129,13 @@ export const reducer = (state: State, action: Action): State => {
       return R.assocPath<RhythmListState, State>(
         ['rhythmList'],
         rhythmList
+      )(state);
+    }
+    case ActionTypes.setPitchList: {
+      const pitchList = payload as PitchListState;
+      return R.assocPath<PitchListState, State>(
+        ['pitchList'],
+        pitchList
       )(state);
     }
     case ActionTypes.setState: {

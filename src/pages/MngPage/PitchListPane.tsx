@@ -1,47 +1,23 @@
+import { Delete } from '@mui/icons-material';
 import { Button, IconButton, TextField } from '@mui/material';
-
 import React, { useContext, useState } from 'react';
-
 import { AppContext } from '../../App';
-import { RhythmListState } from '../../Model';
-import { setRhythmList } from '../../services/rhythmList';
-import Delete from '@mui/icons-material/Delete';
+import { PitchListState } from '../../Model';
+import { setPitchList } from '../../services/pitchList';
 
-const KANAS: { [key: string]: string } = {
-  tattata: 'タッタタ',
-  taatata: 'タータタ',
-  tantata: 'タンタタ',
-  tatatata: 'タタタタ',
-  tatatta: 'タタッタ',
-  tataata: 'タタータ',
-  tatanta: 'タタンタ',
-  tatatax: 'タタタッ',
-  tatataa: 'タタター',
-  tatatan: 'タタタン',
-  tattaa: 'タッター',
-  taataa: 'ターター',
-  tantaa: 'タンター',
-  tattan: 'タッタン',
-  taatan: 'タータン',
-  tantan: 'タンタン',
-};
-
-const RhythmListPane = () => {
+const PitchListPane = () => {
   const { state } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const handleChangeMora = (mora: number) => {
     mora = Math.min(Math.max(2, mora), 4);
-    if (state.rhythmList.mora !== mora) {
-      const updatedRhythmList: RhythmListState = { ...state.rhythmList, mora };
-      setRhythmList(updatedRhythmList);
+    if (state.pitchList.mora !== mora) {
+      const updatedPitchList: PitchListState = { ...state.pitchList, mora };
+      setPitchList(updatedPitchList);
     }
   };
   const handleClearTapped = () => {
-    const updatedRhythmList: RhythmListState = {
-      ...state.rhythmList,
-      tapped: [],
-    };
-    setRhythmList(updatedRhythmList);
+    const updatedPitchList: PitchListState = { ...state.pitchList, tapped: [] };
+    setPitchList(updatedPitchList);
   };
   return (
     <div>
@@ -52,7 +28,7 @@ const RhythmListPane = () => {
           alignItems: 'center',
         }}
       >
-        <h3>Rhythm List</h3>
+        <h3>Pitch List</h3>
         <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
       {open && (
@@ -61,9 +37,7 @@ const RhythmListPane = () => {
             <h4>tapped</h4>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flexGrow: 1 }}>
-                {`[${state.rhythmList.tapped
-                  .map((item) => KANAS[item] || item)
-                  .join(', ')}]`}
+                {`[${state.pitchList.tapped.map((item) => item).join(', ')}]`}
               </div>
               <IconButton size='small' onClick={handleClearTapped}>
                 <Delete />
@@ -76,7 +50,7 @@ const RhythmListPane = () => {
             label='mora'
             type='number'
             autoComplete='off'
-            value={state.rhythmList.mora}
+            value={state.pitchList.mora}
             onChange={(e) => handleChangeMora(Number(e.target.value))}
           />
         </div>
@@ -85,4 +59,4 @@ const RhythmListPane = () => {
   );
 };
 
-export default RhythmListPane;
+export default PitchListPane;
