@@ -86,7 +86,7 @@ const RhythmWorkoutPane = () => {
           alignItems: 'center',
         }}
       >
-        <h3>Rhythm Listening</h3>
+        <h3>Rhythm Workout</h3>
         <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
       </div>
       {open && (

@@ -7,7 +7,7 @@ import CueWorkoutList from './CueWorkoutList';
 import PageStatePane from './PageStatePane';
 import SpeedWorkoutPane from './SpeedWorkoutPane';
 import RhythmListPane from './RhythmListPane';
-import RhythmWorkoutPane from './RhythmListeningPane';
+import RhythmWorkoutPane from './RhythmWorkoutPane';
 import NotePane from './NotePane';
 import PitchListPane from './PitchListPane';
 import PitchWorkoutPane from './PitchWorkoutPane';
