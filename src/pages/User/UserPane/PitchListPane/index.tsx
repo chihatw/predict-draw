@@ -7,7 +7,8 @@ import { State } from '../../../../Model';
 import { ActionTypes } from '../../../../Update';
 import { Container } from '@mui/material';
 import PitchCard from './PitchCard';
-import { ITEMS } from './service';
+import { PITCH_WORKOUT_ITEMS } from '../../../../pitchWorkoutItems';
+import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
 
 const PitchListPane = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -42,9 +43,14 @@ const PitchListPane = () => {
   }, [initialize]);
 
   useEffect(() => {
-    setItems(ITEMS[state.pitchList.mora]);
+    const items = Object.values(PITCH_WORKOUT_ITEMS)
+      .filter((item) => item.id.length === state.pitchList.mora)
+      .map(({ pitchStr, schedules }) => ({ pitchStr, schedules }));
+
+    setItems(items);
   }, [state.pitchList.mora]);
 
+  if (!state.audioContext) return <TouchMe />;
   return (
     <Container maxWidth={'xs'} sx={{ paddingTop: 10 }}>
       <div

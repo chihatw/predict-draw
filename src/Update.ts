@@ -15,6 +15,7 @@ import {
   KanaWorkoutParams,
   SpeedWorkoutParams,
   PitchListState,
+  PitchWorkout,
 } from './Model';
 
 export const ActionTypes = {
@@ -38,6 +39,8 @@ export const ActionTypes = {
   setWorkingMemoryAnswerIds: 'setWorkingMemoryAnswerIds',
   setRhythmWorkout: 'setRhythmWorkout',
   setRhythmWorkoutAnswers: 'setRhythmWorkoutAnswers',
+  setPitchWorkout: 'setPitchWorkout',
+  setPitchWorkoutAnswers: 'setPitchWorkoutAnswers',
   setKanaWorkoutParams: 'setKanaWorkoutParams',
   setSpeedWorkoutParams: 'setSpeedWorkoutParams',
 };
@@ -61,6 +64,7 @@ export type Action = {
     | RhythmListState
     | PitchListState
     | RhythmWorkout
+    | PitchWorkout
     | KanaWorkoutParams
     | SpeedWorkoutParams
     | { [index: number]: string[] }
@@ -121,6 +125,20 @@ export const reducer = (state: State, action: Action): State => {
       const answers = payload as { [index: number]: string[] };
       return R.assocPath<{ [index: number]: string[] }, State>(
         ['rhythmWorkoutAnswers'],
+        answers
+      )(state);
+    }
+    case ActionTypes.setPitchWorkout: {
+      const pitchWorkout = payload as PitchWorkout;
+      return R.assocPath<PitchWorkout, State>(
+        ['pitchWorkout'],
+        pitchWorkout
+      )(state);
+    }
+    case ActionTypes.setPitchWorkoutAnswers: {
+      const answers = payload as { [index: number]: string[] };
+      return R.assocPath<{ [index: number]: string[] }, State>(
+        ['pitchWorkoutAnswers'],
         answers
       )(state);
     }

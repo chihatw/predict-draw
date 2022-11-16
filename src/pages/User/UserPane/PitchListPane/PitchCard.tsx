@@ -7,7 +7,7 @@ import { AppContext } from '../../../../App';
 import { PitchListState } from '../../../../Model';
 import { setPitchList } from '../../../../services/pitchList';
 import { createSourceNode } from '../../../../services/utils';
-import { Schedule } from './service';
+import { Schedule } from '../../../../pitchWorkoutItems';
 
 const PitchCard = ({
   schedules,

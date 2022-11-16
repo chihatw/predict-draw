@@ -3,18 +3,18 @@ import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Button, IconButton, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../../../../../../App';
-import { PITCHES } from '../../../../../../pitch';
-import { setRhythmWorkoutAnswers } from '../../../../../../services/rhythmWorkout';
+import { PITCH_WORKOUT_ITEMS } from '../../../../../../pitchWorkoutItems';
+import { setPitchWorkoutAnswers } from '../../../../../../services/pitchWorkout';
 import { createSourceNode } from '../../../../../../services/utils';
-import { RhythmWorkoutFormState } from '../../Model';
-import RhythmWorkoutAnswerRow from './RhythmWorkoutAnswerRow';
+import { PitchWorkoutFormState } from '../../Model';
+import PitchWorkoutAnswerRow from './PitchWorkoutAnswerRow';
 
-const RhythmWorkoutAnswer = ({
+const PitchWorkoutAnswer = ({
   state,
   dispatch,
 }: {
-  state: RhythmWorkoutFormState;
-  dispatch: React.Dispatch<RhythmWorkoutFormState>;
+  state: PitchWorkoutFormState;
+  dispatch: React.Dispatch<PitchWorkoutFormState>;
 }) => {
   const { state: appState } = useContext(AppContext);
   const theme = useTheme();
@@ -36,34 +36,51 @@ const RhythmWorkoutAnswer = ({
   }, [initialize]);
 
   const currentCueId = state.cueIds[state.currentIndex];
-  const currentCue = PITCHES[currentCueId];
+  const item = PITCH_WORKOUT_ITEMS[currentCueId];
   const play = async () => {
     if (!state.blob || !state.audioContext) return;
-    const sourceNode = await createSourceNode(state.blob, state.audioContext);
-    sourceNode.start(0, currentCue.start, currentCue.end - currentCue.start);
+
+    const currentTime = state.audioContext.currentTime;
+    const sourceNodes: AudioBufferSourceNode[] = [];
+    await Promise.all(
+      item.schedules.map(async (_) => {
+        const sourceNode = await createSourceNode(
+          state.blob!,
+          state.audioContext!
+        );
+        sourceNodes.push(sourceNode);
+      })
+    );
+    item.schedules.forEach((item, index) => {
+      const sourceNode = sourceNodes[index];
+      sourceNode.start(currentTime + item.offset, item.start);
+      sourceNode.stop(currentTime + item.stop);
+    });
   };
   const handleClickPlay = () => {
     play();
   };
+
   const handleClickRow = (cueId: string) => {
     cueId = selectedId === cueId ? '' : cueId;
     setSelectedId(cueId);
 
     let updatedTapped: string[] = [];
-    if (appState.rhythmWorkoutAnswers[state.currentIndex]) {
-      updatedTapped = appState.rhythmWorkoutAnswers[state.currentIndex];
+    if (appState.pitchWorkoutAnswers[state.currentIndex]) {
+      updatedTapped = appState.pitchWorkoutAnswers[state.currentIndex];
     }
     updatedTapped.push(cueId);
-    const updatedRhythmListeningAnswers: { [index: number]: string[] } = {
-      ...appState.rhythmWorkoutAnswers,
+    const updatedPitchListeningAnswers: { [index: number]: string[] } = {
+      ...appState.pitchWorkoutAnswers,
     };
-    updatedRhythmListeningAnswers[state.currentIndex] = updatedTapped;
-    setRhythmWorkoutAnswers(updatedRhythmListeningAnswers);
+    updatedPitchListeningAnswers[state.currentIndex] = updatedTapped;
+    setPitchWorkoutAnswers(updatedPitchListeningAnswers);
   };
+
   const handleNext = () => {
     const updatedAnswerIds: string[] = [...state.answerIds];
     updatedAnswerIds.push(selectedId);
-    const updatedState: RhythmWorkoutFormState = {
+    const updatedState: PitchWorkoutFormState = {
       ...state,
       answerIds: updatedAnswerIds,
       currentIndex: state.currentIndex + 1,
@@ -115,14 +132,14 @@ const RhythmWorkoutAnswer = ({
           paddingTop: 24,
         }}
       >
-        {Object.values(PITCHES)
-          .filter((item) => state.cueIds.includes(item.id))
-          .map((card, index) => (
-            <RhythmWorkoutAnswerRow
+        {Object.values(PITCH_WORKOUT_ITEMS)
+          .filter((item) => item.id.length === state.mora)
+          .map((item, index) => (
+            <PitchWorkoutAnswerRow
               key={index}
-              pitchStr={card.pitchStr}
-              isSelected={selectedId === card.id}
-              handleClickRow={() => handleClickRow(card.id)}
+              pitchStr={item.pitchStr}
+              isSelected={selectedId === item.id}
+              handleClickRow={() => handleClickRow(item.id)}
             />
           ))}
       </div>
@@ -142,4 +159,4 @@ const RhythmWorkoutAnswer = ({
   );
 };
 
-export default RhythmWorkoutAnswer;
+export default PitchWorkoutAnswer;

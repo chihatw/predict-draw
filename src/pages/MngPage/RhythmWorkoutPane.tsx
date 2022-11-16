@@ -14,53 +14,42 @@ import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
 import { PITCHES } from '../../pitch';
 
+const CUE_COUNT: { [key: number]: number } = {
+  2: 4,
+  3: 7,
+  4: 16,
+};
+
 const RhythmWorkoutPane = () => {
   const { state } = useContext(AppContext);
 
   const [open, setOpen] = useState(false);
 
   const handleChangeMora = (mora: number) => {
-    mora = Math.min(Math.max(mora, 1), 3);
+    mora = Math.min(Math.max(mora, 2), 4);
     if (mora === state.rhythmWorkout.mora) return;
 
-    let cueCount = 0;
-    switch (mora) {
-      case 2:
-        cueCount = 7;
-        break;
-      case 3:
-        cueCount = 16;
-        break;
-      default:
-        cueCount = 4;
-    }
+    const cueCount = CUE_COUNT[mora];
     const cueIds = buildCueIds(mora, cueCount);
-    const updatedRhythmListening: RhythmWorkout = {
+    const updatedRhythmWorkout: RhythmWorkout = {
       cueCount,
       cueIds,
       mora,
     };
-    setRhythmWorkout(updatedRhythmListening);
+    setRhythmWorkout(updatedRhythmWorkout);
     setRhythmWorkoutAnswers({});
   };
   const handleChangeCueCount = (cueCount: number) => {
-    switch (state.rhythmWorkout.mora) {
-      case 2:
-        cueCount = Math.min(7, cueCount);
-        break;
-      case 3:
-        cueCount = Math.min(16, cueCount);
-        break;
-      default:
-        cueCount = Math.min(4, cueCount);
-    }
+    const mora = state.rhythmWorkout.mora;
+    cueCount = Math.min(CUE_COUNT[mora], cueCount);
+
     const cueIds = buildCueIds(state.rhythmWorkout.mora, cueCount);
-    const updatedRhythmListening: RhythmWorkout = {
+    const updatedRhythmWorkout: RhythmWorkout = {
       ...state.rhythmWorkout,
       cueCount,
       cueIds,
     };
-    setRhythmWorkout(updatedRhythmListening);
+    setRhythmWorkout(updatedRhythmWorkout);
     setRhythmWorkoutAnswers({});
   };
 
@@ -69,11 +58,11 @@ const RhythmWorkoutPane = () => {
       state.rhythmWorkout.mora,
       state.rhythmWorkout.cueCount
     );
-    const updatedRhythmListening: RhythmWorkout = {
+    const updatedRhythmWorkout: RhythmWorkout = {
       ...state.rhythmWorkout,
       cueIds,
     };
-    setRhythmWorkout(updatedRhythmListening);
+    setRhythmWorkout(updatedRhythmWorkout);
     setRhythmWorkoutAnswers({});
   };
 
@@ -124,24 +113,17 @@ const RhythmWorkoutPane = () => {
                   pitchesArray={string2PitchesArray(cueCard.pitchStr)}
                 />
                 <div>
-                  {(state.rhythmWorkoutAnswers[index] || []).map(
-                    (item, itemIndex) => {
-                      const isLast =
-                        state.rhythmWorkoutAnswers[index].length - 1 ===
-                        itemIndex;
-                      return (
-                        <span
-                          key={itemIndex}
-                          style={{
-                            paddingLeft: 10,
-                            color: isLast ? 'red' : '#ccc',
-                          }}
-                        >
-                          {item}
-                        </span>
-                      );
-                    }
-                  )}
+                  {(state.rhythmWorkoutAnswers[index] || []).map((item, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        color: cueId === item ? '#52a2aa' : 'crimson',
+                        paddingLeft: 10,
+                      }}
+                    >
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
             );

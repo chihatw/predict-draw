@@ -332,6 +332,11 @@ export type RhythmWorkout = {
   cueCount: number;
 };
 
+export type PitchWorkout = {
+  mora: number;
+  cueIds: string[];
+};
+
 export type KanaCards = {
   kanas: string[];
   tapped: string[];
@@ -367,14 +372,16 @@ export type State = {
   };
   note: NoteState;
   kanaCards: KanaCards;
-  rhythmList: RhythmListState;
-  pitchList: PitchListState;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
   randomWorkout: RandomWotkoutState;
   workingMemory: WorkingMemory;
+  rhythmList: RhythmListState;
   rhythmWorkout: RhythmWorkout;
   rhythmWorkoutAnswers: { [index: number]: string[] };
+  pitchList: PitchListState;
+  pitchWorkout: PitchWorkout;
+  pitchWorkoutAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
   params: Params;
   blobs: {
@@ -399,10 +406,12 @@ export const INITIAL_STATE: State = {
   randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
   workingMemory: INITIAL_WORKING_MEMORY,
   workingMemoryAnswerIds: [],
-  rhythmWorkout: { mora: 1, cueIds: [], cueCount: 0 },
-  rhythmWorkoutAnswers: {},
   rhythmList: { tapped: [], mora: 2 },
+  rhythmWorkout: { mora: 2, cueIds: [], cueCount: 0 },
+  rhythmWorkoutAnswers: {},
   pitchList: { tapped: [], mora: 2 },
+  pitchWorkout: { mora: 2, cueIds: [] },
+  pitchWorkoutAnswers: {},
   kanaCards: { tapped: [], kanas: [] },
   params: {
     kanaWorkout: {

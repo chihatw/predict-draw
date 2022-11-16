@@ -54,49 +54,52 @@ const buildSchedules = (input: string): Schedule[] => {
   return schedules;
 };
 
-export const ITEMS: {
-  [key: number]: { pitchStr: string; schedules: Schedule[] }[];
+export const PITCH_WORKOUT_ITEMS: {
+  [key: string]: { id: string; pitchStr: string; schedules: Schedule[] };
 } = {
-  2: [
-    {
-      pitchStr: 'タ＼タ',
-      schedules: buildSchedules('hl'),
-    },
-    {
-      pitchStr: 'タタ',
-      schedules: buildSchedules('lh'),
-    },
-  ],
-  3: [
-    {
-      pitchStr: 'タ＼タタ',
-      schedules: buildSchedules('hll'),
-    },
-    {
-      pitchStr: 'タタ＼タ',
-      schedules: buildSchedules('lhl'),
-    },
-    {
-      pitchStr: 'タタタ',
-      schedules: buildSchedules('lhh'),
-    },
-  ],
-  4: [
-    {
-      pitchStr: 'タ＼タタタ',
-      schedules: buildSchedules('hlll'),
-    },
-    {
-      pitchStr: 'タタ＼タタ',
-      schedules: buildSchedules('lhll'),
-    },
-    {
-      pitchStr: 'タタタ＼タ',
-      schedules: buildSchedules('lhhl'),
-    },
-    {
-      pitchStr: 'タタタタ',
-      schedules: buildSchedules('lhhh'),
-    },
-  ],
+  hl: {
+    id: 'hl',
+    pitchStr: 'タ＼タ',
+    schedules: buildSchedules('hl'),
+  },
+  lh: {
+    id: 'lh',
+    pitchStr: 'タタ',
+    schedules: buildSchedules('lh'),
+  },
+  hll: {
+    id: 'hll',
+    pitchStr: 'タ＼タタ',
+    schedules: buildSchedules('hll'),
+  },
+  lhl: {
+    id: 'lhl',
+    pitchStr: 'タタ＼タ',
+    schedules: buildSchedules('lhl'),
+  },
+  lhh: {
+    id: 'lhh',
+    pitchStr: 'タタタ',
+    schedules: buildSchedules('lhh'),
+  },
+  hlll: {
+    id: 'hlll',
+    pitchStr: 'タ＼タタタ',
+    schedules: buildSchedules('hlll'),
+  },
+  lhll: {
+    id: 'lhll',
+    pitchStr: 'タタ＼タタ',
+    schedules: buildSchedules('lhll'),
+  },
+  lhhl: {
+    id: 'lhhl',
+    pitchStr: 'タタタ＼タ',
+    schedules: buildSchedules('lhhl'),
+  },
+  lhhh: {
+    id: 'lhhh',
+    pitchStr: 'タタタタ',
+    schedules: buildSchedules('lhhh'),
+  },
 };

@@ -9,14 +9,14 @@ import { ActionTypes } from '../../../../Update';
 import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
 
 import {
+  RhythmWorkoutFormState,
   INITIAL_RHYTHM_WORKOUT_FORM_STATE,
-  RhythmLWorkoutFormState,
 } from './Model';
 import RhythmWorkoutForm from './RhythmWorkoutForm';
 
 const reducer = (
-  state: RhythmLWorkoutFormState,
-  action: RhythmLWorkoutFormState
+  state: RhythmWorkoutFormState,
+  action: RhythmWorkoutFormState
 ) => action;
 
 const RhythmWorkoutPane = () => {

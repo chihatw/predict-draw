@@ -4,10 +4,10 @@ import Check from '@mui/icons-material/Check';
 import { useTheme } from '@mui/material';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
-import { PITCHES } from '../../../../../pitch';
-import { RhythmWorkoutFormState } from '../Model';
+import { PITCH_WORKOUT_ITEMS } from '../../../../../pitchWorkoutItems';
+import { PitchWorkoutFormState } from '../Model';
 
-const RhythmWorkoutResult = ({ state }: { state: RhythmWorkoutFormState }) => {
+const PitchWorkoutResult = ({ state }: { state: PitchWorkoutFormState }) => {
   const theme = useTheme();
   let correctCount = 0;
   state.answerIds.forEach((answerId, index) => {
@@ -65,9 +65,9 @@ const RhythmWorkoutResult = ({ state }: { state: RhythmWorkoutFormState }) => {
             </div>
           </div>
           {state.cueIds.map((cueId, index) => {
-            const cue = PITCHES[cueId];
+            const item = PITCH_WORKOUT_ITEMS[cueId];
             const answerId = state.answerIds[index];
-            const answer = PITCHES[answerId];
+            const answer = PITCH_WORKOUT_ITEMS[answerId];
             const isCorrect = cueId == answerId;
             return (
               <div
@@ -107,7 +107,7 @@ const RhythmWorkoutResult = ({ state }: { state: RhythmWorkoutFormState }) => {
                   }}
                 >
                   <SentencePitchLine
-                    pitchesArray={string2PitchesArray(cue.pitchStr)}
+                    pitchesArray={string2PitchesArray(item.pitchStr)}
                   />
                 </div>
                 <div
@@ -133,4 +133,4 @@ const RhythmWorkoutResult = ({ state }: { state: RhythmWorkoutFormState }) => {
   );
 };
 
-export default RhythmWorkoutResult;
+export default PitchWorkoutResult;

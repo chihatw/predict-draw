@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React from 'react';
-import { RhythmLWorkoutFormState } from '../Model';
+import { RhythmWorkoutFormState } from '../Model';
 import RhythmWorkoutAnswer from './RhythmWorkoutAnswer';
 import RhythmWorkoutResult from './RhythmWorkoutResult';
 
@@ -8,8 +8,8 @@ const RhythmWorkoutForm = ({
   state,
   dispatch,
 }: {
-  state: RhythmLWorkoutFormState;
-  dispatch: React.Dispatch<RhythmLWorkoutFormState>;
+  state: RhythmWorkoutFormState;
+  dispatch: React.Dispatch<RhythmWorkoutFormState>;
 }) => {
   return (
     <Container maxWidth='xs' sx={{ paddingTop: 2 }}>
