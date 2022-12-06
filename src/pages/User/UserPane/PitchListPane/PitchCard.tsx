@@ -4,10 +4,9 @@ import { Card, CardContent } from '@mui/material';
 import React, { useContext } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import { AppContext } from '../../../../App';
-import { PitchListState } from '../../../../Model';
+import { PitchListState, Schedule } from '../../../../Model';
 import { setPitchList } from '../../../../services/pitchList';
 import { createSourceNode } from '../../../../services/utils';
-import { Schedule } from '../../../../pitchWorkoutItems';
 
 const PitchCard = ({
   schedules,

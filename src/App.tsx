@@ -25,6 +25,7 @@ import { useKanaCards } from './services/kanaCard';
 import { useSpeedWorkout } from './services/speedWorkout';
 import { usePitchList } from './services/pitchList';
 import { usePitchWorkout } from './services/pitchWorkout';
+import { usePitchInput } from './services/pitchInput';
 
 export const AppContext = createContext<{
   state: State;
@@ -43,6 +44,7 @@ function App() {
   usePitchList(dispatch);
   useRhythmList(dispatch);
   useCueWorkout(dispatch);
+  usePitchInput(dispatch);
   useSpeedWorkout(dispatch);
   usePitchWorkout(dispatch);
   useRhythmWorkout(dispatch);

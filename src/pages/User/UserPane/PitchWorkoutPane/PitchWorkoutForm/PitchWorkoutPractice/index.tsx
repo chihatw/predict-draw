@@ -7,9 +7,9 @@ import { PITCH_WORKOUT_ITEMS } from '../../../../../../pitchWorkoutItems';
 import { setPitchWorkoutAnswers } from '../../../../../../services/pitchWorkout';
 import { createSourceNode } from '../../../../../../services/utils';
 import { PitchWorkoutFormState } from '../../Model';
-import PitchWorkoutAnswerRow from './PitchWorkoutAnswerRow';
+import PitchWorkoutPracticeRow from './PitchWorkoutPracticeRow';
 
-const PitchWorkoutAnswer = ({
+const PitchWorkoutPractice = ({
   state,
   dispatch,
 }: {
@@ -135,7 +135,7 @@ const PitchWorkoutAnswer = ({
         {Object.values(PITCH_WORKOUT_ITEMS)
           .filter((item) => item.id.length === state.mora)
           .map((item, index) => (
-            <PitchWorkoutAnswerRow
+            <PitchWorkoutPracticeRow
               key={index}
               pitchStr={item.pitchStr}
               isSelected={selectedId === item.id}
@@ -159,4 +159,4 @@ const PitchWorkoutAnswer = ({
   );
 };
 
-export default PitchWorkoutAnswer;
+export default PitchWorkoutPractice;

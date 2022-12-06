@@ -82,7 +82,6 @@ const KanaWorkoutAnswer = ({
       answers: updatedAnswers,
       currentIndex: state.currentIndex + 1,
     };
-    console.log(updatedState);
     dispatch(updatedState);
     setSelectedKana('');
     setInitialize(true);

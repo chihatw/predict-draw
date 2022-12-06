@@ -1,4 +1,4 @@
-export type Schedule = { offset: number; start: number; stop: number };
+import { Schedule } from './Model';
 
 const GAP = {
   s: 0.05,

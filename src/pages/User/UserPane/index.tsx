@@ -14,6 +14,7 @@ import SpeedWorkoutCuePane from './SpeedWorkoutCuePane';
 import SpeedWorkoutReadPane from './SpeedWorkoutReadPane';
 import PitchListPane from './PitchListPane';
 import PitchWorkoutPane from './PitchWorkoutPane';
+import PitchInputPane from './PitchInputPane';
 
 const UserPane = ({ user }: { user: string }) => {
   const { state } = useContext(AppContext);
@@ -45,6 +46,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <PitchListPane />;
     case pages.pitchWorkout:
       return <PitchWorkoutPane />;
+    case pages.pitchInput:
+      return <PitchInputPane />;
     case pages.rhythmList:
       return <RhythmListPane />;
     case pages.rhythmWorkout:

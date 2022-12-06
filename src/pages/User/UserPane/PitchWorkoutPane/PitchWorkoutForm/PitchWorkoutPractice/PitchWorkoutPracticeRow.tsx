@@ -3,7 +3,7 @@ import Check from '@mui/icons-material/Check';
 import React from 'react';
 import string2PitchesArray from 'string2pitches-array';
 
-const PitchWorkoutAnswerRow = ({
+const PitchWorkoutPracticeRow = ({
   pitchStr,
   isSelected,
   handleClickRow,
@@ -56,4 +56,4 @@ const PitchWorkoutAnswerRow = ({
   );
 };
 
-export default PitchWorkoutAnswerRow;
+export default PitchWorkoutPracticeRow;

@@ -1,3 +1,5 @@
+export type Schedule = { offset: number; start: number; stop: number };
+
 export const pages = {
   note: 'note',
   blank: 'blank',
@@ -5,6 +7,7 @@ export const pages = {
   pitchList: 'pitchList',
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
+  pitchInput: 'pitchInput',
   kanaWorkout: 'kanaWorkout',
   pitchWorkout: 'pitchWorkout',
   workingMemory: 'workingMemory',
@@ -25,6 +28,7 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.rhythmWorkout, label: 'リズム練習' },
   { value: pages.pitchList, label: 'ピッチ表示' },
   { value: pages.pitchWorkout, label: 'ピッチ練習' },
+  { value: pages.pitchInput, label: 'ピッチ入力' },
   // { value: pages.kanaCards, label: 'かな表示' },
   // { value: pages.kanaWorkout, label: 'かな練習' },
   { value: pages.blank, label: '空欄' },
@@ -337,6 +341,19 @@ export type PitchWorkout = {
   cueIds: string[];
 };
 
+export type PitchInput = {
+  mora: number;
+  cueIds: string[];
+  hasA: boolean;
+  hasN: boolean;
+  hasX: boolean;
+  normalOnly: boolean;
+};
+
+export type PitchInputLogs = {
+  [index: number]: string;
+};
+
 export type KanaCards = {
   kanas: string[];
   tapped: string[];
@@ -381,6 +398,8 @@ export type State = {
   rhythmWorkoutAnswers: { [index: number]: string[] };
   pitchList: PitchListState;
   pitchWorkout: PitchWorkout;
+  pitchInput: PitchInput;
+  pitchInputLogs: PitchInputLogs;
   pitchWorkoutAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
   params: Params;
@@ -411,6 +430,15 @@ export const INITIAL_STATE: State = {
   rhythmWorkoutAnswers: {},
   pitchList: { tapped: [], mora: 2 },
   pitchWorkout: { mora: 2, cueIds: [] },
+  pitchInput: {
+    mora: 2,
+    cueIds: [],
+    hasA: true,
+    hasN: true,
+    hasX: true,
+    normalOnly: true,
+  },
+  pitchInputLogs: {},
   pitchWorkoutAnswers: {},
   kanaCards: { tapped: [], kanas: [] },
   params: {

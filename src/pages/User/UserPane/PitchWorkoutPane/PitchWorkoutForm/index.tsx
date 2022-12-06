@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import React from 'react';
 import { PitchWorkoutFormState } from '../Model';
-import PitchWorkoutAnswer from './PitchWorkoutAnswer';
+import PitchWorkoutPractice from './PitchWorkoutPractice';
 import PitchWorkoutResult from './PitchWorkoutResult';
 
 const PitchWorkoutForm = ({
@@ -13,14 +13,24 @@ const PitchWorkoutForm = ({
 }) => {
   return (
     <Container maxWidth='xs' sx={{ paddingTop: 2 }}>
-      {(() => {
-        if (state.currentIndex !== state.cueIds.length) {
-          return <PitchWorkoutAnswer state={state} dispatch={dispatch} />;
-        }
-        return <PitchWorkoutResult state={state} />;
-      })()}
+      <Switcher state={state} dispatch={dispatch} />
     </Container>
   );
 };
 
 export default PitchWorkoutForm;
+
+const Switcher = ({
+  state,
+  dispatch,
+}: {
+  state: PitchWorkoutFormState;
+  dispatch: React.Dispatch<PitchWorkoutFormState>;
+}) => {
+  //
+  if (state.currentIndex === state.cueIds.length)
+    return <PitchWorkoutResult state={state} />;
+
+  //
+  return <PitchWorkoutPractice state={state} dispatch={dispatch} />;
+};
