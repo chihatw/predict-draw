@@ -19,7 +19,7 @@ const CuePane = React.memo(
                 style={{
                   height: 4,
                   borderTop: '8px #52a2aa dashed',
-                  marginTop: 24,
+                  marginTop: 8,
                 }}
               />
             </>
@@ -29,7 +29,7 @@ const CuePane = React.memo(
               <div style={{ display: 'grid', rowGap: 16 }} key={index}>
                 <CueCard label={cueCard.label} pitchStr={cueCard.pitchStr} />
                 {cueCard.hasBorder && (
-                  <div style={{ height: 4, borderTop: '8px hotpink dashed' }} />
+                  <div style={{ height: 4, borderTop: '8px #52a2aa dashed' }} />
                 )}
               </div>
             );

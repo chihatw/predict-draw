@@ -1,9 +1,6 @@
 export const buildDisableds = (
   input: string,
-  maxLength: number,
-  hasA: boolean,
-  hasN: boolean,
-  hasX: boolean
+  maxLength: number
 ): { highs: boolean[]; lows: boolean[] } => {
   const inputWithoutAccentMark = input.replace('＼', '');
   const moraCount = inputWithoutAccentMark.length;
@@ -40,21 +37,11 @@ export const buildDisableds = (
         ? // 1文字目が高音の場合、2文字目は低音のみ
           {
             highs: [true, true, true, true],
-            lows: specialMoraFilter(
-              [false, false, false, isLastInput ? true : false],
-              hasA,
-              hasN,
-              hasX
-            ),
+            lows: [false, false, false, isLastInput ? true : false],
           }
         : // 1文字目が低音の場合、2文字目は高音のみ
           {
-            highs: specialMoraFilter(
-              [false, false, false, isLastInput ? true : false],
-              hasA,
-              hasN,
-              hasX
-            ),
+            highs: [false, false, false, isLastInput ? true : false],
             lows: [true, true, true, true],
           };
     /**
@@ -89,8 +76,8 @@ export const buildDisableds = (
           default:
         }
         return {
-          highs: specialMoraFilter(highs, hasA, hasN, hasX),
-          lows: specialMoraFilter(lows, hasA, hasN, hasX),
+          highs,
+          lows,
         };
       }
       // ３文字目以降で、直前が低音の場合は、アクセントが既出なので低音のみ
@@ -109,26 +96,7 @@ export const buildDisableds = (
       }
       return {
         highs: [true, true, true, true],
-        lows: specialMoraFilter(lows, hasA, hasN, hasX),
+        lows,
       };
   }
-};
-
-const specialMoraFilter = (
-  array: boolean[],
-  hasA: boolean,
-  hasN: boolean,
-  hasX: boolean
-) => {
-  let [ta, a, n, x] = array;
-  if (!hasA) {
-    a = true;
-  }
-  if (!hasN) {
-    n = true;
-  }
-  if (!hasX) {
-    x = true;
-  }
-  return [ta, a, n, x];
 };

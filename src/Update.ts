@@ -37,7 +37,6 @@ export const ActionTypes = {
   setCueWorkoutParams: 'setCueWorkoutParams',
   saveRandomWorkoutBlob: 'saveRandomWorkoutBlob',
   setRandomWorkoutParams: 'setRandomWorkoutParams',
-  setRandomWorkoutBlobURL: 'setRandomWorkoutBlobURL',
   setWorkingMemoryAnswerIds: 'setWorkingMemoryAnswerIds',
   setRhythmWorkout: 'setRhythmWorkout',
   setRhythmWorkoutAnswers: 'setRhythmWorkoutAnswers',
@@ -92,13 +91,14 @@ export type Action = {
       }
     | {
         blobs: { [workoutId: string]: Blob | null };
+        audioBuffers: { [downloadURL: string]: AudioBuffer };
         randomWorkouts: { [workoutId: string]: RandomWorkout };
       };
 };
 
 export const reducer = (state: State, action: Action): State => {
   const { type, payload } = action;
-  const { blobURLs } = state;
+  const { blobURLs } = state; // setBlobURLs で使用
 
   switch (type) {
     case ActionTypes.setSpeedWorkoutParams: {
@@ -190,12 +190,13 @@ export const reducer = (state: State, action: Action): State => {
         answerIds
       )(state);
     }
+
     case ActionTypes.setWorkingMemory: {
       const { workingMemory, blob } = payload as {
         workingMemory: WorkingMemory;
         blob: Blob | null;
       };
-      const updatedBlobs = { ...state.blobs };
+      const updatedBlobs = { ...state.blobs }; // <- audioBuffers
       if (blob) {
         updatedBlobs[workingMemory.storagePath] = blob;
       }
@@ -234,13 +235,14 @@ export const reducer = (state: State, action: Action): State => {
         })
       )(state);
     }
+
     case ActionTypes.saveRandomWorkoutBlob: {
       const { workout, blob } = payload as {
         workout: RandomWorkout;
         blob: Blob;
       };
       return R.compose(
-        R.assocPath<Blob, State>(['randomWorkout', 'blobs', workout.id], blob),
+        R.assocPath<Blob, State>(['randomWorkout', 'blobs', workout.id], blob), // <- audioBuffers
         R.assocPath<RandomWorkout, State>(
           ['randomWorkout', 'workouts', workout.id],
           workout
@@ -255,15 +257,6 @@ export const reducer = (state: State, action: Action): State => {
       const audioContext = payload as AudioContext;
       return R.compose(
         R.assocPath<AudioContext, State>(['audioContext'], audioContext)
-      )(state);
-    }
-    case ActionTypes.setRandomWorkoutBlobURL: {
-      const { imagePath, blobURL } = payload as {
-        imagePath: string;
-        blobURL: string;
-      };
-      return R.compose(
-        R.assocPath<string, State>(['blobURLs', imagePath], blobURL)
       )(state);
     }
     case ActionTypes.setRandomWorkoutParams: {
@@ -281,6 +274,7 @@ export const reducer = (state: State, action: Action): State => {
     }
     case ActionTypes.setRandomWorkouts: {
       const { randomWorkouts, blobs } = payload as {
+        // <- audioBuffers
         randomWorkouts: { [workoutId: string]: RandomWorkout };
         blobs: { [workoutId: string]: Blob | null };
       };

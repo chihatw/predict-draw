@@ -1,9 +1,6 @@
 import { Schedule } from './Model';
 import { createSourceNode } from './services/utils';
 
-const duration = ({ start, stop }: { start: number; stop: number }) =>
-  stop - start;
-
 export const PITCH_INPUT_ITEMS: {
   [key: string]: { pitchStr: string; schedules: Schedule[] };
 } = {

@@ -24,9 +24,16 @@ const PitchWorkoutPane = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const blob: Blob | null = state.blobs[ta_pitches_120]
-        ? state.blobs[ta_pitches_120]
-        : await getBlobFromAssets(ta_pitches_120);
+      let blob: Blob | null = null;
+      if (state.blobs[ta_pitches_120]) {
+        blob = state.blobs[ta_pitches_120];
+      } else {
+        const { blob: tmp } = await getBlobFromAssets(ta_pitches_120);
+        if (tmp) {
+          blob = tmp;
+        }
+      }
+
       const updatedState = R.assocPath<Blob | null, State>(
         ['blobs', ta_pitches_120],
         blob

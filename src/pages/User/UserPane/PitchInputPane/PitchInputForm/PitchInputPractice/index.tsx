@@ -29,6 +29,11 @@ const PitchInputPractice = ({
   const [input, setInput] = useState('');
   const AnimationElemRef = useRef<HTMLDivElement>(null);
 
+  let { lows, highs } = buildDisableds(input, state.mora);
+  lows = specialMoraFilter(lows, state.hasA, state.hasN, state.hasX);
+  highs = specialMoraFilter(highs, state.hasA, state.hasN, state.hasX);
+  const disableds = { lows, highs };
+
   useEffect(() => {
     if (initialize) {
       const AnswerList = AnimationElemRef.current;
@@ -104,13 +109,7 @@ const PitchInputPractice = ({
       <PitchLineMonitor input={input} handleBackSpace={handleBackSpace} />
 
       <InputPane
-        disableds={buildDisableds(
-          input,
-          state.mora,
-          state.hasA,
-          state.hasN,
-          state.hasX
-        )}
+        disableds={disableds}
         handleClickInputButton={handleClickInputButton}
       />
       <div style={{ height: 40 }} />
@@ -129,3 +128,22 @@ const PitchInputPractice = ({
 export default PitchInputPractice;
 
 //
+
+const specialMoraFilter = (
+  array: boolean[],
+  hasA: boolean,
+  hasN: boolean,
+  hasX: boolean
+) => {
+  let [ta, a, n, x] = array;
+  if (!hasA) {
+    a = true;
+  }
+  if (!hasN) {
+    n = true;
+  }
+  if (!hasX) {
+    x = true;
+  }
+  return [ta, a, n, x];
+};

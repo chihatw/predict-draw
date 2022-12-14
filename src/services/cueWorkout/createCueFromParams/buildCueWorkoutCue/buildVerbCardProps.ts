@@ -82,6 +82,10 @@ const VERBS: { [key: string]: { label: string; pitchStr: string } } = {
   },
 };
 
+/**
+ * verbId と、isNegative isPoliteType のパラメーターを受け取って
+ * 相応しい label と pitchStr を返す
+ */
 const buildVerbCardProps = (
   verbId: string,
   isNegative: boolean,

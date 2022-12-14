@@ -34,7 +34,6 @@ const SpeedWorkoutEditPage = () => {
 
   const handleSubmit = () => {
     if (!workoutId) {
-      // todo create new SpeedWorkout
       return;
     }
     const workout = state.speedWorkouts[workoutId];

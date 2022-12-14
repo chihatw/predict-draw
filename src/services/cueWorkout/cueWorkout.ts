@@ -7,11 +7,10 @@ import {
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import {
-  TOPIC_MODE,
   CueWorkoutCue,
   CueWorkoutParams,
   JOSHI_ORDER,
-  NEGATIVE_SENTENCE,
+  NEVER_ALWAYS_RANDOM,
   INITIAL_CUE_CARD_PROPS,
 } from '../../Model';
 import { CUE_CARDS } from '../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
@@ -23,9 +22,11 @@ const COLLECTIONS = {
 };
 
 export const useCueWorkout = (dispatch: React.Dispatch<Action>) => {
+  // これ何のための初期化？
   useEffect(() => {
     dispatch({ type: ActionTypes.setCueWorkoutCards, payload: CUE_CARDS });
   }, []);
+
   useEffect(() => {
     const unsubCue = onSnapshot(
       doc(db, COLLECTIONS.cueWorkout, 'cue'),
@@ -85,30 +86,28 @@ const buildParams = (doc: DocumentData) => {
   const {
     time,
     verbs,
-    hands,
     colors,
     points,
-    topicMode,
     isRunning,
     hasHeader,
     joshiOrder,
-    hasPosition,
     isPoliteType,
+    groupingWithHa,
     negativeSentence,
+    firstNounAlwaysHasHa,
   } = doc.data();
   const params: CueWorkoutParams = {
     time: time || 0,
     verbs: verbs || [],
-    hands: hands || [],
     points: points || 0,
     colors: colors || [],
     hasHeader: hasHeader || false,
-    topicMode: topicMode || TOPIC_MODE.noTopic,
+    firstNounAlwaysHasHa: firstNounAlwaysHasHa ?? false,
     isRunning: isRunning || false,
     joshiOrder: joshiOrder || JOSHI_ORDER.default,
-    hasPosition: hasPosition || false,
     isPoliteType: isPoliteType || false,
-    negativeSentence: negativeSentence || NEGATIVE_SENTENCE.never,
+    groupingWithHa: groupingWithHa || NEVER_ALWAYS_RANDOM.never,
+    negativeSentence: negativeSentence || NEVER_ALWAYS_RANDOM.never,
   };
   return params;
 };

@@ -1,5 +1,6 @@
 import * as R from 'ramda';
-import { CueCardProps, INITIAL_CUE_CARD_PROPS } from '../../../../Model';
+import { CueCardProps } from '../../../../Model';
+import { getRandomInt } from '../../../utils';
 import buildHeaderCardProps from './buildHeaderCardProps';
 import buildNounCardProps from './buildNounCardProps';
 import buildVerbCardProps from './buildVerbCardProps';
@@ -7,19 +8,21 @@ import buildVerbCardProps from './buildVerbCardProps';
 const buildCueWorkoutCue = ({
   verbId,
   nounIds,
-  hasTopic,
   hasHeader,
   isInverse,
   isNegative,
   isPoliteType,
+  isGroupingWithHa,
+  firstNounAlwaysHasHa,
 }: {
   verbId: string;
   nounIds: string[];
-  hasTopic: boolean;
   hasHeader: boolean;
   isInverse: boolean;
   isNegative: boolean;
   isPoliteType: boolean;
+  isGroupingWithHa: boolean;
+  firstNounAlwaysHasHa: boolean;
 }) => {
   const verb = buildVerbCardProps(verbId, isNegative, isPoliteType);
 
@@ -27,10 +30,23 @@ const buildCueWorkoutCue = ({
     nounIds = R.reverse(nounIds);
   }
 
+  let topicNounId = '';
+  if (hasHeader) {
+    topicNounId = nounIds[getRandomInt(2)];
+  }
+  const header = buildHeaderCardProps(topicNounId);
+
   const nouns: CueCardProps[] = nounIds.map((nounId, index) =>
-    buildNounCardProps(nounId, index, isInverse, hasTopic, nounIds.length === 2)
+    buildNounCardProps(
+      nounId,
+      index,
+      isInverse,
+      firstNounAlwaysHasHa,
+      nounIds.length === 2,
+      topicNounId,
+      isGroupingWithHa
+    )
   );
-  const header = buildHeaderCardProps(hasHeader, nounIds);
 
   const text =
     header.label + nouns.map((noun) => noun.label).join('') + verb.label;

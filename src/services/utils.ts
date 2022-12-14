@@ -71,7 +71,7 @@ export const getBlob = async (downloadURL: string) => {
 export const getBlobFromAssets = async (path: string) => {
   const response = await fetch(path);
   const blob = await response.blob();
-  return blob;
+  return { blob };
 };
 
 export const toggleElement = (arr: string[], val: string) =>

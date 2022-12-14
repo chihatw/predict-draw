@@ -9,24 +9,33 @@ import {
 } from '../../../services/cueWorkout/cueWorkout';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 
-const SelectNegativeMode = () => {
+const SelectGroupingWithHa = () => {
   const { state } = useContext(AppContext);
-  const handleChangeNegativeSentence = async (negativeSentence: string) => {
+  const handleChangeGroupingWithHa = async (groupingWithHa: string) => {
     let updatedParams = R.assocPath<string, CueWorkoutParams>(
-      ['negativeSentence'],
-      negativeSentence
+      ['groupingWithHa'],
+      groupingWithHa
     )(state.cueWorkout.params);
+    // always, random の時は、
+
+    if (groupingWithHa !== NEVER_ALWAYS_RANDOM.never) {
+      // firstNounAlwaysHasHa を false にする
+      updatedParams = R.assocPath<boolean, CueWorkoutParams>(
+        ['firstNounAlwaysHasHa'],
+        false
+      )(updatedParams);
+    }
     await setCueWorkoutParams(updatedParams);
     const cue = createCueFromParams(updatedParams);
     await setCueWorkoutCue(cue);
   };
   return (
     <>
-      <h4>否定</h4>
+      <h4>分類の「は」</h4>
       <Select
-        value={state.cueWorkout.params.negativeSentence}
+        value={state.cueWorkout.params.groupingWithHa}
         size='small'
-        onChange={(e) => handleChangeNegativeSentence(e.target.value)}
+        onChange={(e) => handleChangeGroupingWithHa(e.target.value)}
       >
         {Object.values(NEVER_ALWAYS_RANDOM).map((item, index) => (
           <MenuItem key={index} value={item}>
@@ -38,4 +47,4 @@ const SelectNegativeMode = () => {
   );
 };
 
-export default SelectNegativeMode;
+export default SelectGroupingWithHa;

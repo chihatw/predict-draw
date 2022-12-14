@@ -6,12 +6,11 @@ import ShowStatus from './ShowStatus';
 import SelectVerbs from './SelectVerbs';
 import SelectColors from './SelectColors';
 import SelectJoshiOrder from './SelectJoshiOrder';
-import SelectTopicMode from './SelectTopicMode';
+import SwitchFirstNounAlwaysHasHa from './SwitchFirstNounAlswaysHasHa';
 import SelectNegativeMode from './SelectNegativeMode';
 import SelectPoliteType from './SelectPoliteType';
 import SelectHasHeader from './SelectHasHeader';
-// import SelectHand from './SelectHand';
-// import SelectPosition from './SelectPosition';
+import SelectGroupingWithHa from './SelectGroupingWithHa';
 
 const CueWorkoutList = () => {
   const [open, setOpen] = useState(false);
@@ -35,11 +34,10 @@ const CueWorkoutList = () => {
           <SelectHasHeader />
           <SelectColors />
           <SelectVerbs />
-          {/* <SelectHand /> */}
-          {/* <SelectPosition /> */}
           <SelectJoshiOrder />
           <SelectNegativeMode />
-          <SelectTopicMode />
+          <SelectGroupingWithHa />
+          <SwitchFirstNounAlwaysHasHa />
         </div>
       )}
     </div>

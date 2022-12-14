@@ -24,10 +24,10 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.cueWorkout, label: '紙コップ' },
   // { value: pages.workingMemory, label: 'ワーキングメモリ' },
   { value: pages.note, label: 'ノート' },
-  { value: pages.rhythmList, label: 'リズム表示' },
-  { value: pages.rhythmWorkout, label: 'リズム練習' },
-  { value: pages.pitchList, label: 'ピッチ表示' },
-  { value: pages.pitchWorkout, label: 'ピッチ練習' },
+  // { value: pages.rhythmList, label: 'リズム表示' },
+  // { value: pages.rhythmWorkout, label: 'リズム練習' },
+  // { value: pages.pitchList, label: 'ピッチ表示' },
+  // { value: pages.pitchWorkout, label: 'ピッチ練習' },
   { value: pages.pitchInput, label: 'ピッチ入力' },
   // { value: pages.kanaCards, label: 'かな表示' },
   // { value: pages.kanaWorkout, label: 'かな練習' },
@@ -35,7 +35,7 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   // { value: pages.randomWorkout, label: 'ランダム（実演用）' },
 ];
 
-export const NEGATIVE_SENTENCE: { [id: string]: string } = {
+export const NEVER_ALWAYS_RANDOM: { [id: string]: string } = {
   never: 'never',
   always: 'always',
   random: 'random',
@@ -44,11 +44,6 @@ export const NEGATIVE_SENTENCE: { [id: string]: string } = {
 export const JOSHI_ORDER: { [id: string]: string } = {
   default: 'default',
   inverse: 'inverse',
-  random: 'random',
-};
-export const TOPIC_MODE: { [id: string]: string } = {
-  hasTopic: 'hasTopic',
-  noTopic: 'noTopic',
   random: 'random',
 };
 
@@ -96,13 +91,6 @@ export type SpeedWorkout = {
 export type WorkoutRound = {
   currentRound: number;
   totalRounds: number;
-};
-
-// todo will delete
-export type WorkoutTime = {
-  time: number;
-  bpm: number;
-  isRunning: boolean;
 };
 
 export const INITIAL_WORKOUT: SpeedWorkout = {
@@ -185,7 +173,9 @@ export type RandomWotkoutState = {
   workouts: {
     [workoutId: string]: RandomWorkout;
   };
+  audioBuffers: { [downloadURL: string]: AudioBuffer };
   blobs: {
+    // will delete
     [workoutId: string]: Blob | null;
   };
 };
@@ -195,6 +185,7 @@ export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
   params: INITIAL_RANDOM_WORKOUT_PARAMS,
   workouts: {},
   blobs: {},
+  audioBuffers: {},
 };
 
 export type CueWorkoutCard = {
@@ -240,32 +231,30 @@ export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
 
 export type CueWorkoutParams = {
   time: number;
-  hands: string[];
   verbs: string[];
   points: number;
   colors: string[];
   isRunning: boolean;
-  topicMode: string;
   hasHeader: boolean;
   joshiOrder: string;
-  hasPosition: boolean;
   isPoliteType: boolean;
+  groupingWithHa: string;
   negativeSentence: string;
+  firstNounAlwaysHasHa: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   time: 0,
   verbs: [],
-  hands: [],
   colors: [],
   points: 0,
   isRunning: false,
-  topicMode: TOPIC_MODE.noTopic,
   hasHeader: false,
   joshiOrder: JOSHI_ORDER.default,
-  hasPosition: false,
   isPoliteType: false,
-  negativeSentence: NEGATIVE_SENTENCE.never,
+  groupingWithHa: NEVER_ALWAYS_RANDOM.never,
+  negativeSentence: NEVER_ALWAYS_RANDOM.never,
+  firstNounAlwaysHasHa: true,
 };
 
 export type CueWorkoutState = {
@@ -404,9 +393,14 @@ export type State = {
   workingMemoryAnswerIds: string[];
   params: Params;
   blobs: {
+    // will delete
     [audioPath: string]: Blob;
   };
+  audioBuffers: {
+    [downloadURL: string]: AudioBuffer;
+  };
   blobURLs: {
+    // imageで使用
     [imagePath: string]: string;
   };
 };
@@ -459,4 +453,5 @@ export const INITIAL_STATE: State = {
   },
   blobs: {},
   blobURLs: {},
+  audioBuffers: {},
 };

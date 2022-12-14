@@ -21,9 +21,15 @@ const PitchInputPane = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const blob: Blob | null = state.blobs[pitch_input_100]
-        ? state.blobs[pitch_input_100]
-        : await getBlobFromAssets(pitch_input_100);
+      let blob: Blob | null = null;
+      if (state.blobs[pitch_input_100]) {
+        blob = state.blobs[pitch_input_100];
+      } else {
+        const { blob: tmp } = await getBlobFromAssets(pitch_input_100);
+        if (tmp) {
+          blob = tmp;
+        }
+      }
       const updatedState = R.assocPath<Blob | null, State>(
         ['blobs', pitch_input_100],
         blob

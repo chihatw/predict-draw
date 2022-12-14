@@ -13,18 +13,23 @@ import { KanaCards, State } from '../../../../Model';
 import { ActionTypes } from '../../../../Update';
 import { setKanaCards } from '../../../../services/kanaCard';
 
-// const dummyIds = 'あいうxおかきくけこ'.split('');
-
 const KanaCardsPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const [initialize, setInitialize] = useState(true);
 
   useEffect(() => {
     if (!initialize) return;
+
     const fetchData = async () => {
-      const _blob = state.blobs[gojuuon]
-        ? state.blobs[gojuuon]
-        : await getBlobFromAssets(gojuuon);
+      let _blob = null;
+      if (state.blobs[gojuuon]) {
+        _blob = state.blobs[gojuuon];
+      } else {
+        const { blob: tmp } = await getBlobFromAssets(gojuuon);
+        if (tmp) {
+          _blob = tmp;
+        }
+      }
       const updatedState = R.assocPath<Blob | null, State>(
         ['blobs', gojuuon],
         _blob

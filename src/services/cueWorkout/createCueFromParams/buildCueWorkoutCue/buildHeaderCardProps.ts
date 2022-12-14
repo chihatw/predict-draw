@@ -1,16 +1,17 @@
 import { INITIAL_CUE_CARD_PROPS } from '../../../../Model';
 import { CUE_CARDS } from '../../../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
-import { getRandomInt } from '../../../utils';
 
-const buildHeaderCardProps = (hasHeader: boolean, nounIds: string[]) => {
-  if (!hasHeader) return INITIAL_CUE_CARD_PROPS;
+/**
+ * 選ばれた nounId から label と pitchStr を作る
+ * nounId がなければ、初期値を返す
+ */
+const buildHeaderCardProps = (topicNounId: string) => {
+  if (!topicNounId) return INITIAL_CUE_CARD_PROPS;
 
-  const targetNounId = nounIds[getRandomInt(2)];
+  const noun = CUE_CARDS[topicNounId];
 
-  const noun = CUE_CARDS[targetNounId];
-
-  let label = `私は${noun.label}が好きです`;
-  let pitchStr = ['わたしは', `${noun.pitchStr}が`, 'すき＼です'].join(' ');
+  const label = `私は${noun.label}が好きです`;
+  const pitchStr = ['わたしは', `${noun.pitchStr}が`, 'すき＼です'].join(' ');
   return { label, pitchStr };
 };
 export default buildHeaderCardProps;

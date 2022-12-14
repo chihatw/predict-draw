@@ -28,9 +28,15 @@ const RhythmWorkoutPane = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const _blob: Blob | null = state.blobs[downpitch_120]
-        ? state.blobs[downpitch_120]
-        : await getBlobFromAssets(downpitch_120);
+      let _blob: Blob | null = null;
+      if (state.blobs[downpitch_120]) {
+        _blob = state.blobs[downpitch_120];
+      } else {
+        const { blob: tmp } = await getBlobFromAssets(downpitch_120);
+        if (tmp) {
+          _blob = tmp;
+        }
+      }
       const updatedState = R.assocPath<Blob | null, State>(
         ['blobs', downpitch_120],
         _blob

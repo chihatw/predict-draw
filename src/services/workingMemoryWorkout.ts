@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import {
   doc,
@@ -28,6 +29,7 @@ export const useWorkingMemoryWorkout = (dispatch: React.Dispatch<Action>) => {
         console.log('snapshot workingMemoryWorkout');
         if (!doc.exists()) return;
         const workingMemory = buildWorkingMemory(doc);
+
         dispatch({
           type: ActionTypes.setWorkingMemory,
           payload: { workingMemory, blob: null },

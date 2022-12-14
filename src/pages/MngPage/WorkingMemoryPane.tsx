@@ -1,13 +1,11 @@
 import * as R from 'ramda';
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import { PlayCircle } from '@mui/icons-material';
-import { Button, IconButton, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import { AppContext } from '../../App';
-import { INITIAL_WORKING_MEMORY_CUE, WorkingMemory } from '../../Model';
+import { INITIAL_WORKING_MEMORY_CUE, State, WorkingMemory } from '../../Model';
 import { ActionTypes } from '../../Update';
-import { createSourceNode } from '../../services/utils';
 import {
   buildCueIds,
   setWorkingMemory,
@@ -29,14 +27,19 @@ const WorkingMemoryPane = () => {
       cueIds: updatedCueIds,
       cueCount,
     };
+    const updatedBlobs = { ...state.blobs };
+    if (blob) {
+      updatedBlobs[updatedWorkingMemory.storagePath] = blob;
+    }
+    const updatedState = R.compose(
+      R.assocPath<WorkingMemory, State>(
+        ['workingMemory'],
+        updatedWorkingMemory
+      ),
+      R.assocPath<{ [path: string]: Blob }, State>(['blobs'], updatedBlobs)
+    )(state);
 
-    dispatch({
-      type: ActionTypes.setWorkingMemory,
-      payload: {
-        workingMemory: updatedWorkingMemory,
-        blob,
-      },
-    });
+    dispatch({ type: ActionTypes.setState, payload: updatedState });
     setWorkingMemory(updatedWorkingMemory);
   };
   const handleChangeOffset = (offset: number) => {
@@ -52,13 +55,12 @@ const WorkingMemoryPane = () => {
       cueIds: updatedCueIds,
       offset,
     };
-    dispatch({
-      type: ActionTypes.setWorkingMemory,
-      payload: {
-        workingMemory: updatedWorkingMemory,
-        blob,
-      },
-    });
+
+    const updatedState = R.assocPath<WorkingMemory, State>(
+      ['workingMemory'],
+      updatedWorkingMemory
+    )(state);
+    dispatch({ type: ActionTypes.setState, payload: updatedState });
     setWorkingMemory(updatedWorkingMemory);
   };
 
