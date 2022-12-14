@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { CueCardProps } from '../../../../Model';
+import { CueCardProps, INITIAL_CUE_CARD_PROPS } from '../../../../Model';
 import { getRandomInt } from '../../../utils';
 import buildHeaderCardProps from './buildHeaderCardProps';
 import buildNounCardProps from './buildNounCardProps';
@@ -11,6 +11,7 @@ const buildCueWorkoutCue = ({
   hasHeader,
   isInverse,
   isNegative,
+  isTopicFirst,
   isPoliteType,
   isGroupingWithHa,
   firstNounAlwaysHasHa,
@@ -19,6 +20,7 @@ const buildCueWorkoutCue = ({
   nounIds: string[];
   hasHeader: boolean;
   isInverse: boolean;
+  isTopicFirst: boolean;
   isNegative: boolean;
   isPoliteType: boolean;
   isGroupingWithHa: boolean;
@@ -30,22 +32,29 @@ const buildCueWorkoutCue = ({
     nounIds = R.reverse(nounIds);
   }
 
-  let topicNounId = '';
-  if (hasHeader) {
-    topicNounId = nounIds[getRandomInt(2)];
+  // 前置きがない場合も、内部的に設定する
+  const topicNounId = nounIds[getRandomInt(2)];
+  const other = nounIds.find((item) => item !== topicNounId);
+  if (other) {
+    nounIds = isTopicFirst ? [topicNounId, other] : [other, topicNounId];
   }
-  const header = buildHeaderCardProps(topicNounId);
+
+  let header: CueCardProps = INITIAL_CUE_CARD_PROPS;
+  if (hasHeader) {
+    header = buildHeaderCardProps(topicNounId);
+  }
 
   const nouns: CueCardProps[] = nounIds.map((nounId, index) =>
-    buildNounCardProps(
-      nounId,
+    buildNounCardProps({
       index,
+      nounId,
       isInverse,
-      firstNounAlwaysHasHa,
-      nounIds.length === 2,
+      hasDouble: nounIds.length === 2,
       topicNounId,
-      isGroupingWithHa
-    )
+      isTopicFirst,
+      isGroupingWithHa,
+      firstNounAlwaysHasHa,
+    })
   );
 
   const text =

@@ -1,14 +1,24 @@
 import { CUE_CARDS } from '../../../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 
-const buildNounCardProps = (
-  nounId: string,
-  index: number,
-  isInverse: boolean,
-  firstNounAlwaysHasHa: boolean,
-  hasDouble: boolean,
-  topicNounId: string,
-  isGroupingWithHa: boolean
-) => {
+const buildNounCardProps = ({
+  nounId,
+  index,
+  isInverse,
+  hasDouble,
+  topicNounId,
+  isTopicFirst,
+  isGroupingWithHa,
+  firstNounAlwaysHasHa,
+}: {
+  nounId: string;
+  index: number;
+  isInverse: boolean;
+  hasDouble: boolean;
+  topicNounId: string;
+  isTopicFirst: boolean;
+  isGroupingWithHa: boolean;
+  firstNounAlwaysHasHa: boolean;
+}) => {
   // 分類の「は」を使う設定で、nounId が既出ではない場合
   const hasGrouping = isGroupingWithHa && nounId !== topicNounId;
 

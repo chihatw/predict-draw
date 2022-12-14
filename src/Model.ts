@@ -237,6 +237,7 @@ export type CueWorkoutParams = {
   isRunning: boolean;
   hasHeader: boolean;
   joshiOrder: string;
+  topicFirst: string;
   isPoliteType: boolean;
   groupingWithHa: string;
   negativeSentence: string;
@@ -251,6 +252,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   isRunning: false,
   hasHeader: false,
   joshiOrder: JOSHI_ORDER.default,
+  topicFirst: NEVER_ALWAYS_RANDOM.never,
   isPoliteType: false,
   groupingWithHa: NEVER_ALWAYS_RANDOM.never,
   negativeSentence: NEVER_ALWAYS_RANDOM.never,

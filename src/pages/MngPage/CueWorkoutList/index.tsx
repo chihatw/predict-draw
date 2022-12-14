@@ -11,6 +11,7 @@ import SelectNegativeMode from './SelectNegativeMode';
 import SelectPoliteType from './SelectPoliteType';
 import SelectHasHeader from './SelectHasHeader';
 import SelectGroupingWithHa from './SelectGroupingWithHa';
+import SelectTopicFirst from './SelectTopicFirst';
 
 const CueWorkoutList = () => {
   const [open, setOpen] = useState(false);
@@ -37,6 +38,7 @@ const CueWorkoutList = () => {
           <SelectJoshiOrder />
           <SelectNegativeMode />
           <SelectGroupingWithHa />
+          <SelectTopicFirst />
           <SwitchFirstNounAlwaysHasHa />
         </div>
       )}

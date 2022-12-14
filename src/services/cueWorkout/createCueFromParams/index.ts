@@ -7,6 +7,7 @@ import buildCueWorkoutCue from './buildCueWorkoutCue';
 import getIsGroupingWithHa from './getIsGroupingWithHa';
 import getIsInverb from './getIsInverb';
 import getIsNegative from './getIsNegative';
+import getIsTopicFirst from './getIsTopicFirst';
 import getNounIds from './getNounIds';
 import getVerbId from './getVerbId';
 
@@ -19,6 +20,7 @@ const createCueFromParams = (params: CueWorkoutParams): CueWorkoutCue => {
     return INITIAL_CUE_WORKOUT_CUE;
 
   const isNegative = getIsNegative(params.negativeSentence);
+  const isTopicFirst = getIsTopicFirst(params.topicFirst);
   const isGroupingWithHa = getIsGroupingWithHa(params.groupingWithHa);
 
   const verbId = getVerbId(params.verbs);
@@ -28,12 +30,13 @@ const createCueFromParams = (params: CueWorkoutParams): CueWorkoutCue => {
   const cue = buildCueWorkoutCue({
     verbId,
     nounIds,
-    firstNounAlwaysHasHa: params.firstNounAlwaysHasHa,
     hasHeader: params.hasHeader,
     isInverse,
     isNegative,
+    isTopicFirst,
     isPoliteType: params.isPoliteType,
     isGroupingWithHa,
+    firstNounAlwaysHasHa: params.firstNounAlwaysHasHa,
   });
   return cue;
 };

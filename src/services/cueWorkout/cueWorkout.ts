@@ -91,6 +91,7 @@ const buildParams = (doc: DocumentData) => {
     isRunning,
     hasHeader,
     joshiOrder,
+    topicFirst,
     isPoliteType,
     groupingWithHa,
     negativeSentence,
@@ -102,12 +103,13 @@ const buildParams = (doc: DocumentData) => {
     points: points || 0,
     colors: colors || [],
     hasHeader: hasHeader || false,
-    firstNounAlwaysHasHa: firstNounAlwaysHasHa ?? false,
     isRunning: isRunning || false,
     joshiOrder: joshiOrder || JOSHI_ORDER.default,
+    topicFirst: topicFirst || NEVER_ALWAYS_RANDOM.never,
     isPoliteType: isPoliteType || false,
     groupingWithHa: groupingWithHa || NEVER_ALWAYS_RANDOM.never,
     negativeSentence: negativeSentence || NEVER_ALWAYS_RANDOM.never,
+    firstNounAlwaysHasHa: firstNounAlwaysHasHa ?? false,
   };
   return params;
 };
