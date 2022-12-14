@@ -35,9 +35,9 @@ const AnswerRow = ({
         }}
       >
         <SentencePitchLine pitchesArray={string2PitchesArray(cue.pitchStr)} />
-        {state.blob && state.audioContext && (
+        {state.audioBuffer && state.audioContext && (
           <AnswerRowPlayButton
-            blob={state.blob}
+            audioBuffer={state.audioBuffer}
             audioContext={state.audioContext}
             start={cue.start}
             end={cue.end}
@@ -57,9 +57,9 @@ const AnswerRow = ({
         <SentencePitchLine
           pitchesArray={string2PitchesArray(answer.pitchStr)}
         />
-        {state.blob && state.audioContext && (
+        {state.audioBuffer && state.audioContext && (
           <AnswerRowPlayButton
-            blob={state.blob}
+            audioBuffer={state.audioBuffer}
             audioContext={state.audioContext}
             start={answer.start}
             end={answer.end}

@@ -1,4 +1,6 @@
+import * as R from 'ramda';
 import { getDownloadURL, ref } from 'firebase/storage';
+import { State } from '../Model';
 import { storage } from '../repositories/firebase';
 
 /**
@@ -44,11 +46,11 @@ export const blobToAudioBuffer = async (
 };
 
 export const createSourceNode = async (
-  blob: Blob,
+  audioBuffer: AudioBuffer,
   audioContext: AudioContext
 ) => {
   const sourceNode = audioContext.createBufferSource();
-  sourceNode.buffer = await blobToAudioBuffer(blob, audioContext);
+  sourceNode.buffer = audioBuffer;
   sourceNode.connect(audioContext.destination);
   return sourceNode;
 };
@@ -71,8 +73,35 @@ export const getBlob = async (downloadURL: string) => {
 export const getBlobFromAssets = async (path: string) => {
   const response = await fetch(path);
   const blob = await response.blob();
+
   return { blob };
 };
 
 export const toggleElement = (arr: string[], val: string) =>
   arr.includes(val) ? arr.filter((el) => el !== val) : [...arr, val];
+
+/**
+ * state.audioContext が null なら、state をそのまま返す
+ * state.audioBuffers[path] があれば、state をそのまま返す
+ * path から blob が取得できなければ、state をそのまま返す
+ */
+export const getUpdatedStateWithAssetPath = async (
+  state: State,
+  path: string
+) => {
+  if (!state.audioContext || !!state.audioBuffers[path]) return state;
+
+  let audioBuffer: AudioBuffer | null = null;
+  const { blob } = await getBlobFromAssets(path);
+  if (!blob) return state;
+
+  audioBuffer = await blobToAudioBuffer(blob, state.audioContext);
+  if (!audioBuffer) return state;
+
+  const updatedState = R.assocPath<AudioBuffer, State>(
+    ['audioBuffers', path],
+    audioBuffer
+  )(state);
+
+  return updatedState;
+};

@@ -8,7 +8,7 @@ import {
   startRandomWorkout,
   stopRandomWorkout,
 } from '../../../../../services/randomWorkout';
-import { shuffle } from '../../../../../services/utils';
+import { blobToAudioBuffer, shuffle } from '../../../../../services/utils';
 
 import TimeDisplay from '../../commons/TimeDisplay';
 
@@ -18,7 +18,7 @@ import CheckPane from './CheckPane';
 import Header from './Header';
 import ResetButton from './ResetButton';
 import PlayButton from './PlayButton';
-
+// todo recording
 const RecordingPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const { randomWorkout, audioContext } = state;
@@ -34,6 +34,7 @@ const RecordingPane = () => {
   const startAtRef = useRef(0);
 
   const [blob, setBlob] = useState<Blob | null>(null);
+  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
 
   // streamと連携してマイクを切るため
   const micAudioElemRef = useRef(new Audio());
@@ -50,7 +51,9 @@ const RecordingPane = () => {
     const mediaRecorder = new MediaRecorder(stream);
     // データが入力された時の処理
     mediaRecorder.ondataavailable = async (event: BlobEvent) => {
+      const audioBuffer = await blobToAudioBuffer(event.data, audioContext);
       setBlob(event.data);
+      setAudioBuffer(audioBuffer);
     };
     mediaRecorder.start();
 
@@ -131,7 +134,7 @@ const RecordingPane = () => {
       <div style={{ height: 24 }} />
       <ResetButton reset={reset} />
       <div style={{ height: 120 }} />
-      <CheckPane blob={blob} />
+      <CheckPane blob={blob} audioBuffer={audioBuffer} />
     </div>
   );
 };

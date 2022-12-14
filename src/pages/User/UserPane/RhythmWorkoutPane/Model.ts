@@ -1,5 +1,5 @@
 export type RhythmWorkoutFormState = {
-  blob: Blob | null;
+  audioBuffer: AudioBuffer | null;
   mora: number;
   cueIds: string[];
   answerIds: string[];
@@ -8,7 +8,7 @@ export type RhythmWorkoutFormState = {
 };
 
 export const INITIAL_RHYTHM_WORKOUT_FORM_STATE: RhythmWorkoutFormState = {
-  blob: null,
+  audioBuffer: null,
   mora: 1,
   cueIds: [],
   answerIds: [],

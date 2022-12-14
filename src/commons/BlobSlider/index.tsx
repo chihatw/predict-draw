@@ -7,14 +7,14 @@ import TimePane from './TimePane';
 import { currentTimeToSliderValue, sliderValueToCurrentTime } from './utils';
 
 const BlobSlider = ({
-  blob,
+  audioBuffer,
   spacer,
   duration,
   audioContext,
 }: {
-  blob: Blob;
   spacer: number;
   duration: number;
+  audioBuffer: AudioBuffer;
   audioContext: AudioContext;
 }) => {
   const theme = useTheme();
@@ -31,8 +31,8 @@ const BlobSlider = ({
   const pausedRef = useRef(false);
 
   const play = async () => {
-    if (!blob || !audioContext) return;
-    const sourceNode = await createSourceNode(blob, audioContext);
+    if (!audioBuffer || !audioContext) return;
+    const sourceNode = await createSourceNode(audioBuffer, audioContext);
 
     // 停止された場合
     sourceNode.onended = () => {

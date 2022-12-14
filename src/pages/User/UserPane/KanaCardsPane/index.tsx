@@ -6,8 +6,10 @@ import { AppContext } from '../../../../App';
 import { KanaCard, KANAS } from '../../../../kana';
 import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
 import {
+  blobToAudioBuffer,
   createSourceNode,
   getBlobFromAssets,
+  getUpdatedStateWithAssetPath,
 } from '../../../../services/utils';
 import { KanaCards, State } from '../../../../Model';
 import { ActionTypes } from '../../../../Update';
@@ -21,19 +23,7 @@ const KanaCardsPane = () => {
     if (!initialize) return;
 
     const fetchData = async () => {
-      let _blob = null;
-      if (state.blobs[gojuuon]) {
-        _blob = state.blobs[gojuuon];
-      } else {
-        const { blob: tmp } = await getBlobFromAssets(gojuuon);
-        if (tmp) {
-          _blob = tmp;
-        }
-      }
-      const updatedState = R.assocPath<Blob | null, State>(
-        ['blobs', gojuuon],
-        _blob
-      )(state);
+      const updatedState = await getUpdatedStateWithAssetPath(state, gojuuon);
       dispatch({ type: ActionTypes.setState, payload: updatedState });
       setInitialize(false);
     };
@@ -83,7 +73,7 @@ const KanaCell = ({
   kana: string;
 }) => {
   const { state } = useContext(AppContext);
-  const blob = state.blobs[gojuuon];
+  const audioBuffer = state.audioBuffers[gojuuon];
 
   const handleClick = () => {
     const updatedTapped = [...state.kanaCards.tapped];
@@ -96,8 +86,8 @@ const KanaCell = ({
     play();
   };
   const play = async () => {
-    if (!state.audioContext || !blob) return;
-    const sourceNode = await createSourceNode(blob, state.audioContext);
+    if (!state.audioContext || !audioBuffer) return;
+    const sourceNode = await createSourceNode(audioBuffer, state.audioContext);
     sourceNode.start(0, start, end - start);
   };
   return (

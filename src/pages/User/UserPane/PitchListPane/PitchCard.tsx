@@ -18,7 +18,7 @@ const PitchCard = ({
   schedules: Schedule[];
 }) => {
   const { state } = useContext(AppContext);
-  const blob = state.blobs[ta_pitches_120];
+  const audioBuffer = state.audioBuffers[ta_pitches_120];
 
   const handleClick = () => {
     const updatedTapped = [...state.pitchList.tapped];
@@ -32,12 +32,15 @@ const PitchCard = ({
   };
 
   const play = async () => {
-    if (!state.audioContext || !blob) return;
+    if (!state.audioContext || !audioBuffer) return;
     const currentTime = state.audioContext.currentTime;
     const sourceNodes: AudioBufferSourceNode[] = [];
     await Promise.all(
       schedules.map(async (_) => {
-        const sourceNode = await createSourceNode(blob, state.audioContext!);
+        const sourceNode = await createSourceNode(
+          audioBuffer,
+          state.audioContext!
+        );
         sourceNodes.push(sourceNode);
       })
     );

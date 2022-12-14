@@ -17,15 +17,15 @@ const RhythmRow = ({
   handleTapped: (id: string) => void;
 }) => {
   const { state } = useContext(AppContext);
-  const blob = state.blobs[downpitch_120];
+  const audioBuffer = state.audioBuffers[downpitch_120];
 
   const handleClick = () => {
     handleTapped(card.id);
     play();
   };
   const play = async () => {
-    if (!state.audioContext || !blob) return;
-    const sourceNode = await createSourceNode(blob, state.audioContext);
+    if (!state.audioContext || !audioBuffer) return;
+    const sourceNode = await createSourceNode(audioBuffer, state.audioContext);
     sourceNode.start(0, card.start, card.end - card.start);
   };
   return (

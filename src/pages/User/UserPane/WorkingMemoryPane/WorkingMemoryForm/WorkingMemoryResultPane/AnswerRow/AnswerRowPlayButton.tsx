@@ -4,18 +4,18 @@ import React from 'react';
 import { createSourceNode } from '../../../../../../../services/utils';
 
 const AnswerRowPlayButton = ({
-  blob,
+  audioBuffer,
   audioContext,
   start,
   end,
 }: {
-  blob: Blob;
+  audioBuffer: AudioBuffer;
   audioContext: AudioContext;
   start: number;
   end: number;
 }) => {
   const play = async () => {
-    const sourceNode = await createSourceNode(blob, audioContext);
+    const sourceNode = await createSourceNode(audioBuffer, audioContext);
     sourceNode.start(0, start, end - start);
   };
 

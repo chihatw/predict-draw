@@ -17,9 +17,9 @@ const ResultPane = () => {
   const theme = useTheme();
   const { state } = useContext(AppContext);
   const { randomWorkout, audioContext } = state;
-  const { workouts, workoutId, blobs } = randomWorkout;
+  const { workouts, workoutId, audioBuffers } = randomWorkout;
   const workout = workouts[workoutId];
-  const blob = blobs[workoutId];
+  const audioBuffer = audioBuffers[workoutId];
   const { title, roundCount, time, beatCount, storagePath } = workout;
   const bpm = useMemo(() => {
     if (!time) return 0;
@@ -70,9 +70,9 @@ const ResultPane = () => {
         </div>
       </div>
       <div style={{ height: 64 }} />
-      {!!blob && !!audioContext && (
+      {!!audioBuffer && !!audioContext && (
         <BlobSlider
-          blob={blob}
+          audioBuffer={audioBuffer}
           spacer={5}
           duration={time + 0.3}
           audioContext={audioContext}

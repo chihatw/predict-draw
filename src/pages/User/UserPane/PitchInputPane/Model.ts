@@ -1,5 +1,5 @@
 export type PitchInputFormState = {
-  blob: Blob | null;
+  audioBuffer: AudioBuffer | null;
   mora: number;
   hasA: boolean;
   hasN: boolean;
@@ -11,7 +11,7 @@ export type PitchInputFormState = {
 };
 
 export const INITIAL_PITCH_INPUT_FORM_STATE: PitchInputFormState = {
-  blob: null,
+  audioBuffer: null,
   mora: 2,
   hasA: true,
   hasN: true,

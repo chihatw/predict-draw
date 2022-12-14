@@ -1,5 +1,5 @@
 export type KanaWorkoutState = {
-  blob: Blob | null;
+  audioBuffer: AudioBuffer | null;
   kanas: string[];
   cueIds: string[];
   answers: string[];
@@ -8,7 +8,7 @@ export type KanaWorkoutState = {
 };
 
 export const INITIAL_KANA_WORKOUT_STATE: KanaWorkoutState = {
-  blob: null,
+  audioBuffer: null,
   kanas: [],
   cueIds: [],
   answers: [],

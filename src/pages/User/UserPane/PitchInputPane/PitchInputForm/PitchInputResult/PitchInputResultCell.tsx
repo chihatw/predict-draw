@@ -22,8 +22,8 @@ const PitchInputResultCell = ({
     isCorrect = true;
   }
   const handleClickPlay = (schedules: Schedule[]) => {
-    if (!state.blob || !state.audioContext) return;
-    playScheduledItem(schedules, state.blob, state.audioContext);
+    if (!state.audioBuffer || !state.audioContext) return;
+    playScheduledItem(schedules, state.audioBuffer, state.audioContext);
   };
   return (
     <div

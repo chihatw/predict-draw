@@ -15,7 +15,7 @@ const WorkingMemoryPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const [open, setOpen] = useState(false);
 
-  const blob = state.blobs[state.workingMemory.storagePath];
+  const audioBuffer = state.audioBuffers[state.workingMemory.storagePath]; // todo workingMemory.storagePath?
   const handleChangeCueCount = (cueCount: number) => {
     if (!dispatch) return;
     const updatedCueIds = buildCueIds(
@@ -27,16 +27,19 @@ const WorkingMemoryPane = () => {
       cueIds: updatedCueIds,
       cueCount,
     };
-    const updatedBlobs = { ...state.blobs };
-    if (blob) {
-      updatedBlobs[updatedWorkingMemory.storagePath] = blob;
+    const updatedAudioBuffers = { ...state.audioBuffers };
+    if (audioBuffer) {
+      updatedAudioBuffers[updatedWorkingMemory.storagePath] = audioBuffer;
     }
     const updatedState = R.compose(
       R.assocPath<WorkingMemory, State>(
         ['workingMemory'],
         updatedWorkingMemory
       ),
-      R.assocPath<{ [path: string]: Blob }, State>(['blobs'], updatedBlobs)
+      R.assocPath<{ [path: string]: AudioBuffer }, State>(
+        ['blobs'],
+        updatedAudioBuffers
+      )
     )(state);
 
     dispatch({ type: ActionTypes.setState, payload: updatedState });

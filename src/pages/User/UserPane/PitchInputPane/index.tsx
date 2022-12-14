@@ -1,10 +1,8 @@
-import * as R from 'ramda';
 import pitch_input_100 from '../../../../assets/audios/pitch_input_100.mp3';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { AppContext } from '../../../../App';
 import { INITIAL_PITCH_INPUT_FORM_STATE, PitchInputFormState } from './Model';
-import { getBlobFromAssets } from '../../../../services/utils';
-import { State } from '../../../../Model';
+import { getUpdatedStateWithAssetPath } from '../../../../services/utils';
 import { ActionTypes } from '../../../../Update';
 import PitchInputForm from './PitchInputForm';
 import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
@@ -21,28 +19,19 @@ const PitchInputPane = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let blob: Blob | null = null;
-      if (state.blobs[pitch_input_100]) {
-        blob = state.blobs[pitch_input_100];
-      } else {
-        const { blob: tmp } = await getBlobFromAssets(pitch_input_100);
-        if (tmp) {
-          blob = tmp;
-        }
-      }
-      const updatedState = R.assocPath<Blob | null, State>(
-        ['blobs', pitch_input_100],
-        blob
-      )(state);
+      const updatedState = await getUpdatedStateWithAssetPath(
+        state,
+        pitch_input_100
+      );
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
 
     fetchData();
-  }, []);
+  }, [state.audioContext]);
 
   useEffect(() => {
     const formState: PitchInputFormState = {
-      blob: state.blobs[pitch_input_100],
+      audioBuffer: state.audioBuffers[pitch_input_100],
       mora: state.pitchInput.mora,
       cueIds: state.pitchInput.cueIds,
       answerIds: [],
@@ -52,9 +41,10 @@ const PitchInputPane = () => {
       hasN: state.pitchInput.hasN,
       hasX: state.pitchInput.hasX,
     };
+    console.log({ formState });
     formDispatch(formState);
   }, [
-    state.blobs,
+    state.audioBuffers,
     state.audioContext,
     state.pitchInput.mora,
     state.pitchInput.cueIds,

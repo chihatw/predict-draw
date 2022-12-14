@@ -95,9 +95,9 @@ const PitchInputPractice = ({
         <span style={{ fontSize: 32 }}> / </span>
         <span>{state.cueIds.length}</span>
       </div>
-      {state.blob && state.audioContext ? (
+      {state.audioBuffer && state.audioContext ? (
         <PlayButton
-          blob={state.blob}
+          audioBuffer={state.audioBuffer}
           schedules={item.schedules}
           audioContext={state.audioContext}
           AnimationElemRef={AnimationElemRef}

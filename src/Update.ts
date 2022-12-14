@@ -74,7 +74,7 @@ export type Action = {
     | SpeedWorkoutParams
     | { [index: number]: string[] }
     | { user: string; pageState: string }
-    | { workingMemory: WorkingMemory; blob: Blob | null }
+    | { workingMemory: WorkingMemory; audioBuffer: AudioBuffer | null }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
     | { workout: RandomWorkout; blob: Blob }
@@ -192,17 +192,20 @@ export const reducer = (state: State, action: Action): State => {
     }
 
     case ActionTypes.setWorkingMemory: {
-      const { workingMemory, blob } = payload as {
+      const { workingMemory, audioBuffer } = payload as {
         workingMemory: WorkingMemory;
-        blob: Blob | null;
+        audioBuffer: AudioBuffer | null;
       };
-      const updatedBlobs = { ...state.blobs }; // <- audioBuffers
-      if (blob) {
-        updatedBlobs[workingMemory.storagePath] = blob;
+      const updatedAudioBuffers = { ...state.audioBuffers }; // <- audioBuffers
+      if (audioBuffer) {
+        updatedAudioBuffers[workingMemory.storagePath] = audioBuffer;
       }
       return R.compose(
         R.assocPath<WorkingMemory, State>(['workingMemory'], workingMemory),
-        R.assocPath<{ [path: string]: Blob }, State>(['blobs'], updatedBlobs)
+        R.assocPath<{ [path: string]: AudioBuffer }, State>(
+          ['audioBuffers'],
+          updatedAudioBuffers
+        )
       )(state);
     }
     case ActionTypes.setCueWorkoutCards: {

@@ -32,10 +32,13 @@ const PlayButton = ({
   const currentCueId = state.cueIds[state.currentIndex];
   const currentCue = state.cues[currentCueId];
   const play = async () => {
-    if (!state.blob || !state.audioContext) return;
+    if (!state.audioBuffer || !state.audioContext) return;
     const id = currentCue.id;
     const pitch = PITCHES[id];
-    const sourceNode = await createSourceNode(state.blob, state.audioContext);
+    const sourceNode = await createSourceNode(
+      state.audioBuffer,
+      state.audioContext
+    );
     sourceNode.start(0, pitch.start, pitch.end - pitch.start);
   };
 

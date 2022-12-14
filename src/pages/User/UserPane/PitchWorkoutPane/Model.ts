@@ -1,5 +1,5 @@
 export type PitchWorkoutFormState = {
-  blob: Blob | null;
+  audioBuffer: AudioBuffer | null;
   mora: number;
   cueIds: string[];
   answerIds: string[];
@@ -8,7 +8,7 @@ export type PitchWorkoutFormState = {
 };
 
 export const INITIAL_PITCH_WORKOUT_FORM_STATE: PitchWorkoutFormState = {
-  blob: null,
+  audioBuffer: null,
   mora: 1,
   cueIds: [],
   answerIds: [],

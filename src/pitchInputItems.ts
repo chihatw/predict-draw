@@ -230,22 +230,19 @@ export const PITCH_INPUT_ITEMS: {
 
 export const playScheduledItem = async (
   schedules: Schedule[],
-  blob: Blob,
+  audioBuffer: AudioBuffer,
   audioContext: AudioContext
 ) => {
-  if (!blob || !audioContext) return;
-
   const currentTime = audioContext.currentTime;
   const sourceNodes: AudioBufferSourceNode[] = [];
   await Promise.all(
     schedules.map(async (_) => {
-      const sourceNode = await createSourceNode(blob, audioContext!);
+      const sourceNode = await createSourceNode(audioBuffer, audioContext!);
       sourceNodes.push(sourceNode);
     })
   );
   schedules.forEach((item, index) => {
     const sourceNode = sourceNodes[index];
-    const duration = item.stop - item.start;
     sourceNode.start(currentTime + item.offset, item.start);
     sourceNode.stop(currentTime + item.offset + item.stop - item.start);
   });

@@ -32,7 +32,7 @@ export const useWorkingMemoryWorkout = (dispatch: React.Dispatch<Action>) => {
 
         dispatch({
           type: ActionTypes.setWorkingMemory,
-          payload: { workingMemory, blob: null },
+          payload: { workingMemory, audioBuffer: null },
         });
       }
     );
@@ -82,7 +82,7 @@ export const buildWorkingMemoryFormState = (
   const workingMemoryFormState: WorkingMemoryFormState = {
     ...state.workingMemory,
     audioContext: state.audioContext,
-    blob: state.blobs[downpitch_120],
+    audioBuffer: state.audioBuffers[downpitch_120],
     answerIds: [],
     currentIndex: 0,
   };

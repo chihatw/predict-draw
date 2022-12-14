@@ -42,8 +42,11 @@ const KanaWorkoutAnswer = ({
   ) || { id: '', start: 0, end: 0, hira: '', kata: '' };
 
   const play = async () => {
-    if (!state.blob || !state.audioContext) return;
-    const sourceNode = await createSourceNode(state.blob, state.audioContext);
+    if (!state.audioBuffer || !state.audioContext) return;
+    const sourceNode = await createSourceNode(
+      state.audioBuffer,
+      state.audioContext
+    );
     sourceNode.start(0, currentKana.start, currentKana.end - currentKana.start);
   };
 

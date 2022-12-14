@@ -2,7 +2,10 @@ import * as R from 'ramda';
 import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
-import { getBlobFromAssets } from '../../../../services/utils';
+import {
+  getBlobFromAssets,
+  getUpdatedStateWithAssetPath,
+} from '../../../../services/utils';
 import { RhythmListState, State } from '../../../../Model';
 import { ActionTypes } from '../../../../Update';
 import TouchMe from '../WorkingMemoryPane/WorkingMemoryForm/TouchMe';
@@ -61,20 +64,10 @@ const RhythmListPane = () => {
   useEffect(() => {
     if (!initialize) return;
     const fetchData = async () => {
-      let _blob: Blob | null = null;
-      if (state.blobs[downpitch_120]) {
-        _blob = state.blobs[downpitch_120];
-      } else {
-        const { blob: tmp } = await getBlobFromAssets(downpitch_120);
-        if (tmp) {
-          _blob = tmp;
-        }
-      }
-
-      const updatedState = R.assocPath<Blob | null, State>(
-        ['blobs', downpitch_120],
-        _blob
-      )(state);
+      const updatedState = await getUpdatedStateWithAssetPath(
+        state,
+        downpitch_120
+      );
       dispatch({ type: ActionTypes.setState, payload: updatedState });
       setInitialize(false);
     };

@@ -79,7 +79,7 @@ export const buildCueIds = (mora: number, cueCount: number): string[] => {
 
 export const buildFormState = (state: State): RhythmWorkoutFormState => {
   return {
-    blob: state.blobs[downpitch_120],
+    audioBuffer: state.audioBuffers[downpitch_120],
     mora: state.rhythmWorkout.mora,
     cueIds: state.rhythmWorkout.cueIds,
     answerIds: [],

@@ -3,7 +3,10 @@ import gojuuon from '../../../../assets/audios/gojuuon.mp3';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { AppContext } from '../../../../App';
 import { INITIAL_KANA_WORKOUT_STATE, KanaWorkoutState } from './Model';
-import { getBlobFromAssets } from '../../../../services/utils';
+import {
+  getBlobFromAssets,
+  getUpdatedStateWithAssetPath,
+} from '../../../../services/utils';
 import { KanaWorkoutParams, State } from '../../../../Model';
 import { ActionTypes } from '../../../../Update';
 import {
@@ -27,18 +30,7 @@ const KanaWorkoutPane = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let _blob: Blob | null = null;
-      if (state.blobs[gojuuon]) {
-        _blob = state.blobs[gojuuon];
-      } else {
-        const { blob: tmp } = await getBlobFromAssets(gojuuon);
-        _blob = tmp;
-      }
-
-      const updatedState = R.assocPath<Blob | null, State>(
-        ['blobs', gojuuon],
-        _blob
-      )(state);
+      const updatedState = await getUpdatedStateWithAssetPath(state, gojuuon);
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
     fetchData();
@@ -55,7 +47,7 @@ const KanaWorkoutPane = () => {
       answers: {},
     };
     setKanaWorkoutParams(updatedKanaWorkoutParams);
-  }, [state.kanaCards.kanas, state.audioContext, state.blobs]);
+  }, [state.kanaCards.kanas, state.audioContext, state.audioBuffers]);
 
   if (!state.audioContext) return <TouchMe />;
 

@@ -2,7 +2,10 @@ import * as R from 'ramda';
 import ta_pitches_120 from '../../../../assets/audios/ta_pitches_120.mp3';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
-import { getBlobFromAssets } from '../../../../services/utils';
+import {
+  getBlobFromAssets,
+  getUpdatedStateWithAssetPath,
+} from '../../../../services/utils';
 import { State } from '../../../../Model';
 import { ActionTypes } from '../../../../Update';
 import { Container } from '@mui/material';
@@ -28,20 +31,10 @@ const PitchListPane = () => {
   useEffect(() => {
     if (!initialize) return;
     const fetchData = async () => {
-      let blob: Blob | null = null;
-      if (state.blobs[ta_pitches_120]) {
-        blob = state.blobs[ta_pitches_120];
-      } else {
-        const { blob: tmp } = await getBlobFromAssets(ta_pitches_120);
-        if (tmp) {
-          blob = tmp;
-        }
-      }
-
-      const updatedState = R.assocPath<Blob | null, State>(
-        ['blobs', ta_pitches_120],
-        blob
-      )(state);
+      const updatedState = await getUpdatedStateWithAssetPath(
+        state,
+        ta_pitches_120
+      );
       dispatch({ type: ActionTypes.setState, payload: updatedState });
       setInitialize(false);
     };

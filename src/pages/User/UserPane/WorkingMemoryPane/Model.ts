@@ -3,7 +3,7 @@ import { WorkingMemoryCue } from '../../../../Model';
 export type WorkingMemoryFormState = {
   id: string;
   cues: { [id: string]: WorkingMemoryCue };
-  blob: Blob | null;
+  audioBuffer: AudioBuffer | null;
   cueIds: string[];
   offset: number;
   cueCount: number;
@@ -15,7 +15,7 @@ export type WorkingMemoryFormState = {
 export const INITIAL_WORKING_MEMORY_FORM_STATE: WorkingMemoryFormState = {
   id: '',
   cues: {},
-  blob: null,
+  audioBuffer: null,
   offset: 0,
   cueIds: [],
   cueCount: 0,

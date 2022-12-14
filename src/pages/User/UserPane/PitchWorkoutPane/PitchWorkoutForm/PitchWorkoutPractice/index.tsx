@@ -38,14 +38,14 @@ const PitchWorkoutPractice = ({
   const currentCueId = state.cueIds[state.currentIndex];
   const item = PITCH_WORKOUT_ITEMS[currentCueId];
   const play = async () => {
-    if (!state.blob || !state.audioContext) return;
+    if (!state.audioBuffer || !state.audioContext) return;
 
     const currentTime = state.audioContext.currentTime;
     const sourceNodes: AudioBufferSourceNode[] = [];
     await Promise.all(
       item.schedules.map(async (_) => {
         const sourceNode = await createSourceNode(
-          state.blob!,
+          state.audioBuffer!,
           state.audioContext!
         );
         sourceNodes.push(sourceNode);

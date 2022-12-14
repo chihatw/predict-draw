@@ -3,7 +3,11 @@ import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { AppContext } from '../../../../App';
 import { State } from '../../../../Model';
-import { getBlob, getBlobFromAssets } from '../../../../services/utils';
+import {
+  getBlob,
+  getBlobFromAssets,
+  getUpdatedStateWithAssetPath,
+} from '../../../../services/utils';
 import { buildWorkingMemoryFormState } from '../../../../services/workingMemoryWorkout';
 import { ActionTypes } from '../../../../Update';
 import { INITIAL_WORKING_MEMORY_FORM_STATE } from './Model';
@@ -17,20 +21,10 @@ const WorkingMemoryPane = () => {
   useEffect(() => {
     if (!initializing) return;
     const fetchData = async () => {
-      let _blob: Blob | null = null;
-      if (state.blobs[downpitch_120]) {
-        _blob = state.blobs[downpitch_120];
-      } else {
-        const { blob: tmp } = await getBlobFromAssets(downpitch_120);
-        if (tmp) {
-          _blob = tmp;
-        }
-      }
-
-      const updatedState = R.assocPath<Blob | null, State>(
-        ['blobs', downpitch_120],
-        _blob
-      )(state);
+      const updatedState = await getUpdatedStateWithAssetPath(
+        state,
+        downpitch_120
+      );
       dispatch({ type: ActionTypes.setState, payload: updatedState });
 
       setInitializing(false);

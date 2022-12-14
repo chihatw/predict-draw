@@ -62,7 +62,7 @@ export const buildKanaWorkoutState = (state: State): KanaWorkoutState => {
   );
 
   return {
-    blob: state.blobs[gojuuon],
+    audioBuffer: state.audioBuffers[gojuuon],
     kanas,
     cueIds,
     answers: [],

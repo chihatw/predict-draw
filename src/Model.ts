@@ -167,24 +167,19 @@ export const INITIAL_RANDOM_WORKOUT_PARAMS: RandomWorkoutParams = {
   blob: null,
 };
 
-export type RandomWotkoutState = {
+export type RandomWorkoutState = {
   workoutId: string;
   params: RandomWorkoutParams;
   workouts: {
     [workoutId: string]: RandomWorkout;
   };
   audioBuffers: { [downloadURL: string]: AudioBuffer };
-  blobs: {
-    // will delete
-    [workoutId: string]: Blob | null;
-  };
 };
 
-export const INITIAL_RANDOM_WORKOUT_STATE: RandomWotkoutState = {
+export const INITIAL_RANDOM_WORKOUT_STATE: RandomWorkoutState = {
   workoutId: '',
   params: INITIAL_RANDOM_WORKOUT_PARAMS,
   workouts: {},
-  blobs: {},
   audioBuffers: {},
 };
 
@@ -382,7 +377,7 @@ export type State = {
   kanaCards: KanaCards;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
-  randomWorkout: RandomWotkoutState;
+  randomWorkout: RandomWorkoutState;
   workingMemory: WorkingMemory;
   rhythmList: RhythmListState;
   rhythmWorkout: RhythmWorkout;
@@ -394,10 +389,10 @@ export type State = {
   pitchWorkoutAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
   params: Params;
-  blobs: {
-    // will delete
-    [audioPath: string]: Blob;
-  };
+  // blobs: {
+  //   // will delete
+  //   [audioPath: string]: Blob;
+  // };
   audioBuffers: {
     [downloadURL: string]: AudioBuffer;
   };
@@ -453,7 +448,7 @@ export const INITIAL_STATE: State = {
       currentRound: 1,
     },
   },
-  blobs: {},
+  // blobs: {},
   blobURLs: {},
   audioBuffers: {},
 };

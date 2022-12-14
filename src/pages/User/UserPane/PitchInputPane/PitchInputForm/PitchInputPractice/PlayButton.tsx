@@ -6,18 +6,18 @@ import { Schedule } from '../../../../../../Model';
 import { playScheduledItem } from '../../../../../../pitchInputItems';
 
 const PlayButton = ({
-  blob,
   schedules,
+  audioBuffer,
   audioContext,
   AnimationElemRef,
 }: {
-  blob: Blob;
   schedules: Schedule[];
+  audioBuffer: AudioBuffer;
   audioContext: AudioContext;
   AnimationElemRef: React.RefObject<HTMLDivElement>;
 }) => {
   const handleClickPlay = () => {
-    playScheduledItem(schedules, blob, audioContext);
+    playScheduledItem(schedules, audioBuffer, audioContext);
   };
   return (
     <div
