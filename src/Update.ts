@@ -18,6 +18,8 @@ import {
   PitchWorkout,
   PitchInput,
   PitchInputLogs,
+  VoiceProps,
+  RecordVoiceParams,
 } from './Model';
 
 export const ActionTypes = {
@@ -42,6 +44,10 @@ export const ActionTypes = {
   setRhythmWorkoutAnswers: 'setRhythmWorkoutAnswers',
   setPitchInput: 'setPitchInput',
   setPitchInputLogs: 'setPitchInputLogs',
+  setRecordVoiceRaw: 'setRecordVoiceRaw',
+  setRecordVoiceAssets: 'setRecordVoiceAssets',
+  setRecordVoiceParams: 'setRecordVoiceParams',
+  setRecordVoiceLogs: 'setRecordVoiceLogs',
   setPitchWorkout: 'setPitchWorkout',
   setPitchWorkoutAnswers: 'setPitchWorkoutAnswers',
   setKanaWorkoutParams: 'setKanaWorkoutParams',
@@ -93,7 +99,12 @@ export type Action = {
         blobs: { [workoutId: string]: Blob | null };
         audioBuffers: { [downloadURL: string]: AudioBuffer };
         randomWorkouts: { [workoutId: string]: RandomWorkout };
-      };
+      }
+    // RecordVoice
+    | VoiceProps
+    | { [id: string]: VoiceProps }
+    | RecordVoiceParams
+    | { selected: string };
 };
 
 export const reducer = (state: State, action: Action): State => {
@@ -305,6 +316,35 @@ export const reducer = (state: State, action: Action): State => {
           ['speedWorkouts'],
           workouts
         )
+      )(state);
+    }
+    // recordVoice
+    case ActionTypes.setRecordVoiceRaw: {
+      const recordVoiceRaw = payload as VoiceProps;
+      return R.assocPath<VoiceProps, State>(
+        ['recordVoice', 'raw'],
+        recordVoiceRaw
+      )(state);
+    }
+    case ActionTypes.setRecordVoiceAssets: {
+      const recordVoiceAssets = payload as { [id: string]: VoiceProps };
+      return R.assocPath<{ [id: string]: VoiceProps }, State>(
+        ['recordVoice', 'assets'],
+        recordVoiceAssets
+      )(state);
+    }
+    case ActionTypes.setRecordVoiceParams: {
+      const recordVoiceParams = payload as RecordVoiceParams;
+      return R.assocPath<RecordVoiceParams, State>(
+        ['recordVoice', 'params'],
+        recordVoiceParams
+      )(state);
+    }
+    case ActionTypes.setRecordVoiceLogs: {
+      const recordVoiceLogs = payload as { selected: string };
+      return R.assocPath<{ selected: string }, State>(
+        ['recordVoice', 'logs'],
+        recordVoiceLogs
       )(state);
     }
     default:

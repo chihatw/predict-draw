@@ -37,10 +37,7 @@ const PitchCard = ({
     const sourceNodes: AudioBufferSourceNode[] = [];
     await Promise.all(
       schedules.map(async (_) => {
-        const sourceNode = await createSourceNode(
-          audioBuffer,
-          state.audioContext!
-        );
+        const sourceNode = createSourceNode(audioBuffer, state.audioContext!);
         sourceNodes.push(sourceNode);
       })
     );

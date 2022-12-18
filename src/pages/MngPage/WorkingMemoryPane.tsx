@@ -15,7 +15,7 @@ const WorkingMemoryPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const [open, setOpen] = useState(false);
 
-  const audioBuffer = state.audioBuffers[state.workingMemory.storagePath]; // todo workingMemory.storagePath?
+  const audioBuffer = state.audioBuffers[state.workingMemory.storagePath]; // workingMemory.storagePath?
   const handleChangeCueCount = (cueCount: number) => {
     if (!dispatch) return;
     const updatedCueIds = buildCueIds(

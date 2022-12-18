@@ -15,7 +15,7 @@ const AnswerRowPlayButton = ({
   end: number;
 }) => {
   const play = async () => {
-    const sourceNode = await createSourceNode(audioBuffer, audioContext);
+    const sourceNode = createSourceNode(audioBuffer, audioContext);
     sourceNode.start(0, start, end - start);
   };
 

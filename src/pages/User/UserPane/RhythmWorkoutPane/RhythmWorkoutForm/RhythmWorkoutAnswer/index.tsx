@@ -39,10 +39,7 @@ const RhythmWorkoutAnswer = ({
   const currentCue = PITCHES[currentCueId];
   const play = async () => {
     if (!state.audioBuffer || !state.audioContext) return;
-    const sourceNode = await createSourceNode(
-      state.audioBuffer,
-      state.audioContext
-    );
+    const sourceNode = createSourceNode(state.audioBuffer, state.audioContext);
     sourceNode.start(0, currentCue.start, currentCue.end - currentCue.start);
   };
   const handleClickPlay = () => {

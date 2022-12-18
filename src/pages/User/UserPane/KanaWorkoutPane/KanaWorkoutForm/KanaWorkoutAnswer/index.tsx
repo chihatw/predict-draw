@@ -43,10 +43,7 @@ const KanaWorkoutAnswer = ({
 
   const play = async () => {
     if (!state.audioBuffer || !state.audioContext) return;
-    const sourceNode = await createSourceNode(
-      state.audioBuffer,
-      state.audioContext
-    );
+    const sourceNode = createSourceNode(state.audioBuffer, state.audioContext);
     sourceNode.start(0, currentKana.start, currentKana.end - currentKana.start);
   };
 

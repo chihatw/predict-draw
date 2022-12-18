@@ -15,6 +15,7 @@ import SpeedWorkoutReadPane from './SpeedWorkoutReadPane';
 import PitchListPane from './PitchListPane';
 import PitchWorkoutPane from './PitchWorkoutPane';
 import PitchInputPane from './PitchInputPane';
+import MicTestPane from './MicTestPane';
 
 const UserPane = ({ user }: { user: string }) => {
   const { state } = useContext(AppContext);
@@ -56,6 +57,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <KanaCardsPane />;
     case pages.kanaWorkout:
       return <KanaWorkoutPane />;
+    case pages.micTest:
+      return <MicTestPane />;
     default:
       return <div></div>;
   }

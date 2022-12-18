@@ -41,7 +41,6 @@ const PitchInputPane = () => {
       hasN: state.pitchInput.hasN,
       hasX: state.pitchInput.hasX,
     };
-    console.log({ formState });
     formDispatch(formState);
   }, [
     state.audioBuffers,

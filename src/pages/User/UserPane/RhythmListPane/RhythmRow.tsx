@@ -25,7 +25,7 @@ const RhythmRow = ({
   };
   const play = async () => {
     if (!state.audioContext || !audioBuffer) return;
-    const sourceNode = await createSourceNode(audioBuffer, state.audioContext);
+    const sourceNode = createSourceNode(audioBuffer, state.audioContext);
     sourceNode.start(0, card.start, card.end - card.start);
   };
   return (

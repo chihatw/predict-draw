@@ -35,10 +35,7 @@ const PlayButton = ({
     if (!state.audioBuffer || !state.audioContext) return;
     const id = currentCue.id;
     const pitch = PITCHES[id];
-    const sourceNode = await createSourceNode(
-      state.audioBuffer,
-      state.audioContext
-    );
+    const sourceNode = createSourceNode(state.audioBuffer, state.audioContext);
     sourceNode.start(0, pitch.start, pitch.end - pitch.start);
   };
 

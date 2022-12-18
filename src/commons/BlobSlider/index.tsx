@@ -32,7 +32,7 @@ const BlobSlider = ({
 
   const play = async () => {
     if (!audioBuffer || !audioContext) return;
-    const sourceNode = await createSourceNode(audioBuffer, audioContext);
+    const sourceNode = createSourceNode(audioBuffer, audioContext);
 
     // 停止された場合
     sourceNode.onended = () => {

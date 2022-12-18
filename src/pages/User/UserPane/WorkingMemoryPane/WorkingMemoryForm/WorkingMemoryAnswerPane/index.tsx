@@ -50,10 +50,7 @@ const WorkingMemoryAnswerPane = ({
 
   const play = async () => {
     if (!state.audioBuffer || !state.audioContext) return;
-    const sourceNode = await createSourceNode(
-      state.audioBuffer,
-      state.audioContext
-    );
+    const sourceNode = createSourceNode(state.audioBuffer, state.audioContext);
     const pitch = PITCHES[currentCue.id];
 
     sourceNode.start(0, pitch.start, pitch.end - pitch.start);

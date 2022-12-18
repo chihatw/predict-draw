@@ -26,6 +26,7 @@ import { useSpeedWorkout } from './services/speedWorkout';
 import { usePitchList } from './services/pitchList';
 import { usePitchWorkout } from './services/pitchWorkout';
 import { usePitchInput } from './services/pitchInput';
+import { useRecordVoice } from './services/recordVoice';
 
 export const AppContext = createContext<{
   state: State;
@@ -45,6 +46,7 @@ function App() {
   useRhythmList(dispatch);
   useCueWorkout(dispatch);
   usePitchInput(dispatch);
+  useRecordVoice(dispatch);
   useSpeedWorkout(dispatch);
   usePitchWorkout(dispatch);
   useRhythmWorkout(dispatch);

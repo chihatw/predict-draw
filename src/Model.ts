@@ -3,7 +3,8 @@ export type Schedule = { offset: number; start: number; stop: number };
 export const pages = {
   note: 'note',
   blank: 'blank',
-  kanaCards: 'kanakanaCards',
+  micTest: 'micTest',
+  kanaCards: 'kanaCards',
   pitchList: 'pitchList',
   rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
@@ -33,6 +34,7 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   // { value: pages.kanaWorkout, label: 'かな練習' },
   { value: pages.blank, label: '空欄' },
   // { value: pages.randomWorkout, label: 'ランダム（実演用）' },
+  { value: pages.micTest, label: 'マイクテスト' },
 ];
 
 export const NEVER_ALWAYS_RANDOM: { [id: string]: string } = {
@@ -366,6 +368,53 @@ export type Params = {
   speedWorkout: SpeedWorkoutParams;
 };
 
+export type VoiceProps = {
+  id: string;
+  startAt: number;
+  stopAt: number;
+  pitchStr: string;
+  storagePath: string;
+};
+
+export const INITIAL_VOICE_PROPS: VoiceProps = {
+  id: '',
+  startAt: 0,
+  stopAt: 0,
+  pitchStr: '',
+  storagePath: '',
+};
+
+export type RecordVoiceParams = {
+  activeIds: string[];
+  targetPitchStr: string;
+};
+
+export type RecordVoice = {
+  raw: VoiceProps;
+  assets: {
+    [id: string]: VoiceProps;
+  };
+  params: RecordVoiceParams;
+  logs: {
+    selected: string;
+  };
+};
+
+export const INITIAL_RECORD_VOICE: RecordVoice = {
+  raw: {
+    ...INITIAL_VOICE_PROPS,
+    id: 'raw',
+  },
+  assets: {},
+  params: {
+    activeIds: [],
+    targetPitchStr: '',
+  },
+  logs: {
+    selected: '',
+  },
+};
+
 export type State = {
   audioContext: AudioContext | null;
   pageStates: {
@@ -389,17 +438,13 @@ export type State = {
   pitchWorkoutAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
   params: Params;
-  // blobs: {
-  //   // will delete
-  //   [audioPath: string]: Blob;
-  // };
   audioBuffers: {
     [downloadURL: string]: AudioBuffer;
   };
   blobURLs: {
-    // imageで使用
     [imagePath: string]: string;
   };
+  recordVoice: RecordVoice;
 };
 
 export const INITIAL_STATE: State = {
@@ -451,4 +496,5 @@ export const INITIAL_STATE: State = {
   // blobs: {},
   blobURLs: {},
   audioBuffers: {},
+  recordVoice: INITIAL_RECORD_VOICE,
 };

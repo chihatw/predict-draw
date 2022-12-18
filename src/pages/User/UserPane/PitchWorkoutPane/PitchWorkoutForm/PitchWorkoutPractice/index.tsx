@@ -44,7 +44,7 @@ const PitchWorkoutPractice = ({
     const sourceNodes: AudioBufferSourceNode[] = [];
     await Promise.all(
       item.schedules.map(async (_) => {
-        const sourceNode = await createSourceNode(
+        const sourceNode = createSourceNode(
           state.audioBuffer!,
           state.audioContext!
         );

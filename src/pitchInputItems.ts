@@ -237,7 +237,7 @@ export const playScheduledItem = async (
   const sourceNodes: AudioBufferSourceNode[] = [];
   await Promise.all(
     schedules.map(async (_) => {
-      const sourceNode = await createSourceNode(audioBuffer, audioContext!);
+      const sourceNode = createSourceNode(audioBuffer, audioContext!);
       sourceNodes.push(sourceNode);
     })
   );

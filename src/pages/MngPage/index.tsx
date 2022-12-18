@@ -13,6 +13,7 @@ import PitchListPane from './PitchListPane';
 import PitchWorkoutPane from './PitchWorkoutPane';
 import PitchInputPane from './PitchInputPane';
 import WorkingMemoryPane from './WorkingMemoryPane';
+import RecordVoicePane from './RecordVoicePane';
 
 const MngPage = () => {
   const { state } = useContext(AppContext);
@@ -51,6 +52,7 @@ const MngPage = () => {
             {/* <PitchWorkoutPane /> */}
             <PitchInputPane />
             <CueWorkoutList />
+            <RecordVoicePane />
             {/* <WorkingMemoryPane /> */}
           </div>
         </div>

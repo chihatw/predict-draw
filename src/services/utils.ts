@@ -45,7 +45,7 @@ export const blobToAudioBuffer = async (
   return audioBuffer;
 };
 
-export const createSourceNode = async (
+export const createSourceNode = (
   audioBuffer: AudioBuffer,
   audioContext: AudioContext
 ) => {
@@ -104,4 +104,15 @@ export const getUpdatedStateWithAssetPath = async (
   )(state);
 
   return updatedState;
+};
+
+export const getAudioBufferFromStorage = async (
+  storagePath: string,
+  audioContext: AudioContext
+) => {
+  const downloadURL = await getDownloadURL(ref(storage, storagePath));
+  const response = await fetch(downloadURL);
+  const blob = await response.blob();
+  const audioBuffer = await blobToAudioBuffer(blob, audioContext);
+  return audioBuffer;
 };

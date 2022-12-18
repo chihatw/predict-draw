@@ -1,14 +1,11 @@
-import * as R from 'ramda';
 import gojuuon from '../../../../assets/audios/gojuuon.mp3';
 import { Button, Container } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
-import { KanaCard, KANAS } from '../../../../kana';
+import { KANAS } from '../../../../kana';
 import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
 import {
-  blobToAudioBuffer,
   createSourceNode,
-  getBlobFromAssets,
   getUpdatedStateWithAssetPath,
 } from '../../../../services/utils';
 import { KanaCards, State } from '../../../../Model';
@@ -87,7 +84,7 @@ const KanaCell = ({
   };
   const play = async () => {
     if (!state.audioContext || !audioBuffer) return;
-    const sourceNode = await createSourceNode(audioBuffer, state.audioContext);
+    const sourceNode = createSourceNode(audioBuffer, state.audioContext);
     sourceNode.start(0, start, end - start);
   };
   return (
