@@ -25,6 +25,7 @@ const RecordVoiceRawPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const recordVoiceRaw = state.recordVoice.raw;
   const recordVoiceParams = state.recordVoice.params;
+  const recordVoiceLogs = state.recordVoice.logs;
   const [targetPitchStr, setTargetPitchStr] = useState(
     recordVoiceParams.targetPitchStr
   );
@@ -131,6 +132,7 @@ const RecordVoiceRawPane = () => {
           <Delete />
         </IconButton>
       </div>
+      <div>{`touchedAt: ${recordVoiceLogs.selected}`}</div>
     </div>
   );
 };

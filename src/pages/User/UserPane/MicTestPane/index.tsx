@@ -25,7 +25,7 @@ const MicTestPane = () => {
   // streamと連携してマイクを切るため
   const micAudioElemRef = useRef(new Audio());
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-
+  console.log({ audioBuffer });
   useEffect(() => {
     const recordVoiceRaw = state.recordVoice.raw;
     if (!recordVoiceRaw.storagePath) {
@@ -122,6 +122,7 @@ const MicTestPane = () => {
             <IconButton
               sx={{ color: '#52a2aa' }}
               onClick={handleClickRecButton}
+              disabled={audioBuffer !== null}
             >
               {isRecording ? (
                 <StopCircleIcon sx={{ fontSize: 120 }} />
