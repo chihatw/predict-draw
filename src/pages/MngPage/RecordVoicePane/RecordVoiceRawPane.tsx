@@ -105,6 +105,11 @@ const RecordVoiceRawPane = () => {
     dispatch({ type: ActionTypes.setState, payload: updatedState });
   };
 
+  const date = new Date(Number(recordVoiceLogs.selected));
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+  const dateStr = `${minute}:${second}`;
+
   return (
     <div style={{ display: 'grid', rowGap: 8 }}>
       <TextField
@@ -132,7 +137,7 @@ const RecordVoiceRawPane = () => {
           <Delete />
         </IconButton>
       </div>
-      <div>{`touchedAt: ${recordVoiceLogs.selected}`}</div>
+      <div>{`touchedAt: ${dateStr}`}</div>
     </div>
   );
 };
