@@ -18,10 +18,10 @@ const RecordVoiceRow = ({ id, index }: { id: string; index: number }) => {
   }, [state.recordVoice.assets, id]);
 
   useEffect(() => {
-    if (!asset) return;
+    if (!asset.storagePath) return;
     const audioBuffer = state.audioBuffers[asset.storagePath];
     setAudioBuffer(audioBuffer);
-  }, [state.audioBuffers]);
+  }, [state.audioBuffers, asset.storagePath]);
 
   if (!asset) return <></>;
 

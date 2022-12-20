@@ -1,5 +1,4 @@
-import { PlayArrow } from '@mui/icons-material';
-import { Container, IconButton } from '@mui/material';
+import { Container } from '@mui/material';
 import * as R from 'ramda';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
