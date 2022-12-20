@@ -47,9 +47,8 @@ const PlayButton = ({ audioBuffer }: { audioBuffer: AudioBuffer }) => {
     sourceNode.start();
 
     const updatedRecordVoiceLogs: { selected: string } = {
-      selected: String(Date.now()),
+      selected: `raw,${String(Date.now())}`,
     };
-    console.log({ updatedRecordVoiceLogs });
     setRecordVoiceLogs(updatedRecordVoiceLogs);
   };
   return (
