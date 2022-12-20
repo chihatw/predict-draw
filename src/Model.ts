@@ -13,6 +13,7 @@ export const pages = {
   pitchWorkout: 'pitchWorkout',
   workingMemory: 'workingMemory',
   rhythmWorkout: 'rhythmWorkout',
+  recordVoiceList: 'recordVoiceList',
   speedWorkoutCue: 'speedWorkoutCue',
   speedWorkoutRead: 'speedWorkoutRead',
   speedWorkoutSolo: 'speedWorkoutSolo',
@@ -35,6 +36,7 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.blank, label: '空欄' },
   // { value: pages.randomWorkout, label: 'ランダム（実演用）' },
   { value: pages.micTest, label: 'マイクテスト' },
+  { value: pages.recordVoiceList, label: '録音リスト' },
 ];
 
 export const NEVER_ALWAYS_RANDOM: { [id: string]: string } = {
@@ -493,7 +495,6 @@ export const INITIAL_STATE: State = {
       currentRound: 1,
     },
   },
-  // blobs: {},
   blobURLs: {},
   audioBuffers: {},
   recordVoice: INITIAL_RECORD_VOICE,

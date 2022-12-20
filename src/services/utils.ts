@@ -109,10 +109,22 @@ export const getUpdatedStateWithAssetPath = async (
 export const getAudioBufferFromStorage = async (
   storagePath: string,
   audioContext: AudioContext
-) => {
+): Promise<AudioBuffer | null> => {
   const downloadURL = await getDownloadURL(ref(storage, storagePath));
+  if (!downloadURL) return null;
+  console.log(`fetch from "${storagePath}"`);
   const response = await fetch(downloadURL);
   const blob = await response.blob();
+  if (!blob) return null;
   const audioBuffer = await blobToAudioBuffer(blob, audioContext);
   return audioBuffer;
+};
+
+export const getBlobFromStorage = async (storagePath: string) => {
+  const downloadURL = await getDownloadURL(ref(storage, storagePath));
+  if (!downloadURL) return null;
+  console.log(`fetch from "${storagePath}"`);
+  const response = await fetch(downloadURL);
+  const blob = await response.blob();
+  return blob;
 };

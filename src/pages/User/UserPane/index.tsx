@@ -16,6 +16,7 @@ import PitchListPane from './PitchListPane';
 import PitchWorkoutPane from './PitchWorkoutPane';
 import PitchInputPane from './PitchInputPane';
 import MicTestPane from './MicTestPane';
+import RecordVoiceListPane from './RecordVoiceListPane';
 
 const UserPane = ({ user }: { user: string }) => {
   const { state } = useContext(AppContext);
@@ -59,6 +60,8 @@ const UserPane = ({ user }: { user: string }) => {
       return <KanaWorkoutPane />;
     case pages.micTest:
       return <MicTestPane />;
+    case pages.recordVoiceList:
+      return <RecordVoiceListPane />;
     default:
       return <div></div>;
   }

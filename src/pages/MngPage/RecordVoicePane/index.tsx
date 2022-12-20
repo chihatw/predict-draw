@@ -1,13 +1,10 @@
-import * as R from 'ramda';
-
 import { Button } from '@mui/material';
-import { useContext, useState } from 'react';
-import { AppContext } from '../../../App';
+import React, { useState } from 'react';
 
 import RecordVoiceRawPane from './RecordVoiceRawPane';
+import RecordVoiceAssetsPane from './RecordVoiceAssetsPane';
 
 const RecordVoicePane = () => {
-  const { state, dispatch } = useContext(AppContext);
   const [open, setOpen] = useState(true); //debug
 
   return (
@@ -26,6 +23,8 @@ const RecordVoicePane = () => {
         <div style={{ display: 'grid', rowGap: 8 }}>
           <h4>Raw</h4>
           <RecordVoiceRawPane />
+          <h4>Assets</h4>
+          <RecordVoiceAssetsPane />
         </div>
       )}
     </div>

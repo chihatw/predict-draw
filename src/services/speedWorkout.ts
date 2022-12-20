@@ -36,7 +36,7 @@ export const useSpeedWorkout = (dispatch: React.Dispatch<Action>) => {
     const unsub = onSnapshot(
       q,
       (querySnapshot) => {
-        console.log('snapshot workouts');
+        console.log('snapshot speedWorkouts');
         const workouts: { [id: string]: SpeedWorkout } = {};
         querySnapshot.forEach((doc) => {
           workouts[doc.id] = buildSpeedWorkout(doc);

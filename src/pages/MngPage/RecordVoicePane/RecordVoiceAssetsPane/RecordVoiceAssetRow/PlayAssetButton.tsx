@@ -1,27 +1,23 @@
 import { PlayArrow } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../App';
+import { AppContext } from '../../../../../App';
+import { VoiceProps } from '../../../../../Model';
+import { createSourceNode } from '../../../../../services/utils';
 
-import { createSourceNode } from '../../../../services/utils';
-
-const PlayRawPane = () => {
+const PlayAssetButton = ({ asset }: { asset: VoiceProps }) => {
   const { state } = useContext(AppContext);
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
 
   useEffect(() => {
-    if (!state.recordVoice.raw.storagePath) {
-      setAudioBuffer(null);
-      return;
-    }
-    const audioBuffer = state.audioBuffers[state.recordVoice.raw.storagePath];
+    const audioBuffer = state.audioBuffers[asset.storagePath];
     setAudioBuffer(audioBuffer);
-  }, [state.recordVoice.raw.storagePath, state.audioBuffers]);
+  }, [state.audioBuffers]);
 
   const play = () => {
     if (!state.audioContext || !audioBuffer) return;
     const sourceNode = createSourceNode(audioBuffer, state.audioContext);
-    sourceNode.start();
+    sourceNode.start(0, asset.startAt, asset.stopAt - asset.startAt);
   };
   if (!audioBuffer) return <></>;
   return (
@@ -31,4 +27,4 @@ const PlayRawPane = () => {
   );
 };
 
-export default PlayRawPane;
+export default PlayAssetButton;

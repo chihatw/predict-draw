@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import {
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   onSnapshot,
@@ -31,7 +32,7 @@ export const useRecordVoice = async (dispatch: React.Dispatch<Action>) => {
       }
     );
     const unsubAssets = onSnapshot(
-      collection(db, COLLECTIONS.recordVoice),
+      collection(db, COLLECTIONS.recordVoiceAssets),
       (querySnapshot) => {
         console.log('snapshot recordVoiceAssets');
         const recordVoiceAssets: { [id: string]: VoiceProps } = {};
@@ -82,9 +83,14 @@ export const setRecordVoiceRaw = (recordVoice: VoiceProps) => {
   setDoc(doc(db, COLLECTIONS.recordVoice, 'raw'), recordVoice);
 };
 
-export const setRecordVoiceAssets = (recordVoice: VoiceProps) => {
-  console.log('set recordVoiceAssets');
+export const setRecordVoiceAsset = (recordVoice: VoiceProps) => {
+  console.log('set recordVoiceAsset');
   setDoc(doc(db, COLLECTIONS.recordVoiceAssets, recordVoice.id), recordVoice);
+};
+
+export const deleteRecordVoiceAsset = (id: string) => {
+  console.log('delete recordVoiceAsset');
+  deleteDoc(doc(db, COLLECTIONS.recordVoiceAssets, id));
 };
 
 export const setRecordVoiceParams = (params: RecordVoiceParams) => {

@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { createSourceNode } from '../../../../services/utils';
 import { AppContext } from '../../../../App';
 
@@ -7,16 +7,22 @@ import PlayArrow from '@mui/icons-material/PlayArrow';
 
 import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import string2PitchesArray from 'string2pitches-array';
-import { RecordVoice } from '../../../../Model';
 import { setRecordVoiceLogs } from '../../../../services/recordVoice';
 
-const PlayAudioPane = ({
-  pitchStr,
-  audioBuffer,
-}: {
-  pitchStr: string;
-  audioBuffer: AudioBuffer | null;
-}) => {
+const PlayAudioPane = () => {
+  const { state } = useContext(AppContext);
+  const pitchStr = state.recordVoice.raw.pitchStr;
+  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
+
+  useEffect(() => {
+    if (!state.recordVoice.raw.storagePath) {
+      setAudioBuffer(null);
+      return;
+    }
+    const audioBuffer = state.audioBuffers[state.recordVoice.raw.storagePath];
+    setAudioBuffer(audioBuffer);
+  }, [state.audioBuffers, state.recordVoice.raw.storagePath]);
+
   return (
     <div>
       <div
