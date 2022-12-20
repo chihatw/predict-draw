@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import * as R from 'ramda';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
-import { State } from '../../../../Model';
+import { State, VoiceProps } from '../../../../Model';
 import { setRecordVoiceParams } from '../../../../services/recordVoice';
 import { getAudioBufferFromStorage } from '../../../../services/utils';
 import { ActionTypes } from '../../../../Update';
@@ -11,6 +11,12 @@ import RecordVoiceAssetRow from './RecordVoiceAssetRow';
 const RecordVoiceAssetsPane = () => {
   const { state, dispatch } = useContext(AppContext);
   const [activeIds, setActiveIds] = useState<string[]>([]);
+  const [targetAssetId, setTargetAssetId] = useState('');
+  const [assets, setAssets] = useState<VoiceProps[]>([]);
+
+  useEffect(() => {
+    setAssets(Object.values(state.recordVoice.assets));
+  }, [state.recordVoice.assets]);
 
   /**
    * activeIds の取得
@@ -19,11 +25,25 @@ const RecordVoiceAssetsPane = () => {
     const remoteValues = state.recordVoice.params.activeIds;
     if (!remoteValues.length) {
       setActiveIds([]);
+      return;
     }
     if (!!activeIds.length) return;
 
     setActiveIds(remoteValues);
   }, [state.recordVoice.params.activeIds]);
+
+  /**
+   * targetAssetId の取得
+   */
+  useEffect(() => {
+    const remoteValue = state.recordVoice.params.targetAssetId;
+    if (!remoteValue) {
+      setTargetAssetId('');
+      return;
+    }
+    if (!!targetAssetId) return;
+    setTargetAssetId(remoteValue);
+  }, [state.recordVoice.params.targetAssetId]);
 
   /** audioBuffers の取得 */
   useEffect(() => {
@@ -77,6 +97,16 @@ const RecordVoiceAssetsPane = () => {
     setRecordVoiceParams(updatedParams);
   };
 
+  const selectTarget = (id: string) => {
+    const updatedTargetAssetId = targetAssetId === id ? '' : id;
+    setTargetAssetId(updatedTargetAssetId);
+    const updatedParams = {
+      ...state.recordVoice.params,
+      targetAssetId: updatedTargetAssetId,
+    };
+    setRecordVoiceParams(updatedParams);
+  };
+
   const clearActiveIds = () => {
     setActiveIds([]);
     const updatedParams = {
@@ -85,14 +115,17 @@ const RecordVoiceAssetsPane = () => {
     };
     setRecordVoiceParams(updatedParams);
   };
+
   return (
     <div style={{ display: 'grid', rowGap: 8 }}>
-      {Object.values(state.recordVoice.assets).map((asset, index) => (
+      {assets.map((asset, index) => (
         <RecordVoiceAssetRow
           key={index}
           asset={asset}
+          isTarget={targetAssetId === asset.id}
           index={activeIds.indexOf(asset.id)}
           handleClick={() => selectAsset(asset.id)}
+          selectTarget={() => selectTarget(asset.id)}
         />
       ))}
       <Button

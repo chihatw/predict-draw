@@ -388,6 +388,7 @@ export const INITIAL_VOICE_PROPS: VoiceProps = {
 
 export type RecordVoiceParams = {
   activeIds: string[];
+  targetAssetId: string;
   targetPitchStr: string;
 };
 
@@ -410,6 +411,7 @@ export const INITIAL_RECORD_VOICE: RecordVoice = {
   assets: {},
   params: {
     activeIds: [],
+    targetAssetId: '',
     targetPitchStr: '',
   },
   logs: {

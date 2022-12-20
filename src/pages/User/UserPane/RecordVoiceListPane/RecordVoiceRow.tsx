@@ -3,13 +3,20 @@ import { Button } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import string2PitchesArray from 'string2pitches-array';
 import { AppContext } from '../../../../App';
+import { INITIAL_VOICE_PROPS } from '../../../../Model';
+import { setRecordVoiceLogs } from '../../../../services/recordVoice';
 import { createSourceNode } from '../../../../services/utils';
 
 const RecordVoiceRow = ({ id, index }: { id: string; index: number }) => {
   const { state } = useContext(AppContext);
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
+  const [asset, setAsset] = useState(INITIAL_VOICE_PROPS);
 
-  const asset = state.recordVoice.assets[id];
+  useEffect(() => {
+    const asset = state.recordVoice.assets[id] || INITIAL_VOICE_PROPS;
+    setAsset(asset);
+  }, [state.recordVoice.assets, id]);
+
   useEffect(() => {
     if (!asset) return;
     const audioBuffer = state.audioBuffers[asset.storagePath];
@@ -22,6 +29,7 @@ const RecordVoiceRow = ({ id, index }: { id: string; index: number }) => {
     if (!state.audioContext || !audioBuffer) return;
     const sourceNode = createSourceNode(audioBuffer, state.audioContext);
     sourceNode.start(0, asset.startAt, asset.stopAt - asset.startAt);
+    setRecordVoiceLogs({ selected: `${asset.pitchStr} (row),${Date.now()}` });
   };
 
   return (

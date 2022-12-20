@@ -5,17 +5,22 @@ import DeleteAssetButton from './DeleteAssetButton';
 import PlayAssetButton from './PlayAssetButton';
 import RecordVoiceAssetPitchStr from './RecordVoiceAssetPitchStr';
 import RecordVoiceAssetSelectButton from './RecordVoiceAssetSelectButton';
+import RecordVoiceAssetSelectTarget from './RecordVoiceAssetSelectTarget';
 import RecordVoiceAssetStartAt from './RecordVoiceAssetStartAt';
 import RecordVoiceAssetStopAt from './RecordVoiceAssetStopAt';
 
 const RecordVoiceAssetRow = ({
   asset,
   index,
+  isTarget,
   handleClick,
+  selectTarget,
 }: {
-  asset: VoiceProps;
   index: number;
+  asset: VoiceProps;
+  isTarget: boolean;
   handleClick: () => void;
+  selectTarget: () => void;
 }) => {
   const { state } = useContext(AppContext);
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
@@ -29,6 +34,10 @@ const RecordVoiceAssetRow = ({
     <div style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
       <PlayAssetButton asset={asset} />
       <RecordVoiceAssetSelectButton index={index} handleClick={handleClick} />
+      <RecordVoiceAssetSelectTarget
+        isTarget={isTarget}
+        selectTarget={selectTarget}
+      />
       <RecordVoiceAssetPitchStr asset={asset} />
       <RecordVoiceAssetStartAt asset={asset} />
       <RecordVoiceAssetStopAt asset={asset} />

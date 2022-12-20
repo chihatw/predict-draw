@@ -115,9 +115,10 @@ const buildRecordVoice = (doc: DocumentData): VoiceProps => {
 };
 
 const buildRecordVoiceParams = (doc: DocumentData): RecordVoiceParams => {
-  const { activeIds, targetPitchStr } = doc.data();
+  const { activeIds, targetPitchStr, targetAssetId } = doc.data();
   return {
     activeIds: activeIds || [],
+    targetAssetId: targetAssetId || '',
     targetPitchStr: targetPitchStr || '',
   };
 };
