@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import * as R from 'ramda';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
 import { PITCH_ORDERS } from '../../../../constants';
 import { State, VoiceProps } from '../../../../Model';
@@ -16,7 +16,6 @@ const RecordVoiceAssetsPane = () => {
   const [assets, setAssets] = useState<VoiceProps[]>([]);
 
   useEffect(() => {
-    console.log(state.recordVoice.assets);
     setAssets(
       Object.values(state.recordVoice.assets).sort(
         (a, b) =>

@@ -66,9 +66,7 @@ const RecordVoiceListPane = () => {
   return (
     <Container maxWidth='xs'>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div
-          style={{ display: 'grid', rowGap: 24, marginTop: 16, flexBasis: 320 }}
-        >
+        <div style={{ display: 'grid', rowGap: 24, flexBasis: 320 }}>
           <div style={{ height: 136, textAlign: 'center' }}>
             {!!targetAssetId && <PlayTargetButton id={targetAssetId} />}
           </div>
