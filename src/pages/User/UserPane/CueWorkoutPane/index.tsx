@@ -32,9 +32,11 @@ const CueWorkoutPane = () => {
         ['blobURLs'],
         updatedBlobURLs
       )(state);
+
       dispatch({ type: ActionTypes.setState, payload: updatedState });
       setInitializing(false);
     };
+
     fetchData();
   }, [initializing]);
 
@@ -44,6 +46,7 @@ const CueWorkoutPane = () => {
   useEffect(() => {
     if (state.cueWorkout.params.isRunning) return;
     const miliSeconds = state.cueWorkout.params.time * 1000;
+
     setMiliSeconds(miliSeconds);
   }, [state.cueWorkout.params.time, state.cueWorkout.params.isRunning]);
 

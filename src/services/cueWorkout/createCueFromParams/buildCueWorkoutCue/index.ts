@@ -1,61 +1,55 @@
-import * as R from 'ramda';
-import { CueCardProps, INITIAL_CUE_CARD_PROPS } from '../../../../Model';
-import { getRandomInt } from '../../../utils';
+import {
+  CueCardProps,
+  JOSHI_PATTERN,
+  INITIAL_CUE_CARD_PROPS,
+} from '../../../../Model';
 import buildHeaderCardProps from './buildHeaderCardProps';
-import buildNounCardProps from './buildNounCardProps';
+import {
+  getJoshi,
+  getNounId,
+  buildNounCueCardProps,
+} from './buildNounCardProps';
 import buildVerbCardProps from './buildVerbCardProps';
 
 const buildCueWorkoutCue = ({
   verbId,
   nounIds,
   hasHeader,
-  isInverse,
   isNegative,
-  isTopicFirst,
-  isPoliteType,
-  isGroupingWithHa,
-  firstNounAlwaysHasHa,
+  joshiPattern,
 }: {
   verbId: string;
   nounIds: string[];
   hasHeader: boolean;
-  isInverse: boolean;
-  isTopicFirst: boolean;
   isNegative: boolean;
-  isPoliteType: boolean;
-  isGroupingWithHa: boolean;
-  firstNounAlwaysHasHa: boolean;
+  joshiPattern: string;
 }) => {
-  const verb = buildVerbCardProps(verbId, isNegative, isPoliteType);
-
-  if (isInverse) {
-    nounIds = R.reverse(nounIds);
-  }
-
-  // 前置きがない場合も、内部的に設定する
-  const topicNounId = nounIds[getRandomInt(2)];
-  const other = nounIds.find((item) => item !== topicNounId);
-  if (other) {
-    nounIds = isTopicFirst ? [topicNounId, other] : [other, topicNounId];
-  }
+  const verb = buildVerbCardProps(verbId, isNegative);
 
   let header: CueCardProps = INITIAL_CUE_CARD_PROPS;
   if (hasHeader) {
-    header = buildHeaderCardProps(topicNounId);
+    header = buildHeaderCardProps(nounIds[0]);
   }
 
-  const nouns: CueCardProps[] = nounIds.map((nounId, index) =>
-    buildNounCardProps({
-      index,
-      nounId,
-      isInverse,
-      hasDouble: nounIds.length === 2,
-      topicNounId,
-      isTopicFirst,
-      isGroupingWithHa,
-      firstNounAlwaysHasHa,
-    })
-  );
+  let nouns: CueCardProps[] = [];
+
+  switch (nounIds.length) {
+    case 1:
+      const nounId = nounIds[0];
+      const joshi = 'を';
+      const nounCueCardProps = buildNounCueCardProps(nounId, joshi);
+      nouns = [nounCueCardProps];
+      break;
+    case 2:
+      nouns = nounIds.map((_, index) => {
+        const nounId = getNounId(nounIds, joshiPattern, index);
+        const joshi = getJoshi(joshiPattern, index);
+        return buildNounCueCardProps(nounId, joshi);
+      });
+      break;
+    default:
+      console.error(`incorrect nounIds.length: ${nounIds.length}`);
+  }
 
   const text =
     header.label + nouns.map((noun) => noun.label).join('') + verb.label;

@@ -39,16 +39,29 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.recordVoiceList, label: '録音リスト' },
 ];
 
-export const NEVER_ALWAYS_RANDOM: { [id: string]: string } = {
+export const JOSHI_PATTERN = {
+  default: 'default',
+  inverse: 'inverse',
+  topic_wo_head: 'topic_wo_head',
+  topic_wo_tail: 'topic_wo_tail',
+  topic_ni_head: 'topic_ni_head',
+  topic_ni_tail: 'topic_ni_tail',
+  group_wo_head: 'group_wo_head',
+  group_wo_tail: 'group_wo_tail',
+  group_ni_head: 'group_ni_head',
+  group_ni_tail: 'group_ni_tail',
+};
+
+export const NEVER_ALWAYS_RANDOM = {
   never: 'never',
   always: 'always',
   random: 'random',
 };
 
-export const JOSHI_ORDER: { [id: string]: string } = {
-  default: 'default',
-  inverse: 'inverse',
-  random: 'random',
+export const SHOW_VERB = {
+  show: 'show',
+  hide: 'hide',
+  showBoth: 'showBoth',
 };
 
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
@@ -206,7 +219,6 @@ export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
 export type CueCardProps = {
   label: string;
   pitchStr: string;
-  hasBorder?: boolean;
 };
 
 export const INITIAL_CUE_CARD_PROPS: CueCardProps = {
@@ -233,14 +245,11 @@ export type CueWorkoutParams = {
   verbs: string[];
   points: number;
   colors: string[];
+  showVerb: string;
   isRunning: boolean;
   hasHeader: boolean;
-  joshiOrder: string;
-  topicFirst: string;
-  isPoliteType: boolean;
-  groupingWithHa: string;
+  joshiPatterns: string[];
   negativeSentence: string;
-  firstNounAlwaysHasHa: boolean;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
@@ -248,14 +257,11 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   verbs: [],
   colors: [],
   points: 0,
+  showVerb: SHOW_VERB.show,
   isRunning: false,
   hasHeader: false,
-  joshiOrder: JOSHI_ORDER.default,
-  topicFirst: NEVER_ALWAYS_RANDOM.never,
-  isPoliteType: false,
-  groupingWithHa: NEVER_ALWAYS_RANDOM.never,
+  joshiPatterns: [],
   negativeSentence: NEVER_ALWAYS_RANDOM.never,
-  firstNounAlwaysHasHa: true,
 };
 
 export type CueWorkoutState = {

@@ -9,9 +9,9 @@ import React, { useEffect } from 'react';
 import {
   CueWorkoutCue,
   CueWorkoutParams,
-  JOSHI_ORDER,
   NEVER_ALWAYS_RANDOM,
   INITIAL_CUE_CARD_PROPS,
+  SHOW_VERB,
 } from '../../Model';
 import { CUE_CARDS } from '../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { db } from '../../repositories/firebase';
@@ -88,28 +88,22 @@ const buildParams = (doc: DocumentData) => {
     verbs,
     colors,
     points,
+    showVerb,
     isRunning,
     hasHeader,
-    joshiOrder,
-    topicFirst,
-    isPoliteType,
-    groupingWithHa,
+    joshiPatterns,
     negativeSentence,
-    firstNounAlwaysHasHa,
   } = doc.data();
   const params: CueWorkoutParams = {
     time: time || 0,
     verbs: verbs || [],
     points: points || 0,
     colors: colors || [],
+    showVerb: showVerb || SHOW_VERB.show,
     hasHeader: hasHeader || false,
     isRunning: isRunning || false,
-    joshiOrder: joshiOrder || JOSHI_ORDER.default,
-    topicFirst: topicFirst || NEVER_ALWAYS_RANDOM.never,
-    isPoliteType: isPoliteType || false,
-    groupingWithHa: groupingWithHa || NEVER_ALWAYS_RANDOM.never,
+    joshiPatterns: joshiPatterns || [],
     negativeSentence: negativeSentence || NEVER_ALWAYS_RANDOM.never,
-    firstNounAlwaysHasHa: firstNounAlwaysHasHa ?? false,
   };
   return params;
 };

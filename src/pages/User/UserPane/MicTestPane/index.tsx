@@ -1,17 +1,11 @@
 import * as R from 'ramda';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
-import MicIcon from '@mui/icons-material/Mic';
-import { Container, IconButton } from '@mui/material';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import {
-  blobToAudioBuffer,
-  getAudioBufferFromStorage,
-} from '../../../../services/utils';
+
+import { Container } from '@mui/material';
+import { useContext, useEffect } from 'react';
+import { getAudioBufferFromStorage } from '../../../../services/utils';
 import { AppContext } from '../../../../App';
 import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
-import { State, VoiceProps } from '../../../../Model';
-import { uploadStorage } from '../../../../repositories/storage';
-import { setRecordVoiceRaw } from '../../../../services/recordVoice';
+import { State } from '../../../../Model';
 import PlayAudioPane from './PlayAudioPane';
 import { ActionTypes } from '../../../../Update';
 import TargetPitchPane from './TargetPitchPane';

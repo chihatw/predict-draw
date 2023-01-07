@@ -1,5 +1,5 @@
 import React from 'react';
-import { CueWorkoutState } from '../../../../../Model';
+import { CueCardProps, CueWorkoutState, SHOW_VERB } from '../../../../../Model';
 
 import CueCard from './CueCard';
 
@@ -9,34 +9,21 @@ const CuePane = React.memo(
       <div style={{ height: 200 }}>
         <div style={{ display: 'grid', rowGap: 16, flexGrow: 1 }}>
           {cueWorkout.params.hasHeader && (
-            <>
-              <CueCard
-                label={cueWorkout.cue.header.label}
-                pitchStr={cueWorkout.cue.header.pitchStr}
-              />
-
-              <div
-                style={{
-                  height: 4,
-                  borderTop: '8px #52a2aa dashed',
-                  marginTop: 8,
-                }}
-              />
-            </>
+            <CueCard
+              label={cueWorkout.cue.header.label}
+              pitchStr={cueWorkout.cue.header.pitchStr}
+            />
           )}
-          {cueWorkout.cue.nouns.map((cueCard, index) => {
-            return (
-              <div style={{ display: 'grid', rowGap: 16 }} key={index}>
-                <CueCard label={cueCard.label} pitchStr={cueCard.pitchStr} />
-                {cueCard.hasBorder && (
-                  <div style={{ height: 4, borderTop: '8px #52a2aa dashed' }} />
-                )}
-              </div>
-            );
-          })}
-          <CueCard
-            label={cueWorkout.cue.verb.label}
-            pitchStr={cueWorkout.cue.verb.pitchStr}
+          {cueWorkout.cue.nouns.map((cueCard, index) => (
+            <CueCard
+              key={index}
+              label={cueCard.label}
+              pitchStr={cueCard.pitchStr}
+            />
+          ))}
+          <VerbCueCardSwitch
+            verb={cueWorkout.cue.verb}
+            showVerb={cueWorkout.params.showVerb}
           />
         </div>
       </div>
@@ -45,3 +32,29 @@ const CuePane = React.memo(
 );
 
 export default CuePane;
+
+const VerbCueCardSwitch = ({
+  verb,
+  showVerb,
+}: {
+  verb: CueCardProps;
+  showVerb: string;
+}) => {
+  switch (showVerb) {
+    case SHOW_VERB.show:
+      return <CueCard label={verb.label} pitchStr={verb.pitchStr} />;
+    case SHOW_VERB.hide:
+      return <></>;
+    case SHOW_VERB.showBoth:
+      if (!['入れる', '入れない'].includes(verb.label)) return <></>;
+      return (
+        <>
+          <CueCard label='入れる' pitchStr='いれる' />
+          <CueCard label='入れない' pitchStr='いれない' />
+        </>
+      );
+    default:
+      console.error(`incorrect showVerb: ${showVerb}`);
+      return <></>;
+  }
+};

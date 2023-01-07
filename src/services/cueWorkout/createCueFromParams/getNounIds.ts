@@ -1,5 +1,8 @@
 import { shuffle } from '../../utils';
-
+/**
+ * nounIds.length = 1 || 2
+ * nounIds が　1つの場合は、すべて助詞「を」
+ */
 const getNounIds = (verbId: string, nouns: string[]) => {
   let nounIds: string[] = [];
   switch (verbId) {

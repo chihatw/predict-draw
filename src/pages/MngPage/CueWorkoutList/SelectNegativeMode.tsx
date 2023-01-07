@@ -9,6 +9,12 @@ import {
 } from '../../../services/cueWorkout/cueWorkout';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 
+const LABEL = {
+  [NEVER_ALWAYS_RANDOM.never]: '全て肯定文',
+  [NEVER_ALWAYS_RANDOM.always]: '全て否定文',
+  [NEVER_ALWAYS_RANDOM.random]: '肯否混在',
+};
+
 const SelectNegativeMode = () => {
   const { state } = useContext(AppContext);
   const handleChangeNegativeSentence = async (negativeSentence: string) => {
@@ -30,7 +36,7 @@ const SelectNegativeMode = () => {
       >
         {Object.values(NEVER_ALWAYS_RANDOM).map((item, index) => (
           <MenuItem key={index} value={item}>
-            {item}
+            {LABEL[item]}
           </MenuItem>
         ))}
       </Select>

@@ -1,11 +1,11 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import RecordVoiceRawPane from './RecordVoiceRawPane';
 import RecordVoiceAssetsPane from './RecordVoiceAssetsPane';
 
 const RecordVoicePane = () => {
-  const [open, setOpen] = useState(true); //debug
+  const [open, setOpen] = useState(false);
 
   return (
     <div>

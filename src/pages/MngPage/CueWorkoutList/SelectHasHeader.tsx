@@ -10,8 +10,8 @@ import {
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 
 const HEADER_MODES = [
-  { value: true, label: '前置き有り' },
-  { value: false, label: '前置き無し' },
+  { value: true, label: '前置表示' },
+  { value: false, label: '前置非表示' },
 ];
 
 const SelectHasHeader = () => {
@@ -27,7 +27,7 @@ const SelectHasHeader = () => {
   };
   return (
     <>
-      <h4>前置き</h4>
+      <h4>前置表示</h4>
       <Select
         value={String(state.cueWorkout.params.hasHeader)}
         size='small'

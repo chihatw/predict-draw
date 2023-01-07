@@ -88,12 +88,8 @@ const VERBS: { [key: string]: { label: string; pitchStr: string } } = {
  */
 const buildVerbCardProps = (
   verbId: string,
-  isNegative: boolean,
-  isPoliteType: boolean
+  isNegative: boolean
 ): CueCardProps => {
-  if (isPoliteType && isNegative) {
-    return VERBS_NEGA_POLITE[verbId];
-  }
   if (isNegative) {
     return VERBS_NEGA[verbId];
   }

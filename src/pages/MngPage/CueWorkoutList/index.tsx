@@ -1,17 +1,14 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import SetTime from './SetTime';
 import ShowStatus from './ShowStatus';
 import SelectVerbs from './SelectVerbs';
 import SelectColors from './SelectColors';
-import SelectJoshiOrder from './SelectJoshiOrder';
-import SwitchFirstNounAlwaysHasHa from './SwitchFirstNounAlswaysHasHa';
 import SelectNegativeMode from './SelectNegativeMode';
-import SelectPoliteType from './SelectPoliteType';
 import SelectHasHeader from './SelectHasHeader';
-import SelectGroupingWithHa from './SelectGroupingWithHa';
-import SelectTopicFirst from './SelectTopicFirst';
+import SelectShowVerb from './SelectShowVerb';
+import JoshiPatternList from './JoshiPatternList';
 
 const CueWorkoutList = () => {
   const [open, setOpen] = useState(false);
@@ -31,15 +28,12 @@ const CueWorkoutList = () => {
         <div style={{ display: 'grid', rowGap: 8 }}>
           <ShowStatus />
           <SetTime />
-          <SelectPoliteType />
-          <SelectHasHeader />
           <SelectColors />
           <SelectVerbs />
-          <SelectJoshiOrder />
+          <SelectHasHeader />
+          <SelectShowVerb />
           <SelectNegativeMode />
-          <SelectGroupingWithHa />
-          <SelectTopicFirst />
-          <SwitchFirstNounAlwaysHasHa />
+          <JoshiPatternList />
         </div>
       )}
     </div>
