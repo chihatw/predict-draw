@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
 import { State } from '../../../../Model';
 import {
@@ -23,31 +23,44 @@ const RecordVoiceRawPane = () => {
    * blob の初期設定
    */
   useEffect(() => {
-    // local の存在は無視
+    const path = state.recordVoice.raw.storagePath;
+
+    // path が空の場合は終了
+    if (!path) {
+      setBlob(null);
+      return;
+    }
+
+    // localAudioBuffer の存在は無視
     // 毎回 storage から blob を作成
+    // const localAudioBuffer = state.audioBuffers[path]
+    // if (!!localAudioBuffer) return;
+
     const fetchData = async () => {
+      let updatedState = state;
       if (!state.audioContext) return;
 
-      if (!state.recordVoice.raw.storagePath) {
-        setBlob(null);
+      const remoteBlob = await getBlobFromStorage(path);
+      setBlob(remoteBlob);
+      // path から　blob が取得できなければ、終了
+      if (!remoteBlob) {
+        updatedState = R.dissocPath<State>(['audioBuffers', path])(state);
+        dispatch({ type: ActionTypes.setState, payload: updatedState });
         return;
       }
-      const blob = await getBlobFromStorage(state.recordVoice.raw.storagePath);
-      setBlob(blob);
-      if (!blob) return;
 
-      let updatedState = state;
-      const audioBuffer = await blobToAudioBuffer(blob, state.audioContext);
-      if (!!audioBuffer) {
+      const remoteAudioBuffer = await blobToAudioBuffer(
+        remoteBlob,
+        state.audioContext
+      );
+
+      if (!!remoteAudioBuffer) {
         updatedState = R.assocPath<AudioBuffer, State>(
-          ['audioBuffers', state.recordVoice.raw.storagePath],
-          audioBuffer
+          ['audioBuffers', path],
+          remoteAudioBuffer
         )(state);
       } else {
-        updatedState = R.dissocPath<State>([
-          'audioBuffers',
-          state.recordVoice.raw.storagePath,
-        ])(state);
+        updatedState = R.dissocPath<State>(['audioBuffers', path])(state);
       }
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
@@ -58,15 +71,16 @@ const RecordVoiceRawPane = () => {
    * rawPitchStr の初期値設定
    */
   useEffect(() => {
-    const remoteValue = state.recordVoice.raw.pitchStr;
+    const localValue = state.recordVoice.raw.pitchStr;
     // リモートが空の場合
-    if (!remoteValue) {
+    if (!localValue) {
       setRawPitchStr('');
       return;
     }
     // ローカルが空では無い場合、代入しない
     if (!!rawPitchStr) return;
-    setRawPitchStr(remoteValue);
+
+    setRawPitchStr(localValue);
   }, [state.recordVoice.raw.pitchStr]);
 
   return (

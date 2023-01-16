@@ -53,35 +53,43 @@ const RecordVoiceAssetsPane = () => {
 
   /** audioBuffers の取得 */
   useEffect(() => {
-    const storagePaths: string[] = [];
+    const paths: string[] = [];
     for (const asset of Object.values(state.recordVoice.assets)) {
-      storagePaths.push(asset.storagePath);
+      paths.push(asset.storagePath);
     }
-    const { audioBuffers, storagePathsToGetAudioBufferFromStorage } =
-      checkAudioBuffer(storagePaths, state.audioBuffers);
 
-    if (!storagePathsToGetAudioBufferFromStorage.length) {
+    const filteredPaths = paths.filter((path) =>
+      Object.keys(state.audioBuffers).includes(path)
+    );
+
+    if (paths.length === filteredPaths.length) {
       console.log('already has Assets AudioBuffers');
       return;
     }
 
     const fetchData = async () => {
+      const remoteAudioBuffers: { [path: string]: AudioBuffer } = {};
       await Promise.all(
-        storagePathsToGetAudioBufferFromStorage.map(async (storagePath) => {
+        paths.map(async (path) => {
           if (!state.audioContext) return;
-          const audioBuffer = await getAudioBufferFromStorage(
-            storagePath,
-            state.audioContext
-          );
-          if (audioBuffer) {
-            audioBuffers[storagePath] = audioBuffer;
+
+          const localAudioBuffer = state.audioBuffers[path];
+          if (!localAudioBuffer) {
+            const gotAudioBuffer = await getAudioBufferFromStorage(
+              path,
+              state.audioContext
+            );
+            if (gotAudioBuffer) {
+              remoteAudioBuffers[path] = gotAudioBuffer;
+            }
           }
         })
       );
+      if (!Object.keys(remoteAudioBuffers).length) return;
 
       const updatedState = R.assocPath<{ [id: string]: AudioBuffer }, State>(
         ['audioBuffers'],
-        { ...state.audioBuffers, ...audioBuffers }
+        { ...state.audioBuffers, ...remoteAudioBuffers }
       )(state);
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
@@ -147,24 +155,3 @@ const RecordVoiceAssetsPane = () => {
 };
 
 export default RecordVoiceAssetsPane;
-
-export const checkAudioBuffer = (
-  storagePaths: string[],
-  audioBuffers: { [id: string]: AudioBuffer }
-) => {
-  const _audioBuffers: { [path: string]: AudioBuffer } = {};
-  const storagePathsToGetAudioBufferFromStorage: string[] = [];
-
-  for (const storagePath of storagePaths) {
-    const audioBuffer = audioBuffers[storagePath];
-    if (audioBuffer) {
-      _audioBuffers[storagePath] = audioBuffer;
-    } else {
-      storagePathsToGetAudioBufferFromStorage.push(storagePath);
-    }
-  }
-  return {
-    audioBuffers: _audioBuffers,
-    storagePathsToGetAudioBufferFromStorage,
-  };
-};
