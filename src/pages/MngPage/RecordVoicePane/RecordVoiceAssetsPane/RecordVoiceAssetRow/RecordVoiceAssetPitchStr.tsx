@@ -1,4 +1,5 @@
-import { TextField } from '@mui/material';
+import { Edit } from '@mui/icons-material';
+import { IconButton, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { VoiceProps } from '../../../../../Model';
 import { setRecordVoiceAsset } from '../../../../../services/recordVoice';
@@ -16,20 +17,24 @@ const RecordVoiceAssetPitchStr = ({ asset }: { asset: VoiceProps }) => {
     setInput(pitchStr);
   }, [asset.pitchStr]);
 
-  const handleChange = (input: string) => {
-    setInput(input);
+  const updateRecordVoiceAsset = () => {
     const updatedAsset: VoiceProps = { ...asset, pitchStr: input };
     setRecordVoiceAsset(updatedAsset);
   };
   return (
-    <TextField
-      sx={{ flexGrow: 1 }}
-      size='small'
-      label='pitchStr'
-      value={input}
-      autoComplete='off'
-      onChange={(e) => handleChange(e.target.value)}
-    />
+    <>
+      <TextField
+        sx={{ flexGrow: 1 }}
+        size='small'
+        label='pitchStr'
+        value={input}
+        autoComplete='off'
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <IconButton size='small' onClick={updateRecordVoiceAsset}>
+        <Edit />
+      </IconButton>
+    </>
   );
 };
 
