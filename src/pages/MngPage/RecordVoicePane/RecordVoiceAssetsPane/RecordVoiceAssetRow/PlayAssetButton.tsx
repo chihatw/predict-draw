@@ -16,6 +16,7 @@ const PlayAssetButton = ({ asset }: { asset: VoiceProps }) => {
 
   const play = () => {
     if (!state.audioContext || !audioBuffer) return;
+    console.log(`%c${asset.id}`, 'color:green');
     const sourceNode = createSourceNode(audioBuffer, state.audioContext);
     sourceNode.start(0, asset.startAt, asset.stopAt - asset.startAt);
   };
