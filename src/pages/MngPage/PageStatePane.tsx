@@ -6,7 +6,7 @@ import {
   FormControlLabel,
   Button,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PAGE_STATE } from '../../Model';
 
 const LABELS: { [key: string]: string } = {
@@ -25,20 +25,26 @@ const PageStatePane = ({
   handleChange: (user: string, state: string) => void;
 }) => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const value = localStorage.getItem(user);
+    setOpen(value === String(true));
+  }, [user]);
+
+  const handleClick = () => {
+    const updatedOpen = !open;
+    setOpen(updatedOpen);
+    localStorage.setItem(user, String(updatedOpen));
+  };
   return (
     <FormControl>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
+      <Button
+        fullWidth
+        sx={{ padding: '8px', justifyContent: 'flex-start' }}
+        onClick={handleClick}
       >
         <FormLabel sx={{ fontSize: 12 }}>{LABELS[user] || '??'}</FormLabel>
-        <Button size='small' onClick={() => setOpen(!open)}>
-          {open ? 'hide' : 'open'}
-        </Button>
-      </div>
+      </Button>
       {open && (
         <RadioGroup
           row

@@ -1,11 +1,24 @@
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import RecordVoiceRawPane from './RecordVoiceRawPane';
 import RecordVoiceAssetsPane from './RecordVoiceAssetsPane';
 
+const LOCAL_STORAGE = 'recordVoice';
+
 const RecordVoicePane = () => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const value = localStorage.getItem(LOCAL_STORAGE);
+    setOpen(value === String(true));
+  }, []);
+
+  const handleClickTitle = () => {
+    const updatedOpen = !open;
+    setOpen(updatedOpen);
+    localStorage.setItem(LOCAL_STORAGE, String(updatedOpen));
+  };
 
   return (
     <div>
@@ -16,8 +29,13 @@ const RecordVoicePane = () => {
           alignItems: 'center',
         }}
       >
-        <h3>Record Voice</h3>
-        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
+        <Button
+          fullWidth
+          sx={{ color: 'black', justifyContent: 'flex-start' }}
+          onClick={handleClickTitle}
+        >
+          <h3>Record Voice</h3>
+        </Button>
       </div>
       {open && (
         <div style={{ display: 'grid', rowGap: 8 }}>

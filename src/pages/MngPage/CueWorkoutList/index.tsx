@@ -1,39 +1,44 @@
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import SetTime from './SetTime';
 import ShowStatus from './ShowStatus';
-import SelectVerbs from './SelectVerbs';
 import SelectColors from './SelectColors';
-import SelectNegativeMode from './SelectNegativeMode';
-import SelectHasHeader from './SelectHasHeader';
-import SelectShowVerb from './SelectShowVerb';
-import JoshiPatternList from './JoshiPatternList';
+
+import PatternList from './PatternList';
+
+const LOCAL_STATE = 'cueWorkout';
 
 const CueWorkoutList = () => {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const value = localStorage.getItem(LOCAL_STATE);
+    setOpen(value === String(true));
+  }, []);
+  const handleClickTitle = () => {
+    const updatedOpen = !open;
+    setOpen(updatedOpen);
+    localStorage.setItem(LOCAL_STATE, String(updatedOpen));
+  };
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+      <Button
+        fullWidth
+        sx={{
+          color: 'black',
+          textTransform: 'none',
+          justifyContent: 'flex-start',
         }}
+        onClick={handleClickTitle}
       >
         <h3>紙コップ(CueWorkout)</h3>
-        <Button onClick={() => setOpen(!open)}>{open ? 'hide' : 'open'}</Button>
-      </div>
+      </Button>
       {open && (
         <div style={{ display: 'grid', rowGap: 8 }}>
           <ShowStatus />
           <SetTime />
           <SelectColors />
-          <SelectVerbs />
-          <SelectHasHeader />
-          <SelectShowVerb />
-          <SelectNegativeMode />
-          <JoshiPatternList />
+          <PatternList />
         </div>
       )}
     </div>

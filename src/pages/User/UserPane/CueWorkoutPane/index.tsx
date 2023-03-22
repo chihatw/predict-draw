@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Container } from '@mui/material';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../../../../App';
 import TimeDisplay from '../commons/TimeDisplay';
 import CuePane from './CuePane';
@@ -13,7 +13,6 @@ import { CueWorkoutParams, State } from '../../../../Model';
 import PlayButton from './PlayButton';
 import { ActionTypes } from '../../../../Update';
 import ColorList from './CardList/ColorList';
-import VerbList from './CardList/VerbList';
 import getImages from './CuePane/getImages';
 import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
 
@@ -77,7 +76,10 @@ const CueWorkoutPane = () => {
     /** 新しい Cue の作成 */
     let updatedCue = state.cueWorkout.cue;
     while (updatedCue.text === state.cueWorkout.cue.text) {
-      updatedCue = createCueFromParams(state.cueWorkout.params);
+      updatedCue = createCueFromParams(
+        state.cueWorkout.params.colors,
+        state.cueWorkout.params.patternParams
+      );
     }
     await setCueWorkoutCue(updatedCue);
 
@@ -99,7 +101,6 @@ const CueWorkoutPane = () => {
     <Container maxWidth='sm' sx={{ paddingTop: 0 }}>
       <div style={{ display: 'grid', rowGap: 8 }}>
         <ColorList />
-        <VerbList />
         <TimeDisplay miliSeconds={miliSeconds} />
         <div style={{ margin: '16px 0', height: 300 }}>
           {state.cueWorkout.params.isRunning && (

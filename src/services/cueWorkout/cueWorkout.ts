@@ -9,9 +9,8 @@ import React, { useEffect } from 'react';
 import {
   CueWorkoutCue,
   CueWorkoutParams,
-  NEVER_ALWAYS_RANDOM,
   INITIAL_CUE_CARD_PROPS,
-  SHOW_VERB,
+  INITIAL_PATTERN_PARAMS,
 } from '../../Model';
 import { CUE_CARDS } from '../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { db } from '../../repositories/firebase';
@@ -83,27 +82,13 @@ const buildCue = (doc: DocumentData) => {
 };
 
 const buildParams = (doc: DocumentData) => {
-  const {
-    time,
-    verbs,
-    colors,
-    points,
-    showVerb,
-    isRunning,
-    hasHeader,
-    joshiPatterns,
-    negativeSentence,
-  } = doc.data();
+  const { time, colors, points, isRunning, patternParams } = doc.data();
   const params: CueWorkoutParams = {
     time: time || 0,
-    verbs: verbs || [],
     points: points || 0,
     colors: colors || [],
-    showVerb: showVerb || SHOW_VERB.show,
-    hasHeader: hasHeader || false,
     isRunning: isRunning || false,
-    joshiPatterns: joshiPatterns || [],
-    negativeSentence: negativeSentence || NEVER_ALWAYS_RANDOM.never,
+    patternParams: patternParams || INITIAL_PATTERN_PARAMS,
   };
   return params;
 };

@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { CueWorkoutParams } from '../../../Model';
 import { AppContext } from '../../../App';
 import {
@@ -17,7 +17,11 @@ const ShowStatus = () => {
       isRunning: false,
     };
     await setCueWorkoutParams(updatedParams);
-    const cue = createCueFromParams(updatedParams);
+
+    const cue = createCueFromParams(
+      updatedParams.colors,
+      updatedParams.patternParams
+    );
     await setCueWorkoutCue(cue);
   };
   return (

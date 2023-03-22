@@ -1,3 +1,33 @@
+export const SENTENCE_TYPES = { positive: 'positive', negative: 'negative' };
+export const KAKU_ORDERS = { woFirst: 'woFirst', niFirst: 'niFirst' };
+export const TARGET = {
+  none: 'none',
+  wo: 'wo',
+  ni: 'ni',
+};
+
+export type Pattern = {
+  wo: string;
+  ni: string;
+  doushi: string;
+  topic: string;
+  sentence: string;
+  grouping: string;
+  isWoFirst: boolean;
+  isNegative: boolean;
+};
+
+export const INITIAL_PATTERN: Pattern = {
+  wo: 'を',
+  ni: 'に',
+  topic: TARGET.none,
+  doushi: '入れる',
+  sentence: '青を赤に入れる',
+  grouping: TARGET.none,
+  isWoFirst: true,
+  isNegative: false,
+};
+
 export type Schedule = { offset: number; start: number; stop: number };
 
 export const pages = {
@@ -30,7 +60,7 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   // { value: pages.rhythmWorkout, label: 'リズム練習' },
   // { value: pages.pitchList, label: 'ピッチ表示' },
   // { value: pages.pitchWorkout, label: 'ピッチ練習' },
-  { value: pages.pitchInput, label: 'ピッチ入力' },
+  // { value: pages.pitchInput, label: 'ピッチ入力' },
   // { value: pages.kanaCards, label: 'かな表示' },
   // { value: pages.kanaWorkout, label: 'かな練習' },
   { value: pages.blank, label: '空欄' },
@@ -39,6 +69,7 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.recordVoiceList, label: '録音リスト' },
 ];
 
+// will delete
 export const JOSHI_PATTERN = {
   default: 'default',
   inverse: 'inverse',
@@ -58,24 +89,8 @@ export const NEVER_ALWAYS_RANDOM = {
   random: 'random',
 };
 
-export const SHOW_VERB = {
-  show: 'show',
-  hide: 'hide',
-  showBoth: 'showBoth',
-};
-
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
-
 export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-export const HANDS = ['mine', 'yours'];
-export const VERBS = [
-  'motsu',
-  'yubisasu',
-  'hikkurikaesu',
-  'ireru',
-  'noseru',
-  'kabuseru',
-];
 
 export type PitchCard = {
   id: string;
@@ -240,28 +255,54 @@ export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   header: INITIAL_CUE_CARD_PROPS,
 };
 
+export type PatternParams = {
+  hasWoTopic: boolean;
+  hasNiTopic: boolean;
+  hasNoneTopic: boolean;
+  hasWoGroping: boolean;
+  hasNiGroping: boolean;
+  hasNoneGroping: boolean;
+  hasStraightOrder: boolean;
+  hasInvertOrder: boolean;
+  hasPositive: boolean;
+  hasNegative: boolean;
+  hasGroupingTopic: boolean;
+};
+
+export const INITIAL_PATTERN_PARAMS: PatternParams = {
+  hasWoTopic: false,
+  hasNiTopic: false,
+  hasNoneTopic: true,
+  hasWoGroping: false,
+  hasNiGroping: false,
+  hasNoneGroping: true,
+  hasStraightOrder: true,
+  hasInvertOrder: false,
+  hasPositive: true,
+  hasNegative: false,
+  hasGroupingTopic: false,
+};
+
 export type CueWorkoutParams = {
   time: number;
-  verbs: string[];
   points: number;
   colors: string[];
-  showVerb: string;
   isRunning: boolean;
-  hasHeader: boolean;
-  joshiPatterns: string[];
-  negativeSentence: string;
+  // hasHeader: boolean; // will delete
+  // joshiPatterns: string[]; // will delete
+  // negativeSentence: string; // will delete
+  patternParams: PatternParams;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   time: 0,
-  verbs: [],
   colors: [],
   points: 0,
-  showVerb: SHOW_VERB.show,
   isRunning: false,
-  hasHeader: false,
-  joshiPatterns: [],
-  negativeSentence: NEVER_ALWAYS_RANDOM.never,
+  // hasHeader: false,
+  // joshiPatterns: [],
+  // negativeSentence: NEVER_ALWAYS_RANDOM.never,
+  patternParams: INITIAL_PATTERN_PARAMS,
 };
 
 export type CueWorkoutState = {

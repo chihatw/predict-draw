@@ -23,7 +23,11 @@ const SelectColors = () => {
       updatedColors
     )(state.cueWorkout.params);
     await setCueWorkoutParams(updatedParams);
-    const cue = createCueFromParams(updatedParams);
+
+    const cue = createCueFromParams(
+      updatedParams.colors,
+      updatedParams.patternParams
+    );
     await setCueWorkoutCue(cue);
   };
 
