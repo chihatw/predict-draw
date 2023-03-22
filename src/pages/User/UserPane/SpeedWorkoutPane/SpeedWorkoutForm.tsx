@@ -1,5 +1,4 @@
-import { BpmPane } from '@chihatw/lang-gym-h.card.ui.bpm-pane';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 import React, { useContext, useRef } from 'react';
 import { AppContext } from '../../../../App';
 import { SpeedWorkoutParams } from '../../../../Model';
@@ -131,3 +130,35 @@ const calcBpm = ({
   const seconds = miliSeconds / 1000;
   return Math.floor((beatCount / seconds) * 60);
 };
+
+type BpmPaneProps = {
+  bpm: number;
+  fontSize?: number;
+};
+
+function BpmPane({ bpm, fontSize }: BpmPaneProps) {
+  const theme = useTheme();
+  return (
+    <div
+      style={{
+        ...(theme.typography as any).lato900,
+        fontSize: fontSize ?? 60,
+        display: 'flex',
+        alignItems: 'end',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          ...(theme.typography as any).lato100,
+          fontSize: 36,
+          paddingRight: 20,
+          paddingBottom: 6,
+        }}
+      >
+        BPM
+      </div>
+      <div>{bpm > 0 ? bpm : '--'}</div>
+    </div>
+  );
+}
