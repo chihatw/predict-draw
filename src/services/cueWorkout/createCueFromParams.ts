@@ -22,16 +22,47 @@ const createCueFromParams = (
   if (colors.length < 2 || !currentPatterns.length)
     return INITIAL_CUE_WORKOUT_CUE;
 
-  // 「は」が含まれていれば、抽選確率を倍に
+  // 確率の調整
   let pumpedCurrentPatterns: Pattern[] = [];
-  for (const currentPattern of currentPatterns) {
+  let extra = 0;
+  const topicOrder = [TARGET.ni, TARGET.wo, TARGET.none];
+  const groupingOrder = [TARGET.none, TARGET.ni, TARGET.wo];
+  const sortedCurrentPatterns = currentPatterns.sort(
+    (a, b) =>
+      topicOrder.indexOf(a.topic) * 10 +
+      groupingOrder.indexOf(a.grouping) -
+      (topicOrder.indexOf(b.topic) * 10 + groupingOrder.indexOf(b.grouping))
+  );
+  for (const currentPattern of sortedCurrentPatterns) {
     pumpedCurrentPatterns.push(currentPattern);
 
-    if (
-      currentPattern.topic !== TARGET.none ||
-      currentPattern.grouping !== TARGET.none
-    ) {
-      pumpedCurrentPatterns.push(currentPattern);
+    // 主題有りの場合
+    if (currentPattern.topic !== TARGET.none) {
+      // 分類無しは＋１
+      if (currentPattern.grouping === TARGET.none) {
+        pumpedCurrentPatterns.push(currentPattern);
+        extra++;
+      }
+    }
+    // 主題無しの場合
+    else {
+      switch (currentPattern.grouping) {
+        // ニ格分類は＋２
+        case TARGET.ni:
+          for (let i = 0; i < 2; i++) {
+            pumpedCurrentPatterns.push(currentPattern);
+            extra++;
+          }
+          break;
+        // ヲ格分類は全体の１／３くらいに
+        case TARGET.wo:
+          const max = Math.floor((sortedCurrentPatterns.length + extra) * 0.3);
+          for (let i = 0; i < max; i++) {
+            pumpedCurrentPatterns.push(currentPattern);
+          }
+          break;
+        default:
+      }
     }
   }
 

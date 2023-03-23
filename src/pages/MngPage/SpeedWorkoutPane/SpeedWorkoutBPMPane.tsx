@@ -11,6 +11,7 @@ const SpeedWorkoutBPMPane = () => {
   const handleReset = () => {
     const updatedParams: SpeedWorkoutParams = {
       ...state.params.speedWorkout,
+      bpm: 0,
       currentRound: 1,
       checkedIndexes: [],
       isRunning: false,
