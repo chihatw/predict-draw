@@ -246,6 +246,7 @@ export type CueWorkoutCue = {
   verb: CueCardProps;
   nouns: CueCardProps[];
   header: CueCardProps;
+  pattern: Pattern;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
@@ -253,6 +254,7 @@ export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   verb: INITIAL_CUE_CARD_PROPS,
   text: '',
   header: INITIAL_CUE_CARD_PROPS,
+  pattern: INITIAL_PATTERN,
 };
 
 export type PatternParams = {
@@ -288,10 +290,8 @@ export type CueWorkoutParams = {
   points: number;
   colors: string[];
   isRunning: boolean;
-  // hasHeader: boolean; // will delete
-  // joshiPatterns: string[]; // will delete
-  // negativeSentence: string; // will delete
   patternParams: PatternParams;
+  lastPattern: Pattern;
 };
 
 export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
@@ -299,10 +299,8 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   colors: [],
   points: 0,
   isRunning: false,
-  // hasHeader: false,
-  // joshiPatterns: [],
-  // negativeSentence: NEVER_ALWAYS_RANDOM.never,
   patternParams: INITIAL_PATTERN_PARAMS,
+  lastPattern: INITIAL_PATTERN,
 };
 
 export type CueWorkoutState = {

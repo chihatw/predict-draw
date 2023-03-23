@@ -1,5 +1,5 @@
 import React from 'react';
-import { CueWorkoutState } from '../../../../../Model';
+import { CueWorkoutState, TARGET } from '../../../../../Model';
 
 import CueCard from './CueCard';
 
@@ -8,7 +8,7 @@ const CuePane = React.memo(
     return (
       <div style={{ height: 200 }}>
         <div style={{ display: 'grid', rowGap: 16, flexGrow: 1 }}>
-          {!!cueWorkout.cue.header.label && (
+          {cueWorkout.cue.pattern.topic !== TARGET.none && (
             <CueCard
               label={cueWorkout.cue.header.label}
               pitchStr={cueWorkout.cue.header.pitchStr}

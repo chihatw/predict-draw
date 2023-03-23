@@ -3,6 +3,7 @@ import {
   CueWorkoutCue,
   INITIAL_CUE_CARD_PROPS,
   INITIAL_CUE_WORKOUT_CUE,
+  INITIAL_PATTERN,
   Pattern,
   PatternParams,
   TARGET,
@@ -11,6 +12,9 @@ import { buildCurrentPatterns } from '../../pages/MngPage/CueWorkoutList/service
 import { PATTERNS } from '../../pages/MngPage/CueWorkoutList/services/usePatterns';
 import { CUE_CARDS } from '../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { shuffle } from '../utils';
+
+// /pages/Users/UserPane/CueWorkoutPane/index.tsx showNextCue で
+// pattern の連続を排除しているので、確率の調整を強めに設定
 
 const createCueFromParams = (
   colors: string[],
@@ -47,16 +51,16 @@ const createCueFromParams = (
     // 主題無しの場合
     else {
       switch (currentPattern.grouping) {
-        // ニ格分類は＋２
+        // ニ格分類は＋３
         case TARGET.ni:
           for (let i = 0; i < 2; i++) {
             pumpedCurrentPatterns.push(currentPattern);
             extra++;
           }
           break;
-        // ヲ格分類は全体の１／３くらいに
+        // ヲ格分類は全体の30%くらいに
         case TARGET.wo:
-          const max = Math.floor((sortedCurrentPatterns.length + extra) * 0.3);
+          const max = Math.floor((sortedCurrentPatterns.length + extra) * 0.5);
           for (let i = 0; i < max; i++) {
             pumpedCurrentPatterns.push(currentPattern);
           }
@@ -72,7 +76,10 @@ const createCueFromParams = (
 
 export default createCueFromParams;
 
-const buildCueWorkoutCue = (colors: string[], currentPatterns: Pattern[]) => {
+const buildCueWorkoutCue = (
+  colors: string[],
+  currentPatterns: Pattern[]
+): CueWorkoutCue => {
   // パターン抽選
   const currentPattern: Pattern = shuffle(currentPatterns)[0];
 
@@ -97,7 +104,7 @@ const buildCueWorkoutCue = (colors: string[], currentPatterns: Pattern[]) => {
     .map((item) => item.label)
     .join('');
 
-  return { text, verb, nouns, header };
+  return { text, verb, nouns, header, pattern: currentPattern };
 };
 
 const buildNouns = (colors: string[], pattern: Pattern) => {

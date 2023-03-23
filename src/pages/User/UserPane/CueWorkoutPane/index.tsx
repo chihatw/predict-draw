@@ -75,11 +75,15 @@ const CueWorkoutPane = () => {
   const showNextCue = async () => {
     /** 新しい Cue の作成 */
     let updatedCue = state.cueWorkout.cue;
-    while (updatedCue.text === state.cueWorkout.cue.text) {
-      updatedCue = createCueFromParams(
+    while (
+      JSON.stringify(updatedCue.pattern) ===
+      JSON.stringify(state.cueWorkout.cue.pattern)
+    ) {
+      const cue = createCueFromParams(
         state.cueWorkout.params.colors,
         state.cueWorkout.params.patternParams
       );
+      updatedCue = cue;
     }
     await setCueWorkoutCue(updatedCue);
 

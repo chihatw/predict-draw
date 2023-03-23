@@ -10,6 +10,7 @@ import {
   CueWorkoutCue,
   CueWorkoutParams,
   INITIAL_CUE_CARD_PROPS,
+  INITIAL_PATTERN,
   INITIAL_PATTERN_PARAMS,
 } from '../../Model';
 import { CUE_CARDS } from '../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
@@ -71,24 +72,27 @@ export const setCueWorkoutCue = async (cue: CueWorkoutCue) => {
 };
 
 const buildCue = (doc: DocumentData) => {
-  const { nouns, verb, text, header } = doc.data();
+  const { nouns, verb, text, header, pattern } = doc.data();
   const cue: CueWorkoutCue = {
     verb: verb || INITIAL_CUE_CARD_PROPS,
     text: text || '',
     nouns: nouns || [],
     header: header || INITIAL_CUE_CARD_PROPS,
+    pattern: pattern || INITIAL_PATTERN,
   };
   return cue;
 };
 
 const buildParams = (doc: DocumentData) => {
-  const { time, colors, points, isRunning, patternParams } = doc.data();
+  const { time, colors, points, isRunning, patternParams, lastPattern } =
+    doc.data();
   const params: CueWorkoutParams = {
     time: time || 0,
     points: points || 0,
     colors: colors || [],
     isRunning: isRunning || false,
     patternParams: patternParams || INITIAL_PATTERN_PARAMS,
+    lastPattern: lastPattern || INITIAL_PATTERN,
   };
   return params;
 };
