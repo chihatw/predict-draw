@@ -9,7 +9,7 @@ import {
   setCueWorkoutParams,
   stopCueWorkout,
 } from '../../../../services/cueWorkout/cueWorkout';
-import { CueWorkoutParams, State } from '../../../../Model';
+import { CueWorkoutParams, Pattern, State, TARGET } from '../../../../Model';
 import PlayButton from './PlayButton';
 import { ActionTypes } from '../../../../Update';
 import ColorList from './CardList/ColorList';
@@ -75,10 +75,7 @@ const CueWorkoutPane = () => {
   const showNextCue = async () => {
     /** 新しい Cue の作成 */
     let updatedCue = state.cueWorkout.cue;
-    while (
-      JSON.stringify(updatedCue.pattern) ===
-      JSON.stringify(state.cueWorkout.cue.pattern)
-    ) {
+    while (isContinue(state.cueWorkout.cue.pattern, updatedCue.pattern)) {
       const cue = createCueFromParams(
         state.cueWorkout.params.colors,
         state.cueWorkout.params.patternParams
@@ -118,3 +115,23 @@ const CueWorkoutPane = () => {
 };
 
 export default CueWorkoutPane;
+
+const isContinue = (currentPattern: Pattern, updatedPattern: Pattern) => {
+  return isSamePattern(currentPattern, updatedPattern);
+  // isStraightTopicless(currentPattern, updatedPattern)
+};
+
+const isSamePattern = (currentPattern: Pattern, updatedPattern: Pattern) => {
+  return JSON.stringify(updatedPattern) === JSON.stringify(currentPattern);
+};
+
+// 主題なしは連続させない
+const isStraightTopicless = (
+  currentPattern: Pattern,
+  updatedPattern: Pattern
+) => {
+  // 現在主題がなければ、
+  return (
+    currentPattern.topic === TARGET.none && updatedPattern.topic === TARGET.none
+  );
+};

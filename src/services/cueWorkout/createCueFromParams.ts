@@ -40,28 +40,32 @@ const createCueFromParams = (
   for (const currentPattern of sortedCurrentPatterns) {
     pumpedCurrentPatterns.push(currentPattern);
 
-    // 主題有りの場合
+    /**
+     * 主題有りの場合
+     */
     if (currentPattern.topic !== TARGET.none) {
-      // 分類無しは＋１
+      // 分類無しは＋0
       if (currentPattern.grouping === TARGET.none) {
-        pumpedCurrentPatterns.push(currentPattern);
-        extra++;
+        for (let i = 0; i < 0; i++) {
+          pumpedCurrentPatterns.push(currentPattern);
+          extra++;
+        }
       }
     }
     // 主題無しの場合
     else {
       switch (currentPattern.grouping) {
-        // ニ格分類は＋３
+        // ニ格分類は＋0
         case TARGET.ni:
-          for (let i = 0; i < 2; i++) {
+          for (let i = 0; i < 0; i++) {
             pumpedCurrentPatterns.push(currentPattern);
             extra++;
           }
           break;
-        // ヲ格分類は全体の30%くらいに
+        // ヲ格分類は+0
         case TARGET.wo:
-          const max = Math.floor((sortedCurrentPatterns.length + extra) * 0.5);
-          for (let i = 0; i < max; i++) {
+          // const max = Math.floor((sortedCurrentPatterns.length + extra) * 0.5);
+          for (let i = 0; i < 0; i++) {
             pumpedCurrentPatterns.push(currentPattern);
           }
           break;
