@@ -14,7 +14,6 @@ const RecordVoiceAssetsPane = () => {
   const [activeIds, setActiveIds] = useState<string[]>([]);
   const [targetAssetId, setTargetAssetId] = useState('');
   const [assets, setAssets] = useState<VoiceProps[]>([]);
-  const [open, setOpne] = useState(false);
 
   useEffect(() => {
     setAssets(
@@ -133,34 +132,26 @@ const RecordVoiceAssetsPane = () => {
 
   return (
     <div>
-      <Button
-        sx={{ padding: 0, minWidth: 0, color: '#555' }}
-        onClick={() => setOpne(!open)}
-      >
-        {`タタタタ${open ? '非表示' : '表示'}`}
-      </Button>
-      {open && (
-        <div style={{ display: 'grid', rowGap: 8 }}>
-          {assets.map((asset, index) => (
-            <RecordVoiceAssetRow
-              key={index}
-              asset={asset}
-              isTarget={targetAssetId === asset.id}
-              index={activeIds.indexOf(asset.id)}
-              handleClick={() => selectAsset(asset.id)}
-              selectTarget={() => selectTarget(asset.id)}
-            />
-          ))}
-          <Button
-            variant='contained'
-            sx={{ color: 'white' }}
-            size='small'
-            onClick={clearActiveIds}
-          >
-            Clear
-          </Button>
-        </div>
-      )}
+      <div style={{ display: 'grid', rowGap: 8 }}>
+        {assets.map((asset, index) => (
+          <RecordVoiceAssetRow
+            key={index}
+            asset={asset}
+            isTarget={targetAssetId === asset.id}
+            index={activeIds.indexOf(asset.id)}
+            handleClick={() => selectAsset(asset.id)}
+            selectTarget={() => selectTarget(asset.id)}
+          />
+        ))}
+        <Button
+          variant='contained'
+          sx={{ color: 'white' }}
+          size='small'
+          onClick={clearActiveIds}
+        >
+          Clear
+        </Button>
+      </div>
     </div>
   );
 };
