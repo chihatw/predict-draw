@@ -38,7 +38,7 @@ const RecordVoicePane = () => {
         </Button>
       </div>
       {open && (
-        <div style={{ display: 'grid', rowGap: 8 }}>
+        <div style={{ display: 'grid', rowGap: 8, padding: '0 16px' }}>
           <h4>Raw</h4>
           <RecordVoiceRawPane />
           <h4>Assets</h4>

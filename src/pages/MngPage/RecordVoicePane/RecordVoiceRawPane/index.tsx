@@ -12,7 +12,6 @@ import PlayRawPane from './PlayRawPane';
 import RawPitchStrPane from './RawPitchStrPane';
 import RawSaveAsAssetPane from './RawSaveAsAssetPane';
 import TargetPitchPane from './TargetPitchPane';
-import TouchedAtPane from './TouchedAtPane';
 
 const RecordVoiceRawPane = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -94,7 +93,6 @@ const RecordVoiceRawPane = () => {
         />
         <DeleteRawButton />
       </div>
-      <TouchedAtPane />
       <RawSaveAsAssetPane blob={blob} rawPitchStr={rawPitchStr} />
     </div>
   );
