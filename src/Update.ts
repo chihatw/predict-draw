@@ -3,14 +3,9 @@ import {
   CueWorkoutCard,
   CueWorkoutCue,
   CueWorkoutParams,
-  KanaWorkoutParams,
   NoteState,
-  PitchInput,
-  PitchInputLogs,
   PitchListState,
   PitchWorkout,
-  RandomWorkout,
-  RandomWorkoutParams,
   RecordVoiceParams,
   RhythmListState,
   RhythmWorkout,
@@ -23,7 +18,6 @@ import {
 
 export const ActionTypes = {
   setState: 'setState',
-
   setPitchList: 'setPitchList',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
@@ -50,26 +44,20 @@ export type Action = {
     | SpeedWorkout
     | { [id: string]: SpeedWorkout }
     | NoteState
-    | RandomWorkout
     | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
     | RhythmListState
     | PitchListState
     | RhythmWorkout
-    | PitchInput
-    | PitchInputLogs
     | PitchWorkout
-    | KanaWorkoutParams
     | SpeedWorkoutParams
     | { [index: number]: string[] }
     | { user: string; pageState: string }
     | { workingMemory: WorkingMemory; audioBuffer: AudioBuffer | null }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
-    | { workout: RandomWorkout; blob: Blob }
     | { imagePath: string; blobURL: string }
-    | { params: RandomWorkoutParams; workoutId: string }
     | {
         totalRounds: number;
         currentRound: number;
@@ -82,7 +70,6 @@ export type Action = {
     | {
         blobs: { [workoutId: string]: Blob | null };
         audioBuffers: { [downloadURL: string]: AudioBuffer };
-        randomWorkouts: { [workoutId: string]: RandomWorkout };
       }
     // RecordVoice
     | VoiceProps

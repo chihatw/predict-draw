@@ -115,62 +115,6 @@ export const INITIAL_CUE: Cue = {
   imagePath: '',
 };
 
-export type RandomWorkout = {
-  id: string;
-  cues: Cue[];
-  time: number;
-  title: string;
-  beatCount: number;
-  targetBpm: number;
-  roundCount: number;
-  storagePath: string;
-};
-
-export const INITIAL_RANDOM_WORKOUT: RandomWorkout = {
-  id: '',
-  cues: [],
-  time: 0,
-  title: '',
-  beatCount: 0,
-  targetBpm: 0,
-  roundCount: 1,
-  storagePath: '',
-};
-
-export type RandomWorkoutParams = {
-  time: number;
-  cueIds: string[];
-  isRunning: boolean;
-  currentIndex: number;
-  isChecking: boolean;
-  blob: Blob | null;
-};
-
-export const INITIAL_RANDOM_WORKOUT_PARAMS: RandomWorkoutParams = {
-  time: 0,
-  cueIds: [],
-  isRunning: false,
-  currentIndex: 0,
-  isChecking: false,
-  blob: null,
-};
-
-export type RandomWorkoutState = {
-  workoutId: string;
-  params: RandomWorkoutParams;
-  workouts: {
-    [workoutId: string]: RandomWorkout;
-  };
-  audioBuffers: { [downloadURL: string]: AudioBuffer };
-};
-
-export const INITIAL_RANDOM_WORKOUT_STATE: RandomWorkoutState = {
-  workoutId: '',
-  params: INITIAL_RANDOM_WORKOUT_PARAMS,
-  workouts: {},
-  audioBuffers: {},
-};
-
 export type CueWorkoutCard = {
   id: string;
   label: string;
@@ -332,25 +276,6 @@ export type PitchWorkout = {
   cueIds: string[];
 };
 
-export type PitchInput = {
-  mora: number;
-  cueIds: string[];
-  hasA: boolean;
-  hasN: boolean;
-  hasX: boolean;
-  normalOnly: boolean;
-};
-
-export type PitchInputLogs = {
-  [index: number]: string;
-};
-
-export type KanaWorkoutParams = {
-  kanas: string[];
-  answers: { [index: number]: string[] };
-  currentIndex: number;
-};
-
 export type SpeedWorkoutParams = {
   bpm: number;
   checkedIndexes: number[];
@@ -362,7 +287,6 @@ export type SpeedWorkoutParams = {
 };
 
 export type Params = {
-  kanaWorkout: KanaWorkoutParams;
   speedWorkout: SpeedWorkoutParams;
 };
 
@@ -425,15 +349,12 @@ export type State = {
   note: NoteState;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
-  randomWorkout: RandomWorkoutState;
   workingMemory: WorkingMemory;
   rhythmList: RhythmListState;
   rhythmWorkout: RhythmWorkout;
   rhythmWorkoutAnswers: { [index: number]: string[] };
   pitchList: PitchListState;
   pitchWorkout: PitchWorkout;
-  pitchInput: PitchInput;
-  pitchInputLogs: PitchInputLogs;
   pitchWorkoutAnswers: { [index: number]: string[] };
   workingMemoryAnswerIds: string[];
   params: Params;
@@ -456,8 +377,6 @@ export const INITIAL_STATE: State = {
     chinSan: '',
   },
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  // workoutParams: INITIAL_WORKOUT_PARAMS,
-  randomWorkout: INITIAL_RANDOM_WORKOUT_STATE,
   workingMemory: INITIAL_WORKING_MEMORY,
   workingMemoryAnswerIds: [],
   rhythmList: { tapped: [], mora: 2 },
@@ -465,22 +384,8 @@ export const INITIAL_STATE: State = {
   rhythmWorkoutAnswers: {},
   pitchList: { tapped: [], mora: 2 },
   pitchWorkout: { mora: 2, cueIds: [] },
-  pitchInput: {
-    mora: 2,
-    cueIds: [],
-    hasA: true,
-    hasN: true,
-    hasX: true,
-    normalOnly: true,
-  },
-  pitchInputLogs: {},
   pitchWorkoutAnswers: {},
   params: {
-    kanaWorkout: {
-      kanas: [],
-      currentIndex: 0,
-      answers: {},
-    },
     speedWorkout: {
       bpm: 0,
       isRunning: false,
