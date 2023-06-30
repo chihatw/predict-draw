@@ -55,13 +55,6 @@ export const PAGE_STATE: { value: string; label: string }[] = [
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
 export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
 
-export type PitchCard = {
-  id: string;
-  start: number;
-  end: number;
-  pitchStr: string;
-};
-
 export type PageState = {
   id: string;
   state: string;
@@ -352,11 +345,6 @@ export type PitchInputLogs = {
   [index: number]: string;
 };
 
-export type KanaCards = {
-  kanas: string[];
-  tapped: string[];
-};
-
 export type KanaWorkoutParams = {
   kanas: string[];
   answers: { [index: number]: string[] };
@@ -435,7 +423,6 @@ export type State = {
     chinSan: string;
   };
   note: NoteState;
-  kanaCards: KanaCards;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
   randomWorkout: RandomWorkoutState;
@@ -488,7 +475,6 @@ export const INITIAL_STATE: State = {
   },
   pitchInputLogs: {},
   pitchWorkoutAnswers: {},
-  kanaCards: { tapped: [], kanas: [] },
   params: {
     kanaWorkout: {
       kanas: [],
