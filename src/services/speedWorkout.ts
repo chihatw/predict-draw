@@ -9,7 +9,12 @@ import {
   setDoc,
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
+import { workoutItems2String } from 'workout-items';
 
+import {
+  INITIAL_SPEED_WORKOUT_EDIT_STATE,
+  SpeedWorkoutEditState,
+} from 'views/pages/SpeedWorkoutEditPage/Model';
 import { db } from '../infrastructure/firebase';
 import {
   INITIAL_WORKOUT,
@@ -119,4 +124,22 @@ const buildSpeedWorkout = (doc: DocumentData) => {
     createdAt: createdAt || 0,
   };
   return workout;
+};
+
+export const buildSpeedWorkoutEditState = (
+  state: State,
+  workoutId: string
+): SpeedWorkoutEditState => {
+  const speedWorkout = state.speedWorkouts[workoutId];
+  if (!speedWorkout) return INITIAL_SPEED_WORKOUT_EDIT_STATE;
+
+  return {
+    label: speedWorkout.label,
+    cues: speedWorkout.cues,
+    cueStr: speedWorkout.cues.join('\n'),
+    cueType: speedWorkout.cueType,
+    beatCount: speedWorkout.beatCount,
+    workoutItems: speedWorkout.items,
+    workoutItemStr: workoutItems2String(speedWorkout.items),
+  };
 };

@@ -10,6 +10,7 @@ import { useSpeedWorkout } from '../services/speedWorkout';
 import MngPage from './pages/MngPage';
 import MngNotePage from './pages/Note/MngNotePage';
 import NotePage from './pages/Note/NotePage';
+import SpeedWorkoutEditPage from './pages/SpeedWorkoutEditPage';
 import TopPage from './pages/TopPage';
 import KouSanPage from './pages/User/KouSanPage';
 import LisanPage from './pages/User/LiSanPage';
@@ -48,6 +49,9 @@ function App() {
           <Route path='/mng'>
             <Route index element={<MngPage />} />
             <Route path='note' element={<MngNotePage />} />
+            <Route path='speed'>
+              <Route path=':workoutId' element={<SpeedWorkoutEditPage />} />
+            </Route>
           </Route>
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
