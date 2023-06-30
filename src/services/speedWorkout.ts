@@ -10,7 +10,6 @@ import {
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 
-import { workoutItems2String } from 'application/utils/workoutItems';
 import {
   INITIAL_WORKOUT,
   SpeedWorkout,
@@ -19,10 +18,6 @@ import {
 } from '../Model';
 import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
-import {
-  INITIAL_SPEED_WORKOUT_EDIT_STATE,
-  SpeedWorkoutEditState,
-} from '../views/pages/SpeedWorkoutEditPage/Model';
 import { SpeedWorkoutState } from '../views/pages/User/UserPane/SpeedWorkoutPane/Model';
 
 const COLLECTIONS = { params: 'params', workouts: 'workouts' };
@@ -87,24 +82,6 @@ export const buildSpeedWorkoutState = (state: State): SpeedWorkoutState => {
     miliSeconds: 0,
     totalRounds: state.params.speedWorkout.totalRounds,
     checkedIndexes: state.params.speedWorkout.checkedIndexes,
-  };
-};
-
-export const buildSpeedWorkoutEditState = (
-  state: State,
-  workoutId: string
-): SpeedWorkoutEditState => {
-  const speedWorkout = state.speedWorkouts[workoutId];
-  if (!speedWorkout) return INITIAL_SPEED_WORKOUT_EDIT_STATE;
-
-  return {
-    label: speedWorkout.label,
-    cues: speedWorkout.cues,
-    cueStr: speedWorkout.cues.join('\n'),
-    cueType: speedWorkout.cueType,
-    beatCount: speedWorkout.beatCount,
-    workoutItems: speedWorkout.items,
-    workoutItemStr: workoutItems2String(speedWorkout.items),
   };
 };
 
