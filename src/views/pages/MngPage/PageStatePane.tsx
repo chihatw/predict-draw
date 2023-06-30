@@ -6,24 +6,22 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
+import {
+  PAGE_STATE,
+  USER_LABELS,
+} from 'application/pageStates/core/1-constants';
+import { pageStatesActins } from 'application/pageStates/framework/0-reducer';
 import { useEffect, useState } from 'react';
-import { PAGE_STATE } from '../../../Model';
-
-const LABELS: { [key: string]: string } = {
-  liSan: '李さん',
-  kouSan: '黄さん',
-  chinSan: '陳さん',
-};
+import { useDispatch } from 'react-redux';
 
 const PageStatePane = ({
   user,
   value,
-  handleChange,
 }: {
   user: string;
-  value: string;
-  handleChange: (user: string, state: string) => void;
+  value: string | undefined;
 }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -36,6 +34,11 @@ const PageStatePane = ({
     setOpen(updatedOpen);
     localStorage.setItem(user, String(updatedOpen));
   };
+
+  const handleChange = (value: string) => {
+    dispatch(pageStatesActins.changePageState({ id: user, state: value }));
+  };
+
   return (
     <FormControl>
       <Button
@@ -43,13 +46,13 @@ const PageStatePane = ({
         sx={{ padding: '8px', justifyContent: 'flex-start' }}
         onClick={handleClick}
       >
-        <FormLabel sx={{ fontSize: 12 }}>{LABELS[user] || '??'}</FormLabel>
+        <FormLabel sx={{ fontSize: 12 }}>{USER_LABELS[user] || '??'}</FormLabel>
       </Button>
       {open && (
         <RadioGroup
           row
           value={value}
-          onChange={(e) => handleChange(user, e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
         >
           {PAGE_STATE.map(({ value, label }, index) => (
             <FormControlLabel

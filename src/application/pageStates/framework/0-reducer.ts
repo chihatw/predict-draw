@@ -8,7 +8,17 @@ const pageStateAdapter = createEntityAdapter<IPageState>({
 const pageStatesSlice = createSlice({
   name: 'pageStates',
   initialState: pageStateAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    upsertPageStates: (state, { payload }: { payload: IPageState[] }) => {
+      pageStateAdapter.upsertMany(state, payload);
+    },
+    changePageState: (
+      state,
+      { payload: { id, state: pageState } }: { payload: IPageState }
+    ) => {
+      state.entities[id]!.state = pageState;
+    },
+  },
 });
 
 export const pageStatesActins = pageStatesSlice.actions;

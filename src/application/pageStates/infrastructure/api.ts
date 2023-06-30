@@ -1,4 +1,4 @@
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import { IPageState } from '../core/0-interface';
 
@@ -21,4 +21,9 @@ export const fetchPageStates = async () => {
   });
 
   return pageStates;
+};
+
+export const changePageState = async (id: string, state: string) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  await updateDoc(doc(db, COLLECTION, id), { state });
 };

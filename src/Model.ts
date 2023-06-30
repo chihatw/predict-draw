@@ -30,26 +30,6 @@ export const INITIAL_PATTERN: Pattern = {
 
 export type Schedule = { offset: number; start: number; stop: number };
 
-export const pages = {
-  note: 'note',
-  blank: 'blank',
-  micTest: 'micTest',
-  cueWorkout: 'cueWorkout',
-  speedWorkoutCue: 'speedWorkoutCue',
-  speedWorkoutRead: 'speedWorkoutRead',
-  speedWorkoutSolo: 'speedWorkoutSolo',
-};
-
-export const PAGE_STATE: { value: string; label: string }[] = [
-  { value: pages.speedWorkoutSolo, label: '速読ソロ' },
-  { value: pages.speedWorkoutCue, label: '速読キュー' },
-  { value: pages.speedWorkoutRead, label: '速読練習' },
-  { value: pages.cueWorkout, label: '紙コップ' },
-  { value: pages.note, label: 'ノート' },
-  { value: pages.blank, label: '空欄' },
-  { value: pages.micTest, label: 'マイクテスト' },
-];
-
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
 export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
 
@@ -272,11 +252,6 @@ export const INITIAL_RECORD_VOICE: RecordVoice = {
 };
 
 export type State = {
-  pageStates: {
-    liSan: string;
-    kouSan: string;
-    chinSan: string;
-  };
   note: NoteState;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
@@ -293,11 +268,6 @@ export type State = {
 export const INITIAL_STATE: State = {
   note: INITIAL_NOTE_STATE,
   speedWorkouts: {},
-  pageStates: {
-    liSan: '',
-    kouSan: '',
-    chinSan: '',
-  },
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
   params: {
     speedWorkout: {

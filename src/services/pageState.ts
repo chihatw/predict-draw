@@ -1,7 +1,8 @@
 import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
-import { pages, PageState } from '../Model';
+import { PageState } from '../Model';
 
+import { PAGES } from 'application/pageStates/core/1-constants';
 import { db } from '../infrastructure/firebase';
 import { Action, ActionTypes } from '../Update';
 
@@ -70,5 +71,5 @@ export const setPageState = (pageState: PageState) => {
 
 const buildState = (doc: DocumentData) => {
   const { state } = doc.data();
-  return state || pages.blank;
+  return state || PAGES.blank;
 };

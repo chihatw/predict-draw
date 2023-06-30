@@ -1,7 +1,6 @@
-import { useContext } from 'react';
-import { AppContext } from '../../..';
-import { pages } from '../../../../Model';
-
+import { PAGES } from 'application/pageStates/core/1-constants';
+import { RootState } from 'main';
+import { useSelector } from 'react-redux';
 import CueWorkoutPane from './CueWorkoutPane';
 import MicTestPane from './MicTestPane';
 import NotePane from './NotePane';
@@ -10,28 +9,24 @@ import { SpeedWorkoutPane } from './SpeedWorkoutPane';
 import SpeedWorkoutReadPane from './SpeedWorkoutReadPane';
 
 const UserPane = ({ user }: { user: string }) => {
-  const { state } = useContext(AppContext);
+  const pageStates = useSelector(
+    (state: RootState) => state.pageStates.entities
+  );
 
-  const userStates: { [key: string]: string } = {
-    liSan: state.pageStates.liSan,
-    kouSan: state.pageStates.kouSan,
-    chinSan: state.pageStates.chinSan,
-  };
-
-  const pageState = userStates[user] || '';
+  const pageState = pageStates[user]?.state;
 
   switch (pageState) {
-    case pages.speedWorkoutSolo:
+    case PAGES.speedWorkoutSolo:
       return <SpeedWorkoutPane />;
-    case pages.speedWorkoutCue:
+    case PAGES.speedWorkoutCue:
       return <SpeedWorkoutCuePane />;
-    case pages.speedWorkoutRead:
+    case PAGES.speedWorkoutRead:
       return <SpeedWorkoutReadPane />;
-    case pages.cueWorkout:
+    case PAGES.cueWorkout:
       return <CueWorkoutPane />;
-    case pages.note:
+    case PAGES.note:
       return <NotePane />;
-    case pages.micTest:
+    case PAGES.micTest:
       return <MicTestPane />;
     default:
       return <div></div>;
