@@ -1,6 +1,4 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import CardCellContainer from './CardCellContainer';
 
 const CueCard = ({ label, pitchStr }: { label: string; pitchStr: string }) => {
@@ -19,7 +17,7 @@ const CueCard = ({ label, pitchStr }: { label: string; pitchStr: string }) => {
         <span style={{ fontSize: 16 }}>{label}</span>
       </CardCellContainer>
       <CardCellContainer>
-        <SentencePitchLine pitchesArray={string2PitchesArray(pitchStr)} />
+        <SentencePitchLine pitchStr={pitchStr} />
       </CardCellContainer>
     </div>
   );

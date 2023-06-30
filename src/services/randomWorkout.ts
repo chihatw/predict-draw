@@ -1,3 +1,4 @@
+import { string2PitchesArray } from 'application/utils/string2PitchesArray';
 import {
   collection,
   deleteDoc,
@@ -10,8 +11,7 @@ import {
 } from 'firebase/firestore';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { nanoid } from 'nanoid';
-import React, { useEffect, useState } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import React, { useEffect } from 'react';
 import {
   Cue,
   INITIAL_RANDOM_WORKOUT_PARAMS,

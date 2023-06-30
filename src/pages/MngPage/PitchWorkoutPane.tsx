@@ -1,7 +1,6 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Button, TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext, useState } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../App';
 import { PitchWorkout } from '../../Model';
 import { PITCH_WORKOUT_ITEMS } from '../../pitchWorkoutItems';
@@ -73,9 +72,7 @@ const PitchWorkoutPane = () => {
                 <div style={{ flexBasis: 40, textAlign: 'center' }}>
                   {index + 1}
                 </div>
-                <SentencePitchLine
-                  pitchesArray={string2PitchesArray(item.pitchStr)}
-                />
+                <SentencePitchLine pitchStr={item.pitchStr} />
                 <div>
                   {(state.pitchWorkoutAnswers[index] || []).map((answer, i) => (
                     <span

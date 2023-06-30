@@ -1,9 +1,7 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Clear } from '@mui/icons-material';
 import Check from '@mui/icons-material/Check';
 import { useTheme } from '@mui/material';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { PITCHES } from '../../../../../pitch';
 import { RhythmWorkoutFormState } from '../Model';
 
@@ -106,9 +104,7 @@ const RhythmWorkoutResult = ({ state }: { state: RhythmWorkoutFormState }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  <SentencePitchLine
-                    pitchesArray={string2PitchesArray(cue.pitchStr)}
-                  />
+                  <SentencePitchLine pitchStr={cue.pitchStr} />
                 </div>
                 <div
                   style={{
@@ -120,9 +116,7 @@ const RhythmWorkoutResult = ({ state }: { state: RhythmWorkoutFormState }) => {
                     background: isCorrect ? 'transparent' : 'rgba(255,0,0,0.1)',
                   }}
                 >
-                  <SentencePitchLine
-                    pitchesArray={string2PitchesArray(answer.pitchStr)}
-                  />
+                  <SentencePitchLine pitchStr={answer.pitchStr} />
                 </div>
               </div>
             );

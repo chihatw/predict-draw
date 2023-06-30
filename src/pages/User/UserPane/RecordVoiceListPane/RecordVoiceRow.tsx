@@ -1,7 +1,6 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Button } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext, useEffect, useState } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../../../App';
 import { INITIAL_VOICE_PROPS } from '../../../../Model';
 import { setRecordVoiceLogs } from '../../../../services/recordVoice';
@@ -43,9 +42,7 @@ const RecordVoiceRow = ({ id, index }: { id: string; index: number }) => {
       >
         <div style={{ flexBasis: 20 }}>{index + 1}</div>
         <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-          <SentencePitchLine
-            pitchesArray={string2PitchesArray(asset.pitchStr)}
-          />
+          <SentencePitchLine pitchStr={asset.pitchStr} />
         </div>
       </div>
     </Button>

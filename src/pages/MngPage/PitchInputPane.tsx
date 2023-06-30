@@ -1,7 +1,6 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Button, FormControlLabel, Switch, TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext, useState } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../App';
 import { PitchInput } from '../../Model';
 import { PITCH_INPUT_ITEMS } from '../../pitchInputItems';
@@ -192,9 +191,7 @@ const PitchInputPane = () => {
                   {index + 1}
                 </div>
 
-                <SentencePitchLine
-                  pitchesArray={string2PitchesArray(item.pitchStr)}
-                />
+                <SentencePitchLine pitchStr={item.pitchStr} />
 
                 <div style={{ fontSize: 12, paddingLeft: 24 }}>
                   {state.pitchInputLogs[index] || ''}

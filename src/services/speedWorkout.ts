@@ -1,20 +1,21 @@
 import {
-  setDoc,
-  doc,
-  onSnapshot,
-  DocumentData,
-  query,
   collection,
-  orderBy,
+  doc,
+  DocumentData,
   limit,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
-import { workoutItems2String } from 'workout-items';
+
+import { workoutItems2String } from 'application/utils/workoutItems';
 import {
   INITIAL_WORKOUT,
-  State,
-  SpeedWorkoutParams,
   SpeedWorkout,
+  SpeedWorkoutParams,
+  State,
 } from '../Model';
 import {
   INITIAL_SPEED_WORKOUT_EDIT_STATE,

@@ -1,7 +1,6 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Container } from '@mui/material';
-import React, { useContext } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../../App';
 
 const NotePane = () => {
@@ -20,11 +19,7 @@ const NotePane = () => {
             }}
           >
             <div style={{ textAlign: 'right' }}>{text}</div>
-            <SentencePitchLine
-              pitchesArray={string2PitchesArray(
-                state.note.pitches[index] || ''
-              )}
-            />
+            <SentencePitchLine pitchStr={state.note.pitches[index] || ''} />
           </div>
         ))}
       </div>

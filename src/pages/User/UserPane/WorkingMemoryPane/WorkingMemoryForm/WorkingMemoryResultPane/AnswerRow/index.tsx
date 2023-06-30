@@ -1,6 +1,4 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { INITIAL_WORKING_MEMORY_CUE } from '../../../../../../../Model';
 import { PITCHES } from '../../../../../../../pitch';
 import { WorkingMemoryFormState } from '../../../Model';
@@ -34,7 +32,7 @@ const AnswerRow = ({
           justifyContent: 'center',
         }}
       >
-        <SentencePitchLine pitchesArray={string2PitchesArray(cue.pitchStr)} />
+        <SentencePitchLine pitchStr={cue.pitchStr} />
         {state.audioBuffer && state.audioContext && (
           <AnswerRowPlayButton
             audioBuffer={state.audioBuffer}
@@ -54,9 +52,7 @@ const AnswerRow = ({
             answer.pitchStr === cue.pitchStr ? 'white' : 'rgba(255,0,0,0.1)',
         }}
       >
-        <SentencePitchLine
-          pitchesArray={string2PitchesArray(answer.pitchStr)}
-        />
+        <SentencePitchLine pitchStr={answer.pitchStr} />
         {state.audioBuffer && state.audioContext && (
           <AnswerRowPlayButton
             audioBuffer={state.audioBuffer}

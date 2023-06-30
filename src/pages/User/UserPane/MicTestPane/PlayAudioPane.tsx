@@ -1,12 +1,11 @@
 import { IconButton } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import { createSourceNode } from '../../../../services/utils';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../../App';
+import { createSourceNode } from '../../../../services/utils';
 
 import PlayArrow from '@mui/icons-material/PlayArrow';
 
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { setRecordVoiceLogs } from '../../../../services/recordVoice';
 
 const PlayAudioPane = () => {
@@ -36,7 +35,7 @@ const PlayAudioPane = () => {
         {!!audioBuffer && <PlayButton audioBuffer={audioBuffer} />}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <SentencePitchLine pitchesArray={string2PitchesArray(pitchStr)} />
+        <SentencePitchLine pitchStr={pitchStr} />
       </div>
     </div>
   );

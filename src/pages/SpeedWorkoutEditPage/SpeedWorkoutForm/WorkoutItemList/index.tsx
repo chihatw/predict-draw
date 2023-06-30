@@ -1,6 +1,4 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { SpeedWorkoutItem } from '../../../../Model';
 import CueCell from './CueCell';
 
@@ -31,9 +29,7 @@ const WorkoutItemList = ({
             <div style={{ display: 'grid', rowGap: 4 }}>
               <div style={{ fontSize: 14 }}>{text}</div>
               <div style={{ fontSize: 12, color: '#555' }}>{chinese}</div>
-              <SentencePitchLine
-                pitchesArray={string2PitchesArray(pitchesArray)}
-              />
+              <SentencePitchLine pitchStr={pitchesArray} />
             </div>
           </div>
         );

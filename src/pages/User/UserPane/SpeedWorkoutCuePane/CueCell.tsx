@@ -1,6 +1,4 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { CUE_TYPES } from '../../../../Model';
 
 const CueCell = ({
@@ -40,7 +38,7 @@ const CueCell = ({
             background: isActive ? 'lightyellow' : 'transparent',
           }}
         >
-          <SentencePitchLine pitchesArray={string2PitchesArray(cue)} />
+          <SentencePitchLine pitchStr={cue} />
         </div>
       );
     default:

@@ -1,17 +1,16 @@
 import { Button, Container, Modal, useTheme } from '@mui/material';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import string2PitchesArray from 'string2pitches-array';
 import React, { useContext, useMemo } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../../../../App';
+import { INITIAL_CUE, RandomWorkout } from '../../../../../Model';
+import { ActionTypes } from '../../../../../Update';
+import BlobSlider from '../../../../../commons/BlobSlider';
+import { uploadStorage } from '../../../../../repositories/storage';
 import {
   resetRandomWorkout,
   setRandomWorkout,
 } from '../../../../../services/randomWorkout';
-import { INITIAL_CUE, RandomWorkout } from '../../../../../Model';
 import TimeDisplay from '../../commons/TimeDisplay';
-import BlobSlider from '../../../../../commons/BlobSlider';
-import { uploadStorage } from '../../../../../repositories/storage';
-import { ActionTypes } from '../../../../../Update';
 
 const CheckPane = React.memo(
   ({
@@ -122,13 +121,13 @@ const CheckPane = React.memo(
                     const cue =
                       cues.find((item) => item.id === cueId) || INITIAL_CUE;
                     const { pitchStr } = cue;
-                    const pitchesArray = string2PitchesArray(pitchStr);
+
                     return (
                       <div
                         key={index}
                         style={{ display: 'flex', justifyContent: 'center' }}
                       >
-                        <SentencePitchLine pitchesArray={pitchesArray} />
+                        <SentencePitchLine pitchStr={pitchStr} />
                       </div>
                     );
                   })}

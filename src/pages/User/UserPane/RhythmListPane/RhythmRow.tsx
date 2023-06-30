@@ -1,10 +1,9 @@
-import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Card, CardContent } from '@mui/material';
-import React, { useContext } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../../../App';
 import { PitchCard } from '../../../../Model';
+import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
 import { createSourceNode } from '../../../../services/utils';
 
 const RhythmRow = ({
@@ -47,9 +46,7 @@ const RhythmRow = ({
           <div style={{ display: 'flex', alignItems: 'center', fontSize: 12 }}>
             {index + 1}
           </div>
-          <SentencePitchLine
-            pitchesArray={string2PitchesArray(card.pitchStr)}
-          />
+          <SentencePitchLine pitchStr={card.pitchStr} />
         </div>
       </CardContent>
     </Card>

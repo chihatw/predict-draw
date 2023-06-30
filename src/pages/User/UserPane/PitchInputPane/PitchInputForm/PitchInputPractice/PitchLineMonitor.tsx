@@ -1,8 +1,6 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Backspace } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 
 const PitchLineMonitor = ({
   input,
@@ -33,7 +31,7 @@ const PitchLineMonitor = ({
           alignItems: 'center',
         }}
       >
-        <SentencePitchLine pitchesArray={string2PitchesArray(input)} />
+        <SentencePitchLine pitchStr={input} />
       </div>
       <IconButton onClick={handleBackSpace}>
         <Backspace />

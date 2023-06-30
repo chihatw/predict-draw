@@ -1,8 +1,12 @@
 import { Button, Container, MenuItem, Select, TextField } from '@mui/material';
 import React from 'react';
-import { calcBeatCount, string2WorkoutItems } from 'workout-items';
+
 import { CUE_TYPES } from '../../../Model';
 
+import {
+  calcBeatCount,
+  string2WorkoutItems,
+} from 'application/utils/workoutItems';
 import { SpeedWorkoutEditState } from '../Model';
 import WorkoutItemList from './WorkoutItemList';
 

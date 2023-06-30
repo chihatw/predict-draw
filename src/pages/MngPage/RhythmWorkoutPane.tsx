@@ -1,18 +1,17 @@
 import { Button, TextField } from '@mui/material';
 
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { AppContext } from '../../App';
 
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { RhythmWorkout } from '../../Model';
+import { PITCHES } from '../../pitch';
 import {
   buildCueIds,
   setRhythmWorkout,
   setRhythmWorkoutAnswers,
 } from '../../services/rhythmWorkout';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
-import string2PitchesArray from 'string2pitches-array';
-import { PITCHES } from '../../pitch';
 
 const CUE_COUNT: { [key: number]: number } = {
   2: 4,
@@ -109,9 +108,7 @@ const RhythmWorkoutPane = () => {
                 <div style={{ flexBasis: 40, textAlign: 'center' }}>
                   {index + 1}
                 </div>
-                <SentencePitchLine
-                  pitchesArray={string2PitchesArray(cueCard.pitchStr)}
-                />
+                <SentencePitchLine pitchStr={cueCard.pitchStr} />
                 <div>
                   {(state.rhythmWorkoutAnswers[index] || []).map((item, i) => (
                     <span

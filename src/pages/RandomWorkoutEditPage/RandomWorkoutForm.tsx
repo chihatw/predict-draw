@@ -1,4 +1,3 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import {
   Button,
   Table,
@@ -8,10 +7,10 @@ import {
   TextField,
 } from '@mui/material';
 import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { calcBeatCount, cuesStrToCues } from '../../services/randomWorkout';
 import { RandomWorkoutEditState } from './Model';
-import { RandomWorkoutEditAction, RandomWorkoutActionTypes } from './Update';
+import { RandomWorkoutActionTypes, RandomWorkoutEditAction } from './Update';
 
 const RandomWorkoutForm = ({
   state,
@@ -102,9 +101,7 @@ const RandomWorkoutForm = ({
             <TableRow key={cue.id}>
               <TableCell>{cue.label}</TableCell>
               <TableCell>
-                <SentencePitchLine
-                  pitchesArray={string2PitchesArray(cue.pitchStr)}
-                />
+                <SentencePitchLine pitchStr={cue.pitchStr} />
               </TableCell>
               <TableCell>
                 <TextField

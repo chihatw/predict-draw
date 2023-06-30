@@ -1,10 +1,9 @@
-import ta_pitches_120 from '../../../../assets/audios/ta_pitches_120.mp3';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Card, CardContent } from '@mui/material';
-import React, { useContext } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../../../App';
 import { PitchListState, Schedule } from '../../../../Model';
+import ta_pitches_120 from '../../../../assets/audios/ta_pitches_120.mp3';
 import { setPitchList } from '../../../../services/pitchList';
 import { createSourceNode } from '../../../../services/utils';
 
@@ -65,7 +64,7 @@ const PitchCard = ({
           <div style={{ display: 'flex', alignItems: 'center', fontSize: 12 }}>
             {index + 1}
           </div>
-          <SentencePitchLine pitchesArray={string2PitchesArray(pitchStr)} />
+          <SentencePitchLine pitchStr={pitchStr} />
         </div>
       </CardContent>
     </Card>

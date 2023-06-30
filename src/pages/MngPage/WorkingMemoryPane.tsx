@@ -1,8 +1,7 @@
-import * as R from 'ramda';
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import { Button, TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import * as R from 'ramda';
+import { useContext, useState } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 import { AppContext } from '../../App';
 import { INITIAL_WORKING_MEMORY_CUE, State, WorkingMemory } from '../../Model';
 import { ActionTypes } from '../../Update';
@@ -122,9 +121,7 @@ const WorkingMemoryPane = () => {
                       justifyContent: 'center',
                     }}
                   >
-                    <SentencePitchLine
-                      pitchesArray={string2PitchesArray(cue.pitchStr)}
-                    />
+                    <SentencePitchLine pitchStr={cue.pitchStr} />
                   </div>
                   <div
                     style={{
@@ -134,9 +131,7 @@ const WorkingMemoryPane = () => {
                     }}
                   >
                     {answer.id ? (
-                      <SentencePitchLine
-                        pitchesArray={string2PitchesArray(answer.pitchStr)}
-                      />
+                      <SentencePitchLine pitchStr={answer.pitchStr} />
                     ) : (
                       <div>--</div>
                     )}

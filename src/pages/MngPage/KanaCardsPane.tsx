@@ -1,11 +1,10 @@
-import getMoras from 'get-moras';
-import downpitch_120 from '../../assets/audios/downpitch_120.mp3';
 import { Button, IconButton, TextField } from '@mui/material';
+import getMoras from 'get-moras';
 
-import React, { useContext, useState } from 'react';
+import Delete from '@mui/icons-material/Delete';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../App';
 import { KanaCards } from '../../Model';
-import Delete from '@mui/icons-material/Delete';
 
 import { setKanaCards } from '../../services/kanaCard';
 

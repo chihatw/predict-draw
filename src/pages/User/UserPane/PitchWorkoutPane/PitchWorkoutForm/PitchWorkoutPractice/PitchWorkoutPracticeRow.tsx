@@ -1,7 +1,5 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import Check from '@mui/icons-material/Check';
-import React from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 
 const PitchWorkoutPracticeRow = ({
   pitchStr,
@@ -49,7 +47,7 @@ const PitchWorkoutPracticeRow = ({
             justifyContent: 'center',
           }}
         >
-          <SentencePitchLine pitchesArray={string2PitchesArray(pitchStr)} />
+          <SentencePitchLine pitchStr={pitchStr} />
         </div>
       </div>
     </div>

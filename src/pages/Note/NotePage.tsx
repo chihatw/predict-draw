@@ -1,16 +1,15 @@
-import { SentencePitchLine } from '@chihatw/pitch-line.sentence-pitch-line';
 import {
-  Table,
-  TableRow,
   Container,
+  Table,
   TableBody,
   TableCell,
+  TableRow,
 } from '@mui/material';
-import React, { useContext } from 'react';
-import string2PitchesArray from 'string2pitches-array';
+import { useContext } from 'react';
+import SentencePitchLine from 'views/components/SentencePitchLine';
 
-import Layout from '../../Layout';
 import { AppContext } from '../../App';
+import Layout from '../../Layout';
 
 const NotePage = () => {
   const { state } = useContext(AppContext);
@@ -29,9 +28,7 @@ const NotePage = () => {
                 </TableCell>
                 <TableCell>
                   <div style={{ transform: 'scale(1.3)' }}>
-                    <SentencePitchLine
-                      pitchesArray={string2PitchesArray(pitches[index] || '')}
-                    />
+                    <SentencePitchLine pitchStr={pitches[index] || ''} />
                   </div>
                 </TableCell>
               </TableRow>
