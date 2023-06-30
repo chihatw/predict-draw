@@ -1,6 +1,4 @@
-import React from 'react';
-
-const TouchMe = () => {
+function TouchMe() {
   return (
     <div
       style={{
@@ -18,6 +16,6 @@ const TouchMe = () => {
       touch me!!
     </div>
   );
-};
+}
 
 export default TouchMe;

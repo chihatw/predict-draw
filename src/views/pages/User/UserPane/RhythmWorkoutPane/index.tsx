@@ -4,8 +4,8 @@ import { ActionTypes } from '../../../../../Update';
 import { buildFormState } from '../../../../../services/rhythmWorkout';
 import { getUpdatedStateWithAssetPath } from '../../../../../services/utils';
 import downpitch_120 from '../../../../assets/audios/downpitch_120.mp3';
-import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
 
+import TouchMe from 'views/components/TouchMe';
 import {
   INITIAL_RHYTHM_WORKOUT_FORM_STATE,
   RhythmWorkoutFormState,

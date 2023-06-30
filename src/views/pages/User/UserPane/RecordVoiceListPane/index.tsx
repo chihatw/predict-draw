@@ -5,7 +5,8 @@ import { AppContext } from '../../../../../App';
 import { State } from '../../../../../Model';
 import { ActionTypes } from '../../../../../Update';
 import { getAudioBufferFromStorage } from '../../../../../services/utils';
-import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
+
+import TouchMe from 'views/components/TouchMe';
 import PlayTargetButton from './PlayTargetButton';
 import RecordVoiceRow from './RecordVoiceRow';
 

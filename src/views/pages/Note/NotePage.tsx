@@ -9,7 +9,7 @@ import { useContext } from 'react';
 import SentencePitchLine from 'views/components/SentencePitchLine';
 
 import { AppContext } from '../../../App';
-import Layout from '../../../Layout';
+import Layout from '../../Layout';
 
 const NotePage = () => {
   const { state } = useContext(AppContext);

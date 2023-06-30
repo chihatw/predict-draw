@@ -3,7 +3,8 @@ import { AppContext } from '../../../../../App';
 import { ActionTypes } from '../../../../../Update';
 import { getUpdatedStateWithAssetPath } from '../../../../../services/utils';
 import ta_pitches_120 from '../../../../assets/audios/ta_pitches_120.mp3';
-import TouchMe from '../RandomWorkoutPane/RecordingPane/TouchMe';
+
+import TouchMe from 'views/components/TouchMe';
 import {
   INITIAL_PITCH_WORKOUT_FORM_STATE,
   PitchWorkoutFormState,

@@ -1,5 +1,5 @@
 import UserPane from '.';
-import Layout from '../../../../Layout';
+import Layout from '../../../Layout';
 
 const ChinSanPage = () => {
   return (

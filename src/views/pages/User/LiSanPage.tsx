@@ -1,4 +1,4 @@
-import Layout from '../../../Layout';
+import Layout from '../../Layout';
 import UserPane from './UserPane';
 
 const LisanPage = () => {
