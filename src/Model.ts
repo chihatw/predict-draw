@@ -34,15 +34,7 @@ export const pages = {
   note: 'note',
   blank: 'blank',
   micTest: 'micTest',
-  kanaCards: 'kanaCards',
-  pitchList: 'pitchList',
-  rhythmList: 'rhythmList',
   cueWorkout: 'cueWorkout',
-  pitchInput: 'pitchInput',
-  kanaWorkout: 'kanaWorkout',
-  pitchWorkout: 'pitchWorkout',
-  workingMemory: 'workingMemory',
-  rhythmWorkout: 'rhythmWorkout',
   recordVoiceList: 'recordVoiceList',
   speedWorkoutCue: 'speedWorkoutCue',
   speedWorkoutRead: 'speedWorkoutRead',
@@ -54,40 +46,11 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.speedWorkoutCue, label: '速読キュー' },
   { value: pages.speedWorkoutRead, label: '速読練習' },
   { value: pages.cueWorkout, label: '紙コップ' },
-  // { value: pages.workingMemory, label: 'ワーキングメモリ' },
   { value: pages.note, label: 'ノート' },
-  // { value: pages.rhythmList, label: 'リズム表示' },
-  // { value: pages.rhythmWorkout, label: 'リズム練習' },
-  // { value: pages.pitchList, label: 'ピッチ表示' },
-  // { value: pages.pitchWorkout, label: 'ピッチ練習' },
-  // { value: pages.pitchInput, label: 'ピッチ入力' },
-  // { value: pages.kanaCards, label: 'かな表示' },
-  // { value: pages.kanaWorkout, label: 'かな練習' },
   { value: pages.blank, label: '空欄' },
-  // { value: pages.randomWorkout, label: 'ランダム（実演用）' },
   { value: pages.micTest, label: 'マイクテスト' },
   { value: pages.recordVoiceList, label: '録音リスト' },
 ];
-
-// will delete
-export const JOSHI_PATTERN = {
-  default: 'default',
-  inverse: 'inverse',
-  topic_wo_head: 'topic_wo_head',
-  topic_wo_tail: 'topic_wo_tail',
-  topic_ni_head: 'topic_ni_head',
-  topic_ni_tail: 'topic_ni_tail',
-  group_wo_head: 'group_wo_head',
-  group_wo_tail: 'group_wo_tail',
-  group_ni_head: 'group_ni_head',
-  group_ni_tail: 'group_ni_tail',
-};
-
-export const NEVER_ALWAYS_RANDOM = {
-  never: 'never',
-  always: 'always',
-  random: 'random',
-};
 
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
 export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];

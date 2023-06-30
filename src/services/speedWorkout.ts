@@ -17,13 +17,13 @@ import {
   SpeedWorkoutParams,
   State,
 } from '../Model';
+import { db } from '../repositories/firebase';
+import { Action, ActionTypes } from '../Update';
 import {
   INITIAL_SPEED_WORKOUT_EDIT_STATE,
   SpeedWorkoutEditState,
-} from '../pages/SpeedWorkoutEditPage/Model';
-import { SpeedWorkoutState } from '../pages/User/UserPane/SpeedWorkoutPane/Model';
-import { db } from '../repositories/firebase';
-import { Action, ActionTypes } from '../Update';
+} from '../views/pages/SpeedWorkoutEditPage/Model';
+import { SpeedWorkoutState } from '../views/pages/User/UserPane/SpeedWorkoutPane/Model';
 
 const COLLECTIONS = { params: 'params', workouts: 'workouts' };
 

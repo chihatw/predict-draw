@@ -3,14 +3,13 @@ import {
   CueWorkoutCue,
   INITIAL_CUE_CARD_PROPS,
   INITIAL_CUE_WORKOUT_CUE,
-  INITIAL_PATTERN,
   Pattern,
   PatternParams,
   TARGET,
 } from '../../Model';
-import { buildCurrentPatterns } from '../../pages/MngPage/CueWorkoutList/services/useCurrentPatterns';
-import { PATTERNS } from '../../pages/MngPage/CueWorkoutList/services/usePatterns';
-import { CUE_CARDS } from '../../pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
+import { buildCurrentPatterns } from '../../views/pages/MngPage/CueWorkoutList/services/useCurrentPatterns';
+import { PATTERNS } from '../../views/pages/MngPage/CueWorkoutList/services/usePatterns';
+import { CUE_CARDS } from '../../views/pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { shuffle } from '../utils';
 
 // /pages/Users/UserPane/CueWorkoutPane/index.tsx showNextCue で

@@ -19,12 +19,12 @@ import {
   RandomWorkoutParams,
   State,
 } from '../Model';
+import { db, storage } from '../repositories/firebase';
+import { Action, ActionTypes } from '../Update';
 import {
   INITIAL_RANDOM_WORKOUT_EDIT_STATE,
   RandomWorkoutEditState,
-} from '../pages/RandomWorkoutEditPage/Model';
-import { db, storage } from '../repositories/firebase';
-import { Action, ActionTypes } from '../Update';
+} from '../views/pages/RandomWorkoutEditPage/Model';
 
 const COLLECTIONS = {
   randomWorkouts: 'randomWorkouts',

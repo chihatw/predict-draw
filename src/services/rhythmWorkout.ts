@@ -1,10 +1,10 @@
-import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
+import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import { RhythmWorkout, State } from '../Model';
-import { RhythmWorkoutFormState } from '../pages/User/UserPane/RhythmWorkoutPane/Model';
 import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
+import { RhythmWorkoutFormState } from '../views/pages/User/UserPane/RhythmWorkoutPane/Model';
 import { shuffle } from './utils';
 
 const COLLECTION = 'rhythmWorkout';

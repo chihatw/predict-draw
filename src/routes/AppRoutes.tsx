@@ -1,14 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import TopPage from '../pages/TopPage';
-import LisanPage from '../pages/User/LiSanPage';
-import KouSanPage from '../pages/User/KouSanPage';
-import MngPage from '../pages/MngPage';
-import NotePage from '../pages/Note/NotePage';
-import MngNotePage from '../pages/Note/MngNotePage';
-import RandomWorkoutEditPage from '../pages/RandomWorkoutEditPage';
-import ChinSanPage from '../pages/User/UserPane/ChinSanPage';
-import SpeedWorkoutEditPage from '../pages/SpeedWorkoutEditPage';
+import MngPage from '../views/pages/MngPage';
+import MngNotePage from '../views/pages/Note/MngNotePage';
+import NotePage from '../views/pages/Note/NotePage';
+import RandomWorkoutEditPage from '../views/pages/RandomWorkoutEditPage';
+import SpeedWorkoutEditPage from '../views/pages/SpeedWorkoutEditPage';
+import TopPage from '../views/pages/TopPage';
+import KouSanPage from '../views/pages/User/KouSanPage';
+import LisanPage from '../views/pages/User/LiSanPage';
+import ChinSanPage from '../views/pages/User/UserPane/ChinSanPage';
 
 const AppRoutes = () => {
   return (

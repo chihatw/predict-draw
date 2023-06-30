@@ -1,5 +1,3 @@
-import * as R from 'ramda';
-import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import {
   doc,
   DocumentData,
@@ -8,13 +6,14 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
+import downpitch_120 from '../assets/audios/downpitch_120.mp3';
 import { INITIAL_WORKING_MEMORY, State, WorkingMemory } from '../Model';
+import { db } from '../repositories/firebase';
+import { Action, ActionTypes } from '../Update';
 import {
   INITIAL_WORKING_MEMORY_FORM_STATE,
   WorkingMemoryFormState,
-} from '../pages/User/UserPane/WorkingMemoryPane/Model';
-import { db } from '../repositories/firebase';
-import { Action, ActionTypes } from '../Update';
+} from '../views/pages/User/UserPane/WorkingMemoryPane/Model';
 import { getRandomInt } from './utils';
 
 const COLLECTIONS = {

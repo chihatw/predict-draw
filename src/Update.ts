@@ -4,28 +4,27 @@ import {
   CueWorkoutCue,
   CueWorkoutParams,
   KanaCards,
-  NoteState,
-  RandomWorkout,
-  RandomWorkoutParams,
-  RhythmWorkout,
-  RhythmListState,
-  State,
-  WorkingMemory,
-  SpeedWorkout,
   KanaWorkoutParams,
-  SpeedWorkoutParams,
-  PitchListState,
-  PitchWorkout,
+  NoteState,
   PitchInput,
   PitchInputLogs,
-  VoiceProps,
+  PitchListState,
+  PitchWorkout,
+  RandomWorkout,
+  RandomWorkoutParams,
   RecordVoiceParams,
+  RhythmListState,
+  RhythmWorkout,
+  SpeedWorkout,
+  SpeedWorkoutParams,
+  State,
+  VoiceProps,
+  WorkingMemory,
 } from './Model';
 
 export const ActionTypes = {
   setState: 'setState',
   setBlobURLs: 'setBlobURLs',
-  setKanaCards: 'setKanaCards',
   setPitchList: 'setPitchList',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
@@ -50,7 +49,6 @@ export const ActionTypes = {
   setRecordVoiceLogs: 'setRecordVoiceLogs',
   setPitchWorkout: 'setPitchWorkout',
   setPitchWorkoutAnswers: 'setPitchWorkoutAnswers',
-  setKanaWorkoutParams: 'setKanaWorkoutParams',
   setSpeedWorkoutParams: 'setSpeedWorkoutParams',
 };
 
@@ -120,17 +118,6 @@ export const reducer = (state: State, action: Action): State => {
       )(state);
     }
 
-    case ActionTypes.setKanaWorkoutParams: {
-      const kanaWorkoutParams = payload as KanaWorkoutParams;
-      return R.assocPath<KanaWorkoutParams, State>(
-        ['params', 'kanaWorkout'],
-        kanaWorkoutParams
-      )(state);
-    }
-    case ActionTypes.setKanaCards: {
-      const kanaCards = payload as KanaCards;
-      return R.assocPath<KanaCards, State>(['kanaCards'], kanaCards)(state);
-    }
     case ActionTypes.setRhythmWorkout: {
       const rhythmWorkout = payload as RhythmWorkout;
       return R.assocPath<RhythmWorkout, State>(
