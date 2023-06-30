@@ -8,7 +8,7 @@ import {
 import { useContext } from 'react';
 import SentencePitchLine from 'views/components/SentencePitchLine';
 
-import { AppContext } from '../../../App';
+import { AppContext } from '../..';
 import Layout from '../../Layout';
 
 const NotePage = () => {

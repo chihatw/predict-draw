@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { State, VoiceProps } from '../../../../../Model';
 import { ActionTypes } from '../../../../../Update';
 import { PITCH_ORDERS } from '../../../../../constants';
@@ -61,7 +61,8 @@ const RecordVoiceAssetsPane = () => {
     const filteredPaths = paths.filter((path) =>
       Object.keys(state.audioBuffers).includes(path)
     );
-
+    console.log(state.recordVoice.assets);
+    console.log(paths.length, filteredPaths.length);
     if (paths.length === filteredPaths.length) {
       console.log('already has Assets AudioBuffers');
       return;
@@ -71,14 +72,9 @@ const RecordVoiceAssetsPane = () => {
       const remoteAudioBuffers: { [path: string]: AudioBuffer } = {};
       await Promise.all(
         paths.map(async (path) => {
-          if (!state.audioContext) return;
-
           const localAudioBuffer = state.audioBuffers[path];
           if (!localAudioBuffer) {
-            const gotAudioBuffer = await getAudioBufferFromStorage(
-              path,
-              state.audioContext
-            );
+            const gotAudioBuffer = await getAudioBufferFromStorage(path);
             if (gotAudioBuffer) {
               remoteAudioBuffers[path] = gotAudioBuffer;
             }
@@ -94,7 +90,7 @@ const RecordVoiceAssetsPane = () => {
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
     fetchData();
-  }, [state.recordVoice.assets, state.audioContext]);
+  }, [state.recordVoice.assets]);
 
   const selectAsset = (id: string) => {
     let updatedActiveIds = [...activeIds];

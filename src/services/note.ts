@@ -1,10 +1,10 @@
 import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect } from 'react';
 
-import { db } from '../repositories/firebase';
+import { db } from '../infrastructure/firebase';
 
-import { Action, ActionTypes } from '../Update';
 import { NoteState } from '../Model';
+import { Action, ActionTypes } from '../Update';
 
 export type PitchesArray = string[][][];
 const COLLECTIONS = { pitches: 'pitches' };

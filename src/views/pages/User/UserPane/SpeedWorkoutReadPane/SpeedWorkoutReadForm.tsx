@@ -2,7 +2,7 @@ import { CloseRounded } from '@mui/icons-material';
 import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Container, IconButton } from '@mui/material';
 import React, { useContext } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { SpeedWorkoutParams } from '../../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../../services/speedWorkout';
 import WorkoutLabel from '../commons/WorkoutLabel';

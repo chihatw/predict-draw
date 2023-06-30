@@ -1,7 +1,5 @@
-import * as R from 'ramda';
 import { getDownloadURL, ref } from 'firebase/storage';
-import { State } from '../Model';
-import { storage } from '../repositories/firebase';
+import { storage } from '../infrastructure/firebase';
 
 /**
  *
@@ -36,10 +34,8 @@ export const createAudioContext = () => {
   return audioContext;
 };
 
-export const blobToAudioBuffer = async (
-  blob: Blob,
-  audioContext: AudioContext
-) => {
+export const blobToAudioBuffer = async (blob: Blob) => {
+  const audioContext = new AudioContext();
   const arrayBuffer = await blob.arrayBuffer();
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
   return audioBuffer;
@@ -80,35 +76,8 @@ export const getBlobFromAssets = async (path: string) => {
 export const toggleElement = (arr: string[], val: string) =>
   arr.includes(val) ? arr.filter((el) => el !== val) : [...arr, val];
 
-/**
- * state.audioContext が null なら、state をそのまま返す
- * state.audioBuffers[path] があれば、state をそのまま返す
- * path から blob が取得できなければ、state をそのまま返す
- */
-export const getUpdatedStateWithAssetPath = async (
-  state: State,
-  path: string
-) => {
-  if (!state.audioContext || !!state.audioBuffers[path]) return state;
-
-  let audioBuffer: AudioBuffer | null = null;
-  const { blob } = await getBlobFromAssets(path);
-  if (!blob) return state;
-
-  audioBuffer = await blobToAudioBuffer(blob, state.audioContext);
-  if (!audioBuffer) return state;
-
-  const updatedState = R.assocPath<AudioBuffer, State>(
-    ['audioBuffers', path],
-    audioBuffer
-  )(state);
-
-  return updatedState;
-};
-
 export const getAudioBufferFromStorage = async (
-  storagePath: string,
-  audioContext: AudioContext
+  storagePath: string
 ): Promise<AudioBuffer | null> => {
   const downloadURL = await getDownloadURL(ref(storage, storagePath));
   if (!downloadURL) return null;
@@ -116,7 +85,7 @@ export const getAudioBufferFromStorage = async (
   const response = await fetch(downloadURL);
   const blob = await response.blob();
   if (!blob) return null;
-  const audioBuffer = await blobToAudioBuffer(blob, audioContext);
+  const audioBuffer = await blobToAudioBuffer(blob);
   return audioBuffer;
 };
 

@@ -1,7 +1,7 @@
 import { PlayArrow } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 
 import { createSourceNode } from '../../../../../services/utils';
 
@@ -23,8 +23,9 @@ const PlayRawPane = () => {
   }, [state.recordVoice.raw.storagePath, state.audioBuffers]);
 
   const play = () => {
-    if (!state.audioContext || !audioBuffer) return;
-    const sourceNode = createSourceNode(audioBuffer, state.audioContext);
+    if (!audioBuffer) return;
+    const audioContext = new AudioContext();
+    const sourceNode = createSourceNode(audioBuffer, audioContext);
     sourceNode.start();
   };
   if (!audioBuffer) return <></>;

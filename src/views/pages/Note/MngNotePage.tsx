@@ -1,7 +1,7 @@
 import { Container, TextField } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 
-import { AppContext } from '../../../App';
+import { AppContext } from '../..';
 import { buildInput, buildPitchList, setNote } from '../../../services/note';
 import Layout from '../../Layout';
 

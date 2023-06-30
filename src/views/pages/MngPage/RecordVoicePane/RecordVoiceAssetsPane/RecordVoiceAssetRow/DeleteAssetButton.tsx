@@ -2,7 +2,7 @@ import Delete from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 import * as R from 'ramda';
 import { useContext } from 'react';
-import { AppContext } from '../../../../../../App';
+import { AppContext } from '../../../../..';
 import { State, VoiceProps } from '../../../../../../Model';
 import { ActionTypes } from '../../../../../../Update';
 import { deleteStorage } from '../../../../../../repositories/storage';

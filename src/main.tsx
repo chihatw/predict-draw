@@ -1,10 +1,15 @@
-import { createRoot } from 'react-dom/client';
 import React from 'react';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+
 import { createTheme, ThemeProvider } from '@mui/material';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
+
+import './index.css';
+import App from './views';
+
+import { configureStore } from 'application/0-store/store';
+import services from 'infrastructure/services';
+import { Provider } from 'react-redux';
 
 interface ExtendedTypographyOptions extends TypographyOptions {
   mPlusRounded: React.CSSProperties;
@@ -63,19 +68,23 @@ const theme = createTheme({
   } as ExtendedTypographyOptions,
 });
 
-const container = document.getElementById('root');
-if (!container) throw new Error('Fail to find the roote lement');
-const root = createRoot(container);
+if (import.meta.env.PROD) {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+  console.warn = () => {};
+}
 
-root.render(
-  // strikt mode は useEffect が 2回実行される
-  // <React.StrictMode>
-  <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <div style={{ height: '100vh' }}>
-        <App />
-      </div>
-    </BrowserRouter>
-  </ThemeProvider>
-  // </React.StrictMode>
+const store = configureStore(services);
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </Provider>
 );
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppStore = ReturnType<typeof configureStore>;
+export type AppDispatch = typeof store.dispatch;

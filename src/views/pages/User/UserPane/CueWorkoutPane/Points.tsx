@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 
 const Points = () => {
   const theme = useTheme();

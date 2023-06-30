@@ -2,7 +2,7 @@ import * as R from 'ramda';
 
 import { TextField } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { RecordVoiceParams } from '../../../../../Model';
 import { setRecordVoiceParams } from '../../../../../services/recordVoice';
 

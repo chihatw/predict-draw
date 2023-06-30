@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import { useContext } from 'react';
 import SentencePitchLine from 'views/components/SentencePitchLine';
-import { AppContext } from '../../../../App';
+import { AppContext } from '../../..';
 
 const NotePane = () => {
   const { state } = useContext(AppContext);

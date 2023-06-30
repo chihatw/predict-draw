@@ -1,6 +1,6 @@
 import { Container, Divider } from '@mui/material';
 import { useContext, useMemo } from 'react';
-import { AppContext } from '../../../App';
+import { AppContext } from '../..';
 import { setPageState } from '../../../services/pageState';
 import Layout from '../../Layout';
 import CueWorkoutList from './CueWorkoutList';

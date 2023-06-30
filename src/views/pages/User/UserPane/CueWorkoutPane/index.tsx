@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { CueWorkoutParams, Pattern, State, TARGET } from '../../../../../Model';
 import { ActionTypes } from '../../../../../Update';
 import createCueFromParams from '../../../../../services/cueWorkout/createCueFromParams';

@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import React, { useContext, useEffect, useReducer } from 'react';
 
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import WorkoutLabel from '../commons/WorkoutLabel';
 import WorkoutStatus from '../commons/WorkoutStatus';
 import CueList from './CueList';

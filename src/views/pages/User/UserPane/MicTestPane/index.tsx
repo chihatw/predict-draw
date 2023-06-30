@@ -2,12 +2,11 @@ import * as R from 'ramda';
 
 import { Container } from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { State } from '../../../../../Model';
 import { ActionTypes } from '../../../../../Update';
 import { getAudioBufferFromStorage } from '../../../../../services/utils';
 
-import TouchMe from 'views/components/TouchMe';
 import PlayAudioPane from './PlayAudioPane';
 import RecordVoiceButton from './RecordVoiceButton';
 import TargetPitchPane from './TargetPitchPane';
@@ -30,11 +29,7 @@ const MicTestPane = () => {
 
     // ローカルに無い場合、ストレージから取得
     const fetchData = async () => {
-      if (!state.audioContext) return;
-      const audioBuffer = await getAudioBufferFromStorage(
-        storagePath,
-        state.audioContext
-      );
+      const audioBuffer = await getAudioBufferFromStorage(storagePath);
 
       let updatedState = state;
       if (audioBuffer) {
@@ -50,15 +45,7 @@ const MicTestPane = () => {
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
     fetchData();
-  }, [
-    state.audioBuffers,
-    state.audioContext,
-    state.recordVoice.raw.storagePath,
-  ]);
-
-  if (!state.audioContext) {
-    return <TouchMe />;
-  }
+  }, [state.audioBuffers, state.recordVoice.raw.storagePath]);
 
   return (
     <Container maxWidth='sm'>

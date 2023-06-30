@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../../../../App';
+import { AppContext } from '../../..';
 import { CueWorkoutParams } from '../../../../Model';
 import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
 import {

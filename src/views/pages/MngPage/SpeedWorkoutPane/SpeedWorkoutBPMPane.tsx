@@ -1,7 +1,7 @@
 import { Clear } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../../../../App';
+import { AppContext } from '../../..';
 import { SpeedWorkoutParams } from '../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../services/speedWorkout';
 

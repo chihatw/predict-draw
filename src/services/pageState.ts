@@ -1,8 +1,8 @@
-import { DocumentData, onSnapshot, doc, setDoc } from 'firebase/firestore';
+import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { pages, PageState } from '../Model';
 
-import { db } from '../repositories/firebase';
+import { db } from '../infrastructure/firebase';
 import { Action, ActionTypes } from '../Update';
 
 const COLLECTIONS = {

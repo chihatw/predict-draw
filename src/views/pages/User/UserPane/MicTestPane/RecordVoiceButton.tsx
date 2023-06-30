@@ -3,7 +3,7 @@ import StopCircleIcon from '@mui/icons-material/StopCircle';
 import { IconButton } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { blobToAudioBuffer } from '../../../../../services/utils';
 
 import { RAW_STORAGE_PATH } from '.';
@@ -50,8 +50,8 @@ const RecordVoiceButton = () => {
     // データが入力された時の処理
     mediaRecorder.ondataavailable = async (event: BlobEvent) => {
       const blob = event.data;
-      if (!state.audioContext || !blob) return;
-      const audioBuffer = await blobToAudioBuffer(blob, state.audioContext);
+      if (!blob) return;
+      const audioBuffer = await blobToAudioBuffer(blob);
 
       const recordVoiceRaw: VoiceProps = {
         id: 'raw',

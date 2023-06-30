@@ -9,7 +9,7 @@ import {
 } from '../../../../../Model';
 
 import { PatternListContext } from '.';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import createCueFromParams from '../../../../../services/cueWorkout/createCueFromParams';
 import {
   setCueWorkoutCue,

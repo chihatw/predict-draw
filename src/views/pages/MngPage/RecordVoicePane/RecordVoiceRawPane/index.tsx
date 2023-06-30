@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { State } from '../../../../../Model';
 import { ActionTypes } from '../../../../../Update';
 import {
@@ -37,7 +37,6 @@ const RecordVoiceRawPane = () => {
 
     const fetchData = async () => {
       let updatedState = state;
-      if (!state.audioContext) return;
 
       const remoteBlob = await getBlobFromStorage(path);
       setBlob(remoteBlob);
@@ -48,10 +47,7 @@ const RecordVoiceRawPane = () => {
         return;
       }
 
-      const remoteAudioBuffer = await blobToAudioBuffer(
-        remoteBlob,
-        state.audioContext
-      );
+      const remoteAudioBuffer = await blobToAudioBuffer(remoteBlob);
 
       if (!!remoteAudioBuffer) {
         updatedState = R.assocPath<AudioBuffer, State>(
@@ -64,7 +60,7 @@ const RecordVoiceRawPane = () => {
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
     fetchData();
-  }, [state.recordVoice.raw.storagePath, state.audioContext]);
+  }, [state.recordVoice.raw.storagePath]);
 
   /**
    * rawPitchStr の初期値設定

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { SpeedWorkoutParams } from '../../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../../services/speedWorkout';
 import CueRow from './CueRow';

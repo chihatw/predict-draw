@@ -10,13 +10,13 @@ import {
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 
+import { db } from '../infrastructure/firebase';
 import {
   INITIAL_WORKOUT,
   SpeedWorkout,
   SpeedWorkoutParams,
   State,
 } from '../Model';
-import { db } from '../repositories/firebase';
 import { Action, ActionTypes } from '../Update';
 import { SpeedWorkoutState } from '../views/pages/User/UserPane/SpeedWorkoutPane/Model';
 

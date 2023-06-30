@@ -1,4 +1,3 @@
-import * as R from 'ramda';
 import {
   collection,
   deleteDoc,
@@ -8,9 +7,9 @@ import {
   setDoc,
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
-import { db } from '../repositories/firebase';
-import { Action, ActionTypes } from '../Update';
+import { db } from '../infrastructure/firebase';
 import { RecordVoiceParams, VoiceProps } from '../Model';
+import { Action, ActionTypes } from '../Update';
 
 const COLLECTIONS = {
   recordVoice: 'recordVoice',

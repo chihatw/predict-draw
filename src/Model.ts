@@ -35,7 +35,6 @@ export const pages = {
   blank: 'blank',
   micTest: 'micTest',
   cueWorkout: 'cueWorkout',
-  recordVoiceList: 'recordVoiceList',
   speedWorkoutCue: 'speedWorkoutCue',
   speedWorkoutRead: 'speedWorkoutRead',
   speedWorkoutSolo: 'speedWorkoutSolo',
@@ -49,7 +48,6 @@ export const PAGE_STATE: { value: string; label: string }[] = [
   { value: pages.note, label: 'ノート' },
   { value: pages.blank, label: '空欄' },
   { value: pages.micTest, label: 'マイクテスト' },
-  { value: pages.recordVoiceList, label: '録音リスト' },
 ];
 
 export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
@@ -74,11 +72,6 @@ export type SpeedWorkout = {
   cueType: string;
   beatCount: number;
   createdAt: number;
-};
-
-export type WorkoutRound = {
-  currentRound: number;
-  totalRounds: number;
 };
 
 export const INITIAL_WORKOUT: SpeedWorkout = {
@@ -215,67 +208,6 @@ export const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
   params: INITIAL_CUE_WORKOUT_PARAMS,
 };
 
-export type WorkingMemoryCue = {
-  id: string;
-  end: number;
-  start: number;
-  pitchStr: string;
-};
-
-export const INITIAL_WORKING_MEMORY_CUE: WorkingMemoryCue = {
-  id: '',
-  pitchStr: '',
-  start: 0,
-  end: 0,
-};
-
-export type WorkingMemoryAnswer = {
-  createdAt: number;
-  cuePitchStrs: string[];
-  inputPitchStrs: string[];
-  score: number;
-  offset: number;
-};
-
-export type WorkingMemory = {
-  id: string;
-  offset: number;
-  cueCount: number;
-  storagePath: string;
-  cues: { [id: string]: WorkingMemoryCue };
-  cueIds: string[]; // for monitor
-};
-
-export const INITIAL_WORKING_MEMORY: WorkingMemory = {
-  id: '',
-  offset: 0,
-  cueCount: 0,
-  storagePath: '',
-  cues: {},
-  cueIds: [],
-};
-
-export type RhythmListState = {
-  tapped: string[];
-  mora: number;
-};
-
-export type PitchListState = {
-  tapped: string[];
-  mora: number;
-};
-
-export type RhythmWorkout = {
-  mora: number;
-  cueIds: string[];
-  cueCount: number;
-};
-
-export type PitchWorkout = {
-  mora: number;
-  cueIds: string[];
-};
-
 export type SpeedWorkoutParams = {
   bpm: number;
   checkedIndexes: number[];
@@ -340,7 +272,6 @@ export const INITIAL_RECORD_VOICE: RecordVoice = {
 };
 
 export type State = {
-  audioContext: AudioContext | null;
   pageStates: {
     liSan: string;
     kouSan: string;
@@ -349,14 +280,6 @@ export type State = {
   note: NoteState;
   cueWorkout: CueWorkoutState;
   speedWorkouts: { [id: string]: SpeedWorkout };
-  workingMemory: WorkingMemory;
-  rhythmList: RhythmListState;
-  rhythmWorkout: RhythmWorkout;
-  rhythmWorkoutAnswers: { [index: number]: string[] };
-  pitchList: PitchListState;
-  pitchWorkout: PitchWorkout;
-  pitchWorkoutAnswers: { [index: number]: string[] };
-  workingMemoryAnswerIds: string[];
   params: Params;
   audioBuffers: {
     [downloadURL: string]: AudioBuffer;
@@ -368,7 +291,6 @@ export type State = {
 };
 
 export const INITIAL_STATE: State = {
-  audioContext: null,
   note: INITIAL_NOTE_STATE,
   speedWorkouts: {},
   pageStates: {
@@ -377,14 +299,6 @@ export const INITIAL_STATE: State = {
     chinSan: '',
   },
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  workingMemory: INITIAL_WORKING_MEMORY,
-  workingMemoryAnswerIds: [],
-  rhythmList: { tapped: [], mora: 2 },
-  rhythmWorkout: { mora: 2, cueIds: [], cueCount: 0 },
-  rhythmWorkoutAnswers: {},
-  pitchList: { tapped: [], mora: 2 },
-  pitchWorkout: { mora: 2, cueIds: [] },
-  pitchWorkoutAnswers: {},
   params: {
     speedWorkout: {
       bpm: 0,

@@ -1,6 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../App';
+import { AppContext } from '../../..';
 import { SpeedWorkoutParams } from '../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../services/speedWorkout';
 import SpeedWorkoutBPMPane from './SpeedWorkoutBPMPane';

@@ -2,7 +2,7 @@ import Check from '@mui/icons-material/Check';
 import { Button, IconButton } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../../../App';
+import { AppContext } from '../../..';
 import { SpeedWorkoutParams } from '../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../services/speedWorkout';
 

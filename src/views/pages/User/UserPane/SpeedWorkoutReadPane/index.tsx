@@ -1,6 +1,6 @@
 import { useContext, useEffect, useReducer } from 'react';
 
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 
 import {
   buildSpeedWorkoutReadState,

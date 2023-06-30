@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../../../App';
+import { AppContext } from '../../../../..';
 import { VoiceProps } from '../../../../../../Model';
 import DeleteAssetButton from './DeleteAssetButton';
 import PlayAssetButton from './PlayAssetButton';

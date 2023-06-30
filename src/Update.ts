@@ -4,21 +4,15 @@ import {
   CueWorkoutCue,
   CueWorkoutParams,
   NoteState,
-  PitchListState,
-  PitchWorkout,
   RecordVoiceParams,
-  RhythmListState,
-  RhythmWorkout,
   SpeedWorkout,
   SpeedWorkoutParams,
   State,
   VoiceProps,
-  WorkingMemory,
 } from './Model';
 
 export const ActionTypes = {
   setState: 'setState',
-  setPitchList: 'setPitchList',
   setNoteState: 'setNoteState',
   setPageState: 'setPageState',
   setAudioContext: 'setAudioContext',
@@ -47,14 +41,9 @@ export type Action = {
     | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
-    | RhythmListState
-    | PitchListState
-    | RhythmWorkout
-    | PitchWorkout
     | SpeedWorkoutParams
     | { [index: number]: string[] }
     | { user: string; pageState: string }
-    | { workingMemory: WorkingMemory; audioBuffer: AudioBuffer | null }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
     | { imagePath: string; blobURL: string }
@@ -87,13 +76,6 @@ export const reducer = (state: State, action: Action): State => {
       return R.assocPath<SpeedWorkoutParams, State>(
         ['params', 'speedWorkout'],
         params
-      )(state);
-    }
-    case ActionTypes.setPitchList: {
-      const pitchList = payload as PitchListState;
-      return R.assocPath<PitchListState, State>(
-        ['pitchList'],
-        pitchList
       )(state);
     }
     case ActionTypes.setState: {

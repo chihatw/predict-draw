@@ -1,6 +1,6 @@
 import { Button, useTheme } from '@mui/material';
 import React, { useContext, useRef } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { SpeedWorkoutParams } from '../../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../../services/speedWorkout';
 import BPMCulcLabel from '../commons/BPMCulcLabel';

@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../../../App';
+import { AppContext } from '../../../..';
 import { createSourceNode } from '../../../../../services/utils';
 
 import PlayArrow from '@mui/icons-material/PlayArrow';
@@ -47,8 +47,8 @@ const PlayButton = ({ audioBuffer }: { audioBuffer: AudioBuffer }) => {
   const { state } = useContext(AppContext);
 
   const play = () => {
-    if (!state.audioContext) return;
-    const sourceNode = createSourceNode(audioBuffer, state.audioContext);
+    const audioContext = new AudioContext();
+    const sourceNode = createSourceNode(audioBuffer, audioContext);
     sourceNode.start();
 
     const updatedRecordVoiceLogs: { selected: string } = {
