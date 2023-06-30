@@ -1,16 +1,13 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { INITIAL_STATE, State } from './Model';
 
-import AppRoutes from './routes/AppRoutes';
-import usePageState from './services/pageState';
 import { Action, ActionTypes, reducer } from './Update';
-import useNote from './services/note';
-import { createAudioContext } from './services/utils';
+import AppRoutes from './routes/AppRoutes';
 import { useCueWorkout } from './services/cueWorkout/cueWorkout';
+import useNote from './services/note';
+import usePageState from './services/pageState';
 import { useSpeedWorkout } from './services/speedWorkout';
-import { usePitchWorkout } from './services/pitchWorkout';
-import { usePitchInput } from './services/pitchInput';
-import { useRecordVoice } from './services/recordVoice';
+import { createAudioContext } from './services/utils';
 
 export const AppContext = createContext<{
   state: State;
@@ -26,10 +23,7 @@ function App() {
   useNote(dispatch);
   usePageState(dispatch);
   useCueWorkout(dispatch);
-  usePitchInput(dispatch);
-  useRecordVoice(dispatch);
   useSpeedWorkout(dispatch);
-  usePitchWorkout(dispatch);
 
   useEffect(() => {
     const { audioContext } = state;
