@@ -1,25 +1,18 @@
 import { Clear } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { useContext } from 'react';
-import { AppContext } from '../../..';
-import { SpeedWorkoutParams } from '../../../../Model';
-import { setSpeedWorkoutParams } from '../../../../services/speedWorkout';
+
+import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SpeedWorkoutBPMPane = () => {
-  const { state } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const { isRunning, bpm } = useSelector(
+    (state: RootState) => state.speedWorkoutParams
+  );
 
   const handleReset = () => {
-    const updatedParams: SpeedWorkoutParams = {
-      ...state.params.speedWorkout,
-      bpm: 0,
-      currentRound: 1,
-      checkedIndexes: [],
-      isRunning: false,
-      updatedAt: new Date().getTime(),
-    };
-
-    //  app
-    setSpeedWorkoutParams(updatedParams);
+    dispatch(speedWorkoutParamsActions.reset());
   };
 
   return (
@@ -33,11 +26,7 @@ const SpeedWorkoutBPMPane = () => {
       }}
     >
       <h5 style={{ flexBasis: 80 }}>bpm</h5>
-      {state.params.speedWorkout.isRunning ? (
-        <div>計測中</div>
-      ) : (
-        <div>{state.params.speedWorkout.bpm}</div>
-      )}
+      {isRunning ? <div>計測中</div> : <div>{bpm}</div>}
       <IconButton size='small' onClick={handleReset}>
         <Clear color='warning' />
       </IconButton>

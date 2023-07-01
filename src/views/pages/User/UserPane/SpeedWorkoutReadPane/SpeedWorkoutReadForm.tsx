@@ -1,9 +1,9 @@
 import { CloseRounded } from '@mui/icons-material';
 import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Container, IconButton } from '@mui/material';
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import React, { useContext } from 'react';
 import { AppContext } from '../../../..';
-import { SpeedWorkoutParams } from '../../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../../services/speedWorkout';
 import WorkoutLabel from '../commons/WorkoutLabel';
 import WorkoutStatus from '../commons/WorkoutStatus';
@@ -25,7 +25,7 @@ const SpeedWorkoutReadForm = ({
     updatedState.isRunning = !state.isRunning;
     dispatch(updatedState);
 
-    const updatedParams: SpeedWorkoutParams = {
+    const updatedParams: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
     };
     updatedParams.isRunning = !state.isRunning;
@@ -40,7 +40,7 @@ const SpeedWorkoutReadForm = ({
     };
     dispatch(updatedState);
 
-    const updatedParams: SpeedWorkoutParams = {
+    const updatedParams: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
       checkedIndexes: [],
       currentRound: 1,

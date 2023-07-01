@@ -1,5 +1,6 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
 import { Services } from 'infrastructure/services';
+import { RootState } from 'main';
 import { IPageState } from '../core/0-interface';
 import { pageStatesActins } from './0-reducer';
 
@@ -11,14 +12,16 @@ const pageStatesMiddleware =
     next(action);
     switch (action.type) {
       case 'mngPage/initiate': {
+        const pageStateIds = (getState() as RootState).pageStates.ids;
+        if (!!pageStateIds.length) return;
         const pageStates = await services.api.pageStates.fetchPageStates();
         dispatch(pageStatesActins.upsertPageStates(pageStates));
-        break;
+        return;
       }
       case 'pageStates/changePageState': {
         const { id, state } = action.payload as IPageState;
         await services.api.pageStates.changePageState(id, state);
-        break;
+        return;
       }
       default:
     }

@@ -1,3 +1,4 @@
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import * as R from 'ramda';
 import {
   CueWorkoutCard,
@@ -6,7 +7,6 @@ import {
   NoteState,
   RecordVoiceParams,
   SpeedWorkout,
-  SpeedWorkoutParams,
   State,
   VoiceProps,
 } from './Model';
@@ -41,7 +41,7 @@ export type Action = {
     | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
-    | SpeedWorkoutParams
+    | ISpeedWorkoutParams
     | { [index: number]: string[] }
     | { user: string; pageState: string }
     | { [id: string]: CueWorkoutCard }
@@ -72,8 +72,8 @@ export const reducer = (state: State, action: Action): State => {
 
   switch (type) {
     case ActionTypes.setSpeedWorkoutParams: {
-      const params = payload as SpeedWorkoutParams;
-      return R.assocPath<SpeedWorkoutParams, State>(
+      const params = payload as ISpeedWorkoutParams;
+      return R.assocPath<ISpeedWorkoutParams, State>(
         ['params', 'speedWorkout'],
         params
       )(state);

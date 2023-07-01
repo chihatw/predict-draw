@@ -1,7 +1,8 @@
 import { useContext, useEffect, useReducer } from 'react';
 
 import { AppContext } from '../../../..';
-import { SpeedWorkoutParams } from '../../../../../Model';
+
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import {
   buildSpeedWorkoutState,
   setSpeedWorkoutParams,
@@ -24,7 +25,7 @@ export const SpeedWorkoutPane = () => {
       type: SpeedWorkoutActionTypes.setState,
       payload: speedReadingState,
     });
-    const params: SpeedWorkoutParams = {
+    const params: ISpeedWorkoutParams = {
       ...state.params.speedWorkout,
       bpm: 0,
       isRunning: false,

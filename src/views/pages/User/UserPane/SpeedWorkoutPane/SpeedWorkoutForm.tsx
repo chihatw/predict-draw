@@ -1,7 +1,7 @@
 import { Button, useTheme } from '@mui/material';
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import React, { useContext, useRef } from 'react';
 import { AppContext } from '../../../..';
-import { SpeedWorkoutParams } from '../../../../../Model';
 import { setSpeedWorkoutParams } from '../../../../../services/speedWorkout';
 import BPMCulcLabel from '../commons/BPMCulcLabel';
 import { SpeedWorkoutState } from './Model';
@@ -29,7 +29,7 @@ const SpeedWorkoutForm = ({
     startAtRef.current = performance.now();
     loopIdRef.current = requestAnimationFrame(loop);
 
-    const params: SpeedWorkoutParams = {
+    const params: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
       bpm: 0,
       isRunning: true,
@@ -59,7 +59,7 @@ const SpeedWorkoutForm = ({
       beatCount: state.workout.beatCount,
     });
 
-    const params: SpeedWorkoutParams = {
+    const params: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
       bpm,
       isRunning: false,
@@ -82,7 +82,7 @@ const SpeedWorkoutForm = ({
       isRunning: false,
     };
     dispatch({ type: SpeedWorkoutActionTypes.setState, payload: updatedState });
-    const params: SpeedWorkoutParams = {
+    const params: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
       bpm: 0,
       isRunning: false,

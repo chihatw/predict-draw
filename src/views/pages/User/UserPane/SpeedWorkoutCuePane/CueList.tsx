@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 
 import { AppContext } from '../../../..';
-import { SpeedWorkoutParams } from '../../../../../Model';
+
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import { setSpeedWorkoutParams } from '../../../../../services/speedWorkout';
 import CueRow from './CueRow';
 import { SpeedWorkoutCueState } from './Model';
@@ -25,7 +26,7 @@ const CueList = ({
       checkedIndexes: updatedCheckedIndexes,
     };
     dispatch(updatedState);
-    const updatedParams: SpeedWorkoutParams = {
+    const updatedParams: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
       checkedIndexes: updatedCheckedIndexes,
     };
@@ -41,7 +42,7 @@ const CueList = ({
       checkedIndexes: [],
     };
     dispatch(updatedState);
-    const updatedParams: SpeedWorkoutParams = {
+    const updatedParams: ISpeedWorkoutParams = {
       ...appState.params.speedWorkout,
       currentRound: updatedCurrentRound,
       checkedIndexes: [],

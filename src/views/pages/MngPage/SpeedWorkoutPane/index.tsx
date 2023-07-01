@@ -1,15 +1,21 @@
 import { Button, TextField } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../..';
-import { SpeedWorkoutParams } from '../../../../Model';
-import { setSpeedWorkoutParams } from '../../../../services/speedWorkout';
+
+import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppContext } from 'views';
 import SpeedWorkoutBPMPane from './SpeedWorkoutBPMPane';
-import SpeedWorkoutList from './SpeedWorkoutList';
+import SpeedWorkoutRow from './SpeedWorkoutRow';
 
 const LOCAL_STORAGE = 'speedWorkkout';
 
 const SpeedWorkoutPane = () => {
   const { state } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const totalRounds = useSelector(
+    (state: RootState) => state.speedWorkoutParams.totalRounds
+  );
 
   const [open, setOpen] = useState(false);
 
@@ -19,11 +25,7 @@ const SpeedWorkoutPane = () => {
   }, []);
 
   const handleChangeTotalRounds = (totalRounds: number) => {
-    const updatedParams: SpeedWorkoutParams = {
-      ...state.params.speedWorkout,
-      totalRounds,
-    };
-    setSpeedWorkoutParams(updatedParams);
+    dispatch(speedWorkoutParamsActions.changeTotalRounds(totalRounds));
   };
 
   const handleClickTitle = () => {
@@ -60,12 +62,16 @@ const SpeedWorkoutPane = () => {
               size='small'
               type='number'
               label='totalRounds'
-              value={state.params.speedWorkout.totalRounds}
+              value={totalRounds}
               onChange={(e) => handleChangeTotalRounds(Number(e.target.value))}
               autoComplete='off'
             />
           </div>
-          <SpeedWorkoutList />
+          <div>
+            {Object.values(state.speedWorkouts).map((workout, index) => (
+              <SpeedWorkoutRow workout={workout} key={index} />
+            ))}
+          </div>
         </div>
       )}
     </div>

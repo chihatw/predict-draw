@@ -1,3 +1,5 @@
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
+
 export const SENTENCE_TYPES = { positive: 'positive', negative: 'negative' };
 export const KAKU_ORDERS = { woFirst: 'woFirst', niFirst: 'niFirst' };
 export const TARGET = {
@@ -188,18 +190,8 @@ export const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
   params: INITIAL_CUE_WORKOUT_PARAMS,
 };
 
-export type SpeedWorkoutParams = {
-  bpm: number;
-  checkedIndexes: number[];
-  updatedAt: number;
-  isRunning: boolean;
-  selectedId: string;
-  totalRounds: number;
-  currentRound: number;
-};
-
 export type Params = {
-  speedWorkout: SpeedWorkoutParams;
+  speedWorkout: ISpeedWorkoutParams;
 };
 
 export type VoiceProps = {

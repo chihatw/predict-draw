@@ -11,17 +11,13 @@ import {
 import React, { useEffect } from 'react';
 import { workoutItems2String } from 'workout-items';
 
+import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import {
   INITIAL_SPEED_WORKOUT_EDIT_STATE,
   SpeedWorkoutEditState,
 } from 'views/pages/SpeedWorkoutEditPage/Model';
 import { db } from '../infrastructure/firebase';
-import {
-  INITIAL_WORKOUT,
-  SpeedWorkout,
-  SpeedWorkoutParams,
-  State,
-} from '../Model';
+import { INITIAL_WORKOUT, SpeedWorkout, State } from '../Model';
 import { Action, ActionTypes } from '../Update';
 import { SpeedWorkoutState } from '../views/pages/User/UserPane/SpeedWorkoutPane/Model';
 
@@ -64,7 +60,7 @@ export const useSpeedWorkout = (dispatch: React.Dispatch<Action>) => {
   }, []);
 };
 
-export const setSpeedWorkoutParams = (params: SpeedWorkoutParams) => {
+export const setSpeedWorkoutParams = (params: ISpeedWorkoutParams) => {
   console.log('set speedWorkoutParams');
   setDoc(doc(db, COLLECTIONS.params, 'speedWorkout'), params);
 };
@@ -90,7 +86,7 @@ export const buildSpeedWorkoutState = (state: State): SpeedWorkoutState => {
   };
 };
 
-const buildSpeedWorkoutParams = (doc: DocumentData): SpeedWorkoutParams => {
+const buildSpeedWorkoutParams = (doc: DocumentData): ISpeedWorkoutParams => {
   const {
     bpm,
     updatedAt,
