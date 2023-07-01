@@ -15,7 +15,7 @@ import {
   INITIAL_PATTERN_PARAMS,
 } from '../../Model';
 import { Action, ActionTypes } from '../../Update';
-import { CUE_CARDS } from '../../views/pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
+import { CUE_CARDS } from '../../views/components/UserPane/CueWorkoutPane/CUE_CARDS';
 
 const COLLECTIONS = {
   cueWorkout: 'cueWorkout',

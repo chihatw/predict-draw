@@ -24,5 +24,3 @@ const pageStatesSlice = createSlice({
 export const pageStatesActins = pageStatesSlice.actions;
 
 export default pageStatesSlice.reducer;
-
-// todo export const { } = pageStateAdapter.getSelectors()

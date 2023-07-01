@@ -4,11 +4,13 @@ import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framew
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { SpeedWorkout } from '../../../../Model';
 
-function SpeedWorkoutRow({ workout }: { workout: SpeedWorkout }) {
+function SpeedWorkoutRow({ speedWorkoutId }: { speedWorkoutId: string }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const label = useSelector(
+    (state: RootState) => state.speedWorkouts.entities[speedWorkoutId]?.label
+  );
   const selectedId = useSelector(
     (state: RootState) => state.speedWorkoutParams.selectedId
   );
@@ -22,17 +24,17 @@ function SpeedWorkoutRow({ workout }: { workout: SpeedWorkout }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <IconButton
-        onClick={() => handleChangeSelectedId(workout.id)}
-        sx={{ color: selectedId === workout.id ? '#52a2aa' : '#ccc' }}
+        onClick={() => handleChangeSelectedId(speedWorkoutId)}
+        sx={{ color: selectedId === speedWorkoutId ? '#52a2aa' : '#ccc' }}
       >
         <Check />
       </IconButton>
 
       <Button
         sx={{ flexGrow: 1, justifyContent: 'flex-start', color: 'black' }}
-        onClick={() => handleOpenEditor(workout.id)}
+        onClick={() => handleOpenEditor(speedWorkoutId)}
       >
-        {workout.label}
+        {label}
       </Button>
     </div>
   );

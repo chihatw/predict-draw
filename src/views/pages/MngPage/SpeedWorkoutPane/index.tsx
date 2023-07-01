@@ -1,18 +1,19 @@
 import { Button, TextField } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppContext } from 'views';
 import SpeedWorkoutBPMPane from './SpeedWorkoutBPMPane';
 import SpeedWorkoutRow from './SpeedWorkoutRow';
 
 const LOCAL_STORAGE = 'speedWorkkout';
 
 const SpeedWorkoutPane = () => {
-  const { state } = useContext(AppContext);
   const dispatch = useDispatch();
+  const speedWorkoutIds = useSelector(
+    (state: RootState) => state.speedWorkouts.ids
+  );
   const totalRounds = useSelector(
     (state: RootState) => state.speedWorkoutParams.totalRounds
   );
@@ -68,8 +69,11 @@ const SpeedWorkoutPane = () => {
             />
           </div>
           <div>
-            {Object.values(state.speedWorkouts).map((workout, index) => (
-              <SpeedWorkoutRow workout={workout} key={index} />
+            {speedWorkoutIds.map((speedWorkoutId, index) => (
+              <SpeedWorkoutRow
+                speedWorkoutId={speedWorkoutId as string}
+                key={index}
+              />
             ))}
           </div>
         </div>

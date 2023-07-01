@@ -7,9 +7,9 @@ import {
   PatternParams,
   TARGET,
 } from '../../Model';
+import { CUE_CARDS } from '../../views/components/UserPane/CueWorkoutPane/CUE_CARDS';
 import { buildCurrentPatterns } from '../../views/pages/MngPage/CueWorkoutList/services/useCurrentPatterns';
 import { PATTERNS } from '../../views/pages/MngPage/CueWorkoutList/services/usePatterns';
-import { CUE_CARDS } from '../../views/pages/User/UserPane/CueWorkoutPane/CUE_CARDS';
 import { shuffle } from '../utils';
 
 // /pages/Users/UserPane/CueWorkoutPane/index.tsx showNextCue で

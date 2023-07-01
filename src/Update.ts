@@ -14,7 +14,6 @@ import {
 export const ActionTypes = {
   setState: 'setState',
   setNoteState: 'setNoteState',
-  setPageState: 'setPageState',
   setAudioContext: 'setAudioContext',
   setSpeedWorkouts: 'setSpeedWorkouts',
   setCueWorkoutCue: 'setCueWorkoutCue',
@@ -81,13 +80,7 @@ export const reducer = (state: State, action: Action): State => {
     case ActionTypes.setState: {
       return payload as State;
     }
-    case ActionTypes.setPageState: {
-      const { user, pageState } = payload as {
-        user: string;
-        pageState: string;
-      };
-      return R.assocPath<string, State>(['pageStates', user], pageState)(state);
-    }
+
     case ActionTypes.setCueWorkoutCards: {
       const cards = payload as { [id: string]: CueWorkoutCard };
       return R.compose(

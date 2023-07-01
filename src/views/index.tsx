@@ -5,16 +5,15 @@ import { INITIAL_STATE, State } from '../Model';
 import { Action, reducer } from '../Update';
 import { useCueWorkout } from '../services/cueWorkout/cueWorkout';
 import useNote from '../services/note';
-import usePageState from '../services/pageState';
 import { useSpeedWorkout } from '../services/speedWorkout';
+import ChinSanPage from './pages/ChinSanPage';
+import KouSanPage from './pages/KouSanPage';
+import LisanPage from './pages/LiSanPage';
 import MngPage from './pages/MngPage';
 import MngNotePage from './pages/Note/MngNotePage';
 import NotePage from './pages/Note/NotePage';
 import SpeedWorkoutEditPage from './pages/SpeedWorkoutEditPage';
 import TopPage from './pages/TopPage';
-import KouSanPage from './pages/User/KouSanPage';
-import LisanPage from './pages/User/LiSanPage';
-import ChinSanPage from './pages/User/UserPane/ChinSanPage';
 
 export const AppContext = createContext<{
   state: State;
@@ -28,7 +27,6 @@ function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   useNote(dispatch);
-  usePageState(dispatch);
   useCueWorkout(dispatch);
   useSpeedWorkout(dispatch);
 

@@ -19,7 +19,7 @@ import {
 import { db } from '../infrastructure/firebase';
 import { INITIAL_WORKOUT, SpeedWorkout, State } from '../Model';
 import { Action, ActionTypes } from '../Update';
-import { SpeedWorkoutState } from '../views/pages/User/UserPane/SpeedWorkoutPane/Model';
+import { SpeedWorkoutState } from '../views/components/UserPane/SpeedWorkoutPane/Model';
 
 const COLLECTIONS = { params: 'params', workouts: 'workouts' };
 
@@ -44,18 +44,9 @@ export const useSpeedWorkout = (dispatch: React.Dispatch<Action>) => {
         console.warn(err);
       }
     );
-    const unsubParams = onSnapshot(
-      doc(db, COLLECTIONS.params, 'speedWorkout'),
-      (doc) => {
-        console.log('snapshot speedWorkoutParams');
-        if (!doc.exists()) return;
-        const params = buildSpeedWorkoutParams(doc);
-        dispatch({ type: ActionTypes.setSpeedWorkoutParams, payload: params });
-      }
-    );
+
     return () => {
       unsub();
-      unsubParams();
     };
   }, []);
 };
