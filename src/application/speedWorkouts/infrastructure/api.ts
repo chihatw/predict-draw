@@ -1,8 +1,15 @@
 import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
-import { DocumentData, collection, getDocs, query } from 'firebase/firestore';
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import { nanoid } from 'nanoid';
-import { ISpeedWorkout } from '../core/0-interface';
+import { IRemoteSpeedWorkout, ISpeedWorkout } from '../core/0-interface';
 
 const COLLECTION = 'workouts';
 
@@ -36,6 +43,7 @@ const buildSpeedWorkout = (
     chinese: string;
     pitchesArray: string;
     text: string;
+    cuePitchStr: string;
   }[]) {
     const tempId = nanoid(8);
     workoutItems.push({
@@ -43,6 +51,7 @@ const buildSpeedWorkout = (
       pitchStr: item.pitchesArray,
       tempId,
       text: item.text,
+      cuePitchStr: item.cuePitchStr || '',
     });
   }
 
@@ -67,4 +76,12 @@ const buildItemTempIds = (
     itemTempIds.push(target!.tempId);
   }
   return itemTempIds;
+};
+
+export const updateSpeedWorkout = async (
+  workoutId: string,
+  workout: Omit<IRemoteSpeedWorkout, 'createdAt'>
+) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, workoutId), { ...workout }); // todo check
 };

@@ -1,5 +1,3 @@
-import { string2PitchesArray } from '../string2PitchesArray';
-
 export type WorkoutItem = {
   text: string;
   chinese: string;
@@ -38,13 +36,4 @@ export const workoutItems2String = (workoutItems: WorkoutItem[]) => {
     lines.push(pitchesArray);
   }
   return lines.join('\n');
-};
-
-export const calcBeatCount = (workoutItems: WorkoutItem[]) => {
-  const moraCount = workoutItems.reduce((accumulator, workoutItem) => {
-    const { pitchesArray } = workoutItem;
-    const itemMoraCount = string2PitchesArray(pitchesArray).flat().length;
-    return accumulator + itemMoraCount;
-  }, 0);
-  return Math.ceil(moraCount / 2);
 };

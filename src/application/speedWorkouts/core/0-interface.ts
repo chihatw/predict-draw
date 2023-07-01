@@ -6,3 +6,16 @@ export interface ISpeedWorkout {
   itemTempIds: string[];
   label: string;
 }
+
+export interface IRemoteSpeedWorkout {
+  beatCount: number;
+  createdAt: number;
+  cueType: string;
+  cues: string[];
+  items: {
+    chinese: string;
+    pitchesArray: string;
+    text: string;
+  }[];
+  label: string;
+}

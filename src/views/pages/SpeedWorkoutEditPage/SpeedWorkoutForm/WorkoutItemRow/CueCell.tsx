@@ -1,7 +1,14 @@
+import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
+import { CUE_TYPES } from 'application/speedWorkouts/core/1-constants';
 import SentencePitchLine from 'views/components/SentencePitchLine';
-import { CUE_TYPES } from '../../../../../Model';
 
-const CueCell = ({ cue, cueType }: { cue: string; cueType: string }) => {
+const CueCell = ({
+  workoutItem,
+  cueType,
+}: {
+  cueType: string;
+  workoutItem: ISpeedWorkoutItem;
+}) => {
   switch (cueType) {
     case CUE_TYPES.STRING:
       return (
@@ -14,7 +21,7 @@ const CueCell = ({ cue, cueType }: { cue: string; cueType: string }) => {
             justifyContent: 'center',
           }}
         >
-          {cue}
+          {workoutItem.text}
         </div>
       );
     case CUE_TYPES.PITCH:
@@ -27,7 +34,7 @@ const CueCell = ({ cue, cueType }: { cue: string; cueType: string }) => {
             overflowX: 'scroll',
           }}
         >
-          <SentencePitchLine pitchStr={cue} />
+          <SentencePitchLine pitchStr={workoutItem.cuePitchStr} />
         </div>
       );
     default:

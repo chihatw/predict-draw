@@ -1,4 +1,3 @@
-import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import * as R from 'ramda';
 import {
   CueWorkoutCard,
@@ -6,7 +5,6 @@ import {
   CueWorkoutParams,
   NoteState,
   RecordVoiceParams,
-  SpeedWorkout,
   State,
   VoiceProps,
 } from './Model';
@@ -14,8 +12,6 @@ import {
 export const ActionTypes = {
   setState: 'setState',
   setNoteState: 'setNoteState',
-  setAudioContext: 'setAudioContext',
-  setSpeedWorkouts: 'setSpeedWorkouts',
   setCueWorkoutCue: 'setCueWorkoutCue',
   setCueWorkoutCards: 'setCueWorkoutCards',
   setCueWorkoutParams: 'setCueWorkoutParams',
@@ -23,7 +19,6 @@ export const ActionTypes = {
   setRecordVoiceAssets: 'setRecordVoiceAssets',
   setRecordVoiceParams: 'setRecordVoiceParams',
   setRecordVoiceLogs: 'setRecordVoiceLogs',
-  setSpeedWorkoutParams: 'setSpeedWorkoutParams',
 };
 
 export type Action = {
@@ -34,32 +29,17 @@ export type Action = {
     | string[]
     | number
     | number[]
-    | SpeedWorkout
-    | { [id: string]: SpeedWorkout }
     | NoteState
-    | AudioContext
     | CueWorkoutCue
     | CueWorkoutParams
-    | ISpeedWorkoutParams
     | { [index: number]: string[] }
-    | { user: string; pageState: string }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
     | { imagePath: string; blobURL: string }
     | {
-        totalRounds: number;
-        currentRound: number;
-      }
-    | {
-        time: number;
-        bpm: number;
-        isRunning: boolean;
-      }
-    | {
         blobs: { [workoutId: string]: Blob | null };
         audioBuffers: { [downloadURL: string]: AudioBuffer };
       }
-    // RecordVoice
     | VoiceProps
     | { [id: string]: VoiceProps }
     | RecordVoiceParams
@@ -70,13 +50,6 @@ export const reducer = (state: State, action: Action): State => {
   const { type, payload } = action;
 
   switch (type) {
-    case ActionTypes.setSpeedWorkoutParams: {
-      const params = payload as ISpeedWorkoutParams;
-      return R.assocPath<ISpeedWorkoutParams, State>(
-        ['params', 'speedWorkout'],
-        params
-      )(state);
-    }
     case ActionTypes.setState: {
       return payload as State;
     }
@@ -103,28 +76,13 @@ export const reducer = (state: State, action: Action): State => {
       )(state);
     }
 
-    case ActionTypes.setAudioContext: {
-      const audioContext = payload as AudioContext;
-      return R.compose(
-        R.assocPath<AudioContext, State>(['audioContext'], audioContext)
-      )(state);
-    }
-
     case ActionTypes.setNoteState: {
       const noteState = payload as NoteState;
       return R.compose(R.assocPath<NoteState, State>(['note'], noteState))(
         state
       );
     }
-    case ActionTypes.setSpeedWorkouts: {
-      const workouts = payload as { [id: string]: SpeedWorkout };
-      return R.compose(
-        R.assocPath<{ [id: string]: SpeedWorkout }, State>(
-          ['speedWorkouts'],
-          workouts
-        )
-      )(state);
-    }
+
     // recordVoice
     case ActionTypes.setRecordVoiceRaw: {
       const recordVoiceRaw = payload as VoiceProps;

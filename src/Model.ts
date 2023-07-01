@@ -1,5 +1,3 @@
-import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
-
 export const SENTENCE_TYPES = { positive: 'positive', negative: 'negative' };
 export const KAKU_ORDERS = { woFirst: 'woFirst', niFirst: 'niFirst' };
 export const TARGET = {
@@ -32,38 +30,12 @@ export const INITIAL_PATTERN: Pattern = {
 
 export type Schedule = { offset: number; start: number; stop: number };
 
-export const CUE_TYPES = { STRING: 'string', PITCH: 'pitchesArray' };
 export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-
-export type PageState = {
-  id: string;
-  state: string;
-};
 
 export type SpeedWorkoutItem = {
   text: string;
   chinese: string;
   pitchesArray: string;
-};
-
-export type SpeedWorkout = {
-  id: string;
-  cues: string[];
-  items: SpeedWorkoutItem[];
-  label: string;
-  cueType: string;
-  beatCount: number;
-  createdAt: number;
-};
-
-export const INITIAL_WORKOUT: SpeedWorkout = {
-  id: '',
-  cues: [],
-  items: [],
-  label: '',
-  cueType: '',
-  createdAt: 0,
-  beatCount: 0,
 };
 
 export type NoteState = {
@@ -190,10 +162,6 @@ export const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
   params: INITIAL_CUE_WORKOUT_PARAMS,
 };
 
-export type Params = {
-  speedWorkout: ISpeedWorkoutParams;
-};
-
 export type VoiceProps = {
   id: string;
   startAt: number;
@@ -246,8 +214,6 @@ export const INITIAL_RECORD_VOICE: RecordVoice = {
 export type State = {
   note: NoteState;
   cueWorkout: CueWorkoutState;
-  speedWorkouts: { [id: string]: SpeedWorkout };
-  params: Params;
   audioBuffers: {
     [downloadURL: string]: AudioBuffer;
   };
@@ -259,19 +225,7 @@ export type State = {
 
 export const INITIAL_STATE: State = {
   note: INITIAL_NOTE_STATE,
-  speedWorkouts: {},
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  params: {
-    speedWorkout: {
-      bpm: 0,
-      isRunning: false,
-      selectedId: '',
-      updatedAt: 0,
-      totalRounds: 1,
-      checkedIndexes: [],
-      currentRound: 1,
-    },
-  },
   blobURLs: {},
   audioBuffers: {},
   recordVoice: INITIAL_RECORD_VOICE,

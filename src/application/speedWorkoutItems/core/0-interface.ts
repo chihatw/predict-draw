@@ -1,6 +1,7 @@
 export interface ISpeedWorkoutItem {
   tempId: string;
+  text: string;
   chinese: string;
   pitchStr: string;
-  text: string;
+  cuePitchStr: string;
 }

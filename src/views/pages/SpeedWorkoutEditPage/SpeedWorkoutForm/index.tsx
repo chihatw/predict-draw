@@ -1,81 +1,105 @@
 import { Button, Container, MenuItem, Select, TextField } from '@mui/material';
-import React from 'react';
-import { calcBeatCount, string2WorkoutItems } from 'workout-items';
+import { useEffect, useState } from 'react';
 
-import { CUE_TYPES } from '../../../../Model';
-import { SpeedWorkoutEditState } from '../Model';
-import WorkoutItemList from './WorkoutItemList';
+import {
+  buildRemoteSpeedWorkout,
+  buildSpeedWorkoutItems,
+  buildSpeedWorkoutItemsStr,
+} from 'application/speedWorkoutEditPage/core/2-services';
+import { speedWorkoutEditPageActions } from 'application/speedWorkoutEditPage/framework/0-reducer';
+import { CUE_TYPES } from 'application/speedWorkouts/core/1-constants';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import WorkoutItemRow from './WorkoutItemRow';
 
-const SpeedWorkoutForm = ({
-  state,
-  dispatch,
-  handleSubmit,
-}: {
-  state: SpeedWorkoutEditState;
-  dispatch: React.Dispatch<SpeedWorkoutEditState>;
-  handleSubmit: () => void;
-}) => {
+const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const speedWorkout = useSelector(
+    (state: RootState) => state.speedWorkouts.entities[workoutId]
+  );
+
+  const speedWorkoutEditPage = useSelector(
+    (state: RootState) => state.speedWorkoutEditPage
+  );
+
+  const [value, setValue] = useState({ workoutItemsStr: '', cuesStr: '' });
+
+  useEffect(() => {
+    if (!!value.workoutItemsStr) return;
+    const _input = buildSpeedWorkoutItemsStr(speedWorkoutEditPage.workoutItems);
+    setValue((currentValue) => ({ ...currentValue, workoutItemsStr: _input }));
+  }, [speedWorkoutEditPage.workoutItems, value.workoutItemsStr]);
+
+  useEffect(() => {
+    const workoutItems = buildSpeedWorkoutItems(value.workoutItemsStr);
+    dispatch(speedWorkoutEditPageActions.setWorkoutItems(workoutItems));
+  }, [value.workoutItemsStr]);
+
+  useEffect(() => {
+    if (!speedWorkout) return;
+    dispatch(speedWorkoutEditPageActions.initiate(speedWorkout));
+  }, [speedWorkout]);
+
   const handleChangeLabel = (label: string) => {
-    const updatedState: SpeedWorkoutEditState = { ...state, label };
-    dispatch(updatedState);
-  };
-
-  const handleChangeWorkoutItemStr = (workoutItemStr: string) => {
-    console.log({ workoutItemStr });
-    const workoutItems = string2WorkoutItems(workoutItemStr);
-    console.log({ workoutItems });
-    const beatCount = calcBeatCount(workoutItems);
-    const updatedState: SpeedWorkoutEditState = {
-      ...state,
-      beatCount,
-      workoutItems,
-      workoutItemStr,
-    };
-    dispatch(updatedState);
+    dispatch(speedWorkoutEditPageActions.changeLabel(label));
   };
 
   const handleChangeCueType = (cueType: string) => {
-    const updatedState: SpeedWorkoutEditState = { ...state, cueType };
-    dispatch(updatedState);
+    dispatch(speedWorkoutEditPageActions.changeCueType(cueType));
   };
 
-  const handleChangeCueStr = (cueStr: string) => {
-    const lines = cueStr.split('\n');
-    let cues: string[] = [];
-    for (let i = 0; i < state.workoutItems.length; i++) {
-      cues.push(lines[i] || '');
-    }
-    const updatedState: SpeedWorkoutEditState = {
-      ...state,
-      cues,
-      cueStr,
-    };
-    dispatch(updatedState);
+  const handleSubmit = () => {
+    if (!workoutId) return;
+    const remoteSpeedWorkout = buildRemoteSpeedWorkout(speedWorkoutEditPage);
+    dispatch(
+      speedWorkoutEditPageActions.submit({ workoutId, remoteSpeedWorkout })
+    );
+    navigate('/mng');
   };
 
+  if (!speedWorkout) return;
   return (
     <Container maxWidth='sm' sx={{ paddingTop: 10, paddingBottom: 20 }}>
       <div style={{ display: 'grid', rowGap: 8 }}>
-        <div>{`beatCount: ${state.beatCount}`}</div>
+        <div>{`beatCount: ${speedWorkoutEditPage.beatCount}`}</div>
         <TextField
           label='label'
           size='small'
-          value={state.label}
+          value={speedWorkoutEditPage.label}
           onChange={(e) => handleChangeLabel(e.target.value)}
         />
+        <div
+          style={{
+            fontSize: 8,
+            color: 'gray',
+            paddingLeft: '2em',
+            paddingBottom: '1em',
+          }}
+        >
+          <div>text</div>
+          <div>chinese</div>
+          <div>pitchStr</div>
+          <div>cuePitchStr</div>
+        </div>
         <TextField
           multiline
           rows={12}
           label='workout items'
-          value={state.workoutItemStr}
-          onChange={(e) => {
-            handleChangeWorkoutItemStr(e.target.value);
-          }}
+          value={value.workoutItemsStr}
+          onChange={(e) =>
+            setValue((currentValue) => ({
+              ...currentValue,
+              workoutItemsStr: e.target.value,
+            }))
+          }
         />
 
         <Select
           size='small'
-          value={state.cueType}
+          value={speedWorkoutEditPage.cueType}
           onChange={(e) => handleChangeCueType(e.target.value)}
         >
           {Object.values(CUE_TYPES).map((type, index) => (
@@ -84,19 +108,11 @@ const SpeedWorkoutForm = ({
             </MenuItem>
           ))}
         </Select>
-        <TextField
-          value={state.cueStr}
-          size='small'
-          label='cues'
-          multiline
-          rows={6}
-          onChange={(e) => handleChangeCueStr(e.target.value)}
-        />
-        <WorkoutItemList
-          workoutItems={state.workoutItems}
-          cues={state.cues}
-          cueType={state.cueType}
-        />
+        <div style={{ display: 'grid', rowGap: 16 }}>
+          {speedWorkout.itemTempIds.map((itemTempId, index) => (
+            <WorkoutItemRow index={index} key={index} />
+          ))}
+        </div>
         <Button onClick={handleSubmit}>Submit</Button>
       </div>
     </Container>
