@@ -1,46 +1,44 @@
-import { useContext, useEffect, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 
-import { AppContext } from '../..';
-
-import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
+import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import {
-  buildSpeedWorkoutState,
-  setSpeedWorkoutParams,
-} from '../../../services/speedWorkout';
-import { INITIAL_SPEED_READING_STATE } from './Model';
+  COLLECTION,
+  DOCID,
+  buildSpeedWorkoutParams,
+} from 'application/speedWorkoutParams/infrastracture/api';
+import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from 'infrastructure/firebase';
+import { useDispatch } from 'react-redux';
 import SpeedWorkoutForm from './SpeedWorkoutForm';
-import { SpeedWorkoutActionTypes, speedReadingReducer } from './Update';
 
 export const UserSpeedWorkoutPane = () => {
-  const { state } = useContext(AppContext);
+  const dispatch = useDispatch();
 
-  const [speedReadingState, speedReadingDispatch] = useReducer(
-    speedReadingReducer,
-    INITIAL_SPEED_READING_STATE
-  );
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
-    const speedReadingState = buildSpeedWorkoutState(state);
-    speedReadingDispatch({
-      type: SpeedWorkoutActionTypes.setState,
-      payload: speedReadingState,
+    const unsub = onSnapshot(doc(db, COLLECTION, DOCID), (docSnapshot) => {
+      console.log(`%cfetched ${COLLECTION}`, 'color:red');
+      const speedWorkoutParams = buildSpeedWorkoutParams(docSnapshot);
+      dispatch(speedWorkoutParamsActions.setParams(speedWorkoutParams));
+      if (!speedWorkoutParams.bpm) {
+        setElapsedTime(0);
+      }
     });
-    const params: ISpeedWorkoutParams = {
-      ...state.params.speedWorkout,
-      bpm: 0,
-      isRunning: false,
+    return () => {
+      unsub();
     };
-    setSpeedWorkoutParams(params);
-  }, [
-    state.speedWorkouts,
-    state.params.speedWorkout.updatedAt,
-    state.params.speedWorkout.selectedId,
-  ]);
+  }, []);
+
+  useEffect(() => {
+    dispatch(speedWorkoutsActions.startFetch());
+  }, []);
 
   return (
     <SpeedWorkoutForm
-      state={speedReadingState}
-      dispatch={speedReadingDispatch}
+      elapsedTime={elapsedTime}
+      setElapsedTime={setElapsedTime}
     />
   );
 };

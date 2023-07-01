@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 const TimePane = ({ miliSeconds }: { miliSeconds: number }) => (
   <div style={{ display: 'flex', justifyContent: 'center' }}>

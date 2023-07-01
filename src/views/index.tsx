@@ -5,7 +5,6 @@ import { INITIAL_STATE, State } from '../Model';
 import { Action, reducer } from '../Update';
 import { useCueWorkout } from '../services/cueWorkout/cueWorkout';
 import useNote from '../services/note';
-import { useSpeedWorkout } from '../services/speedWorkout';
 import ChinSanPage from './pages/ChinSanPage';
 import KouSanPage from './pages/KouSanPage';
 import LisanPage from './pages/LiSanPage';
@@ -28,7 +27,6 @@ function App() {
 
   useNote(dispatch);
   useCueWorkout(dispatch);
-  useSpeedWorkout(dispatch);
 
   return (
     <AppContext.Provider

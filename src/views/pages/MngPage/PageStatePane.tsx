@@ -10,7 +10,7 @@ import {
   PAGE_STATE,
   USER_LABELS,
 } from 'application/pageStates/core/1-constants';
-import { pageStatesActins } from 'application/pageStates/framework/0-reducer';
+import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -36,7 +36,7 @@ const PageStatePane = ({
   };
 
   const handleChange = (value: string) => {
-    dispatch(pageStatesActins.changePageState({ id: user, state: value }));
+    dispatch(pageStatesActions.changePageState({ id: user, state: value }));
   };
 
   return (

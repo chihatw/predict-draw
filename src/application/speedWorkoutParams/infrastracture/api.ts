@@ -2,8 +2,8 @@ import { DocumentData, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import { ISpeedWorkoutParams } from '../core/0-interface';
 
-const COLLECTION = 'params';
-const DOCID = 'speedWorkout';
+export const COLLECTION = 'params';
+export const DOCID = 'speedWorkout';
 
 export const fetchSpeedWorkoutParams = async () => {
   console.log(`%cfetch ${COLLECTION}`, 'color:red');
@@ -25,7 +25,6 @@ export const reset = () => {
     bpm: 0,
     updatedAt: new Date().getTime(),
     isRunning: false,
-    selectedId: '',
     currentRound: 1,
     checkedIndexes: [],
   });
@@ -36,7 +35,19 @@ export const selectId = (selectedId: string) => {
   updateDoc(doc(db, COLLECTION, DOCID), { selectedId });
 };
 
-const buildSpeedWorkoutParams = (doc: DocumentData): ISpeedWorkoutParams => {
+export const startWorkout = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOCID), { bpm: 0, isRunning: true });
+};
+
+export const stopWorkout = (bpm: number) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOCID), { bpm, isRunning: false });
+};
+
+export const buildSpeedWorkoutParams = (
+  doc: DocumentData
+): ISpeedWorkoutParams => {
   const {
     bpm,
     checkedIndexes,

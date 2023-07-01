@@ -9,6 +9,7 @@ const speedWorkoutParamsMiddleware =
   async (action: AnyAction) => {
     next(action);
     switch (action.type) {
+      case 'speedWOrkoutParams/startFetch':
       case 'mngPage/initiate': {
         const speedWorkoutParams =
           await services.api.speedWorkoutParams.fetchSpeedWorkoutParams();
@@ -28,6 +29,15 @@ const speedWorkoutParamsMiddleware =
       case 'speedWorkoutParams/selectId': {
         const selectedId = action.payload as string;
         services.api.speedWorkoutParams.selectId(selectedId);
+        return;
+      }
+      case 'speedWorkoutParams/startWorkout': {
+        services.api.speedWorkoutParams.startWorkout();
+        return;
+      }
+      case 'speedWorkoutParams/stopWorkout': {
+        const bpm = action.payload as number;
+        services.api.speedWorkoutParams.stopWorkout(bpm);
         return;
       }
       default:

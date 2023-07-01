@@ -2,7 +2,7 @@ import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import { IPageState } from '../core/0-interface';
 
-const COLLECTION = 'pageStates';
+export const COLLECTION = 'pageStates';
 
 export const fetchPageStates = async () => {
   console.log(`%cfetch ${COLLECTION}`, 'color:red');

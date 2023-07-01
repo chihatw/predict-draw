@@ -9,6 +9,7 @@ const pageStatesSlice = createSlice({
   name: 'pageStates',
   initialState: pageStateAdapter.getInitialState(),
   reducers: {
+    startFetch: (state) => state,
     upsertPageStates: (state, { payload }: { payload: IPageState[] }) => {
       pageStateAdapter.upsertMany(state, payload);
     },
@@ -21,6 +22,6 @@ const pageStatesSlice = createSlice({
   },
 });
 
-export const pageStatesActins = pageStatesSlice.actions;
+export const pageStatesActions = pageStatesSlice.actions;
 
 export default pageStatesSlice.reducer;
