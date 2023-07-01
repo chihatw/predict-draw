@@ -1,6 +1,8 @@
 import {
   changeTotalRounds,
+  checkIndex,
   fetchSpeedWorkoutParams,
+  nextRound,
   reset,
   selectId,
   startWorkout,
@@ -14,4 +16,6 @@ export default {
   selectId,
   startWorkout,
   stopWorkout,
+  checkIndex,
+  nextRound,
 };

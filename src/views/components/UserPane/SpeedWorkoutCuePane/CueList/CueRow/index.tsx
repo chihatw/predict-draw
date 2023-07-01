@@ -1,21 +1,31 @@
 import { Check } from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
-import React from 'react';
+import { RootState } from 'main';
+import { useSelector } from 'react-redux';
 import CueCell from './CueCell';
 
 const CueRow = ({
-  cue,
-  cueType,
-  isChecked,
+  index,
   isActive,
   handleClick,
+  itemTempId,
 }: {
-  cue: string;
-  cueType: string;
-  isChecked: boolean;
+  index: number;
   isActive: boolean;
   handleClick: () => void;
+  itemTempId: string;
 }) => {
+  const { selectedId, checkedIndexes } = useSelector(
+    (state: RootState) => state.speedWorkoutParams
+  );
+  const speedWorkout = useSelector(
+    (state: RootState) => state.speedWorkouts.entities[selectedId]
+  );
+
+  const isChecked = checkedIndexes.includes(index);
+
+  if (!speedWorkout) return <></>;
+
   return (
     <Collapse in={!isChecked || isActive}>
       <Button
@@ -38,7 +48,7 @@ const CueRow = ({
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <CueCell cue={cue} cueType={cueType} isActive={isActive} />
+            <CueCell itemTempId={itemTempId} isActive={isActive} />
             <Check sx={{ color: isChecked ? '#52a2aa' : '#eee' }} />
           </div>
         </div>

@@ -1,6 +1,5 @@
 import SyncIcon from '@mui/icons-material/Sync';
 import { IconButton } from '@mui/material';
-import React from 'react';
 
 const NextButton = ({ handleClickNext }: { handleClickNext: () => void }) => {
   return (

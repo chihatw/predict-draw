@@ -40,6 +40,14 @@ const speedWorkoutParamsMiddleware =
         services.api.speedWorkoutParams.stopWorkout(bpm);
         return;
       }
+      case 'speedWorkoutParams/checkIndex': {
+        const index = action.payload as number;
+        services.api.speedWorkoutParams.checkIndex(index);
+        return;
+      }
+      case 'speedWorkoutParams/nextRound': {
+        services.api.speedWorkoutParams.nextRound();
+      }
       default:
     }
   };

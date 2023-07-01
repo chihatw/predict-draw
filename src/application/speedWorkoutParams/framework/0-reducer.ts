@@ -20,6 +20,7 @@ const speedWorkoutParamsSlice = createSlice({
     }),
     selectId: (state, { payload }: { payload: string }) => {
       state.selectedId = payload;
+      state.bpm = 0;
     },
     startWorkout: (state) => {
       state.isRunning = true;
@@ -27,6 +28,13 @@ const speedWorkoutParamsSlice = createSlice({
     stopWorkout: (state, { payload }: { payload: number }) => {
       state.isRunning = false;
       state.bpm = payload;
+    },
+    checkIndex: (state, { payload }: { payload: number }) => {
+      state.checkedIndexes = [...state.checkedIndexes, payload];
+    },
+    nextRound: (state) => {
+      state.currentRound++;
+      state.checkedIndexes = [];
     },
   },
 });

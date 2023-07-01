@@ -1,5 +1,4 @@
 import { useTheme } from '@mui/system';
-import React from 'react';
 
 const WorkoutLabel = ({
   label,

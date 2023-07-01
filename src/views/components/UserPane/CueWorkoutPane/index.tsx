@@ -10,7 +10,7 @@ import {
   setCueWorkoutParams,
   stopCueWorkout,
 } from '../../../../services/cueWorkout/cueWorkout';
-import TimeDisplay from '../commons/TimeDisplay';
+import TimeDisplay from '../../TimeDisplay';
 import ColorList from './CardList/ColorList';
 import CuePane from './CuePane';
 import getImages from './CuePane/getImages';
