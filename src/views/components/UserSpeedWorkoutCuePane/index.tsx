@@ -2,12 +2,12 @@ import { Container } from '@mui/material';
 
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
-import WorkoutLabel from '../../WorkoutLabel';
-import WorkoutStatus from '../../WorkoutStatus';
+import WorkoutLabel from '../WorkoutLabel';
+import WorkoutStatus from '../WorkoutStatus';
 import CueList from './CueList';
 import ReadySign from './ReadySign';
 
-const SpeedWorkoutCuePane = () => {
+const UserSpeedWorkoutCuePane = () => {
   const { selectedId, isRunning, checkedIndexes } = useSelector(
     (state: RootState) => state.speedWorkoutParams
   );
@@ -33,4 +33,4 @@ const SpeedWorkoutCuePane = () => {
   );
 };
 
-export default SpeedWorkoutCuePane;
+export default UserSpeedWorkoutCuePane;

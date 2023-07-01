@@ -1,12 +1,12 @@
 import { IconButton } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../..';
-import { createSourceNode } from '../../../../services/utils';
+import { AppContext } from '../..';
+import { createSourceNode } from '../../../services/utils';
 
 import PlayArrow from '@mui/icons-material/PlayArrow';
 
 import SentencePitchLine from 'views/components/SentencePitchLine';
-import { setRecordVoiceLogs } from '../../../../services/recordVoice';
+import { setRecordVoiceLogs } from '../../../services/recordVoice';
 
 const PlayAudioPane = () => {
   const { state } = useContext(AppContext);

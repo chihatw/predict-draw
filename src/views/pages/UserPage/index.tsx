@@ -9,19 +9,21 @@ import {
   buildSpeedWorkoutParams,
 } from 'application/speedWorkoutParams/infrastracture/api';
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
+import { USER_LAYOUTS } from 'application/userPage/core/1-constants';
 import { collection, doc, onSnapshot, query } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import { RootState } from 'main';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UserSpeedWorkoutPane from '../UserSpeedWorkoutPane';
-import UserSpeedWorkoutReadPane from '../UserSpeedWorkoutReadPane';
-import CueWorkoutPane from './CueWorkoutPane';
-import MicTestPane from './MicTestPane';
-import NotePane from './NotePane';
-import SpeedWorkoutCuePane from './SpeedWorkoutCuePane';
+import Layout from 'views/Layout';
+import CueWorkoutPane from '../../components/CueWorkoutPane';
+import MicTestPane from '../../components/MicTestPane';
+import NotePane from '../../components/NotePane';
+import UserSpeedWorkoutCuePane from '../../components/UserSpeedWorkoutCuePane';
+import UserSpeedWorkoutPane from '../../components/UserSpeedWorkoutPane';
+import UserSpeedWorkoutReadPane from '../../components/UserSpeedWorkoutReadPane';
 
-const UserPane = ({ user }: { user: string }) => {
+const UserPage = ({ user }: { user: string }) => {
   const dispatch = useDispatch();
 
   const userPageStates = useSelector(
@@ -65,22 +67,26 @@ const UserPane = ({ user }: { user: string }) => {
     dispatch(speedWorkoutsActions.startFetch());
   }, []);
 
-  switch (userPageStates) {
-    case PAGES.speedWorkoutSolo:
-      return <UserSpeedWorkoutPane />;
-    case PAGES.speedWorkoutRead:
-      return <UserSpeedWorkoutReadPane />;
-    case PAGES.speedWorkoutCue:
-      return <SpeedWorkoutCuePane />;
-    case PAGES.cueWorkout:
-      return <CueWorkoutPane />;
-    case PAGES.note:
-      return <NotePane />;
-    case PAGES.micTest:
-      return <MicTestPane />;
-    default:
-      return <div></div>;
-  }
+  const content = (() => {
+    switch (userPageStates) {
+      case PAGES.speedWorkoutSolo:
+        return <UserSpeedWorkoutPane />;
+      case PAGES.speedWorkoutRead:
+        return <UserSpeedWorkoutReadPane />;
+      case PAGES.speedWorkoutCue:
+        return <UserSpeedWorkoutCuePane />;
+      case PAGES.cueWorkout:
+        return <CueWorkoutPane />;
+      case PAGES.note:
+        return <NotePane />;
+      case PAGES.micTest:
+        return <MicTestPane />;
+      default:
+        return <div></div>;
+    }
+  })();
+
+  return <Layout {...USER_LAYOUTS[user]}>{content}</Layout>;
 };
 
-export default UserPane;
+export default UserPage;

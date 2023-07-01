@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import SentencePitchLine from 'views/components/SentencePitchLine';
-import { AppContext } from '../../..';
+import { AppContext } from '../..';
 
 const TargetPitchPane = () => {
   const { state } = useContext(AppContext);

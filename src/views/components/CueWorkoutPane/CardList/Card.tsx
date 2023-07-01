@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AppContext } from '../../../..';
+import { AppContext } from '../../..';
 
 const Card = ({ cardId, isActive }: { cardId: string; isActive: boolean }) => {
   const { state } = useContext(AppContext);

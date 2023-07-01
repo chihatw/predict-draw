@@ -2,10 +2,10 @@ import * as R from 'ramda';
 
 import { Container } from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { AppContext } from '../../..';
-import { State } from '../../../../Model';
-import { ActionTypes } from '../../../../Update';
-import { getAudioBufferFromStorage } from '../../../../services/utils';
+import { AppContext } from '../..';
+import { State } from '../../../Model';
+import { ActionTypes } from '../../../Update';
+import { getAudioBufferFromStorage } from '../../../services/utils';
 
 import PlayAudioPane from './PlayAudioPane';
 import RecordVoiceButton from './RecordVoiceButton';

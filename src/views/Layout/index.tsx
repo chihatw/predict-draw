@@ -7,7 +7,7 @@ const HEADER_HEIGHT = 60;
 const PADDING_TOP = 8;
 
 const Layout: React.FC<{
-  color: 'red' | 'blue' | '';
+  color: string;
   label?: string;
   children: React.ReactNode;
 }> = ({ color, label, children }) => {

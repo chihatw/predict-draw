@@ -1,5 +1,5 @@
 import React from 'react';
-import { CueWorkoutState, TARGET } from '../../../../../Model';
+import { CueWorkoutState, TARGET } from '../../../../Model';
 
 import CueCard from './CueCard';
 

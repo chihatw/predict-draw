@@ -5,14 +5,12 @@ import { INITIAL_STATE, State } from '../Model';
 import { Action, reducer } from '../Update';
 import { useCueWorkout } from '../services/cueWorkout/cueWorkout';
 import useNote from '../services/note';
-import ChinSanPage from './pages/ChinSanPage';
-import KouSanPage from './pages/KouSanPage';
-import LisanPage from './pages/LiSanPage';
 import MngPage from './pages/MngPage';
 import MngNotePage from './pages/Note/MngNotePage';
 import NotePage from './pages/Note/NotePage';
 import SpeedWorkoutEditPage from './pages/SpeedWorkoutEditPage';
 import TopPage from './pages/TopPage';
+import UserPage from './pages/UserPage';
 
 export const AppContext = createContext<{
   state: State;
@@ -38,9 +36,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<TopPage />} />
-          <Route path='/liSan' element={<LisanPage />} />
-          <Route path='/kouSan' element={<KouSanPage />} />
-          <Route path='/chinSan' element={<ChinSanPage />} />
+          <Route path='/liSan' element={<UserPage user='liSan' />} />
+          <Route path='/kouSan' element={<UserPage user='kouSan' />} />
+          <Route path='/chinSan' element={<UserPage user='chinSan' />} />
           <Route path='note' element={<NotePage />} />
           <Route path='/mng'>
             <Route index element={<MngPage />} />

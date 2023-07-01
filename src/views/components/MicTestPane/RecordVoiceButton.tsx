@@ -3,14 +3,14 @@ import StopCircleIcon from '@mui/icons-material/StopCircle';
 import { IconButton } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from '../../..';
-import { blobToAudioBuffer } from '../../../../services/utils';
+import { AppContext } from '../..';
+import { blobToAudioBuffer } from '../../../services/utils';
 
 import { RAW_STORAGE_PATH } from '.';
-import { State, VoiceProps } from '../../../../Model';
-import { ActionTypes } from '../../../../Update';
-import { uploadStorage } from '../../../../repositories/storage';
-import { setRecordVoiceRaw } from '../../../../services/recordVoice';
+import { State, VoiceProps } from '../../../Model';
+import { ActionTypes } from '../../../Update';
+import { uploadStorage } from '../../../repositories/storage';
+import { setRecordVoiceRaw } from '../../../services/recordVoice';
 
 const RecordVoiceButton = () => {
   const { state, dispatch } = useContext(AppContext);

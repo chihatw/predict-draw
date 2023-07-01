@@ -7,12 +7,12 @@ import {
   PatternParams,
   TARGET,
 } from '../../Model';
-import { CUE_CARDS } from '../../views/components/UserPane/CueWorkoutPane/CUE_CARDS';
+import { CUE_CARDS } from '../../views/components/CueWorkoutPane/CUE_CARDS';
 import { buildCurrentPatterns } from '../../views/pages/MngPage/CueWorkoutList/services/useCurrentPatterns';
 import { PATTERNS } from '../../views/pages/MngPage/CueWorkoutList/services/usePatterns';
 import { shuffle } from '../utils';
 
-// /pages/Users/UserPane/CueWorkoutPane/index.tsx showNextCue で
+// showNextCue で
 // pattern の連続を排除しているので、確率の調整を強めに設定
 
 const createCueFromParams = (

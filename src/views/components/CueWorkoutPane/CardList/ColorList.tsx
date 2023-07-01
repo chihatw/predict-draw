@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import CardList from '.';
-import { AppContext } from '../../../..';
+import { AppContext } from '../../..';
 
 const ColorList = () => {
   const { state } = useContext(AppContext);

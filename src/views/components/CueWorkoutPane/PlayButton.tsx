@@ -3,7 +3,7 @@ import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { IconButton } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../../..';
+import { AppContext } from '../..';
 
 const rotate = keyframes`
   0%  {

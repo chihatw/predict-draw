@@ -1,16 +1,16 @@
 import { Container } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from '../../..';
-import { CueWorkoutParams, Pattern, State, TARGET } from '../../../../Model';
-import { ActionTypes } from '../../../../Update';
-import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
+import { AppContext } from '../..';
+import { CueWorkoutParams, Pattern, State, TARGET } from '../../../Model';
+import { ActionTypes } from '../../../Update';
+import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 import {
   setCueWorkoutCue,
   setCueWorkoutParams,
   stopCueWorkout,
-} from '../../../../services/cueWorkout/cueWorkout';
-import TimeDisplay from '../../TimeDisplay';
+} from '../../../services/cueWorkout/cueWorkout';
+import TimeDisplay from '../TimeDisplay';
 import ColorList from './CardList/ColorList';
 import CuePane from './CuePane';
 import getImages from './CuePane/getImages';

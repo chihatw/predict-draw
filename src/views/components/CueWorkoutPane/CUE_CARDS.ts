@@ -1,4 +1,4 @@
-import { CueWorkoutCard } from '../../../../Model';
+import { CueWorkoutCard } from '../../../Model';
 
 export const CUE_CARDS: { [key: string]: CueWorkoutCard } = {
   red: {
