@@ -1,11 +1,11 @@
 import { PAGES } from 'application/pageStates/core/1-constants';
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
+import { UserSpeedWorkoutPane } from '../UserSpeedWorkoutPane';
 import CueWorkoutPane from './CueWorkoutPane';
 import MicTestPane from './MicTestPane';
 import NotePane from './NotePane';
 import SpeedWorkoutCuePane from './SpeedWorkoutCuePane';
-import { SpeedWorkoutPane } from './SpeedWorkoutPane';
 import SpeedWorkoutReadPane from './SpeedWorkoutReadPane';
 
 const UserPane = ({ user }: { user: string }) => {
@@ -17,7 +17,7 @@ const UserPane = ({ user }: { user: string }) => {
 
   switch (pageState) {
     case PAGES.speedWorkoutSolo:
-      return <SpeedWorkoutPane />;
+      return <UserSpeedWorkoutPane />;
     case PAGES.speedWorkoutCue:
       return <SpeedWorkoutCuePane />;
     case PAGES.speedWorkoutRead:

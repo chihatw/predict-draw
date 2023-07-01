@@ -1,17 +1,17 @@
 import { useContext, useEffect, useReducer } from 'react';
 
-import { AppContext } from '../../..';
+import { AppContext } from '../..';
 
 import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import {
   buildSpeedWorkoutState,
   setSpeedWorkoutParams,
-} from '../../../../services/speedWorkout';
+} from '../../../services/speedWorkout';
 import { INITIAL_SPEED_READING_STATE } from './Model';
 import SpeedWorkoutForm from './SpeedWorkoutForm';
 import { SpeedWorkoutActionTypes, speedReadingReducer } from './Update';
 
-export const SpeedWorkoutPane = () => {
+export const UserSpeedWorkoutPane = () => {
   const { state } = useContext(AppContext);
 
   const [speedReadingState, speedReadingDispatch] = useReducer(

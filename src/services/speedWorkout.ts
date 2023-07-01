@@ -19,7 +19,7 @@ import {
 import { db } from '../infrastructure/firebase';
 import { INITIAL_WORKOUT, SpeedWorkout, State } from '../Model';
 import { Action, ActionTypes } from '../Update';
-import { SpeedWorkoutState } from '../views/components/UserPane/SpeedWorkoutPane/Model';
+import { SpeedWorkoutState } from '../views/components/UserSpeedWorkoutPane/Model';
 
 const COLLECTIONS = { params: 'params', workouts: 'workouts' };
 

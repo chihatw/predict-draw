@@ -1,9 +1,9 @@
 import { Button, useTheme } from '@mui/material';
 import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import React, { useContext, useRef } from 'react';
-import { AppContext } from '../../..';
-import { setSpeedWorkoutParams } from '../../../../services/speedWorkout';
-import BPMCulcLabel from '../commons/BPMCulcLabel';
+import { AppContext } from '../..';
+import { setSpeedWorkoutParams } from '../../../services/speedWorkout';
+import BPMCulcLabel from '../UserPane/commons/BPMCulcLabel';
 import { SpeedWorkoutState } from './Model';
 import TimePane from './TimePane';
 import TimerButton from './TimerButton';

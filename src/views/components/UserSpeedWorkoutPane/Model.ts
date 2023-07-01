@@ -1,4 +1,4 @@
-import { INITIAL_WORKOUT, SpeedWorkout } from '../../../../Model';
+import { INITIAL_WORKOUT, SpeedWorkout } from '../../../Model';
 
 export type SpeedWorkoutState = {
   isRunning: boolean;
