@@ -1,15 +1,15 @@
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
+import SelectColors from './SelectColors';
 import SetTime from './SetTime';
 import ShowStatus from './ShowStatus';
-import SelectColors from './SelectColors';
 
 import PatternList from './PatternList';
 
 const LOCAL_STATE = 'cueWorkout';
 
-const CueWorkoutList = () => {
+const MngCueWorkoutPane = () => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const value = localStorage.getItem(LOCAL_STATE);
@@ -45,4 +45,4 @@ const CueWorkoutList = () => {
   );
 };
 
-export default CueWorkoutList;
+export default MngCueWorkoutPane;

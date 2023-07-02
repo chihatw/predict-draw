@@ -5,7 +5,7 @@ import {
   Pattern,
   SENTENCE_TYPES,
   TARGET,
-} from '../../../../../Model';
+} from '../../../../Model';
 
 export const PATTERNS = [
   {

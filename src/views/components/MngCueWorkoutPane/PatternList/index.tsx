@@ -9,7 +9,7 @@ import {
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { initialState } from 'application/cuePatternParams/core/1-constants';
 import { Dispatch, createContext, useReducer } from 'react';
-import { TARGET } from '../../../../../Model';
+import { TARGET } from '../../../../Model';
 import useCurrentPatterns from '../services/useCurrentPatterns';
 import PatternListSwitchesPane from './PatternListSwitchesPane';
 

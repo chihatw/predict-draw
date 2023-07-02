@@ -4,11 +4,11 @@ import { RootState } from 'main';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../Layout';
-import CueWorkoutList from './CueWorkoutList';
+import MngCueWorkoutPane from '../../components/MngCueWorkoutPane';
+import MngPageStatePane from '../../components/MngPageStatePane';
+import MngSpeedWorkoutPane from '../../components/MngSpeedWorkoutPane';
 import NotePane from './NotePane';
-import PageStatePane from './PageStatePane';
 import RecordVoicePane from './RecordVoicePane';
-import SpeedWorkoutPane from './SpeedWorkoutPane';
 
 const MngPage = () => {
   const dispatch = useDispatch();
@@ -21,23 +21,23 @@ const MngPage = () => {
     dispatch(mngPageActions.initiate());
   }, []);
 
+  const userPageStates = users.map((user, index) => (
+    <MngPageStatePane
+      key={index}
+      user={user as string}
+      value={pageStates[user]?.state}
+    />
+  ));
+
   return (
     <Layout color='red' label='MngPage'>
       <Container maxWidth='sm'>
         <div style={{ display: 'grid', rowGap: 16, padding: '8px 0' }}>
-          <div style={{ display: 'grid' }}>
-            {users.map((user, index) => (
-              <PageStatePane
-                key={index}
-                user={user as string}
-                value={pageStates[user]?.state}
-              />
-            ))}
-          </div>
+          <div style={{ display: 'grid' }}>{userPageStates}</div>
           <Divider />
           <div style={{ display: 'grid', rowGap: 0, paddingBottom: 80 }}>
-            <SpeedWorkoutPane />
-            <CueWorkoutList />
+            <MngSpeedWorkoutPane />
+            <MngCueWorkoutPane />
             <RecordVoicePane />
             <NotePane />
           </div>

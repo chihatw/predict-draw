@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pattern, TARGET } from '../../../../../Model';
+import { Pattern, TARGET } from '../../../../Model';
 
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { PATTERNS } from './usePatterns';

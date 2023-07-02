@@ -1,14 +1,14 @@
 import { Button } from '@mui/material';
 import * as R from 'ramda';
 import { useContext } from 'react';
-import { AppContext } from '../../..';
-import { COLORS, CueWorkoutParams } from '../../../../Model';
-import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
+import { AppContext } from '../..';
+import { COLORS, CueWorkoutParams } from '../../../Model';
+import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 import {
   setCueWorkoutCue,
   setCueWorkoutParams,
-} from '../../../../services/cueWorkout/cueWorkout';
-import { toggleElement } from '../../../../services/utils';
+} from '../../../services/cueWorkout/cueWorkout';
+import { toggleElement } from '../../../services/utils';
 
 const SelectColors = () => {
   const { state } = useContext(AppContext);

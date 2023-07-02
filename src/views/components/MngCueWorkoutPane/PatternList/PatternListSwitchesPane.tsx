@@ -2,17 +2,17 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect } from 'react';
 
-import { CueWorkoutParams } from '../../../../../Model';
+import { CueWorkoutParams } from '../../../../Model';
 
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { initialState } from 'application/cuePatternParams/core/1-constants';
 import { PatternListContext } from '.';
-import { AppContext } from '../../../..';
-import createCueFromParams from '../../../../../services/cueWorkout/createCueFromParams';
+import { AppContext } from '../../..';
+import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
 import {
   setCueWorkoutCue,
   setCueWorkoutParams,
-} from '../../../../../services/cueWorkout/cueWorkout';
+} from '../../../../services/cueWorkout/cueWorkout';
 
 const PatternListSwitchesPane = () => {
   const { state } = useContext(AppContext);

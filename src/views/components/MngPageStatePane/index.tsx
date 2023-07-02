@@ -14,7 +14,7 @@ import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-const PageStatePane = ({
+const MngPageStatePane = ({
   user,
   value,
 }: {
@@ -68,4 +68,4 @@ const PageStatePane = ({
   );
 };
 
-export default PageStatePane;
+export default MngPageStatePane;

@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../../..';
-import { CueWorkoutParams } from '../../../../Model';
-import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
+import { AppContext } from '../..';
+import { CueWorkoutParams } from '../../../Model';
+import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 import {
   setCueWorkoutCue,
   setCueWorkoutParams,
-} from '../../../../services/cueWorkout/cueWorkout';
+} from '../../../services/cueWorkout/cueWorkout';
 
 const ShowStatus = () => {
   const { state } = useContext(AppContext);

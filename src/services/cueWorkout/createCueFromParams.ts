@@ -8,8 +8,8 @@ import {
   TARGET,
 } from '../../Model';
 import { CUE_CARDS } from '../../views/components/CueWorkoutPane/CUE_CARDS';
-import { buildCurrentPatterns } from '../../views/pages/MngPage/CueWorkoutList/services/useCurrentPatterns';
-import { PATTERNS } from '../../views/pages/MngPage/CueWorkoutList/services/usePatterns';
+import { buildCurrentPatterns } from '../../views/components/MngCueWorkoutPane/services/useCurrentPatterns';
+import { PATTERNS } from '../../views/components/MngCueWorkoutPane/services/usePatterns';
 import { shuffle } from '../utils';
 
 // showNextCue で

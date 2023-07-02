@@ -1,9 +1,9 @@
 import { TextField } from '@mui/material';
 import * as R from 'ramda';
 import { useContext } from 'react';
-import { AppContext } from '../../..';
-import { CueWorkoutParams } from '../../../../Model';
-import { setCueWorkoutParams } from '../../../../services/cueWorkout/cueWorkout';
+import { AppContext } from '../..';
+import { CueWorkoutParams } from '../../../Model';
+import { setCueWorkoutParams } from '../../../services/cueWorkout/cueWorkout';
 
 const SetTime = () => {
   const { state } = useContext(AppContext);
