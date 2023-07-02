@@ -1,3 +1,4 @@
+import { initialState } from 'application/cuePatternParams/core/1-constants';
 import {
   doc,
   DocumentData,
@@ -12,7 +13,6 @@ import {
   CueWorkoutParams,
   INITIAL_CUE_CARD_PROPS,
   INITIAL_PATTERN,
-  INITIAL_PATTERN_PARAMS,
 } from '../../Model';
 import { Action, ActionTypes } from '../../Update';
 import { CUE_CARDS } from '../../views/components/CueWorkoutPane/CUE_CARDS';
@@ -91,7 +91,7 @@ const buildParams = (doc: DocumentData) => {
     points: points || 0,
     colors: colors || [],
     isRunning: isRunning || false,
-    patternParams: patternParams || INITIAL_PATTERN_PARAMS,
+    patternParams: patternParams || initialState,
     lastPattern: lastPattern || INITIAL_PATTERN,
   };
   return params;

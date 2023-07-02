@@ -1,10 +1,10 @@
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import {
   CueCardProps,
   CueWorkoutCue,
   INITIAL_CUE_CARD_PROPS,
   INITIAL_CUE_WORKOUT_CUE,
   Pattern,
-  PatternParams,
   TARGET,
 } from '../../Model';
 import { CUE_CARDS } from '../../views/components/CueWorkoutPane/CUE_CARDS';
@@ -17,7 +17,7 @@ import { shuffle } from '../utils';
 
 const createCueFromParams = (
   colors: string[],
-  patternParams: PatternParams
+  patternParams: ICuePatternParams
 ): CueWorkoutCue => {
   const patterns = PATTERNS;
   const currentPatterns = buildCurrentPatterns(patterns, patternParams);

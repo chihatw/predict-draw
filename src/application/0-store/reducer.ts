@@ -1,3 +1,5 @@
+import cuePatternParams from 'application/cuePatternParams/framework/0-reducer';
+import cueWorkoutParams from 'application/cueWorkoutParams/framework/0-reducer';
 import mngPage from 'application/mngPage/framework/0-reducer';
 import pageStates from 'application/pageStates/framework/0-reducer';
 import speedWorkoutEditPage from 'application/speedWorkoutEditPage/framework/0-reducer';
@@ -12,4 +14,6 @@ export default {
   speedWorkoutItems,
   speedWorkouts,
   speedWorkoutEditPage,
+  cueWorkoutParams,
+  cuePatternParams,
 };

@@ -2,12 +2,10 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import * as R from 'ramda';
 import { useContext, useEffect } from 'react';
 
-import {
-  CueWorkoutParams,
-  INITIAL_PATTERN_PARAMS,
-  PatternParams,
-} from '../../../../../Model';
+import { CueWorkoutParams } from '../../../../../Model';
 
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { initialState } from 'application/cuePatternParams/core/1-constants';
 import { PatternListContext } from '.';
 import { AppContext } from '../../../..';
 import createCueFromParams from '../../../../../services/cueWorkout/createCueFromParams';
@@ -21,8 +19,7 @@ const PatternListSwitchesPane = () => {
   const { listState, listDispatch } = useContext(PatternListContext);
 
   useEffect(() => {
-    if (JSON.stringify(listState) !== JSON.stringify(INITIAL_PATTERN_PARAMS))
-      return;
+    if (JSON.stringify(listState) !== JSON.stringify(initialState)) return;
 
     if (
       JSON.stringify(state.cueWorkout.params.patternParams) !==
@@ -32,9 +29,11 @@ const PatternListSwitchesPane = () => {
     }
   }, [state.cueWorkout.params.patternParams, listState]);
 
-  const handleChangePatternParams = (updatedPatternParams: PatternParams) => {
+  const handleChangePatternParams = (
+    updatedPatternParams: ICuePatternParams
+  ) => {
     listDispatch(updatedPatternParams);
-    const updatedParams = R.assocPath<PatternParams, CueWorkoutParams>(
+    const updatedParams = R.assocPath<ICuePatternParams, CueWorkoutParams>(
       ['patternParams'],
       updatedPatternParams
     )(state.cueWorkout.params);

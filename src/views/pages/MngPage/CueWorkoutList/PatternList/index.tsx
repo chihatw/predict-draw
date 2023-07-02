@@ -6,27 +6,25 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { initialState } from 'application/cuePatternParams/core/1-constants';
 import { Dispatch, createContext, useReducer } from 'react';
-import {
-  INITIAL_PATTERN_PARAMS,
-  PatternParams,
-  TARGET,
-} from '../../../../../Model';
+import { TARGET } from '../../../../../Model';
 import useCurrentPatterns from '../services/useCurrentPatterns';
 import PatternListSwitchesPane from './PatternListSwitchesPane';
 
-const reducer = (state: PatternParams, action: PatternParams) => action;
+const reducer = (state: ICuePatternParams, action: ICuePatternParams) => action;
 
 export const PatternListContext = createContext<{
-  listState: PatternParams;
-  listDispatch: Dispatch<PatternParams>;
+  listState: ICuePatternParams;
+  listDispatch: Dispatch<ICuePatternParams>;
 }>({
-  listState: INITIAL_PATTERN_PARAMS,
+  listState: initialState,
   listDispatch: () => {},
 });
 
 const PatternList = () => {
-  const [listState, listDispatch] = useReducer(reducer, INITIAL_PATTERN_PARAMS);
+  const [listState, listDispatch] = useReducer(reducer, initialState);
   const currentPatterns = useCurrentPatterns(listState);
 
   return (

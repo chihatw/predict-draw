@@ -1,3 +1,6 @@
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { initialState } from 'application/cuePatternParams/core/1-constants';
+
 export const SENTENCE_TYPES = { positive: 'positive', negative: 'negative' };
 export const KAKU_ORDERS = { woFirst: 'woFirst', niFirst: 'niFirst' };
 export const TARGET = {
@@ -104,40 +107,12 @@ export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   pattern: INITIAL_PATTERN,
 };
 
-export type PatternParams = {
-  hasWoTopic: boolean;
-  hasNiTopic: boolean;
-  hasNoneTopic: boolean;
-  hasWoGroping: boolean;
-  hasNiGroping: boolean;
-  hasNoneGroping: boolean;
-  hasStraightOrder: boolean;
-  hasInvertOrder: boolean;
-  hasPositive: boolean;
-  hasNegative: boolean;
-  hasGroupingTopic: boolean;
-};
-
-export const INITIAL_PATTERN_PARAMS: PatternParams = {
-  hasWoTopic: false,
-  hasNiTopic: false,
-  hasNoneTopic: true,
-  hasWoGroping: false,
-  hasNiGroping: false,
-  hasNoneGroping: true,
-  hasStraightOrder: true,
-  hasInvertOrder: false,
-  hasPositive: true,
-  hasNegative: false,
-  hasGroupingTopic: false,
-};
-
 export type CueWorkoutParams = {
   time: number;
   points: number;
   colors: string[];
   isRunning: boolean;
-  patternParams: PatternParams;
+  patternParams: ICuePatternParams;
   lastPattern: Pattern;
 };
 
@@ -146,7 +121,7 @@ export const INITIAL_CUE_WORKOUT_PARAMS: CueWorkoutParams = {
   colors: [],
   points: 0,
   isRunning: false,
-  patternParams: INITIAL_PATTERN_PARAMS,
+  patternParams: initialState,
   lastPattern: INITIAL_PATTERN,
 };
 
