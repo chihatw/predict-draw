@@ -2,8 +2,8 @@ import { css, keyframes } from '@emotion/css';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { IconButton } from '@mui/material';
-import { useContext } from 'react';
-import { AppContext } from '../..';
+import { RootState } from 'main';
+import { useSelector } from 'react-redux';
 
 const rotate = keyframes`
   0%  {
@@ -15,21 +15,11 @@ const rotate = keyframes`
   }
 `;
 
-const PlayButton = ({
-  startTimer,
-  showNextCue,
-}: {
-  startTimer: () => void;
-  showNextCue: () => void;
-}) => {
-  const { state } = useContext(AppContext);
-  const { cueWorkout } = state;
-  const { params } = cueWorkout;
-  const { isRunning, points } = params;
+const PlayButton = ({ handleClick }: { handleClick: () => void }) => {
+  const { isRunning, points } = useSelector(
+    (state: RootState) => state.cueWorkoutParams
+  );
 
-  const handleClick = () => {
-    isRunning ? showNextCue() : startTimer();
-  };
   return (
     <div
       style={{

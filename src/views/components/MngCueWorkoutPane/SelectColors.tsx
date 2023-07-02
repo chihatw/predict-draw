@@ -1,33 +1,23 @@
 import { Button } from '@mui/material';
-import * as R from 'ramda';
-import { useContext } from 'react';
-import { AppContext } from '../..';
-import { COLORS, CueWorkoutParams } from '../../../Model';
+import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
+import { COLORS } from '../../../Model';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
-import {
-  setCueWorkoutCue,
-  setCueWorkoutParams,
-} from '../../../services/cueWorkout/cueWorkout';
+import { setCueWorkoutCue } from '../../../services/cueWorkout/cueWorkout';
 import { toggleElement } from '../../../services/utils';
 
 const SelectColors = () => {
-  const { state } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const { colors } = useSelector((state: RootState) => state.cueWorkoutParams);
+  const cuePatternParams = useSelector(
+    (state: RootState) => state.cuePatternParams
+  );
 
   const handleClickColor = async (color: string) => {
-    const updatedColors = toggleElement(
-      [...state.cueWorkout.params.colors],
-      color
-    );
-    const updatedParams = R.assocPath<string[], CueWorkoutParams>(
-      ['colors'],
-      updatedColors
-    )(state.cueWorkout.params);
-    await setCueWorkoutParams(updatedParams);
-
-    const cue = createCueFromParams(
-      updatedParams.colors,
-      updatedParams.patternParams
-    );
+    const updatedColors = toggleElement([...colors], color);
+    dispatch(cueWorkoutParamsActions.setColors(updatedColors));
+    const cue = createCueFromParams(updatedColors, cuePatternParams);
     await setCueWorkoutCue(cue);
   };
 
@@ -44,11 +34,7 @@ const SelectColors = () => {
         {COLORS.map((color) => (
           <Button
             key={color}
-            color={
-              state.cueWorkout.params.colors.includes(color)
-                ? 'primary'
-                : 'secondary'
-            }
+            color={colors.includes(color) ? 'primary' : 'secondary'}
             onClick={() => handleClickColor(color)}
           >
             {color}

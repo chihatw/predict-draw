@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import {
   CueWorkoutCard,
   CueWorkoutCue,
-  CueWorkoutParams,
   NoteState,
   RecordVoiceParams,
   State,
@@ -14,7 +13,6 @@ export const ActionTypes = {
   setNoteState: 'setNoteState',
   setCueWorkoutCue: 'setCueWorkoutCue',
   setCueWorkoutCards: 'setCueWorkoutCards',
-  setCueWorkoutParams: 'setCueWorkoutParams',
   setRecordVoiceRaw: 'setRecordVoiceRaw',
   setRecordVoiceAssets: 'setRecordVoiceAssets',
   setRecordVoiceParams: 'setRecordVoiceParams',
@@ -31,7 +29,6 @@ export type Action = {
     | number[]
     | NoteState
     | CueWorkoutCue
-    | CueWorkoutParams
     | { [index: number]: string[] }
     | { [id: string]: CueWorkoutCard }
     | { [imagePath: string]: string }
@@ -67,12 +64,6 @@ export const reducer = (state: State, action: Action): State => {
       const cue = payload as CueWorkoutCue;
       return R.compose(
         R.assocPath<CueWorkoutCue, State>(['cueWorkout', 'cue'], cue)
-      )(state);
-    }
-    case ActionTypes.setCueWorkoutParams: {
-      const params = payload as CueWorkoutParams;
-      return R.compose(
-        R.assocPath<CueWorkoutParams, State>(['cueWorkout', 'params'], params)
       )(state);
     }
 

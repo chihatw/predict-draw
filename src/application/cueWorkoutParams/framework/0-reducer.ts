@@ -7,9 +7,24 @@ const cueWorkoutParamsSlice = createSlice({
   initialState,
   reducers: {
     setProps: (state, { payload }: { payload: ICueWorkoutParams }) => payload,
+    setColors: (state, { payload }: { payload: string[] }) => {
+      state.colors = payload;
+    },
+    setTime: (state, { payload }: { payload: number }) => {
+      state.time = payload;
+    },
     reset: (state) => {
       state.isRunning = false;
       state.points = 0;
+    },
+    start: (state) => {
+      state.isRunning = true;
+    },
+    next: (state) => {
+      state.points++;
+    },
+    stop: (state) => {
+      state.isRunning = false;
     },
   },
 });

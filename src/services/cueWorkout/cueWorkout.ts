@@ -1,16 +1,8 @@
-import { initialState } from 'application/cuePatternParams/core/1-constants';
-import {
-  doc,
-  DocumentData,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore';
+import { doc, DocumentData, onSnapshot, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { db } from '../../infrastructure/firebase';
 import {
   CueWorkoutCue,
-  CueWorkoutParams,
   INITIAL_CUE_CARD_PROPS,
   INITIAL_PATTERN,
 } from '../../Model';
@@ -38,32 +30,10 @@ export const useCueWorkout = (dispatch: React.Dispatch<Action>) => {
       }
     );
 
-    const unsubParams = onSnapshot(
-      doc(db, COLLECTIONS.cueWorkout, 'params'),
-      (doc) => {
-        console.log('snapShot cueWorkoutParams');
-        if (!doc.exists()) return;
-        const params = buildParams(doc);
-        dispatch({ type: ActionTypes.setCueWorkoutParams, payload: params });
-      }
-    );
     return () => {
       unsubCue();
-      unsubParams();
     };
   }, []);
-};
-
-export const setCueWorkoutParams = async (params: CueWorkoutParams) => {
-  console.log('set cueWorkoutParams');
-  await setDoc(doc(db, COLLECTIONS.cueWorkout, 'params'), params);
-};
-
-export const stopCueWorkout = async () => {
-  console.log('update cueWorkoutParams');
-  await updateDoc(doc(db, COLLECTIONS.cueWorkout, 'params'), {
-    isRunning: false,
-  });
 };
 
 export const setCueWorkoutCue = async (cue: CueWorkoutCue) => {
@@ -81,18 +51,4 @@ const buildCue = (doc: DocumentData) => {
     pattern: pattern || INITIAL_PATTERN,
   };
   return cue;
-};
-
-const buildParams = (doc: DocumentData) => {
-  const { time, colors, points, isRunning, patternParams, lastPattern } =
-    doc.data();
-  const params: CueWorkoutParams = {
-    time: time || 0,
-    points: points || 0,
-    colors: colors || [],
-    isRunning: isRunning || false,
-    patternParams: patternParams || initialState,
-    lastPattern: lastPattern || INITIAL_PATTERN,
-  };
-  return params;
 };

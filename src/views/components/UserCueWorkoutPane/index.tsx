@@ -1,47 +1,47 @@
 import { Container } from '@mui/material';
+import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
+import { RootState } from 'main';
 import { useContext, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppContext } from '../..';
-import { CueWorkoutParams, Pattern, TARGET } from '../../../Model';
+import { Pattern } from '../../../Model';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
-import {
-  setCueWorkoutCue,
-  setCueWorkoutParams,
-  stopCueWorkout,
-} from '../../../services/cueWorkout/cueWorkout';
+import { setCueWorkoutCue } from '../../../services/cueWorkout/cueWorkout';
 import TimeDisplay from '../TimeDisplay';
 import ColorList from './CardList/ColorList';
 import CuePane from './CuePane';
 import PlayButton from './PlayButton';
 
 const UserCueWorkoutPane = () => {
+  const dispatch = useDispatch();
   const { state } = useContext(AppContext);
+  const { isRunning, time, colors } = useSelector(
+    (state: RootState) => state.cueWorkoutParams
+  );
+  const cuePatternParams = useSelector(
+    (state: RootState) => state.cuePatternParams
+  );
   const [miliSeconds, setMiliSeconds] = useState(0);
 
   const startAtRef = useRef(0);
   const loopIdRef = useRef(0);
 
   useEffect(() => {
-    if (state.cueWorkout.params.isRunning) return;
-    const miliSeconds = state.cueWorkout.params.time * 1000;
+    if (isRunning) return;
+    const miliSeconds = time * 1000;
 
     setMiliSeconds(miliSeconds);
-  }, [state.cueWorkout.params.time, state.cueWorkout.params.isRunning]);
+  }, [time, isRunning]);
 
-  const startTimer = async () => {
+  const start = async () => {
     startAtRef.current = performance.now();
     timerLoop();
-
-    /** 開始フラグ */
-    const newParams: CueWorkoutParams = {
-      ...state.cueWorkout.params,
-      isRunning: true,
-    };
-    await setCueWorkoutParams(newParams);
+    dispatch(cueWorkoutParamsActions.start());
   };
 
   const timerLoop = () => {
     const elapsedTime = performance.now() - startAtRef.current;
-    const miliSeconds = state.cueWorkout.params.time * 1000 - elapsedTime;
+    const miliSeconds = time * 1000 - elapsedTime;
     if (miliSeconds > 0) {
       setMiliSeconds(miliSeconds);
       loopIdRef.current = window.requestAnimationFrame(timerLoop);
@@ -50,30 +50,26 @@ const UserCueWorkoutPane = () => {
     stopTimer();
   };
 
-  const showNextCue = async () => {
+  const next = async () => {
     /** 新しい Cue の作成 */
     let updatedCue = state.cueWorkout.cue;
     while (isContinue(state.cueWorkout.cue.pattern, updatedCue.pattern)) {
-      const cue = createCueFromParams(
-        state.cueWorkout.params.colors,
-        state.cueWorkout.params.patternParams
-      );
+      const cue = createCueFromParams(colors, cuePatternParams);
       updatedCue = cue;
     }
     await setCueWorkoutCue(updatedCue);
 
-    /** ポイント加算 */
-    const newParams: CueWorkoutParams = {
-      ...state.cueWorkout.params,
-      points: state.cueWorkout.params.points + 1,
-    };
-    await setCueWorkoutParams(newParams);
+    dispatch(cueWorkoutParamsActions.next());
   };
 
   const stopTimer = async () => {
     setMiliSeconds(0);
     window.cancelAnimationFrame(loopIdRef.current);
-    await stopCueWorkout();
+    dispatch(cueWorkoutParamsActions.stop());
+  };
+
+  const handleClick = () => {
+    isRunning ? next() : start();
   };
 
   return (
@@ -82,11 +78,9 @@ const UserCueWorkoutPane = () => {
         <ColorList />
         <TimeDisplay miliSeconds={miliSeconds} />
         <div style={{ margin: '16px 0', height: 300 }}>
-          {state.cueWorkout.params.isRunning && (
-            <CuePane cueWorkout={state.cueWorkout} />
-          )}
+          {isRunning && <CuePane cueWorkout={state.cueWorkout} />}
         </div>
-        <PlayButton startTimer={startTimer} showNextCue={showNextCue} />
+        <PlayButton handleClick={handleClick} />
       </div>
     </Container>
   );
@@ -96,20 +90,8 @@ export default UserCueWorkoutPane;
 
 const isContinue = (currentPattern: Pattern, updatedPattern: Pattern) => {
   return isSamePattern(currentPattern, updatedPattern);
-  // isStraightTopicless(currentPattern, updatedPattern)
 };
 
 const isSamePattern = (currentPattern: Pattern, updatedPattern: Pattern) => {
   return JSON.stringify(updatedPattern) === JSON.stringify(currentPattern);
-};
-
-// 主題なしは連続させない
-const isStraightTopicless = (
-  currentPattern: Pattern,
-  updatedPattern: Pattern
-) => {
-  // 現在主題がなければ、
-  return (
-    currentPattern.topic === TARGET.none && updatedPattern.topic === TARGET.none
-  );
 };

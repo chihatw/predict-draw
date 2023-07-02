@@ -1,5 +1,11 @@
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import { DocumentData, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import {
+  DocumentData,
+  doc,
+  increment,
+  onSnapshot,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
 import { ICueWorkoutParams } from '../core/0-interface';
@@ -13,6 +19,41 @@ export const reset = async () => {
   updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
     isRunning: false,
     points: 0,
+  });
+};
+
+export const start = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
+    isRunning: true,
+  });
+};
+
+export const next = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
+    points: increment(1),
+  });
+};
+
+export const stop = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
+    isRunning: false,
+  });
+};
+
+export const setColors = (colors: string[]) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
+    colors,
+  });
+};
+
+export const setTime = (time: number) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
+    time,
   });
 };
 

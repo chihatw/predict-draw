@@ -1,17 +1,11 @@
-import { useContext } from 'react';
+import { RootState } from 'main';
+import { useSelector } from 'react-redux';
 import CardList from '.';
-import { AppContext } from '../../..';
 
 const ColorList = () => {
-  const { state } = useContext(AppContext);
+  const { colors } = useSelector((state: RootState) => state.cueWorkoutParams);
   const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-  return (
-    <CardList
-      list={COLORS}
-      columns={6}
-      selectedList={state.cueWorkout.params.colors}
-    />
-  );
+  return <CardList list={COLORS} columns={6} selectedList={colors} />;
 };
 
 export default ColorList;

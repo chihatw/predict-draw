@@ -1,48 +1,26 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
-import * as R from 'ramda';
-import { useContext, useEffect } from 'react';
-
-import { CueWorkoutParams } from '../../../../Model';
+import { useState } from 'react';
 
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import { initialState } from 'application/cuePatternParams/core/1-constants';
-import { PatternListContext } from '.';
-import { AppContext } from '../../..';
+import { cuePatternParamsActions } from 'application/cuePatternParams/framework/0-reducer';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
 import createCueFromParams from '../../../../services/cueWorkout/createCueFromParams';
-import {
-  setCueWorkoutCue,
-  setCueWorkoutParams,
-} from '../../../../services/cueWorkout/cueWorkout';
+import { setCueWorkoutCue } from '../../../../services/cueWorkout/cueWorkout';
 
 const PatternListSwitchesPane = () => {
-  const { state } = useContext(AppContext);
-  const { listState, listDispatch } = useContext(PatternListContext);
-
-  useEffect(() => {
-    if (JSON.stringify(listState) !== JSON.stringify(initialState)) return;
-
-    if (
-      JSON.stringify(state.cueWorkout.params.patternParams) !==
-      JSON.stringify(listState)
-    ) {
-      listDispatch(state.cueWorkout.params.patternParams);
-    }
-  }, [state.cueWorkout.params.patternParams, listState]);
-
+  const dispatch = useDispatch();
+  const cuePatternParams = useSelector(
+    (state: RootState) => state.cuePatternParams
+  );
+  const { colors } = useSelector((state: RootState) => state.cueWorkoutParams);
+  const [value, setValue] = useState(cuePatternParams);
   const handleChangePatternParams = (
     updatedPatternParams: ICuePatternParams
   ) => {
-    listDispatch(updatedPatternParams);
-    const updatedParams = R.assocPath<ICuePatternParams, CueWorkoutParams>(
-      ['patternParams'],
-      updatedPatternParams
-    )(state.cueWorkout.params);
-    setCueWorkoutParams(updatedParams);
-
-    const cue = createCueFromParams(
-      updatedParams.colors,
-      updatedParams.patternParams
-    );
+    setValue(updatedPatternParams);
+    dispatch(cuePatternParamsActions.setProps(updatedPatternParams));
+    const cue = createCueFromParams(colors, updatedPatternParams);
     setCueWorkoutCue(cue);
   };
 
@@ -54,10 +32,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasWoTopic}
+              checked={value.hasWoTopic}
               onChange={(e) => {
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasWoTopic: e.target.checked,
                 });
               }}
@@ -69,10 +47,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasNiTopic}
+              checked={value.hasNiTopic}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasNiTopic: e.target.checked,
                 })
               }
@@ -84,10 +62,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasNoneTopic}
+              checked={value.hasNoneTopic}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasNoneTopic: e.target.checked,
                 })
               }
@@ -95,13 +73,11 @@ const PatternListSwitchesPane = () => {
           }
           label={<div style={{ fontSize: 14, userSelect: 'none' }}>なし</div>}
         />
-        {!listState.hasWoTopic &&
-          !listState.hasNiTopic &&
-          !listState.hasNoneTopic && (
-            <div style={{ fontSize: 12, color: 'red' }}>
-              １つ以上指定してださい
-            </div>
-          )}
+        {!value.hasWoTopic && !value.hasNiTopic && !value.hasNoneTopic && (
+          <div style={{ fontSize: 12, color: 'red' }}>
+            １つ以上指定してださい
+          </div>
+        )}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', columnGap: 16 }}>
         <div style={{ fontSize: 14, userSelect: 'none' }}>分類</div>
@@ -109,10 +85,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasWoGroping}
+              checked={value.hasWoGroping}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasWoGroping: e.target.checked,
                 })
               }
@@ -124,10 +100,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasNiGroping}
+              checked={value.hasNiGroping}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasNiGroping: e.target.checked,
                 })
               }
@@ -139,10 +115,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasNoneGroping}
+              checked={value.hasNoneGroping}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasNoneGroping: e.target.checked,
                 })
               }
@@ -150,9 +126,9 @@ const PatternListSwitchesPane = () => {
           }
           label={<div style={{ fontSize: 14 }}>なし</div>}
         />
-        {!listState.hasWoGroping &&
-          !listState.hasNiGroping &&
-          !listState.hasNoneGroping && (
+        {!value.hasWoGroping &&
+          !value.hasNiGroping &&
+          !value.hasNoneGroping && (
             <div style={{ fontSize: 12, color: 'red' }}>
               １つ以上指定してださい
             </div>
@@ -164,10 +140,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasStraightOrder}
+              checked={value.hasStraightOrder}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasStraightOrder: e.target.checked,
                 })
               }
@@ -179,10 +155,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasInvertOrder}
+              checked={value.hasInvertOrder}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasInvertOrder: e.target.checked,
                 })
               }
@@ -190,7 +166,7 @@ const PatternListSwitchesPane = () => {
           }
           label={<div style={{ fontSize: 14, userSelect: 'none' }}>逆順</div>}
         />
-        {!listState.hasStraightOrder && !listState.hasInvertOrder && (
+        {!value.hasStraightOrder && !value.hasInvertOrder && (
           <div style={{ fontSize: 12, color: 'red' }}>
             １つ以上指定してださい
           </div>
@@ -202,10 +178,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasPositive}
+              checked={value.hasPositive}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasPositive: e.target.checked,
                 })
               }
@@ -217,10 +193,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasNegative}
+              checked={value.hasNegative}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasNegative: e.target.checked,
                 })
               }
@@ -228,7 +204,7 @@ const PatternListSwitchesPane = () => {
           }
           label={<div style={{ fontSize: 14, userSelect: 'none' }}>否定</div>}
         />
-        {!listState.hasPositive && !listState.hasNegative && (
+        {!value.hasPositive && !value.hasNegative && (
           <div style={{ fontSize: 12, color: 'red' }}>
             １つ以上指定してださい
           </div>
@@ -242,10 +218,10 @@ const PatternListSwitchesPane = () => {
           control={
             <Checkbox
               size='small'
-              checked={listState.hasGroupingTopic}
+              checked={value.hasGroupingTopic}
               onChange={(e) =>
                 handleChangePatternParams({
-                  ...listState,
+                  ...value,
                   hasGroupingTopic: e.target.checked,
                 })
               }
@@ -253,7 +229,7 @@ const PatternListSwitchesPane = () => {
           }
           label={<div style={{ fontSize: 14, userSelect: 'none' }}>許可</div>}
         />
-        {listState.hasGroupingTopic && (
+        {value.hasGroupingTopic && (
           <div style={{ fontSize: 12, color: 'red' }}>
             主題と分類の重複指定が許可されました
           </div>

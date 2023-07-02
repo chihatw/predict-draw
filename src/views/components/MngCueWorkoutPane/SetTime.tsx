@@ -1,19 +1,13 @@
 import { TextField } from '@mui/material';
-import * as R from 'ramda';
-import { useContext } from 'react';
-import { AppContext } from '../..';
-import { CueWorkoutParams } from '../../../Model';
-import { setCueWorkoutParams } from '../../../services/cueWorkout/cueWorkout';
+import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SetTime = () => {
-  const { state } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const { time } = useSelector((state: RootState) => state.cueWorkoutParams);
   const handleChangeTime = async (time: number) => {
-    const updatedParams = R.assocPath<number, CueWorkoutParams>(
-      ['time'],
-      time
-    )(state.cueWorkout.params);
-
-    await setCueWorkoutParams(updatedParams);
+    dispatch(cueWorkoutParamsActions.setTime(time));
   };
   return (
     <>
@@ -22,7 +16,7 @@ const SetTime = () => {
         fullWidth
         size='small'
         type='number'
-        value={state.cueWorkout.params.time}
+        value={time}
         onChange={(e) => handleChangeTime(Number(e.target.value))}
       />
     </>

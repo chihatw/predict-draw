@@ -1,3 +1,10 @@
-import { reset } from 'application/cueWorkoutParams/infrastructure/api';
+import {
+  next,
+  reset,
+  setColors,
+  setTime,
+  start,
+  stop,
+} from 'application/cueWorkoutParams/infrastructure/api';
 
-export default { reset };
+export default { reset, start, next, stop, setColors, setTime };
