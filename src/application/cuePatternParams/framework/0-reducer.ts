@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ICuePatternParams } from '../core/0-interface';
 import { initialState } from '../core/1-constants';
 
 const cuePatternParamsSlice = createSlice({
   name: 'cuePatternParams',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setProps: (state, { payload }: { payload: ICuePatternParams }) => payload,
+  },
 });
 
 export const cuePatternParamsActions = cuePatternParamsSlice.actions;

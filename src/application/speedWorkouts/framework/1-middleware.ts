@@ -15,6 +15,7 @@ const speedWorkoutsMiddleware =
     switch (action.type) {
       case 'speedWorkouts/startFetch': {
         const speedWorkoutIds = (getState() as RootState).speedWorkouts.ids;
+        console.log(speedWorkoutIds);
         if (!!speedWorkoutIds.length) return;
         const { speedWorkouts, speedWorkoutItems } =
           await services.api.speedWorkouts.fetchSpeedWorkouts();

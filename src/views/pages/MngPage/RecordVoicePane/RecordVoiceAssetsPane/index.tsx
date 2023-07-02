@@ -61,8 +61,7 @@ const RecordVoiceAssetsPane = () => {
     const filteredPaths = paths.filter((path) =>
       Object.keys(state.audioBuffers).includes(path)
     );
-    console.log(state.recordVoice.assets);
-    console.log(paths.length, filteredPaths.length);
+
     if (paths.length === filteredPaths.length) {
       console.log('already has Assets AudioBuffers');
       return;

@@ -69,7 +69,6 @@ export type CueWorkoutCard = {
   id: string;
   label: string;
   pitchStr: string;
-  imagePath: string;
   hasTailAccent: boolean;
 };
 
@@ -77,7 +76,6 @@ export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
   id: '',
   label: '',
   pitchStr: '',
-  imagePath: '',
   hasTailAccent: false,
 };
 
@@ -192,16 +190,12 @@ export type State = {
   audioBuffers: {
     [downloadURL: string]: AudioBuffer;
   };
-  blobURLs: {
-    [imagePath: string]: string;
-  };
   recordVoice: RecordVoice;
 };
 
 export const INITIAL_STATE: State = {
   note: INITIAL_NOTE_STATE,
   cueWorkout: INITIAL_CUE_WORKOUT_STATE,
-  blobURLs: {},
   audioBuffers: {},
   recordVoice: INITIAL_RECORD_VOICE,
 };

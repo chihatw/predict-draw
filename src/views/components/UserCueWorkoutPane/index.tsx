@@ -1,9 +1,7 @@
 import { Container } from '@mui/material';
-import * as R from 'ramda';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../..';
-import { CueWorkoutParams, Pattern, State, TARGET } from '../../../Model';
-import { ActionTypes } from '../../../Update';
+import { CueWorkoutParams, Pattern, TARGET } from '../../../Model';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 import {
   setCueWorkoutCue,
@@ -13,31 +11,11 @@ import {
 import TimeDisplay from '../TimeDisplay';
 import ColorList from './CardList/ColorList';
 import CuePane from './CuePane';
-import getImages from './CuePane/getImages';
 import PlayButton from './PlayButton';
 
-const CueWorkoutPane = () => {
-  const { state, dispatch } = useContext(AppContext);
+const UserCueWorkoutPane = () => {
+  const { state } = useContext(AppContext);
   const [miliSeconds, setMiliSeconds] = useState(0);
-  const [initializing, setInitializing] = useState(true);
-
-  /** 画像の読み込み */
-  useEffect(() => {
-    if (!initializing) return;
-    const fetchData = async () => {
-      const blobURLs = await getImages(state.blobURLs);
-      const updatedBlobURLs = { ...state.blobURLs, ...blobURLs };
-      const updatedState = R.assocPath<{ [imagePath: string]: string }, State>(
-        ['blobURLs'],
-        updatedBlobURLs
-      )(state);
-
-      dispatch({ type: ActionTypes.setState, payload: updatedState });
-      setInitializing(false);
-    };
-
-    fetchData();
-  }, [initializing]);
 
   const startAtRef = useRef(0);
   const loopIdRef = useRef(0);
@@ -114,7 +92,7 @@ const CueWorkoutPane = () => {
   );
 };
 
-export default CueWorkoutPane;
+export default UserCueWorkoutPane;
 
 const isContinue = (currentPattern: Pattern, updatedPattern: Pattern) => {
   return isSamePattern(currentPattern, updatedPattern);

@@ -1,8 +1,6 @@
 import { Container, Divider } from '@mui/material';
-import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import { RootState } from 'main';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Layout from '../../Layout';
 import MngCueWorkoutPane from '../../components/MngCueWorkoutPane';
 import MngPageStatePane from '../../components/MngPageStatePane';
@@ -11,14 +9,9 @@ import NotePane from './NotePane';
 import RecordVoicePane from './RecordVoicePane';
 
 const MngPage = () => {
-  const dispatch = useDispatch();
   const { ids: users, entities: pageStates } = useSelector(
     (state: RootState) => state.pageStates
   );
-
-  useEffect(() => {
-    dispatch(speedWorkoutsActions.startFetch());
-  }, []);
 
   const userPageStates = users.map((user, index) => (
     <MngPageStatePane
