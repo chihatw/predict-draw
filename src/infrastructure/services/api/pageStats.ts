@@ -1,6 +1,3 @@
-import {
-  changePageState,
-  fetchPageStates,
-} from 'application/pageStates/infrastructure/api';
+import { changePageState } from 'application/pageStates/infrastructure/api';
 
-export default { fetchPageStates, changePageState };
+export default { changePageState };

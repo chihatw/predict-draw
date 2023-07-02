@@ -1,5 +1,5 @@
 import { Container, Divider } from '@mui/material';
-import { mngPageActions } from 'application/mngPage/framework/0-reducer';
+import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import { RootState } from 'main';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,13 +12,12 @@ import RecordVoicePane from './RecordVoicePane';
 
 const MngPage = () => {
   const dispatch = useDispatch();
-
   const { ids: users, entities: pageStates } = useSelector(
     (state: RootState) => state.pageStates
   );
 
   useEffect(() => {
-    dispatch(mngPageActions.initiate());
+    dispatch(speedWorkoutsActions.startFetch());
   }, []);
 
   const userPageStates = users.map((user, index) => (

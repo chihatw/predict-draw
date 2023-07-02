@@ -1,7 +1,6 @@
 import {
   changeTotalRounds,
   checkIndex,
-  fetchSpeedWorkoutParams,
   nextRound,
   reset,
   selectId,
@@ -10,7 +9,6 @@ import {
 } from 'application/speedWorkoutParams/infrastracture/api';
 
 export default {
-  fetchSpeedWorkoutParams,
   changeTotalRounds,
   reset,
   selectId,

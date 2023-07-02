@@ -1,29 +1,60 @@
-import { collection, doc, getDocs, query, updateDoc } from 'firebase/firestore';
+import * as _ from 'lodash';
+
+import { Dictionary } from '@reduxjs/toolkit';
+import {
+  DocumentData,
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
+
 import { IPageState } from '../core/0-interface';
 
-export const PAGE_STATES_COLLECTION = 'pageStates';
-
-export const fetchPageStates = async () => {
-  console.log(`%cfetch ${PAGE_STATES_COLLECTION}`, 'color:red');
-
-  const q = query(collection(db, PAGE_STATES_COLLECTION));
-
-  const querySnapshot = await getDocs(q);
-
-  const pageStates: IPageState[] = [];
-  querySnapshot.forEach((doc) => {
-    const { state } = doc.data();
-    pageStates.push({
-      id: doc.id,
-      state,
-    });
-  });
-
-  return pageStates;
-};
+const COLLECTION = 'pageStates';
 
 export const changePageState = async (id: string, state: string) => {
-  console.log(`%cupdate ${PAGE_STATES_COLLECTION}`, 'color:red');
-  await updateDoc(doc(db, PAGE_STATES_COLLECTION, id), { state });
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  await updateDoc(doc(db, COLLECTION, id), { state });
+};
+
+export const listenPageStates = (
+  localPageStates: Dictionary<IPageState>,
+  callback: (pageStates: IPageState[]) => void
+) => {
+  const q = query(collection(db, COLLECTION));
+  return onSnapshot(q, (querySnapshot) => {
+    console.log(`%cfetch ${COLLECTION}`, 'color:red');
+    const pageStates: IPageState[] = [];
+    querySnapshot.forEach((doc) => {
+      pageStates.push(buildPageState(doc));
+    });
+    if (isEqual(pageStates, localPageStates)) return;
+    callback(pageStates);
+  });
+};
+
+const isEqual = (
+  pageStates: IPageState[],
+  localPageStates: Dictionary<IPageState>
+) => {
+  let result = !!Object.keys(localPageStates).length;
+  for (const [key, local] of Object.entries(localPageStates)) {
+    const remote = pageStates.find((pageState) => pageState.id === key);
+    if (!_.isEqual(local, remote)) {
+      result = false;
+    }
+  }
+  return result;
+};
+
+const buildPageState = (doc: DocumentData) => {
+  const { state } = doc.data();
+  const pageState: IPageState = {
+    id: doc.id,
+    state,
+  };
+  return pageState;
 };

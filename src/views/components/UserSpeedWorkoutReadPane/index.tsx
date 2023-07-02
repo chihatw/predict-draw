@@ -3,7 +3,9 @@ import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Container, IconButton } from '@mui/material';
 
 import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
+import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import { RootState } from 'main';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import WorkoutLabel from '../WorkoutLabel';
 import WorkoutStatus from '../WorkoutStatus';
@@ -17,6 +19,10 @@ const UserSpeedWorkoutReadPane = () => {
   const speedWorkout = useSelector(
     (state: RootState) => state.speedWorkouts.entities[selectedId]
   );
+
+  useEffect(() => {
+    dispatch(speedWorkoutsActions.startFetch());
+  }, []);
 
   const handleStart = () => {
     dispatch(speedWorkoutParamsActions.startWorkout());

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BPMCulcLabel from './BPMCulcLabel';
 
+import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import BpmPane from './BpmPane';
 import ResetButton from './ResetButton';
 import TimePane from './TimePane';
@@ -20,6 +21,10 @@ const UserSpeedWorkoutPane = () => {
   );
 
   const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    dispatch(speedWorkoutsActions.startFetch());
+  }, []);
 
   useEffect(() => {
     if (!bpm) {

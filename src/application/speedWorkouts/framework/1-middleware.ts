@@ -13,8 +13,7 @@ const speedWorkoutsMiddleware =
   async (action: AnyAction) => {
     next(action);
     switch (action.type) {
-      case 'speedWorkouts/startFetch':
-      case 'mngPage/initiate': {
+      case 'speedWorkouts/startFetch': {
         const speedWorkoutIds = (getState() as RootState).speedWorkouts.ids;
         if (!!speedWorkoutIds.length) return;
         const { speedWorkouts, speedWorkoutItems } =
