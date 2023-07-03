@@ -1,15 +1,15 @@
 import { Container } from '@mui/material';
-import { useContext } from 'react';
+import { RootState } from 'main';
+import { useSelector } from 'react-redux';
 import SentencePitchLine from 'views/components/SentencePitchLine';
-import { AppContext } from '../..';
 
-const NotePane = () => {
-  const { state } = useContext(AppContext);
+const UserNotePane = () => {
+  const note = useSelector((state: RootState) => state.note);
 
   return (
     <Container maxWidth='sm' sx={{ paddingTop: 5 }}>
       <div style={{ display: 'grid', rowGap: 8 }}>
-        {state.note.texts.map((text, index) => (
+        {note.texts.map((text, index) => (
           <div
             key={index}
             style={{
@@ -19,7 +19,7 @@ const NotePane = () => {
             }}
           >
             <div style={{ textAlign: 'right' }}>{text}</div>
-            <SentencePitchLine pitchStr={state.note.pitches[index] || ''} />
+            <SentencePitchLine pitchStr={note.pitchStrs[index] || ''} />
           </div>
         ))}
       </div>
@@ -27,4 +27,4 @@ const NotePane = () => {
   );
 };
 
-export default NotePane;
+export default UserNotePane;

@@ -4,8 +4,8 @@ import { RootState } from 'main';
 import { useSelector } from 'react-redux';
 import Layout from 'views/Layout';
 import MicTestPane from '../../components/MicTestPane';
-import NotePane from '../../components/NotePane';
 import UserCueWorkoutPane from '../../components/UserCueWorkoutPane';
+import UserNotePane from '../../components/UserNotePane';
 import UserSpeedWorkoutCuePane from '../../components/UserSpeedWorkoutCuePane';
 import UserSpeedWorkoutPane from '../../components/UserSpeedWorkoutPane';
 import UserSpeedWorkoutReadPane from '../../components/UserSpeedWorkoutReadPane';
@@ -26,7 +26,7 @@ const UserPage = ({ user }: { user: string }) => {
       case PAGES.cueWorkout:
         return <UserCueWorkoutPane />;
       case PAGES.note:
-        return <NotePane />;
+        return <UserNotePane />;
       case PAGES.micTest:
         return <MicTestPane />;
       default:

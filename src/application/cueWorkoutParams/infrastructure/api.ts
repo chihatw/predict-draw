@@ -18,18 +18,16 @@ const DOC_ID = 'params';
 export const listenCueWorkoutParams = (
   localCueWorkoutParams: ICueWorkoutParams,
   localCuePatternParams: ICuePatternParams,
-  cueWorkoutParamsCallback: (cueWorkoutParams: ICueWorkoutParams) => void,
-  cuePatternParamsCallback: (cuePatternParams: ICuePatternParams) => void
+  cueWorkoutParamsCallback: (value: ICueWorkoutParams) => void,
+  cuePatternParamsCallback: (value: ICuePatternParams) => void
 ) => {
   return onSnapshot(doc(db, COLLECTION, DOC_ID), (docSnapshot) => {
     console.log(`%cfetched ${COLLECTION}`, 'color:red');
     const { cueWorkoutParams, cuePatternParams } =
       buildCueWorkoutParams(docSnapshot);
-    console.log({ localCueWorkoutParams, cueWorkoutParams });
     if (!_.isEqual(localCueWorkoutParams, cueWorkoutParams)) {
       cueWorkoutParamsCallback(cueWorkoutParams);
     }
-    console.log({ localCuePatternParams, cuePatternParams });
     if (!_.isEqual(localCuePatternParams, cuePatternParams)) {
       cuePatternParamsCallback(cuePatternParams);
     }

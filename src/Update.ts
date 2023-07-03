@@ -1,10 +1,9 @@
-import { ICueWorkoutCard } from 'application/cueWorkoutCards/core/0-interface';
 import * as R from 'ramda';
-import { NoteState, RecordVoiceParams, State, VoiceProps } from './Model';
+import { RecordVoiceParams, State, VoiceProps } from './Model';
 
 export const ActionTypes = {
   setState: 'setState',
-  setNoteState: 'setNoteState',
+
   setCueWorkoutCue: 'setCueWorkoutCue',
   setCueWorkoutCards: 'setCueWorkoutCards',
   setRecordVoiceRaw: 'setRecordVoiceRaw',
@@ -21,9 +20,7 @@ export type Action = {
     | string[]
     | number
     | number[]
-    | NoteState
     | { [index: number]: string[] }
-    | { [id: string]: ICueWorkoutCard }
     | { [imagePath: string]: string }
     | { imagePath: string; blobURL: string }
     | {
@@ -42,23 +39,6 @@ export const reducer = (state: State, action: Action): State => {
   switch (type) {
     case ActionTypes.setState: {
       return payload as State;
-    }
-
-    case ActionTypes.setCueWorkoutCards: {
-      const cards = payload as { [id: string]: ICueWorkoutCard };
-      return R.compose(
-        R.assocPath<{ [id: string]: ICueWorkoutCard }, State>(
-          ['cueWorkout', 'cards'],
-          cards
-        )
-      )(state);
-    }
-
-    case ActionTypes.setNoteState: {
-      const noteState = payload as NoteState;
-      return R.compose(R.assocPath<NoteState, State>(['note'], noteState))(
-        state
-      );
     }
 
     // recordVoice

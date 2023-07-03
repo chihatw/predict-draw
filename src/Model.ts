@@ -1,15 +1,5 @@
 export type Schedule = { offset: number; start: number; stop: number };
 
-export type NoteState = {
-  texts: string[];
-  pitches: string[];
-};
-
-export const INITIAL_NOTE_STATE: NoteState = {
-  texts: [],
-  pitches: [],
-};
-
 export type VoiceProps = {
   id: string;
   startAt: number;
@@ -60,7 +50,6 @@ export const INITIAL_RECORD_VOICE: RecordVoice = {
 };
 
 export type State = {
-  note: NoteState;
   audioBuffers: {
     [downloadURL: string]: AudioBuffer;
   };
@@ -68,7 +57,6 @@ export type State = {
 };
 
 export const INITIAL_STATE: State = {
-  note: INITIAL_NOTE_STATE,
   audioBuffers: {},
   recordVoice: INITIAL_RECORD_VOICE,
 };

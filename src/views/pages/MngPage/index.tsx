@@ -3,9 +3,9 @@ import { RootState } from 'main';
 import { useSelector } from 'react-redux';
 import Layout from '../../Layout';
 import MngCueWorkoutPane from '../../components/MngCueWorkoutPane';
+import MngNotePane from '../../components/MngNotePane';
 import MngPageStatePane from '../../components/MngPageStatePane';
 import MngSpeedWorkoutPane from '../../components/MngSpeedWorkoutPane';
-import NotePane from './NotePane';
 import RecordVoicePane from './RecordVoicePane';
 
 const MngPage = () => {
@@ -31,7 +31,7 @@ const MngPage = () => {
             <MngSpeedWorkoutPane />
             <MngCueWorkoutPane />
             <RecordVoicePane />
-            <NotePane />
+            <MngNotePane />
           </div>
         </div>
       </Container>

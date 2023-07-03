@@ -9,6 +9,8 @@ import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-redu
 import { listenCueWorkoutCue } from 'application/cueWorkoutCue/infrastructure/api';
 import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { listenCueWorkoutParams } from 'application/cueWorkoutParams/infrastructure/api';
+import { noteActions } from 'application/note/framework/0-reducer';
+import { listenNote } from 'application/note/infrastructure/api';
 import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
 import { listenPageStates } from 'application/pageStates/infrastructure/api';
 import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
@@ -16,9 +18,8 @@ import { listenSpeedWorkoutParams } from 'application/speedWorkoutParams/infrast
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import { RootState } from 'main';
 import { Action, reducer } from '../Update';
-import useNote from '../services/note';
+import MngNotePage from './pages/MngNotePage';
 import MngPage from './pages/MngPage';
-import MngNotePage from './pages/Note/MngNotePage';
 import NotePage from './pages/Note/NotePage';
 import SpeedWorkoutEditPage from './pages/SpeedWorkoutEditPage';
 import TopPage from './pages/TopPage';
@@ -43,11 +44,10 @@ function App() {
     cuePatternParams,
     cuePattern,
     cueWorkoutCue,
+    note,
   } = useSelector((state: RootState) => state);
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-
-  useNote(dispatch);
 
   useEffect(() => {
     const unsub = listenPageStates(pageStates, (value) =>
@@ -90,6 +90,15 @@ function App() {
       unsub();
     };
   }, [cueWorkoutCue, cuePattern]);
+
+  useEffect(() => {
+    const unsub = listenNote(note, (value) =>
+      _dispatch(noteActions.setProps(value))
+    );
+    return () => {
+      unsub();
+    };
+  }, [note]);
 
   useEffect(() => {
     _dispatch(speedWorkoutsActions.startFetch());

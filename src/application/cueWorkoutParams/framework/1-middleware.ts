@@ -1,6 +1,7 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { Services } from 'infrastructure/services';
+
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 const cueWorkoutParamsMiddleware =
   (services: Services): Middleware =>
   ({ dispatch, getState }) =>
