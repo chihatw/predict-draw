@@ -7,6 +7,8 @@ const cuePatternParamsSlice = createSlice({
   initialState: initialState,
   reducers: {
     setProps: (state, { payload }: { payload: ICuePatternParams }) => payload,
+    updateProps: (state, { payload }: { payload: ICuePatternParams }) =>
+      payload,
   },
 });
 

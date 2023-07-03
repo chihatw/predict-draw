@@ -16,7 +16,6 @@ import { listenSpeedWorkoutParams } from 'application/speedWorkoutParams/infrast
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import { RootState } from 'main';
 import { Action, reducer } from '../Update';
-import { useCueWorkout } from '../services/cueWorkout/cueWorkout';
 import useNote from '../services/note';
 import MngPage from './pages/MngPage';
 import MngNotePage from './pages/Note/MngNotePage';
@@ -49,7 +48,6 @@ function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   useNote(dispatch);
-  useCueWorkout(dispatch);
 
   useEffect(() => {
     const unsub = listenPageStates(pageStates, (value) =>
@@ -79,7 +77,7 @@ function App() {
     return () => {
       unsub();
     };
-  }, []);
+  }, [cueWorkoutParams, cuePatternParams]);
 
   useEffect(() => {
     const unsub = listenCueWorkoutCue(
@@ -91,7 +89,7 @@ function App() {
     return () => {
       unsub();
     };
-  }, []);
+  }, [cueWorkoutCue, cuePattern]);
 
   useEffect(() => {
     _dispatch(speedWorkoutsActions.startFetch());

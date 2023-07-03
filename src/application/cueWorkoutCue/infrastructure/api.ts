@@ -1,6 +1,6 @@
 import { ICuePattern } from 'application/cuePattern/core/0-interface';
 import { initialState } from 'application/cuePattern/core/1-constants';
-import { DocumentData, doc, onSnapshot } from 'firebase/firestore';
+import { DocumentData, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
 import { ICueWorkoutCue } from '../core/0-interface';
@@ -24,6 +24,11 @@ export const listenCueWorkoutCue = (
       cuePatternCallback(cuePattern);
     }
   });
+};
+
+export const setCueWorkoutCue = (cue: ICueWorkoutCue, pattern: ICuePattern) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), { ...cue, pattern });
 };
 
 const buildCueWorkoutCue = (doc: DocumentData) => {

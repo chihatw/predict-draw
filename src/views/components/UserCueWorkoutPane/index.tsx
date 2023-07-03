@@ -1,12 +1,11 @@
 import { Container } from '@mui/material';
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppContext } from '../..';
-import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
-import { setCueWorkoutCue } from '../../../services/cueWorkout/cueWorkout';
+
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
+import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import TimeDisplay from '../TimeDisplay';
 import ColorList from './CardList/ColorList';
 import CuePane from './CuePane';
@@ -14,13 +13,14 @@ import PlayButton from './PlayButton';
 
 const UserCueWorkoutPane = () => {
   const dispatch = useDispatch();
-  const { state } = useContext(AppContext);
+
   const { isRunning, time, colors } = useSelector(
     (state: RootState) => state.cueWorkoutParams
   );
-  const cuePatternParams = useSelector(
-    (state: RootState) => state.cuePatternParams
+  const { cuePatternParams, cuePattern, cueWorkoutCue } = useSelector(
+    (state: RootState) => state
   );
+
   const [miliSeconds, setMiliSeconds] = useState(0);
 
   const startAtRef = useRef(0);
@@ -51,14 +51,7 @@ const UserCueWorkoutPane = () => {
   };
 
   const next = async () => {
-    /** 新しい Cue の作成 */
-    let updatedCue = state.cueWorkout.cue;
-    while (isContinue(state.cueWorkout.cue.pattern, updatedCue.pattern)) {
-      const cue = createCueFromParams(colors, cuePatternParams);
-      updatedCue = cue;
-    }
-    await setCueWorkoutCue(updatedCue);
-
+    dispatch(cueWorkoutCueActions.updateCueStart({ colors, cuePatternParams }));
     dispatch(cueWorkoutParamsActions.next());
   };
 
@@ -78,7 +71,9 @@ const UserCueWorkoutPane = () => {
         <ColorList />
         <TimeDisplay miliSeconds={miliSeconds} />
         <div style={{ margin: '16px 0', height: 300 }}>
-          {isRunning && <CuePane cueWorkout={state.cueWorkout} />}
+          {isRunning && (
+            <CuePane cueWorkoutCue={cueWorkoutCue} cuePattern={cuePattern} />
+          )}
         </div>
         <PlayButton handleClick={handleClick} />
       </div>

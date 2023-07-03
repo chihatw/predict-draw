@@ -1,25 +1,54 @@
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import { CueWorkoutCue, INITIAL_CUE_WORKOUT_CUE } from '../../Model';
-import { buildCurrentPatterns } from '../../views/components/MngCueWorkoutPane/services/useCurrentPatterns';
+import * as _ from 'lodash';
 
 import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { PATTERNS, TARGET } from 'application/cuePattern/core/1-constants';
+import {
+  PATTERNS,
+  TARGET,
+  initialState as cuePatternInitialState,
+} from 'application/cuePattern/core/1-constants';
+import { buildCurrentPatterns } from 'application/cuePattern/core/2-services';
 import { CUE_CARDS } from 'application/cueWorkoutCards/core/1-constants';
-import { ICueCard } from 'application/cueWorkoutCue/core/0-interface';
-import { shuffle } from '../utils';
+import {
+  ICueCard,
+  ICueWorkoutCue,
+} from 'application/cueWorkoutCue/core/0-interface';
+import { initialState as cueWorkoutCueInitialState } from 'application/cueWorkoutCue/core/1-constants';
+import { shuffle } from 'application/utils/utils';
 
-// showNextCue で
-// pattern の連続を排除しているので、確率の調整を強めに設定
+export const updateCue = (
+  colors: string[],
+  cuePatternParams: ICuePatternParams,
+  currentCuePattern: ICuePattern,
+  currentCueWorkoutCue: ICueWorkoutCue
+): {
+  cuePattern: ICuePattern;
+  cueWorkoutCue: ICueWorkoutCue;
+} => {
+  let updatedCue = {
+    cuePattern: currentCuePattern,
+    cueWorkoutCue: currentCueWorkoutCue,
+  };
+  while (_.isEqual(currentCuePattern, updatedCue.cuePattern)) {
+    const { cuePattern: _cuePattern, cueWorkoutCue: _cueWorkoutCue } =
+      createCueFromParams(colors, cuePatternParams);
+    updatedCue = { cuePattern: _cuePattern, cueWorkoutCue: _cueWorkoutCue };
+  }
+  return updatedCue;
+};
 
-const createCueFromParams = (
+export const createCueFromParams = (
   colors: string[],
   patternParams: ICuePatternParams
-): CueWorkoutCue => {
+): { cuePattern: ICuePattern; cueWorkoutCue: ICueWorkoutCue } => {
   const patterns = PATTERNS;
   const currentPatterns = buildCurrentPatterns(patterns, patternParams);
 
   if (colors.length < 2 || !currentPatterns.length)
-    return INITIAL_CUE_WORKOUT_CUE;
+    return {
+      cuePattern: cuePatternInitialState,
+      cueWorkoutCue: cueWorkoutCueInitialState,
+    };
 
   // 確率の調整
   let pumpedCurrentPatterns: ICuePattern[] = [];
@@ -69,16 +98,17 @@ const createCueFromParams = (
     }
   }
 
-  const cue = buildCueWorkoutCue(colors, pumpedCurrentPatterns);
-  return cue;
+  const { cuePattern, cueWorkoutCue } = buildCueWorkoutCueAndPattern(
+    colors,
+    pumpedCurrentPatterns
+  );
+  return { cuePattern, cueWorkoutCue };
 };
 
-export default createCueFromParams;
-
-const buildCueWorkoutCue = (
+const buildCueWorkoutCueAndPattern = (
   colors: string[],
   currentPatterns: ICuePattern[]
-): CueWorkoutCue => {
+): { cuePattern: ICuePattern; cueWorkoutCue: ICueWorkoutCue } => {
   // パターン抽選
   const currentPattern: ICuePattern = shuffle(currentPatterns)[0];
 
@@ -103,7 +133,10 @@ const buildCueWorkoutCue = (
     .map((item) => item.label)
     .join('');
 
-  return { text, verb, nouns, header, pattern: currentPattern };
+  const cuePattern: ICuePattern = currentPattern;
+  const cueWorkoutCue: ICueWorkoutCue = { text, verb, nouns, header };
+
+  return { cuePattern, cueWorkoutCue };
 };
 
 const buildNouns = (colors: string[], pattern: ICuePattern) => {

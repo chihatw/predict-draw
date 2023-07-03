@@ -1,21 +1,28 @@
 import React from 'react';
-import { CueWorkoutState } from '../../../../Model';
 
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
 import { TARGET } from 'application/cuePattern/core/1-constants';
+import { ICueWorkoutCue } from 'application/cueWorkoutCue/core/0-interface';
 import CueCard from './CueCard';
 
 const CuePane = React.memo(
-  ({ cueWorkout }: { cueWorkout: CueWorkoutState }) => {
+  ({
+    cuePattern,
+    cueWorkoutCue,
+  }: {
+    cuePattern: ICuePattern;
+    cueWorkoutCue: ICueWorkoutCue;
+  }) => {
     return (
       <div style={{ height: 200 }}>
         <div style={{ display: 'grid', rowGap: 16, flexGrow: 1 }}>
-          {cueWorkout.cue.pattern.topic !== TARGET.none && (
+          {cuePattern.topic !== TARGET.none && (
             <CueCard
-              label={cueWorkout.cue.header.label}
-              pitchStr={cueWorkout.cue.header.pitchStr}
+              label={cueWorkoutCue.header.label}
+              pitchStr={cueWorkoutCue.header.pitchStr}
             />
           )}
-          {cueWorkout.cue.nouns.map((cueCard, index) => (
+          {cueWorkoutCue.nouns.map((cueCard, index) => (
             <CueCard
               key={index}
               label={cueCard.label}
@@ -23,8 +30,8 @@ const CuePane = React.memo(
             />
           ))}
           <CueCard
-            label={cueWorkout.cue.verb.label}
-            pitchStr={cueWorkout.cue.verb.pitchStr}
+            label={cueWorkoutCue.verb.label}
+            pitchStr={cueWorkoutCue.verb.pitchStr}
           />
         </div>
       </div>

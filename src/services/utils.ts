@@ -1,39 +1,6 @@
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../infrastructure/firebase';
 
-/**
- *
- * @example
- * getRandomInt(1) // 0;
- * getRandomInt(2) // 0,1;
- *
- */
-export const getRandomInt = (max: number) => {
-  return Math.floor(Math.random() * max);
-};
-
-export const shuffle = ([...array]: any[]) => {
-  for (let i = array.length - 1; i >= 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
-
-export const createAudioContext = () => {
-  const audioContext = new window.AudioContext();
-  const osc = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
-
-  osc.connect(gainNode);
-  gainNode.connect(audioContext.destination);
-
-  gainNode.gain.value = 0;
-  osc.start(audioContext.currentTime);
-  osc.stop(audioContext.currentTime + 0.01);
-  return audioContext;
-};
-
 export const blobToAudioBuffer = async (blob: Blob) => {
   const audioContext = new AudioContext();
   const arrayBuffer = await blob.arrayBuffer();
@@ -72,9 +39,6 @@ export const getBlobFromAssets = async (path: string) => {
 
   return { blob };
 };
-
-export const toggleElement = (arr: string[], val: string) =>
-  arr.includes(val) ? arr.filter((el) => el !== val) : [...arr, val];
 
 export const getAudioBufferFromStorage = async (
   storagePath: string

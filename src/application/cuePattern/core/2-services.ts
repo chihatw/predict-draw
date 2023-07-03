@@ -1,24 +1,11 @@
-import { useEffect, useState } from 'react';
-
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { PATTERNS, TARGET } from 'application/cuePattern/core/1-constants';
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-
-const useCurrentPatterns = (listState: ICuePatternParams) => {
-  const [currentPatterns, setCurrentPatterns] = useState<ICuePattern[]>([]);
-  const patterns = PATTERNS;
-  useEffect(() => {
-    const currentPatterns = buildCurrentPatterns(patterns, listState);
-    setCurrentPatterns(currentPatterns);
-  }, [listState]);
-  return currentPatterns;
-};
-export default useCurrentPatterns;
+import { ICuePattern } from './0-interface';
+import { TARGET } from './1-constants';
 
 export const buildCurrentPatterns = (
   patterns: ICuePattern[],
   listState: ICuePatternParams
-) => {
+): ICuePattern[] => {
   return (
     patterns
       // 主題

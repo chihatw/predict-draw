@@ -5,6 +5,15 @@ import {
   setTime,
   start,
   stop,
+  updatePatternParams,
 } from 'application/cueWorkoutParams/infrastructure/api';
 
-export default { reset, start, next, stop, setColors, setTime };
+export default {
+  reset,
+  start,
+  next,
+  stop,
+  setColors,
+  setTime,
+  updatePatternParams,
+};

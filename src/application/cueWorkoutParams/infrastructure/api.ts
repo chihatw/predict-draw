@@ -25,9 +25,11 @@ export const listenCueWorkoutParams = (
     console.log(`%cfetched ${COLLECTION}`, 'color:red');
     const { cueWorkoutParams, cuePatternParams } =
       buildCueWorkoutParams(docSnapshot);
+    console.log({ localCueWorkoutParams, cueWorkoutParams });
     if (!_.isEqual(localCueWorkoutParams, cueWorkoutParams)) {
       cueWorkoutParamsCallback(cueWorkoutParams);
     }
+    console.log({ localCuePatternParams, cuePatternParams });
     if (!_.isEqual(localCuePatternParams, cuePatternParams)) {
       cuePatternParamsCallback(cuePatternParams);
     }
@@ -74,6 +76,13 @@ export const setTime = (time: number) => {
   console.log(`%cupdate ${COLLECTION}`, 'color:red');
   updateDoc(doc(db, COLLECTION, DOC_ID), {
     time,
+  });
+};
+
+export const updatePatternParams = (patternParams: ICuePatternParams) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    patternParams,
   });
 };
 

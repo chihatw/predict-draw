@@ -1,4 +1,5 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { Services } from 'infrastructure/services';
 const cueWorkoutParamsMiddleware =
   (services: Services): Middleware =>
@@ -32,6 +33,10 @@ const cueWorkoutParamsMiddleware =
         const time = action.payload as number;
         services.api.cueWorkoutParams.setTime(time);
         return;
+      }
+      case 'cuePatternParams/updateProps': {
+        const patternParams = action.payload as ICuePatternParams;
+        services.api.cueWorkoutParams.updatePatternParams(patternParams);
       }
       default:
     }

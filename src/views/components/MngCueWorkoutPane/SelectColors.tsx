@@ -3,10 +3,9 @@ import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
 import { COLORS } from 'application/cueWorkoutParams/core/1-constants';
-import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
-import { setCueWorkoutCue } from '../../../services/cueWorkout/cueWorkout';
-import { toggleElement } from '../../../services/utils';
+import { toggleElement } from 'application/cueWorkoutParams/core/2-services';
 
 const SelectColors = () => {
   const dispatch = useDispatch();
@@ -18,8 +17,12 @@ const SelectColors = () => {
   const handleClickColor = async (color: string) => {
     const updatedColors = toggleElement([...colors], color);
     dispatch(cueWorkoutParamsActions.setColors(updatedColors));
-    const cue = createCueFromParams(updatedColors, cuePatternParams);
-    await setCueWorkoutCue(cue);
+    dispatch(
+      cueWorkoutCueActions.updateCueStart({
+        colors: updatedColors,
+        cuePatternParams,
+      })
+    );
   };
 
   return (

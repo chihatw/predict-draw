@@ -1,3 +1,4 @@
+import cueWorkoutCue from './cueWorkoutCue';
 import cueWorkoutParams from './cueWorkoutParams';
 import pageStates from './pageStats';
 import speedWorkoutParams from './speedWorkoutParams';
@@ -8,4 +9,5 @@ export default {
   speedWorkoutParams,
   speedWorkouts,
   cueWorkoutParams,
+  cueWorkoutCue,
 };
