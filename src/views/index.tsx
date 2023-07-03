@@ -3,15 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { INITIAL_STATE, State } from '../Model';
 
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { cuePatternActions } from 'application/cuePattern/framework/0-reducer';
 import { cuePatternParamsActions } from 'application/cuePatternParams/framework/0-reducer';
-import { ICueWorkoutParams } from 'application/cueWorkoutParams/core/0-interface';
+import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
+import { listenCueWorkoutCue } from 'application/cueWorkoutCue/infrastructure/api';
 import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { listenCueWorkoutParams } from 'application/cueWorkoutParams/infrastructure/api';
-import { IPageState } from 'application/pageStates/core/0-interface';
 import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
 import { listenPageStates } from 'application/pageStates/infrastructure/api';
-import { ISpeedWorkoutParams } from 'application/speedWorkoutParams/core/0-interface';
 import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import { listenSpeedWorkoutParams } from 'application/speedWorkoutParams/infrastracture/api';
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
@@ -39,16 +38,13 @@ function App() {
   const pageStates = useSelector(
     (state: RootState) => state.pageStates.entities
   );
-  const speedWorkoutParams = useSelector(
-    (state: RootState) => state.speedWorkoutParams
-  );
-  const cueWorkoutParams = useSelector(
-    (state: RootState) => state.cueWorkoutParams
-  );
-
-  const cuePatternParams = useSelector(
-    (state: RootState) => state.cuePatternParams
-  );
+  const {
+    speedWorkoutParams,
+    cueWorkoutParams,
+    cuePatternParams,
+    cuePattern,
+    cueWorkoutCue,
+  } = useSelector((state: RootState) => state);
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
@@ -56,8 +52,8 @@ function App() {
   useCueWorkout(dispatch);
 
   useEffect(() => {
-    const unsub = listenPageStates(pageStates, (pageStates: IPageState[]) =>
-      _dispatch(pageStatesActions.upsertPageStates(pageStates))
+    const unsub = listenPageStates(pageStates, (value) =>
+      _dispatch(pageStatesActions.upsertPageStates(value))
     );
     return () => {
       unsub();
@@ -65,10 +61,8 @@ function App() {
   }, [pageStates]);
 
   useEffect(() => {
-    const unsub = listenSpeedWorkoutParams(
-      speedWorkoutParams,
-      (speedWorkoutParams: ISpeedWorkoutParams) =>
-        _dispatch(speedWorkoutParamsActions.setParams(speedWorkoutParams))
+    const unsub = listenSpeedWorkoutParams(speedWorkoutParams, (value) =>
+      _dispatch(speedWorkoutParamsActions.setParams(value))
     );
     return () => {
       unsub();
@@ -79,10 +73,20 @@ function App() {
     const unsub = listenCueWorkoutParams(
       cueWorkoutParams,
       cuePatternParams,
-      (cueWorkoutParams: ICueWorkoutParams) =>
-        _dispatch(cueWorkoutParamsActions.setProps(cueWorkoutParams)),
-      (cuePatternParams: ICuePatternParams) =>
-        _dispatch(cuePatternParamsActions.setProps(cuePatternParams))
+      (value) => _dispatch(cueWorkoutParamsActions.setProps(value)),
+      (value) => _dispatch(cuePatternParamsActions.setProps(value))
+    );
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsub = listenCueWorkoutCue(
+      cueWorkoutCue,
+      cuePattern,
+      (value) => _dispatch(cueWorkoutCueActions.setProps(value)),
+      (value) => _dispatch(cuePatternActions.setProps(value))
     );
     return () => {
       unsub();

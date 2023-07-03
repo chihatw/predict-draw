@@ -18,3 +18,5 @@ export const initialState: ICueWorkoutParams = {
   colors: [],
   isRunning: false,
 };
+
+export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];

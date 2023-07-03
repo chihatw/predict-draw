@@ -8,7 +8,8 @@ import {
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
 import { buildCurrentPatterns } from '../services/useCurrentPatterns';
-import { PATTERNS } from '../services/usePatterns';
+
+import { PATTERNS } from 'application/cuePattern/core/1-constants';
 import PatternListSwitchesPane from './PatternListSwitchesPane';
 import PatternRow from './PatternRow';
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import { CueWorkoutState, TARGET } from '../../../../Model';
+import { CueWorkoutState } from '../../../../Model';
 
+import { TARGET } from 'application/cuePattern/core/1-constants';
 import CueCard from './CueCard';
 
 const CuePane = React.memo(

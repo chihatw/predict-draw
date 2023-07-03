@@ -1,13 +1,4 @@
-export interface ICuePattern {
-  doushi: string;
-  grouping: string;
-  isNegative: boolean;
-  isWoFirst: boolean;
-  ni: string;
-  sentence: string;
-  wo: string;
-  topic: string;
-}
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
 
 export interface ICueWorkoutParams {
   colors: string[];

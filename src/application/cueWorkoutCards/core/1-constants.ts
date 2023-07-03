@@ -1,6 +1,6 @@
-import { CueWorkoutCard } from '../../../Model';
+import { ICueWorkoutCard } from './0-interface';
 
-export const CUE_CARDS: { [key: string]: CueWorkoutCard } = {
+export const CUE_CARDS: { [key: string]: ICueWorkoutCard } = {
   red: {
     id: 'red',
     label: '赤',

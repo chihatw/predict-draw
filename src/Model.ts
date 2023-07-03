@@ -1,42 +1,12 @@
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { initialState } from 'application/cuePattern/core/1-constants';
+import { ICueWorkoutCard } from 'application/cueWorkoutCards/core/0-interface';
+import { ICueCard } from 'application/cueWorkoutCue/core/0-interface';
+
 export const SENTENCE_TYPES = { positive: 'positive', negative: 'negative' };
 export const KAKU_ORDERS = { woFirst: 'woFirst', niFirst: 'niFirst' };
-export const TARGET = {
-  none: 'none',
-  wo: 'wo',
-  ni: 'ni',
-};
-
-export type Pattern = {
-  wo: string;
-  ni: string;
-  doushi: string;
-  topic: string;
-  sentence: string;
-  grouping: string;
-  isWoFirst: boolean;
-  isNegative: boolean;
-};
-
-export const INITIAL_PATTERN: Pattern = {
-  wo: 'を',
-  ni: 'に',
-  topic: TARGET.none,
-  doushi: '入れる',
-  sentence: '青を赤に入れる',
-  grouping: TARGET.none,
-  isWoFirst: true,
-  isNegative: false,
-};
 
 export type Schedule = { offset: number; start: number; stop: number };
-
-export const COLORS = ['red', 'blue', 'yellow', 'green', 'pink', 'orange'];
-
-export type SpeedWorkoutItem = {
-  text: string;
-  chinese: string;
-  pitchesArray: string;
-};
 
 export type NoteState = {
   texts: string[];
@@ -48,77 +18,35 @@ export const INITIAL_NOTE_STATE: NoteState = {
   pitches: [],
 };
 
-export type Cue = {
-  id: string;
-  label: string;
-  pitchStr: string;
-  imagePath: string;
-};
-
-export const INITIAL_CUE: Cue = {
-  id: '',
-  label: '',
-  pitchStr: '',
-  imagePath: '',
-};
-
-export type CueWorkoutCard = {
-  id: string;
-  label: string;
-  pitchStr: string;
-  hasTailAccent: boolean;
-};
-
-export const INITIAL_CUE_WORKOUT_CARD: CueWorkoutCard = {
+export const INITIAL_CUE_WORKOUT_CARD: ICueWorkoutCard = {
   id: '',
   label: '',
   pitchStr: '',
   hasTailAccent: false,
 };
 
-export type CueCardProps = {
-  label: string;
-  pitchStr: string;
-};
-
-export const INITIAL_CUE_CARD_PROPS: CueCardProps = {
-  label: '',
-  pitchStr: '',
-};
-
 export type CueWorkoutCue = {
   text: string;
-  verb: CueCardProps;
-  nouns: CueCardProps[];
-  header: CueCardProps;
-  pattern: Pattern;
+  verb: ICueCard;
+  nouns: ICueCard[];
+  header: ICueCard;
+  pattern: ICuePattern;
 };
 
 export const INITIAL_CUE_WORKOUT_CUE: CueWorkoutCue = {
   nouns: [],
-  verb: INITIAL_CUE_CARD_PROPS,
+  verb: { label: '', pitchStr: '' },
   text: '',
-  header: INITIAL_CUE_CARD_PROPS,
-  pattern: INITIAL_PATTERN,
+  header: { label: '', pitchStr: '' },
+  pattern: initialState,
 };
-
-// export type CueWorkoutParams = {
-//   time: number;
-//   points: number;
-//   colors: string[];
-//   isRunning: boolean;
-//   patternParams: ICuePatternParams;
-//   lastPattern: Pattern;
-// };
 
 export type CueWorkoutState = {
   cue: CueWorkoutCue;
-  cards: { [id: string]: CueWorkoutCard };
 };
 
 export const INITIAL_CUE_WORKOUT_STATE: CueWorkoutState = {
   cue: INITIAL_CUE_WORKOUT_CUE,
-  cards: {},
 };
 
 export type VoiceProps = {

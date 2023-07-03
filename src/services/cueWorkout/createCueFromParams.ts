@@ -1,15 +1,11 @@
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import {
-  CueCardProps,
-  CueWorkoutCue,
-  INITIAL_CUE_CARD_PROPS,
-  INITIAL_CUE_WORKOUT_CUE,
-  Pattern,
-  TARGET,
-} from '../../Model';
+import { CueWorkoutCue, INITIAL_CUE_WORKOUT_CUE } from '../../Model';
 import { buildCurrentPatterns } from '../../views/components/MngCueWorkoutPane/services/useCurrentPatterns';
-import { PATTERNS } from '../../views/components/MngCueWorkoutPane/services/usePatterns';
-import { CUE_CARDS } from '../../views/components/UserCueWorkoutPane/CUE_CARDS';
+
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { PATTERNS, TARGET } from 'application/cuePattern/core/1-constants';
+import { CUE_CARDS } from 'application/cueWorkoutCards/core/1-constants';
+import { ICueCard } from 'application/cueWorkoutCue/core/0-interface';
 import { shuffle } from '../utils';
 
 // showNextCue で
@@ -26,7 +22,7 @@ const createCueFromParams = (
     return INITIAL_CUE_WORKOUT_CUE;
 
   // 確率の調整
-  let pumpedCurrentPatterns: Pattern[] = [];
+  let pumpedCurrentPatterns: ICuePattern[] = [];
   let extra = 0;
   const topicOrder = [TARGET.ni, TARGET.wo, TARGET.none];
   const groupingOrder = [TARGET.none, TARGET.ni, TARGET.wo];
@@ -81,10 +77,10 @@ export default createCueFromParams;
 
 const buildCueWorkoutCue = (
   colors: string[],
-  currentPatterns: Pattern[]
+  currentPatterns: ICuePattern[]
 ): CueWorkoutCue => {
   // パターン抽選
-  const currentPattern: Pattern = shuffle(currentPatterns)[0];
+  const currentPattern: ICuePattern = shuffle(currentPatterns)[0];
 
   // 色抽選
   const shuffledColors = shuffle(colors);
@@ -110,8 +106,8 @@ const buildCueWorkoutCue = (
   return { text, verb, nouns, header, pattern: currentPattern };
 };
 
-const buildNouns = (colors: string[], pattern: Pattern) => {
-  const nouns: CueCardProps[] = [];
+const buildNouns = (colors: string[], pattern: ICuePattern) => {
+  const nouns: ICueCard[] = [];
 
   // 基本順は　ヲ格が先
   const [woNounId, niNounId] = colors.slice(0, 2);
@@ -137,7 +133,7 @@ const buildNouns = (colors: string[], pattern: Pattern) => {
             'すき＼です',
           ].join(' '),
         }
-      : INITIAL_CUE_CARD_PROPS;
+      : { label: '', pitchStr: '' };
 
   return { nouns, header };
 };

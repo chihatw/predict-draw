@@ -1,4 +1,3 @@
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import {
   DocumentData,
   doc,
@@ -8,54 +7,13 @@ import {
 } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
+
+import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { ICueWorkoutParams } from '../core/0-interface';
 import { INITIAL_LAST_PATTERNS } from '../core/1-constants';
 
 const COLLECTION = 'cueWorkout';
-const PARAMS_DOC_ID = 'params';
-
-export const reset = async () => {
-  console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
-    isRunning: false,
-    points: 0,
-  });
-};
-
-export const start = () => {
-  console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
-    isRunning: true,
-  });
-};
-
-export const next = () => {
-  console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
-    points: increment(1),
-  });
-};
-
-export const stop = () => {
-  console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
-    isRunning: false,
-  });
-};
-
-export const setColors = (colors: string[]) => {
-  console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
-    colors,
-  });
-};
-
-export const setTime = (time: number) => {
-  console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, PARAMS_DOC_ID), {
-    time,
-  });
-};
+const DOC_ID = 'params';
 
 export const listenCueWorkoutParams = (
   localCueWorkoutParams: ICueWorkoutParams,
@@ -63,7 +21,7 @@ export const listenCueWorkoutParams = (
   cueWorkoutParamsCallback: (cueWorkoutParams: ICueWorkoutParams) => void,
   cuePatternParamsCallback: (cuePatternParams: ICuePatternParams) => void
 ) => {
-  return onSnapshot(doc(db, COLLECTION, PARAMS_DOC_ID), (docSnapshot) => {
+  return onSnapshot(doc(db, COLLECTION, DOC_ID), (docSnapshot) => {
     console.log(`%cfetched ${COLLECTION}`, 'color:red');
     const { cueWorkoutParams, cuePatternParams } =
       buildCueWorkoutParams(docSnapshot);
@@ -73,6 +31,49 @@ export const listenCueWorkoutParams = (
     if (!_.isEqual(localCuePatternParams, cuePatternParams)) {
       cuePatternParamsCallback(cuePatternParams);
     }
+  });
+};
+
+export const reset = async () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    isRunning: false,
+    points: 0,
+  });
+};
+
+export const start = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    isRunning: true,
+  });
+};
+
+export const next = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    points: increment(1),
+  });
+};
+
+export const stop = () => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    isRunning: false,
+  });
+};
+
+export const setColors = (colors: string[]) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    colors,
+  });
+};
+
+export const setTime = (time: number) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), {
+    time,
   });
 };
 

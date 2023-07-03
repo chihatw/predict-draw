@@ -1,8 +1,15 @@
 import { Clear } from '@mui/icons-material';
 import { TableCell, TableRow } from '@mui/material';
-import { Pattern, TARGET } from '../../../../Model';
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { TARGET } from 'application/cuePattern/core/1-constants';
 
-function PatternRow({ index, pattern }: { index: number; pattern: Pattern }) {
+function PatternRow({
+  index,
+  pattern,
+}: {
+  index: number;
+  pattern: ICuePattern;
+}) {
   const topicCell =
     pattern.topic === TARGET.none ? (
       <Clear sx={{ fontSize: 12 }} />

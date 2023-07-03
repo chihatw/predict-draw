@@ -1,10 +1,10 @@
 import { Container } from '@mui/material';
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
 import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppContext } from '../..';
-import { Pattern } from '../../../Model';
 import createCueFromParams from '../../../services/cueWorkout/createCueFromParams';
 import { setCueWorkoutCue } from '../../../services/cueWorkout/cueWorkout';
 import TimeDisplay from '../TimeDisplay';
@@ -88,10 +88,16 @@ const UserCueWorkoutPane = () => {
 
 export default UserCueWorkoutPane;
 
-const isContinue = (currentPattern: Pattern, updatedPattern: Pattern) => {
+const isContinue = (
+  currentPattern: ICuePattern,
+  updatedPattern: ICuePattern
+) => {
   return isSamePattern(currentPattern, updatedPattern);
 };
 
-const isSamePattern = (currentPattern: Pattern, updatedPattern: Pattern) => {
+const isSamePattern = (
+  currentPattern: ICuePattern,
+  updatedPattern: ICuePattern
+) => {
   return JSON.stringify(updatedPattern) === JSON.stringify(currentPattern);
 };

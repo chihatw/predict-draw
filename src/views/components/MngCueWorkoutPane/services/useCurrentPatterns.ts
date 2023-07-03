@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Pattern, TARGET } from '../../../../Model';
 
+import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { PATTERNS, TARGET } from 'application/cuePattern/core/1-constants';
 import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import { PATTERNS } from './usePatterns';
 
 const useCurrentPatterns = (listState: ICuePatternParams) => {
-  const [currentPatterns, setCurrentPatterns] = useState<Pattern[]>([]);
+  const [currentPatterns, setCurrentPatterns] = useState<ICuePattern[]>([]);
   const patterns = PATTERNS;
   useEffect(() => {
     const currentPatterns = buildCurrentPatterns(patterns, listState);
@@ -16,7 +16,7 @@ const useCurrentPatterns = (listState: ICuePatternParams) => {
 export default useCurrentPatterns;
 
 export const buildCurrentPatterns = (
-  patterns: Pattern[],
+  patterns: ICuePattern[],
   listState: ICuePatternParams
 ) => {
   return (
