@@ -5,8 +5,8 @@ import Layout from '../../Layout';
 import MngCueWorkoutPane from '../../components/MngCueWorkoutPane';
 import MngNotePane from '../../components/MngNotePane';
 import MngPageStatePane from '../../components/MngPageStatePane';
+import MngRecordVoicePane from '../../components/MngRecordVoicePane';
 import MngSpeedWorkoutPane from '../../components/MngSpeedWorkoutPane';
-import RecordVoicePane from './RecordVoicePane';
 
 const MngPage = () => {
   const { ids: users, entities: pageStates } = useSelector(
@@ -30,7 +30,7 @@ const MngPage = () => {
           <div style={{ display: 'grid', rowGap: 0, paddingBottom: 80 }}>
             <MngSpeedWorkoutPane />
             <MngCueWorkoutPane />
-            <RecordVoicePane />
+            <MngRecordVoicePane />
             <MngNotePane />
           </div>
         </div>

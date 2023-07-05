@@ -1,10 +1,10 @@
 import * as R from 'ramda';
 
 import { TextField } from '@mui/material';
+import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../..';
-import { RecordVoiceParams } from '../../../../../Model';
-import { setRecordVoiceParams } from '../../../../../services/recordVoice';
+import { AppContext } from '../../..';
+import { setRecordVoiceParams } from '../../../../services/recordVoice';
 
 const TargetPitchPane = () => {
   const { state } = useContext(AppContext);
@@ -13,7 +13,7 @@ const TargetPitchPane = () => {
    * targetPitchStr の初期値設定
    */
   useEffect(() => {
-    const remoteValue = state.recordVoice.params.targetPitchStr;
+    const remoteValue = state.recordVoice.params.recordedPitchStr;
     // リモートが空の場合
     if (!remoteValue) {
       setInput('');
@@ -23,11 +23,11 @@ const TargetPitchPane = () => {
     if (!!input) return;
 
     setInput(remoteValue);
-  }, [state.recordVoice.params.targetPitchStr]);
+  }, [state.recordVoice.params.recordedPitchStr]);
 
   const handleChangeInput = (input: string) => {
     setInput(input);
-    const updatedRecordVoiceParams = R.assocPath<string, RecordVoiceParams>(
+    const updatedRecordVoiceParams = R.assocPath<string, IRecordVoiceParams>(
       ['targetPitchStr'],
       input
     )(state.recordVoice.params);
@@ -37,7 +37,7 @@ const TargetPitchPane = () => {
     <TextField
       size='small'
       value={input}
-      label='targetPitchStr'
+      label='recordedPitchStr'
       onChange={(e) => handleChangeInput(e.target.value)}
       autoComplete='off'
     />

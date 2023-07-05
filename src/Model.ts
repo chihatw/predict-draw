@@ -1,3 +1,5 @@
+import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
+
 export type Schedule = { offset: number; start: number; stop: number };
 
 export type VoiceProps = {
@@ -5,7 +7,6 @@ export type VoiceProps = {
   startAt: number;
   stopAt: number;
   pitchStr: string;
-  storagePath: string;
 };
 
 export const INITIAL_VOICE_PROPS: VoiceProps = {
@@ -13,39 +14,25 @@ export const INITIAL_VOICE_PROPS: VoiceProps = {
   startAt: 0,
   stopAt: 0,
   pitchStr: '',
-  storagePath: '',
-};
-
-export type RecordVoiceParams = {
-  activeIds: string[];
-  targetAssetId: string;
-  targetPitchStr: string;
 };
 
 export type RecordVoice = {
-  raw: VoiceProps;
+  hasRaw: boolean;
+  rawPitchStr: string;
   assets: {
     [id: string]: VoiceProps;
   };
-  params: RecordVoiceParams;
-  logs: {
-    selected: string;
-  };
+  params: IRecordVoiceParams;
 };
 
 export const INITIAL_RECORD_VOICE: RecordVoice = {
-  raw: {
-    ...INITIAL_VOICE_PROPS,
-    id: 'raw',
-  },
+  rawPitchStr: '',
+  hasRaw: false,
   assets: {},
   params: {
-    activeIds: [],
-    targetAssetId: '',
-    targetPitchStr: '',
-  },
-  logs: {
-    selected: '',
+    recordedPitchStr: '',
+    pitchStr: '',
+    hasVoice: false,
   },
 };
 

@@ -7,6 +7,7 @@ import { State } from '../../../Model';
 import { ActionTypes } from '../../../Update';
 import { getAudioBufferFromStorage } from '../../../services/utils';
 
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
 import PlayAudioPane from './PlayAudioPane';
 import RecordVoiceButton from './RecordVoiceButton';
 import TargetPitchPane from './TargetPitchPane';
@@ -17,8 +18,7 @@ const MicTestPane = () => {
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
-    const storagePath = state.recordVoice.raw.storagePath;
-    if (!storagePath) return;
+    const storagePath = RECORD_VOICE_STORAGE_PATH + 'raw';
 
     // ローカルの存在を確認
     const audioBuffer: AudioBuffer | null = state.audioBuffers[storagePath];
@@ -45,7 +45,7 @@ const MicTestPane = () => {
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
     fetchData();
-  }, [state.audioBuffers, state.recordVoice.raw.storagePath]);
+  }, [state.audioBuffers]);
 
   return (
     <Container maxWidth='sm'>

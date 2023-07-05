@@ -1,12 +1,13 @@
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
 import * as R from 'ramda';
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../..';
-import { State } from '../../../../../Model';
-import { ActionTypes } from '../../../../../Update';
+import { AppContext } from '../../..';
+import { State } from '../../../../Model';
+import { ActionTypes } from '../../../../Update';
 import {
   blobToAudioBuffer,
   getBlobFromStorage,
-} from '../../../../../services/utils';
+} from '../../../../services/utils';
 import DeleteRawButton from './DeleteRawButton';
 import PlayRawPane from './PlayRawPane';
 import RawPitchStrPane from './RawPitchStrPane';
@@ -22,13 +23,7 @@ const RecordVoiceRawPane = () => {
    * blob の初期設定
    */
   useEffect(() => {
-    const path = state.recordVoice.raw.storagePath;
-
-    // path が空の場合は終了
-    if (!path) {
-      setBlob(null);
-      return;
-    }
+    const path = RECORD_VOICE_STORAGE_PATH + 'raw';
 
     // localAudioBuffer の存在は無視
     // 毎回 storage から blob を作成
@@ -60,13 +55,13 @@ const RecordVoiceRawPane = () => {
       dispatch({ type: ActionTypes.setState, payload: updatedState });
     };
     fetchData();
-  }, [state.recordVoice.raw.storagePath]);
+  }, []);
 
   /**
    * rawPitchStr の初期値設定
    */
   useEffect(() => {
-    const localValue = state.recordVoice.raw.pitchStr;
+    const localValue = state.recordVoice.rawPitchStr;
     // リモートが空の場合
     if (!localValue) {
       setRawPitchStr('');
@@ -76,7 +71,7 @@ const RecordVoiceRawPane = () => {
     if (!!rawPitchStr) return;
 
     setRawPitchStr(localValue);
-  }, [state.recordVoice.raw.pitchStr]);
+  }, [state.recordVoice.rawPitchStr]);
 
   return (
     <div style={{ display: 'grid', rowGap: 8 }}>

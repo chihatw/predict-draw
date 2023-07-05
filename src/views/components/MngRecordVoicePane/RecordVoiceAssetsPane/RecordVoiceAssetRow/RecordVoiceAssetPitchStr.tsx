@@ -1,8 +1,8 @@
 import { Edit } from '@mui/icons-material';
 import { IconButton, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { VoiceProps } from '../../../../../../Model';
-import { setRecordVoiceAsset } from '../../../../../../services/recordVoice';
+import { VoiceProps } from '../../../../../Model';
+import { setRecordVoiceAsset } from '../../../../../services/recordVoice';
 
 const RecordVoiceAssetPitchStr = ({ asset }: { asset: VoiceProps }) => {
   const [input, setInput] = useState('');

@@ -1,12 +1,12 @@
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import RecordVoiceRawPane from './RecordVoiceRawPane';
 import RecordVoiceAssetsPane from './RecordVoiceAssetsPane';
+import RecordVoiceRawPane from './RecordVoiceRawPane';
 
 const LOCAL_STORAGE = 'recordVoice';
 
-const RecordVoicePane = () => {
+const MngRecordVoicePane = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -49,4 +49,4 @@ const RecordVoicePane = () => {
   );
 };
 
-export default RecordVoicePane;
+export default MngRecordVoicePane;

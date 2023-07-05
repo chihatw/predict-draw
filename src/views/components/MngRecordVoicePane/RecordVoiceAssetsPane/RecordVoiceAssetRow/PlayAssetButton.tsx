@@ -1,32 +1,27 @@
 import { PlayArrow } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../..';
-
+import { VoiceProps } from '../../../../../Model';
 import { createSourceNode } from '../../../../../services/utils';
 
-const PlayRawPane = () => {
+const PlayAssetButton = ({ asset }: { asset: VoiceProps }) => {
   const { state } = useContext(AppContext);
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
 
   useEffect(() => {
-    const path = state.recordVoice.raw.storagePath;
-    if (!path) {
-      setAudioBuffer(null);
-      return;
-    }
+    const path = RECORD_VOICE_STORAGE_PATH + asset.id;
     const audioBuffer = state.audioBuffers[path];
-    if (!audioBuffer) {
-      setAudioBuffer(null);
-    }
     setAudioBuffer(audioBuffer);
-  }, [state.recordVoice.raw.storagePath, state.audioBuffers]);
+  }, [state.audioBuffers, asset.id]);
 
   const play = () => {
     if (!audioBuffer) return;
+    console.log(`%c${asset.id}`, 'color:green');
     const audioContext = new AudioContext();
     const sourceNode = createSourceNode(audioBuffer, audioContext);
-    sourceNode.start();
+    sourceNode.start(0, asset.startAt, asset.stopAt - asset.startAt);
   };
   if (!audioBuffer) return <></>;
   return (
@@ -36,4 +31,4 @@ const PlayRawPane = () => {
   );
 };
 
-export default PlayRawPane;
+export default PlayAssetButton;

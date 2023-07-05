@@ -6,7 +6,7 @@ const TargetPitchPane = () => {
   const { state } = useContext(AppContext);
   return (
     <div style={{ display: 'flex', justifyContent: 'center', height: 40 }}>
-      <SentencePitchLine pitchStr={state.recordVoice.params.targetPitchStr} />
+      <SentencePitchLine pitchStr={state.recordVoice.params.recordedPitchStr} />
     </div>
   );
 };

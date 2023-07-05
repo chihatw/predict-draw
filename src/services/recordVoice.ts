@@ -1,3 +1,4 @@
+import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
 import {
   collection,
   deleteDoc,
@@ -5,10 +6,11 @@ import {
   DocumentData,
   onSnapshot,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import React, { useEffect } from 'react';
 import { db } from '../infrastructure/firebase';
-import { RecordVoiceParams, VoiceProps } from '../Model';
+import { VoiceProps } from '../Model';
 import { Action, ActionTypes } from '../Update';
 
 const COLLECTIONS = {
@@ -77,9 +79,9 @@ export const useRecordVoice = async (dispatch: React.Dispatch<Action>) => {
   }, []);
 };
 
-export const setRecordVoiceRaw = (recordVoice: VoiceProps) => {
+export const updateRowPitchStr = (pitchStr: string) => {
   console.log('set recordVoiceRaw');
-  setDoc(doc(db, COLLECTIONS.recordVoice, 'raw'), recordVoice);
+  updateDoc(doc(db, COLLECTIONS.recordVoice, 'raw'), { pitchStr });
 };
 
 export const setRecordVoiceAsset = (recordVoice: VoiceProps) => {
@@ -92,7 +94,7 @@ export const deleteRecordVoiceAsset = (id: string) => {
   deleteDoc(doc(db, COLLECTIONS.recordVoiceAssets, id));
 };
 
-export const setRecordVoiceParams = (params: RecordVoiceParams) => {
+export const setRecordVoiceParams = (params: IRecordVoiceParams) => {
   console.log('set recordVoiceParams');
   setDoc(doc(db, COLLECTIONS.recordVoice, 'params'), params);
 };
@@ -103,22 +105,23 @@ export const setRecordVoiceLogs = (logs: { selected: string }) => {
 };
 
 const buildRecordVoice = (doc: DocumentData): VoiceProps => {
-  const { storagePath, startAt, stopAt, pitchStr } = doc.data();
+  const { startAt, stopAt, pitchStr } = doc.data();
   return {
     id: doc.id,
     stopAt: stopAt || 0,
     startAt: startAt || 0,
     pitchStr: pitchStr || '',
-    storagePath: storagePath || '',
   };
 };
 
-const buildRecordVoiceParams = (doc: DocumentData): RecordVoiceParams => {
-  const { activeIds, targetPitchStr, targetAssetId } = doc.data();
+const buildRecordVoiceParams = (doc: DocumentData): IRecordVoiceParams => {
+  const { recordedPitchStr, pitchStr, hasVoice } = doc.data();
   return {
-    activeIds: activeIds || [],
-    targetAssetId: targetAssetId || '',
-    targetPitchStr: targetPitchStr || '',
+    // activeIds: activeIds || [],
+    // targetAssetId: targetAssetId || '',
+    recordedPitchStr: recordedPitchStr || '',
+    pitchStr: pitchStr || '',
+    hasVoice: hasVoice || false,
   };
 };
 const buildRecordVoiceLogs = (doc: DocumentData): { selected: string } => {

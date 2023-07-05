@@ -1,23 +1,23 @@
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { VoiceProps } from '../../../../../../Model';
-import { setRecordVoiceAsset } from '../../../../../../services/recordVoice';
+import { VoiceProps } from '../../../../../Model';
+import { setRecordVoiceAsset } from '../../../../../services/recordVoice';
 
-const RecordVoiceAssetStopAt = ({ asset }: { asset: VoiceProps }) => {
+const RecordVoiceAssetStartAt = ({ asset }: { asset: VoiceProps }) => {
   const [input, setInput] = useState(0);
 
   useEffect(() => {
-    const stopAt = asset.stopAt;
-    if (!stopAt) {
+    const startAt = asset.startAt;
+    if (!startAt) {
       return;
     }
     if (!!input) return;
-    setInput(stopAt);
-  }, [asset.stopAt]);
+    setInput(startAt);
+  }, [asset.startAt]);
 
   const handleChange = (input: number) => {
     setInput(input);
-    const updatedAsset: VoiceProps = { ...asset, stopAt: input };
+    const updatedAsset: VoiceProps = { ...asset, startAt: input };
     setRecordVoiceAsset(updatedAsset);
   };
 
@@ -25,13 +25,13 @@ const RecordVoiceAssetStopAt = ({ asset }: { asset: VoiceProps }) => {
     <TextField
       sx={{ width: 110 }}
       size='small'
-      type='number'
       value={input}
-      label='stopAt'
+      type='number'
       onChange={(e) => handleChange(Number(e.target.value))}
       inputProps={{ step: 0.1, min: 0 }}
+      label='startAt'
     />
   );
 };
 
-export default RecordVoiceAssetStopAt;
+export default RecordVoiceAssetStartAt;

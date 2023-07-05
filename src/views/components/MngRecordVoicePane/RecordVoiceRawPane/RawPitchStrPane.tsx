@@ -1,10 +1,8 @@
 import { TextField } from '@mui/material';
-import * as R from 'ramda';
 import { useContext } from 'react';
-import { AppContext } from '../../../..';
-import { VoiceProps } from '../../../../../Model';
+import { AppContext } from '../../..';
 
-import { setRecordVoiceRaw } from '../../../../../services/recordVoice';
+import { updateRowPitchStr } from '../../../../services/recordVoice';
 
 const RawPitchStrPane = ({
   rawPitchStr,
@@ -17,11 +15,7 @@ const RawPitchStrPane = ({
 
   const handleChangeRawPitchStr = (pitchStr: string) => {
     setRawPitchStr(pitchStr);
-    const updatedRecordVoiceRaw = R.assocPath<string, VoiceProps>(
-      ['pitchStr'],
-      pitchStr
-    )(state.recordVoice.raw);
-    setRecordVoiceRaw(updatedRecordVoiceRaw);
+    updateRowPitchStr(pitchStr);
   };
   return (
     <TextField

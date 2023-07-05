@@ -6,11 +6,11 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '../..';
 import { blobToAudioBuffer } from '../../../services/utils';
 
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
 import { RAW_STORAGE_PATH } from '.';
 import { State, VoiceProps } from '../../../Model';
 import { ActionTypes } from '../../../Update';
 import { uploadStorage } from '../../../repositories/storage';
-import { setRecordVoiceRaw } from '../../../services/recordVoice';
 
 const RecordVoiceButton = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -22,13 +22,10 @@ const RecordVoiceButton = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
   useEffect(() => {
-    if (!state.recordVoice.raw.storagePath) {
-      setAudioBuffer(null);
-      return;
-    }
-    const audioBuffer = state.audioBuffers[state.recordVoice.raw.storagePath];
+    const path = RECORD_VOICE_STORAGE_PATH + 'raw';
+    const audioBuffer = state.audioBuffers[path];
     setAudioBuffer(audioBuffer);
-  }, [state.audioBuffers, state.recordVoice.raw.storagePath]);
+  }, [state.audioBuffers]);
 
   const handleClickRecButton = () => {
     const updatedIsRecording = !isRecording;
@@ -58,10 +55,9 @@ const RecordVoiceButton = () => {
         startAt: 0,
         stopAt: 0,
         pitchStr: '',
-        storagePath: RAW_STORAGE_PATH,
       };
       uploadStorage(blob, RAW_STORAGE_PATH);
-      setRecordVoiceRaw(recordVoiceRaw);
+      // todo setRecordVoiceRaw(recordVoiceRaw);
       const updatedState = R.assocPath<AudioBuffer, State>(
         ['audioBuffers', RAW_STORAGE_PATH],
         audioBuffer

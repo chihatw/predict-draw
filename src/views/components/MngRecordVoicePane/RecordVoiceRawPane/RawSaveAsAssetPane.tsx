@@ -1,11 +1,12 @@
 import { Button } from '@mui/material';
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
 import { nanoid } from 'nanoid';
 import { useContext } from 'react';
-import { AppContext } from '../../../..';
-import { VoiceProps } from '../../../../../Model';
-import { uploadStorage } from '../../../../../repositories/storage';
-import { setRecordVoiceAsset } from '../../../../../services/recordVoice';
-import { blobToAudioBuffer } from '../../../../../services/utils';
+import { AppContext } from '../../..';
+import { VoiceProps } from '../../../../Model';
+import { uploadStorage } from '../../../../repositories/storage';
+import { setRecordVoiceAsset } from '../../../../services/recordVoice';
+import { blobToAudioBuffer } from '../../../../services/utils';
 
 const RawSaveAsAssetPane = ({
   blob,
@@ -18,7 +19,7 @@ const RawSaveAsAssetPane = ({
   const handleSave = async () => {
     if (!blob) return;
     const id = nanoid(8);
-    const storagePath = `/recordVoice/${id}`;
+    const storagePath = RECORD_VOICE_STORAGE_PATH + id;
     uploadStorage(blob, storagePath);
     const audioBuffer = await blobToAudioBuffer(blob);
     const recordVoiceAsset: VoiceProps = {
@@ -26,7 +27,6 @@ const RawSaveAsAssetPane = ({
       startAt: 0,
       stopAt: Math.round(audioBuffer.duration * 100) / 100,
       pitchStr: rawPitchStr,
-      storagePath,
     };
     setRecordVoiceAsset(recordVoiceAsset);
   };

@@ -1,5 +1,6 @@
+import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
 import * as R from 'ramda';
-import { RecordVoiceParams, State, VoiceProps } from './Model';
+import { State, VoiceProps } from './Model';
 
 export const ActionTypes = {
   setState: 'setState',
@@ -29,7 +30,7 @@ export type Action = {
       }
     | VoiceProps
     | { [id: string]: VoiceProps }
-    | RecordVoiceParams
+    | IRecordVoiceParams
     | { selected: string };
 };
 
@@ -57,8 +58,8 @@ export const reducer = (state: State, action: Action): State => {
       )(state);
     }
     case ActionTypes.setRecordVoiceParams: {
-      const recordVoiceParams = payload as RecordVoiceParams;
-      return R.assocPath<RecordVoiceParams, State>(
+      const recordVoiceParams = payload as IRecordVoiceParams;
+      return R.assocPath<IRecordVoiceParams, State>(
         ['recordVoice', 'params'],
         recordVoiceParams
       )(state);
