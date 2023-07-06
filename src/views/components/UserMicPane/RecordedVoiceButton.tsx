@@ -12,7 +12,7 @@ import { State, VoiceProps } from '../../../Model';
 import { ActionTypes } from '../../../Update';
 import { uploadStorage } from '../../../repositories/storage';
 
-const RecordVoiceButton = () => {
+const RecordedVoiceButton = () => {
   const { state, dispatch } = useContext(AppContext);
   const [isRecording, setIsRecording] = useState(false);
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
@@ -101,4 +101,4 @@ const RecordVoiceButton = () => {
   );
 };
 
-export default RecordVoiceButton;
+export default RecordedVoiceButton;

@@ -9,7 +9,7 @@ import { getAudioBufferFromStorage } from '../../../services/utils';
 
 import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
 import PlayAudioPane from './PlayAudioPane';
-import RecordVoiceButton from './RecordVoiceButton';
+import RecordedVoiceButton from './RecordedVoiceButton';
 import TargetPitchPane from './TargetPitchPane';
 
 export const RAW_STORAGE_PATH = '/recordVoice/raw';
@@ -52,7 +52,7 @@ const UserMicPane = () => {
       <div style={{ display: 'grid', paddingTop: 80, rowGap: 40 }}>
         <div>
           <TargetPitchPane />
-          <RecordVoiceButton />
+          <RecordedVoiceButton />
         </div>
         <PlayAudioPane />
       </div>
