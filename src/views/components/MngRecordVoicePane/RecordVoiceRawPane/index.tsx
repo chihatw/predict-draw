@@ -10,8 +10,8 @@ import {
 } from '../../../../services/utils';
 import DeleteRawButton from './DeleteRawButton';
 import PlayRawPane from './PlayRawPane';
-import RawPitchStrPane from './RawPitchStrPane';
 import RawSaveAsAssetPane from './RawSaveAsAssetPane';
+import RecordedPitchStrPane from './RecordedPitchStrPane';
 import TargetPitchPane from './TargetPitchPane';
 
 const RecordVoiceRawPane = () => {
@@ -24,12 +24,6 @@ const RecordVoiceRawPane = () => {
    */
   useEffect(() => {
     const path = RECORD_VOICE_STORAGE_PATH + 'raw';
-
-    // localAudioBuffer の存在は無視
-    // 毎回 storage から blob を作成
-    // const localAudioBuffer = state.audioBuffers[path]
-    // if (!!localAudioBuffer) return;
-
     const fetchData = async () => {
       let updatedState = state;
 
@@ -61,7 +55,7 @@ const RecordVoiceRawPane = () => {
    * rawPitchStr の初期値設定
    */
   useEffect(() => {
-    const localValue = state.recordVoice.rawPitchStr;
+    const localValue = state.recordVoice.params.recordedPitchStr;
     // リモートが空の場合
     if (!localValue) {
       setRawPitchStr('');
@@ -71,14 +65,14 @@ const RecordVoiceRawPane = () => {
     if (!!rawPitchStr) return;
 
     setRawPitchStr(localValue);
-  }, [state.recordVoice.rawPitchStr]);
+  }, [state.recordVoice.params.recordedPitchStr]);
 
   return (
     <div style={{ display: 'grid', rowGap: 8 }}>
       <TargetPitchPane />
       <div style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
         <PlayRawPane />
-        <RawPitchStrPane
+        <RecordedPitchStrPane
           rawPitchStr={rawPitchStr}
           setRawPitchStr={setRawPitchStr}
         />

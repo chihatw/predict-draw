@@ -6,12 +6,10 @@ import { createSourceNode } from '../../../services/utils';
 import PlayArrow from '@mui/icons-material/PlayArrow';
 
 import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
-import SentencePitchLine from 'views/components/SentencePitchLine';
 import { setRecordVoiceLogs } from '../../../services/recordVoice';
 
 const PlayAudioPane = () => {
   const { state } = useContext(AppContext);
-  const pitchStr = state.recordVoice.rawPitchStr;
   const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
 
   useEffect(() => {
@@ -32,9 +30,6 @@ const PlayAudioPane = () => {
         }}
       >
         {!!audioBuffer && <PlayButton audioBuffer={audioBuffer} />}
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <SentencePitchLine pitchStr={pitchStr} />
       </div>
     </div>
   );

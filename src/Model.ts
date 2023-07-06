@@ -17,8 +17,6 @@ export const INITIAL_VOICE_PROPS: VoiceProps = {
 };
 
 export type RecordVoice = {
-  hasRaw: boolean;
-  rawPitchStr: string;
   assets: {
     [id: string]: VoiceProps;
   };
@@ -26,13 +24,11 @@ export type RecordVoice = {
 };
 
 export const INITIAL_RECORD_VOICE: RecordVoice = {
-  rawPitchStr: '',
-  hasRaw: false,
   assets: {},
   params: {
-    recordedPitchStr: '',
-    pitchStr: '',
     hasVoice: false,
+    rawPitchStr: '',
+    recordedPitchStr: '',
   },
 };
 

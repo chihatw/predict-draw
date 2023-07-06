@@ -1,3 +1,4 @@
+import audioBuffers from './audioBuffers';
 import cueWorkoutCue from './cueWorkoutCue';
 import cueWorkoutParams from './cueWorkoutParams';
 import note from './note';
@@ -12,4 +13,5 @@ export default {
   cueWorkoutParams,
   cueWorkoutCue,
   note,
+  audioBuffers,
 };

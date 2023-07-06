@@ -3,8 +3,8 @@ import { USER_LAYOUTS } from 'application/userPage/core/1-constants';
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
 import Layout from 'views/Layout';
-import MicTestPane from '../../components/MicTestPane';
 import UserCueWorkoutPane from '../../components/UserCueWorkoutPane';
+import UserMicPane from '../../components/UserMicPane';
 import UserNotePane from '../../components/UserNotePane';
 import UserSpeedWorkoutCuePane from '../../components/UserSpeedWorkoutCuePane';
 import UserSpeedWorkoutPane from '../../components/UserSpeedWorkoutPane';
@@ -28,7 +28,7 @@ const UserPage = ({ user }: { user: string }) => {
       case PAGES.note:
         return <UserNotePane />;
       case PAGES.micTest:
-        return <MicTestPane />;
+        return <UserMicPane />;
       default:
         return <div></div>;
     }

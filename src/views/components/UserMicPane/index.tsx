@@ -14,7 +14,7 @@ import TargetPitchPane from './TargetPitchPane';
 
 export const RAW_STORAGE_PATH = '/recordVoice/raw';
 
-const MicTestPane = () => {
+const UserMicPane = () => {
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
@@ -60,4 +60,4 @@ const MicTestPane = () => {
   );
 };
 
-export default MicTestPane;
+export default UserMicPane;

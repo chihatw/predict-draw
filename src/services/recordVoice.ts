@@ -115,13 +115,11 @@ const buildRecordVoice = (doc: DocumentData): VoiceProps => {
 };
 
 const buildRecordVoiceParams = (doc: DocumentData): IRecordVoiceParams => {
-  const { recordedPitchStr, pitchStr, hasVoice } = doc.data();
+  const { rawPitchStr, hasVoice, recordedPitchStr } = doc.data();
   return {
-    // activeIds: activeIds || [],
-    // targetAssetId: targetAssetId || '',
-    recordedPitchStr: recordedPitchStr || '',
-    pitchStr: pitchStr || '',
+    rawPitchStr: rawPitchStr || '',
     hasVoice: hasVoice || false,
+    recordedPitchStr: recordedPitchStr || '',
   };
 };
 const buildRecordVoiceLogs = (doc: DocumentData): { selected: string } => {

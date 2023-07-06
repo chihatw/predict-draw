@@ -13,7 +13,7 @@ const TargetPitchPane = () => {
    * targetPitchStr の初期値設定
    */
   useEffect(() => {
-    const remoteValue = state.recordVoice.params.recordedPitchStr;
+    const remoteValue = state.recordVoice.params.rawPitchStr;
     // リモートが空の場合
     if (!remoteValue) {
       setInput('');
@@ -23,7 +23,7 @@ const TargetPitchPane = () => {
     if (!!input) return;
 
     setInput(remoteValue);
-  }, [state.recordVoice.params.recordedPitchStr]);
+  }, [state.recordVoice.params.rawPitchStr]);
 
   const handleChangeInput = (input: string) => {
     setInput(input);
@@ -37,7 +37,7 @@ const TargetPitchPane = () => {
     <TextField
       size='small'
       value={input}
-      label='recordedPitchStr'
+      label='rawPitchStr'
       onChange={(e) => handleChangeInput(e.target.value)}
       autoComplete='off'
     />

@@ -1,5 +1,5 @@
 export interface IRecordVoiceParams {
-  pitchStr: string;
   hasVoice: boolean;
+  rawPitchStr: string;
   recordedPitchStr: string;
 }

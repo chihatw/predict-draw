@@ -4,7 +4,7 @@ import { AppContext } from '../../..';
 
 import { updateRowPitchStr } from '../../../../services/recordVoice';
 
-const RawPitchStrPane = ({
+const RecordedPitchStrPane = ({
   rawPitchStr,
   setRawPitchStr,
 }: {
@@ -22,11 +22,11 @@ const RawPitchStrPane = ({
       sx={{ flexGrow: 1 }}
       size='small'
       value={rawPitchStr}
-      label='rawPitchStr'
+      label='recordedPitchStr'
       onChange={(e) => handleChangeRawPitchStr(e.target.value)}
       autoComplete='off'
     />
   );
 };
 
-export default RawPitchStrPane;
+export default RecordedPitchStrPane;
