@@ -1,42 +1,21 @@
-import * as R from 'ramda';
-
 import { TextField } from '@mui/material';
-import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
-import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../..';
-import { setRecordVoiceParams } from '../../../../services/recordVoice';
+import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
 
 const TargetPitchPane = () => {
-  const { state } = useContext(AppContext);
-  const [input, setInput] = useState('');
-  /**
-   * targetPitchStr の初期値設定
-   */
-  useEffect(() => {
-    const remoteValue = state.recordVoice.params.rawPitchStr;
-    // リモートが空の場合
-    if (!remoteValue) {
-      setInput('');
-      return;
-    }
-    // ローカルが空では無い場合、代入しない
-    if (!!input) return;
-
-    setInput(remoteValue);
-  }, [state.recordVoice.params.rawPitchStr]);
+  const dispatch = useDispatch();
+  const rawPitchStr = useSelector(
+    (state: RootState) => state.recordVoiceParams.rawPitchStr
+  );
 
   const handleChangeInput = (input: string) => {
-    setInput(input);
-    const updatedRecordVoiceParams = R.assocPath<string, IRecordVoiceParams>(
-      ['targetPitchStr'],
-      input
-    )(state.recordVoice.params);
-    setRecordVoiceParams(updatedRecordVoiceParams);
+    dispatch(recordVoiceParamsActions.changeRawPitchStr(input));
   };
   return (
     <TextField
       size='small'
-      value={input}
+      value={rawPitchStr}
       label='rawPitchStr'
       onChange={(e) => handleChangeInput(e.target.value)}
       autoComplete='off'

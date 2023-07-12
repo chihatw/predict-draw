@@ -3,6 +3,7 @@ import cueWorkoutCue from './cueWorkoutCue';
 import cueWorkoutParams from './cueWorkoutParams';
 import note from './note';
 import pageStates from './pageStats';
+import recordVoiceParams from './recordVoiceParams';
 import speedWorkoutParams from './speedWorkoutParams';
 import speedWorkouts from './speedWorkouts';
 
@@ -14,4 +15,5 @@ export default {
   cueWorkoutCue,
   note,
   audioBuffers,
+  recordVoiceParams,
 };

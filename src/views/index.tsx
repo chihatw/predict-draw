@@ -13,6 +13,8 @@ import { noteActions } from 'application/note/framework/0-reducer';
 import { listenNote } from 'application/note/infrastructure/api';
 import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
 import { listenPageStates } from 'application/pageStates/infrastructure/api';
+import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
+import { listenRecordVoiceParams } from 'application/recordVoiceParms/infrastructure/api';
 import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import { listenSpeedWorkoutParams } from 'application/speedWorkoutParams/infrastracture/api';
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
@@ -45,6 +47,7 @@ function App() {
     cuePattern,
     cueWorkoutCue,
     note,
+    recordVoiceParams,
   } = useSelector((state: RootState) => state);
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -99,6 +102,15 @@ function App() {
       unsub();
     };
   }, [note]);
+
+  useEffect(() => {
+    const unsub = listenRecordVoiceParams(recordVoiceParams, (value) =>
+      _dispatch(recordVoiceParamsActions.setParams(value))
+    );
+    return () => {
+      unsub();
+    };
+  }, [recordVoiceParams]);
 
   useEffect(() => {
     _dispatch(speedWorkoutsActions.startFetch());
