@@ -26,7 +26,6 @@ export type RecordVoice = {
 export const INITIAL_RECORD_VOICE: RecordVoice = {
   assets: {},
   params: {
-    hasVoice: false,
     rawPitchStr: '',
     recordedPitchStr: '',
   },

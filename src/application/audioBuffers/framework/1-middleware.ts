@@ -1,8 +1,9 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { audioBuffersActions } from './0-reducer';
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { recordedAudioActions } from 'application/recordedAudio/framework/0-reducer';
 import { Services } from 'infrastructure/services';
 import { RootState } from 'main';
-import { recordedAudioActions } from 'application/recordedAudio/framework/0-reducer';
+import { audioBuffersActions } from './0-reducer';
 
 const audioMiddleWare =
   (services: Services): Middleware =>
@@ -78,8 +79,21 @@ const audioMiddleWare =
         await services.api.audioBuffers.deleteStorageByPath(path);
         return;
       }
-      case 'ranomWorkoutPage/abandomRecordedAudioBuffer': {
-        dispatch(recordedAudioActions.resetRecordedAudio());
+      // audioBuffers に追加、storage に upload
+      case 'recordedAudio/setRecordedAudio': {
+        const { recordedAudioBuffer, recordedBlob } = action.payload as {
+          recordedBlob: Blob;
+          recordedAudioBuffer: AudioBuffer;
+        };
+        if (!recordedBlob || !recordedAudioBuffer) return;
+        const path = RECORD_VOICE_STORAGE_PATH + 'raw';
+        await services.api.audioBuffers.uploadStorageByPath(recordedBlob, path);
+        dispatch(
+          audioBuffersActions.saveAudioBuffer({
+            id: path,
+            audioBuffer: recordedAudioBuffer,
+          })
+        );
         return;
       }
       default:

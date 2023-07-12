@@ -6,8 +6,16 @@ import { Services } from 'infrastructure/services';
 import middleware from './middleware';
 
 const serializableCheck = {
-  ignoredActions: [],
-  ignoredPaths: [],
+  ignoredActions: [
+    'audioBuffers/saveAudioBuffer',
+    'recordedAudio/setRecordedAudio',
+    'audioBuffers/mergeFetchedAudioBuffers',
+  ],
+  ignoredPaths: [
+    'audioBuffers.entities',
+    'recordedAudio.blob',
+    'recordedAudio.audioBuffer',
+  ],
 };
 
 export const configureStore = import.meta.env.DEV

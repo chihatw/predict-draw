@@ -1,23 +1,21 @@
 import { IconButton } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../..';
-import { createSourceNode } from '../../../services/utils';
 
 import PlayArrow from '@mui/icons-material/PlayArrow';
 
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
-import { setRecordVoiceLogs } from '../../../services/recordVoice';
+import { StopCircle } from '@mui/icons-material';
+import {
+  pauseSourceNode,
+  playAudioBufferAndSetSourceNode,
+} from 'application/audioBuffers/core/2-services';
+import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { RootState } from 'main';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PlayAudioPane = () => {
-  const { state } = useContext(AppContext);
-  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
-
-  useEffect(() => {
-    const storagePath = RECORD_VOICE_STORAGE_PATH + 'raw';
-
-    const audioBuffer = state.audioBuffers[storagePath];
-    setAudioBuffer(audioBuffer);
-  }, [state.audioBuffers]);
+  const rawAudioBuffer = useSelector(
+    (state: RootState) => state.audioBuffers.entities[RAW_PATH]
+  );
 
   return (
     <div>
@@ -29,7 +27,9 @@ const PlayAudioPane = () => {
           alignItems: 'center',
         }}
       >
-        {!!audioBuffer && <PlayButton audioBuffer={audioBuffer} />}
+        {!!rawAudioBuffer && !!rawAudioBuffer.audioBuffer && (
+          <PlayButton audioBuffer={rawAudioBuffer.audioBuffer} />
+        )}
       </div>
     </div>
   );
@@ -38,21 +38,52 @@ const PlayAudioPane = () => {
 export default PlayAudioPane;
 
 const PlayButton = ({ audioBuffer }: { audioBuffer: AudioBuffer }) => {
-  const { state } = useContext(AppContext);
+  const dispatch = useDispatch();
+  const sourceNodeRef = useRef<AudioBufferSourceNode | undefined>(undefined);
+  const rawAudioBuffer = useSelector(
+    (state: RootState) => state.audioBuffers.entities[RAW_PATH]
+  );
+
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      pauseSourceNode(sourceNodeRef);
+      setIsPlaying(false);
+    };
+  }, []);
 
   const play = () => {
-    const audioContext = new AudioContext();
-    const sourceNode = createSourceNode(audioBuffer, audioContext);
-    sourceNode.start();
+    if (!rawAudioBuffer || !rawAudioBuffer.audioBuffer) return;
+    setIsPlaying(true);
+    playAudioBufferAndSetSourceNode(
+      rawAudioBuffer.audioBuffer,
+      0,
+      rawAudioBuffer.audioBuffer.duration,
+      sourceNodeRef,
+      () => setIsPlaying(false)
+    );
+  };
 
-    const updatedRecordVoiceLogs: { selected: string } = {
-      selected: `raw,${String(Date.now())}`,
-    };
-    setRecordVoiceLogs(updatedRecordVoiceLogs);
+  const pause = () => {
+    setIsPlaying(false);
+    pauseSourceNode(sourceNodeRef);
+  };
+
+  const handleClick = () => {
+    if (isPlaying) {
+      pause();
+      return;
+    }
+    play();
   };
   return (
-    <IconButton sx={{ color: '#52a2aa' }} onClick={play}>
-      <PlayArrow sx={{ fontSize: 120 }} />
+    <IconButton sx={{ color: '#52a2aa' }} onClick={handleClick}>
+      {isPlaying ? (
+        <StopCircle sx={{ fontSize: 120 }} />
+      ) : (
+        <PlayArrow sx={{ fontSize: 120 }} />
+      )}
     </IconButton>
   );
 };

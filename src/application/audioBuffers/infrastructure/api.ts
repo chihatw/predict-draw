@@ -1,12 +1,13 @@
 import {
   deleteObject,
-  ref,
   getDownloadURL,
+  ref,
   uploadBytes,
 } from 'firebase/storage';
-import { blobToAudioBuffer } from '../core/2-services';
 import { storage } from 'infrastructure/firebase';
+import { blobToAudioBuffer } from '../core/2-services';
 
+export const COLLECTION = 'recordVoiceAssets';
 export const ARTILCE_STORAGE_PATH = 'articles/';
 export const ASSIGNMENTS_STORAGE_PATH = 'assignments/';
 

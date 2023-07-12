@@ -5,6 +5,7 @@ import cueWorkoutCue from 'application/cueWorkoutCue/framework/0-reducer';
 import cueWorkoutParams from 'application/cueWorkoutParams/framework/0-reducer';
 import note from 'application/note/framework/0-reducer';
 import pageStates from 'application/pageStates/framework/0-reducer';
+import recordVoiceParams from 'application/recordVoiceParms/framework/0-reducer';
 import recordedAudio from 'application/recordedAudio/framework/0-reducer';
 import speedWorkoutEditPage from 'application/speedWorkoutEditPage/framework/0-reducer';
 import speedWorkoutItems from 'application/speedWorkoutItems/framework/0-reducer';
@@ -24,4 +25,5 @@ export default {
   note,
   recordedAudio,
   audioBuffers,
+  recordVoiceParams,
 };

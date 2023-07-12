@@ -118,7 +118,6 @@ const buildRecordVoiceParams = (doc: DocumentData): IRecordVoiceParams => {
   const { rawPitchStr, hasVoice, recordedPitchStr } = doc.data();
   return {
     rawPitchStr: rawPitchStr || '',
-    hasVoice: hasVoice || false,
     recordedPitchStr: recordedPitchStr || '',
   };
 };

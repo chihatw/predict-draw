@@ -1,3 +1,4 @@
+import audioBuffers from 'application/audioBuffers/framework/1-middleware';
 import cueWorkoutCue from 'application/cueWorkoutCue/framework/1-middleware';
 import cueWorkoutParams from 'application/cueWorkoutParams/framework/1-middleware';
 import note from 'application/note/framework/1-middleware';
@@ -14,4 +15,5 @@ export default [
   ...cueWorkoutParams,
   ...cueWorkoutCue,
   ...note,
+  ...audioBuffers,
 ];
