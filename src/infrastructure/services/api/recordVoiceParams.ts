@@ -2,5 +2,5 @@ import {
   changeHasRaw,
   changeRawPitchStr,
   changeRecordedPitchStr,
-} from 'application/recordVoiceParms/infrastructure/api';
+} from 'application/recordVoiceParams/infrastructure/api';
 export default { changeRawPitchStr, changeRecordedPitchStr, changeHasRaw };

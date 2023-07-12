@@ -1,4 +1,4 @@
-import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
+import { IRecordVoiceParams } from 'application/recordVoiceParams/core/0-interface';
 
 export type Schedule = { offset: number; start: number; stop: number };
 

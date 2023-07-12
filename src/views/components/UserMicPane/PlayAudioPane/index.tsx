@@ -8,7 +8,7 @@ import {
   pauseSourceNode,
   playAudioBufferAndSetSourceNode,
 } from 'application/audioBuffers/core/2-services';
-import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
 import { RootState } from 'main';
 
 const PlayAudioPane = () => {

@@ -1,8 +1,8 @@
 import Delete from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 import { audioBuffersActions } from 'application/audioBuffers/framework/0-reducer';
-import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
-import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
+import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
+import { recordVoiceParamsActions } from 'application/recordVoiceParams/framework/0-reducer';
 import { useDispatch } from 'react-redux';
 
 const DeleteRawButton = () => {

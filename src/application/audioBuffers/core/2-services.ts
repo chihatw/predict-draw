@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react';
 
-export const createSourceNode = (
+const createSourceNode = (
   audioBuffer: AudioBuffer,
   audioContext: AudioContext
 ) => {

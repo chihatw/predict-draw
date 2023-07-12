@@ -1,9 +1,9 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
+import { IRecordVoiceParams } from 'application/recordVoiceParams/core/0-interface';
 import {
   RAW_PATH,
   RECORD_VOICE_STORAGE_PATH,
-} from 'application/recordVoiceParms/core/1-constants';
+} from 'application/recordVoiceParams/core/1-constants';
 import { recordedAudioActions } from 'application/recordedAudio/framework/0-reducer';
 import { Services } from 'infrastructure/services';
 import { RootState } from 'main';
@@ -29,12 +29,12 @@ const audioMiddleWare =
           await services.api.audioBuffers.fetchStorageAudioBuffer(path);
         if (!gotAudioBuffer) return;
         dispatch(
-          audioBuffersActions.mergeAudioBuffers({
-            [path]: {
+          audioBuffersActions.mergeAudioBuffers([
+            {
               id: path,
               audioBuffer: gotAudioBuffer || undefined,
             },
-          })
+          ])
         );
 
         return;
@@ -47,21 +47,19 @@ const audioMiddleWare =
 
         // audioBuffers の取得
         const gotAudioBuffers: {
-          [id: string]: {
-            id: string;
-            audioBuffer: AudioBuffer | undefined;
-          };
-        } = {};
+          id: string;
+          audioBuffer: AudioBuffer | undefined;
+        }[] = [];
         await Promise.all(
           paths.map(async (path) => {
             // path がすでに存在すれば、スキップ
             if (!fetchedPaths.includes(path)) {
               const gotAudioBuffer =
                 await services.api.audioBuffers.fetchStorageAudioBuffer(path);
-              gotAudioBuffers[path] = {
+              gotAudioBuffers.push({
                 id: path,
                 audioBuffer: gotAudioBuffer,
-              };
+              });
             }
           })
         );

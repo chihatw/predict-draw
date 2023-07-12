@@ -1,26 +1,13 @@
 import Delete from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
-import * as R from 'ramda';
-import { useContext } from 'react';
-import { AppContext } from '../../../..';
-import { State, VoiceProps } from '../../../../../Model';
-import { ActionTypes } from '../../../../../Update';
-import { deleteStorage } from '../../../../../repositories/storage';
-import { deleteRecordVoiceAsset } from '../../../../../services/recordVoice';
+import { IRecordVoiceAsset } from 'application/recordVoiceAssets/core/0-interface';
+import { recordVoiceAssetsActions } from 'application/recordVoiceAssets/framework/0-reducer';
+import { useDispatch } from 'react-redux';
 
-const DeleteAssetButton = ({ asset }: { asset: VoiceProps }) => {
-  const { state, dispatch } = useContext(AppContext);
+const DeleteAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
+  const dispatch = useDispatch();
   const deleteAsset = () => {
-    const path = RECORD_VOICE_STORAGE_PATH + asset.id;
-    deleteStorage(path);
-    deleteRecordVoiceAsset(asset.id);
-
-    const updatedState = R.compose(
-      R.dissocPath<State>(['audioBuffers', path]),
-      R.dissocPath<State>(['recordVoice', 'assets', asset.id])
-    )(state);
-    dispatch({ type: ActionTypes.setState, payload: updatedState });
+    dispatch(recordVoiceAssetsActions.removeOne(asset.id));
   };
   return (
     <IconButton size='small' onClick={deleteAsset}>

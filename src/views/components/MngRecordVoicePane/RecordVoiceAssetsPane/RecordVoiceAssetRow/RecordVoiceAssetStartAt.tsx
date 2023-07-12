@@ -1,31 +1,21 @@
 import { TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { VoiceProps } from '../../../../../Model';
-import { setRecordVoiceAsset } from '../../../../../services/recordVoice';
+import { IRecordVoiceAsset } from 'application/recordVoiceAssets/core/0-interface';
+import { recordVoiceAssetsActions } from 'application/recordVoiceAssets/framework/0-reducer';
+import { useDispatch } from 'react-redux';
 
-const RecordVoiceAssetStartAt = ({ asset }: { asset: VoiceProps }) => {
-  const [input, setInput] = useState(0);
-
-  useEffect(() => {
-    const startAt = asset.startAt;
-    if (!startAt) {
-      return;
-    }
-    if (!!input) return;
-    setInput(startAt);
-  }, [asset.startAt]);
-
+const RecordVoiceAssetStartAt = ({ asset }: { asset: IRecordVoiceAsset }) => {
+  const dispatch = useDispatch();
   const handleChange = (input: number) => {
-    setInput(input);
-    const updatedAsset: VoiceProps = { ...asset, startAt: input };
-    setRecordVoiceAsset(updatedAsset);
+    dispatch(
+      recordVoiceAssetsActions.changeStartAt({ id: asset.id, startAt: input })
+    );
   };
 
   return (
     <TextField
-      sx={{ width: 110 }}
+      sx={{ flexBasis: 80 }}
       size='small'
-      value={input}
+      value={asset.startAt}
       type='number'
       onChange={(e) => handleChange(Number(e.target.value))}
       inputProps={{ step: 0.1, min: 0 }}

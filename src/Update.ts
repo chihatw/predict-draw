@@ -1,4 +1,4 @@
-import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
+import { IRecordVoiceParams } from 'application/recordVoiceParams/core/0-interface';
 import * as R from 'ramda';
 import { State, VoiceProps } from './Model';
 
@@ -8,9 +8,6 @@ export const ActionTypes = {
   setCueWorkoutCue: 'setCueWorkoutCue',
   setCueWorkoutCards: 'setCueWorkoutCards',
   setRecordVoiceRaw: 'setRecordVoiceRaw',
-  setRecordVoiceAssets: 'setRecordVoiceAssets',
-  setRecordVoiceParams: 'setRecordVoiceParams',
-  setRecordVoiceLogs: 'setRecordVoiceLogs',
 };
 
 export type Action = {
@@ -50,27 +47,7 @@ export const reducer = (state: State, action: Action): State => {
         recordVoiceRaw
       )(state);
     }
-    case ActionTypes.setRecordVoiceAssets: {
-      const recordVoiceAssets = payload as { [id: string]: VoiceProps };
-      return R.assocPath<{ [id: string]: VoiceProps }, State>(
-        ['recordVoice', 'assets'],
-        recordVoiceAssets
-      )(state);
-    }
-    case ActionTypes.setRecordVoiceParams: {
-      const recordVoiceParams = payload as IRecordVoiceParams;
-      return R.assocPath<IRecordVoiceParams, State>(
-        ['recordVoice', 'params'],
-        recordVoiceParams
-      )(state);
-    }
-    case ActionTypes.setRecordVoiceLogs: {
-      const recordVoiceLogs = payload as { selected: string };
-      return R.assocPath<{ selected: string }, State>(
-        ['recordVoice', 'logs'],
-        recordVoiceLogs
-      )(state);
-    }
+
     default:
       return R.compose(R.identity)(state);
   }

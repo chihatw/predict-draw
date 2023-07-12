@@ -12,14 +12,7 @@ const audioSlice = createSlice({
   reducers: {
     getAudioBufferStart: (state, { payload }: { payload: string }) => state,
     getAudioBuffersStart: (state, { payload }: { payload: string[] }) => state,
-    mergeAudioBuffers: (
-      state,
-      {
-        payload,
-      }: {
-        payload: { [id: string]: IAudioBuffer };
-      }
-    ) => {
+    mergeAudioBuffers: (state, { payload }: { payload: IAudioBuffer[] }) => {
       audioBufferAdapter.upsertMany(state, payload);
     },
     saveAudioBuffer: (

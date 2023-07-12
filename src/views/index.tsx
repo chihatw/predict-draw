@@ -13,8 +13,10 @@ import { noteActions } from 'application/note/framework/0-reducer';
 import { listenNote } from 'application/note/infrastructure/api';
 import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
 import { listenPageStates } from 'application/pageStates/infrastructure/api';
-import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
-import { listenRecordVoiceParams } from 'application/recordVoiceParms/infrastructure/api';
+import { recordVoiceAssetsActions } from 'application/recordVoiceAssets/framework/0-reducer';
+import { listenRecordVoiceAssets } from 'application/recordVoiceAssets/infrastructure/api';
+import { recordVoiceParamsActions } from 'application/recordVoiceParams/framework/0-reducer';
+import { listenRecordVoiceParams } from 'application/recordVoiceParams/infrastructure/api';
 import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import { listenSpeedWorkoutParams } from 'application/speedWorkoutParams/infrastracture/api';
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
@@ -48,6 +50,7 @@ function App() {
     cueWorkoutCue,
     note,
     recordVoiceParams,
+    recordVoiceAssets,
   } = useSelector((state: RootState) => state);
 
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -111,6 +114,15 @@ function App() {
       unsub();
     };
   }, [recordVoiceParams]);
+
+  useEffect(() => {
+    const unsub = listenRecordVoiceAssets(recordVoiceAssets.entities, (value) =>
+      _dispatch(recordVoiceAssetsActions.setAll(value))
+    );
+    return () => {
+      unsub();
+    };
+  }, [recordVoiceAssets]);
 
   useEffect(() => {
     _dispatch(speedWorkoutsActions.startFetch());

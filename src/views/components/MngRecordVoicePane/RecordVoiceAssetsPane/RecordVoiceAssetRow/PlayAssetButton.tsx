@@ -1,32 +1,51 @@
-import { PlayArrow } from '@mui/icons-material';
+import { PlayArrow, StopCircle } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
-import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../../..';
-import { VoiceProps } from '../../../../../Model';
-import { createSourceNode } from '../../../../../services/utils';
+import {
+  pauseSourceNode,
+  playAudioBufferAndSetSourceNode,
+} from 'application/audioBuffers/core/2-services';
+import { IRecordVoiceAsset } from 'application/recordVoiceAssets/core/0-interface';
+import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParams/core/1-constants';
+import { RootState } from 'main';
+import { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const PlayAssetButton = ({ asset }: { asset: VoiceProps }) => {
-  const { state } = useContext(AppContext);
-  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
-
-  useEffect(() => {
-    const path = RECORD_VOICE_STORAGE_PATH + asset.id;
-    const audioBuffer = state.audioBuffers[path];
-    setAudioBuffer(audioBuffer);
-  }, [state.audioBuffers, asset.id]);
+const PlayAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
+  const audioBuffer = useSelector(
+    (state: RootState) =>
+      state.audioBuffers.entities[RECORD_VOICE_STORAGE_PATH + asset.id]
+  );
+  const sourceNodeRef = useRef<AudioBufferSourceNode | undefined>(undefined);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const play = () => {
-    if (!audioBuffer) return;
-    console.log(`%c${asset.id}`, 'color:green');
-    const audioContext = new AudioContext();
-    const sourceNode = createSourceNode(audioBuffer, audioContext);
-    sourceNode.start(0, asset.startAt, asset.stopAt - asset.startAt);
+    if (!audioBuffer || !audioBuffer.audioBuffer) return;
+    setIsPlaying(true);
+    playAudioBufferAndSetSourceNode(
+      audioBuffer.audioBuffer,
+      0,
+      audioBuffer.audioBuffer.duration,
+      sourceNodeRef,
+      () => setIsPlaying(false)
+    );
   };
-  if (!audioBuffer) return <></>;
+
+  const pause = () => {
+    setIsPlaying(false);
+    pauseSourceNode(sourceNodeRef);
+  };
+
+  const handleClick = () => {
+    if (isPlaying) {
+      pause();
+      return;
+    }
+    play();
+  };
+  if (!audioBuffer || !audioBuffer.audioBuffer) return <></>;
   return (
-    <IconButton size='small' onClick={play}>
-      <PlayArrow />
+    <IconButton size='small' onClick={handleClick}>
+      {isPlaying ? <StopCircle /> : <PlayArrow />}
     </IconButton>
   );
 };

@@ -8,8 +8,8 @@ import {
   createMediaRecorder,
   startRecording,
 } from 'application/audioBuffers/core/2-services';
-import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
-import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
+import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
+import { recordVoiceParamsActions } from 'application/recordVoiceParams/framework/0-reducer';
 import { recordedAudioActions } from 'application/recordedAudio/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';

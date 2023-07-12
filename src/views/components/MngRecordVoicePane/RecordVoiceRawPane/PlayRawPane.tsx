@@ -5,7 +5,7 @@ import {
   playAudioBufferAndSetSourceNode,
 } from 'application/audioBuffers/core/2-services';
 
-import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
 import { RootState } from 'main';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';

@@ -1,6 +1,8 @@
 import { Button } from '@mui/material';
-import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { IRecordVoiceAsset } from 'application/recordVoiceAssets/core/0-interface';
+import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
 import { RootState } from 'main';
+import { nanoid } from 'nanoid';
 import { useSelector } from 'react-redux';
 
 const RawSaveAsAssetPane = () => {
@@ -12,18 +14,13 @@ const RawSaveAsAssetPane = () => {
   );
   const handleSave = async () => {
     // todo
-    // if (!blob) return;
-    // const id = nanoid(8);
-    // const storagePath = RECORD_VOICE_STORAGE_PATH + id;
-    // uploadStorage(blob, storagePath);
-    // const audioBuffer = await blobToAudioBuffer(blob);
-    // const recordVoiceAsset: VoiceProps = {
-    //   id,
-    //   startAt: 0,
-    //   stopAt: Math.round(audioBuffer.duration * 100) / 100,
-    //   pitchStr: rawPitchStr,
-    // };
-    // setRecordVoiceAsset(recordVoiceAsset);
+    if (!rawAudioBuffer || !rawAudioBuffer.audioBuffer) return;
+    const asset: IRecordVoiceAsset = {
+      id: nanoid(8),
+      startAt: 0,
+      stopAt: rawAudioBuffer?.audioBuffer.duration,
+      pitchStr: recordedPitchStr,
+    };
   };
   return (
     <Button
