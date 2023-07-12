@@ -28,6 +28,7 @@ export const INITIAL_RECORD_VOICE: RecordVoice = {
   params: {
     rawPitchStr: '',
     recordedPitchStr: '',
+    hasRaw: false,
   },
 };
 

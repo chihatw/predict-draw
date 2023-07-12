@@ -28,11 +28,17 @@ export const changeRecordedPitchStr = (recordedPitchStr: string) => {
   updateDoc(doc(db, COLLECTION, DOC_ID), { recordedPitchStr });
 };
 
+export const changeHasRaw = (hasRaw: boolean) => {
+  console.log(`%cupdate ${COLLECTION}`, 'color:red');
+  updateDoc(doc(db, COLLECTION, DOC_ID), { hasRaw });
+};
+
 const buildRecordVoiceParams = (doc: DocumentData) => {
-  const { rawPitchStr, recordedPitchStr } = doc.data();
+  const { rawPitchStr, recordedPitchStr, hasRaw } = doc.data();
   const recordVoiceParams: IRecordVoiceParams = {
     rawPitchStr: rawPitchStr || '',
     recordedPitchStr: recordedPitchStr || '',
+    hasRaw: hasRaw || false,
   };
   return recordVoiceParams;
 };

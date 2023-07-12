@@ -1,29 +1,24 @@
 import { TextField } from '@mui/material';
-import { useContext } from 'react';
-import { AppContext } from '../../..';
+import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
 
-import { updateRowPitchStr } from '../../../../services/recordVoice';
+import { RootState } from 'main';
+import { useDispatch, useSelector } from 'react-redux';
 
-const RecordedPitchStrPane = ({
-  rawPitchStr,
-  setRawPitchStr,
-}: {
-  rawPitchStr: string;
-  setRawPitchStr: (input: string) => void;
-}) => {
-  const { state } = useContext(AppContext);
-
-  const handleChangeRawPitchStr = (pitchStr: string) => {
-    setRawPitchStr(pitchStr);
-    updateRowPitchStr(pitchStr);
+const RecordedPitchStrPane = () => {
+  const dispatch = useDispatch();
+  const recordedPitchStr = useSelector(
+    (state: RootState) => state.recordVoiceParams.recordedPitchStr
+  );
+  const handleChange = (value: string) => {
+    dispatch(recordVoiceParamsActions.changeRecordedPitchStr(value));
   };
   return (
     <TextField
       sx={{ flexGrow: 1 }}
       size='small'
-      value={rawPitchStr}
+      value={recordedPitchStr}
       label='recordedPitchStr'
-      onChange={(e) => handleChangeRawPitchStr(e.target.value)}
+      onChange={(e) => handleChange(e.target.value)}
       autoComplete='off'
     />
   );

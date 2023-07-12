@@ -9,7 +9,7 @@ const serializableCheck = {
   ignoredActions: [
     'audioBuffers/saveAudioBuffer',
     'recordedAudio/setRecordedAudio',
-    'audioBuffers/mergeFetchedAudioBuffers',
+    'audioBuffers/mergeAudioBuffers',
   ],
   ignoredPaths: [
     'audioBuffers.entities',

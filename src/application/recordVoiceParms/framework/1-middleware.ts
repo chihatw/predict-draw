@@ -13,7 +13,16 @@ const recordVoiceParamsMiddleware =
         services.api.recordVoiceParams.changeRawPitchStr(rawPitchStr);
         return;
       }
-
+      case 'recordVoiceParams/changeRecordedPitchStr': {
+        const recordedPitchStr = action.payload as string;
+        services.api.recordVoiceParams.changeRecordedPitchStr(recordedPitchStr);
+        return;
+      }
+      case 'recordVoiceParams/changeHasRaw': {
+        const hasRaw = action.payload as boolean;
+        services.api.recordVoiceParams.changeHasRaw(hasRaw);
+        return;
+      }
       default:
     }
   };

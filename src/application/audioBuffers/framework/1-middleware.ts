@@ -1,5 +1,9 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { IRecordVoiceParams } from 'application/recordVoiceParms/core/0-interface';
+import {
+  RAW_PATH,
+  RECORD_VOICE_STORAGE_PATH,
+} from 'application/recordVoiceParms/core/1-constants';
 import { recordedAudioActions } from 'application/recordedAudio/framework/0-reducer';
 import { Services } from 'infrastructure/services';
 import { RootState } from 'main';
@@ -23,8 +27,9 @@ const audioMiddleWare =
 
         const gotAudioBuffer =
           await services.api.audioBuffers.fetchStorageAudioBuffer(path);
+        if (!gotAudioBuffer) return;
         dispatch(
-          audioBuffersActions.mergeFetchedAudioBuffers({
+          audioBuffersActions.mergeAudioBuffers({
             [path]: {
               id: path,
               audioBuffer: gotAudioBuffer || undefined,
@@ -61,7 +66,7 @@ const audioMiddleWare =
           })
         );
 
-        dispatch(audioBuffersActions.mergeFetchedAudioBuffers(gotAudioBuffers));
+        dispatch(audioBuffersActions.mergeAudioBuffers(gotAudioBuffers));
         return;
       }
       case 'audioBuffers/saveAudioBuffer': {
@@ -74,7 +79,7 @@ const audioMiddleWare =
         dispatch(recordedAudioActions.resetRecordedAudio());
         return;
       }
-      case 'audioBuffers/removeFetchedAudioBuffer': {
+      case 'audioBuffers/removeAudioBuffer': {
         const path = action.payload as string;
         await services.api.audioBuffers.deleteStorageByPath(path);
         return;
@@ -94,6 +99,15 @@ const audioMiddleWare =
             audioBuffer: recordedAudioBuffer,
           })
         );
+        return;
+      }
+      case 'recordVoiceParams/setParams': {
+        const params = action.payload as IRecordVoiceParams;
+        if (!params.hasRaw) {
+          dispatch(audioBuffersActions.removeAudioBuffer(RAW_PATH));
+          return;
+        }
+        dispatch(audioBuffersActions.getAudioBufferStart(RAW_PATH));
         return;
       }
       default:

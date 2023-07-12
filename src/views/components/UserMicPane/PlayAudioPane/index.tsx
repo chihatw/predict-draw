@@ -12,10 +12,10 @@ import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
 import { RootState } from 'main';
 
 const PlayAudioPane = () => {
-  const sourceNodeRef = useRef<AudioBufferSourceNode | undefined>(undefined);
   const rawAudioBuffer = useSelector(
     (state: RootState) => state.audioBuffers.entities[RAW_PATH]
   );
+  const sourceNodeRef = useRef<AudioBufferSourceNode | undefined>(undefined);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const play = () => {
@@ -42,6 +42,8 @@ const PlayAudioPane = () => {
     }
     play();
   };
+
+  if (!rawAudioBuffer || !rawAudioBuffer.audioBuffer) return <></>;
 
   return (
     <div

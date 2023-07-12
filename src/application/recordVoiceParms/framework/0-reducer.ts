@@ -10,6 +10,12 @@ const recordVoiceParamsSlice = createSlice({
     changeRawPitchStr: (state, { payload }: { payload: string }) => {
       state.rawPitchStr = payload;
     },
+    changeRecordedPitchStr: (state, { payload }: { payload: string }) => {
+      state.recordedPitchStr = payload;
+    },
+    changeHasRaw: (state, { payload }: { payload: boolean }) => {
+      state.hasRaw = payload;
+    },
   },
 });
 

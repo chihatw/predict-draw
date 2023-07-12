@@ -1,31 +1,15 @@
 import Delete from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParms/core/1-constants';
-import * as R from 'ramda';
-import { useContext } from 'react';
-import { AppContext } from '../../..';
-import { INITIAL_VOICE_PROPS, State, VoiceProps } from '../../../../Model';
-import { ActionTypes } from '../../../../Update';
-import { deleteStorage } from '../../../../repositories/storage';
+import { audioBuffersActions } from 'application/audioBuffers/framework/0-reducer';
+import { RAW_PATH } from 'application/recordVoiceParms/core/1-constants';
+import { recordVoiceParamsActions } from 'application/recordVoiceParms/framework/0-reducer';
+import { useDispatch } from 'react-redux';
 
 const DeleteRawButton = () => {
-  const { state, dispatch } = useContext(AppContext);
+  const dispatch = useDispatch();
   const deleteRecordVoiceRaw = () => {
-    const path = RECORD_VOICE_STORAGE_PATH + 'raw';
-    deleteStorage(path);
-    const initialRecordVoiceRaw = {
-      ...INITIAL_VOICE_PROPS,
-      id: 'raw',
-    };
-    // todo setRecordVoiceRaw(initialRecordVoiceRaw);
-    const updatedState = R.compose(
-      R.dissocPath<State>(['audioBuffers', path]),
-      R.assocPath<VoiceProps, State>(
-        ['recordVoice', 'raw'],
-        initialRecordVoiceRaw
-      )
-    )(state);
-    dispatch({ type: ActionTypes.setState, payload: updatedState });
+    dispatch(audioBuffersActions.removeAudioBuffer(RAW_PATH));
+    dispatch(recordVoiceParamsActions.changeHasRaw(false));
   };
   return (
     <IconButton size='small' onClick={deleteRecordVoiceRaw}>
