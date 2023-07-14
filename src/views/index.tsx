@@ -1,7 +1,6 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { INITIAL_STATE, State } from '../Model';
 
 import { cuePatternActions } from 'application/cuePattern/framework/0-reducer';
 import { cuePatternParamsActions } from 'application/cuePatternParams/framework/0-reducer';
@@ -21,7 +20,6 @@ import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framew
 import { listenSpeedWorkoutParams } from 'application/speedWorkoutParams/infrastracture/api';
 import { speedWorkoutsActions } from 'application/speedWorkouts/framework/0-reducer';
 import { RootState } from 'main';
-import { Action, reducer } from '../Update';
 import MngNotePage from './pages/MngNotePage';
 import MngPage from './pages/MngPage';
 import NotePage from './pages/Note/NotePage';
@@ -29,16 +27,8 @@ import SpeedWorkoutEditPage from './pages/SpeedWorkoutEditPage';
 import TopPage from './pages/TopPage';
 import UserPage from './pages/UserPage';
 
-export const AppContext = createContext<{
-  state: State;
-  dispatch: React.Dispatch<Action>;
-}>({
-  state: INITIAL_STATE,
-  dispatch: () => null,
-});
-
 function App() {
-  const _dispatch = useDispatch();
+  const dispatch = useDispatch();
   const pageStates = useSelector(
     (state: RootState) => state.pageStates.entities
   );
@@ -53,11 +43,9 @@ function App() {
     recordVoiceAssets,
   } = useSelector((state: RootState) => state);
 
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-
   useEffect(() => {
     const unsub = listenPageStates(pageStates, (value) =>
-      _dispatch(pageStatesActions.upsertPageStates(value))
+      dispatch(pageStatesActions.upsertPageStates(value))
     );
     return () => {
       unsub();
@@ -66,7 +54,7 @@ function App() {
 
   useEffect(() => {
     const unsub = listenSpeedWorkoutParams(speedWorkoutParams, (value) =>
-      _dispatch(speedWorkoutParamsActions.setParams(value))
+      dispatch(speedWorkoutParamsActions.setParams(value))
     );
     return () => {
       unsub();
@@ -77,8 +65,8 @@ function App() {
     const unsub = listenCueWorkoutParams(
       cueWorkoutParams,
       cuePatternParams,
-      (value) => _dispatch(cueWorkoutParamsActions.setProps(value)),
-      (value) => _dispatch(cuePatternParamsActions.setProps(value))
+      (value) => dispatch(cueWorkoutParamsActions.setProps(value)),
+      (value) => dispatch(cuePatternParamsActions.setProps(value))
     );
     return () => {
       unsub();
@@ -89,8 +77,8 @@ function App() {
     const unsub = listenCueWorkoutCue(
       cueWorkoutCue,
       cuePattern,
-      (value) => _dispatch(cueWorkoutCueActions.setProps(value)),
-      (value) => _dispatch(cuePatternActions.setProps(value))
+      (value) => dispatch(cueWorkoutCueActions.setProps(value)),
+      (value) => dispatch(cuePatternActions.setProps(value))
     );
     return () => {
       unsub();
@@ -99,7 +87,7 @@ function App() {
 
   useEffect(() => {
     const unsub = listenNote(note, (value) =>
-      _dispatch(noteActions.setProps(value))
+      dispatch(noteActions.setProps(value))
     );
     return () => {
       unsub();
@@ -108,7 +96,7 @@ function App() {
 
   useEffect(() => {
     const unsub = listenRecordVoiceParams(recordVoiceParams, (value) =>
-      _dispatch(recordVoiceParamsActions.setParams(value))
+      dispatch(recordVoiceParamsActions.setParams(value))
     );
     return () => {
       unsub();
@@ -117,7 +105,7 @@ function App() {
 
   useEffect(() => {
     const unsub = listenRecordVoiceAssets(recordVoiceAssets.entities, (value) =>
-      _dispatch(recordVoiceAssetsActions.setAll(value))
+      dispatch(recordVoiceAssetsActions.setAll(value))
     );
     return () => {
       unsub();
@@ -125,34 +113,27 @@ function App() {
   }, [recordVoiceAssets]);
 
   useEffect(() => {
-    _dispatch(speedWorkoutsActions.startFetch());
+    dispatch(speedWorkoutsActions.startFetch());
   }, []);
 
   return (
-    <AppContext.Provider
-      value={{
-        state,
-        dispatch,
-      }}
-    >
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<TopPage />} />
-          <Route path='/liSan' element={<UserPage user='liSan' />} />
-          <Route path='/kouSan' element={<UserPage user='kouSan' />} />
-          <Route path='/chinSan' element={<UserPage user='chinSan' />} />
-          <Route path='note' element={<NotePage />} />
-          <Route path='/mng'>
-            <Route index element={<MngPage />} />
-            <Route path='note' element={<MngNotePage />} />
-            <Route path='speed'>
-              <Route path=':workoutId' element={<SpeedWorkoutEditPage />} />
-            </Route>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<TopPage />} />
+        <Route path='/liSan' element={<UserPage user='liSan' />} />
+        <Route path='/kouSan' element={<UserPage user='kouSan' />} />
+        <Route path='/chinSan' element={<UserPage user='chinSan' />} />
+        <Route path='note' element={<NotePage />} />
+        <Route path='/mng'>
+          <Route index element={<MngPage />} />
+          <Route path='note' element={<MngNotePage />} />
+          <Route path='speed'>
+            <Route path=':workoutId' element={<SpeedWorkoutEditPage />} />
           </Route>
-          <Route path='*' element={<Navigate to='/' />} />
-        </Routes>
-      </BrowserRouter>
-    </AppContext.Provider>
+        </Route>
+        <Route path='*' element={<Navigate to='/' />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

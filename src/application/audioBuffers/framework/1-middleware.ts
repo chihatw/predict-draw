@@ -25,8 +25,15 @@ const audioMiddleWare =
         // path がすでに存在すれば、終了
         if (paths.includes(path)) break;
 
-        const gotAudioBuffer =
-          await services.api.audioBuffers.fetchStorageAudioBuffer(path);
+        const result = await services.api.audioBuffers.fetchStorageAudioBuffer(
+          path
+        );
+
+        if (!result) return;
+
+        const gotAudioBuffer = result.audioBuffer;
+        const gotBlob = result.blob;
+
         if (!gotAudioBuffer) return;
         dispatch(
           audioBuffersActions.mergeAudioBuffers([
@@ -36,6 +43,10 @@ const audioMiddleWare =
             },
           ])
         );
+
+        if (path === RAW_PATH) {
+          dispatch(recordedAudioActions.setBlob(gotBlob));
+        }
 
         return;
       }
@@ -54,8 +65,10 @@ const audioMiddleWare =
           paths.map(async (path) => {
             // path がすでに存在すれば、スキップ
             if (!fetchedPaths.includes(path)) {
-              const gotAudioBuffer =
+              const result =
                 await services.api.audioBuffers.fetchStorageAudioBuffer(path);
+              const gotAudioBuffer = result ? result.audioBuffer : undefined;
+
               gotAudioBuffers.push({
                 id: path,
                 audioBuffer: gotAudioBuffer,
@@ -103,6 +116,7 @@ const audioMiddleWare =
         const params = action.payload as IRecordVoiceParams;
         if (!params.hasRaw) {
           dispatch(audioBuffersActions.removeAudioBuffer(RAW_PATH));
+          dispatch(recordedAudioActions.removeBlob());
           return;
         }
         dispatch(audioBuffersActions.getAudioBufferStart(RAW_PATH));

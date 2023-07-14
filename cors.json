@@ -4,10 +4,10 @@
     "method": ["GET"], 
     "origin": 
       [
-        "http://localhost:5173/",
-        "http://127.0.0.1:5173/",
-        "https://predict-draw.vercel.app/"
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://predict-draw.vercel.app"
       ],
-    "responseHeader": ["Content-Type"]  
+    "responseHeader": ["Content-Type", "Access-Control-Allow-Origin"]  
   }
 ]

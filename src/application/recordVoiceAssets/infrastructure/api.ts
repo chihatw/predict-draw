@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
+  setDoc,
   updateDoc,
 } from 'firebase/firestore';
 import { db } from 'infrastructure/firebase';
@@ -44,6 +45,10 @@ export const changeStartAt = (id: string, startAt: number) => {
 export const changeStopAt = (id: string, stopAt: number) => {
   console.log(`%cupdate ${COLLECTION}`, 'color:red');
   updateDoc(doc(db, COLLECTION, id), { stopAt });
+};
+
+export const addOne = (asset: IRecordVoiceAsset) => {
+  setDoc(doc(db, COLLECTION, asset.id), asset);
 };
 
 export const deleteOne = (id: string) => {

@@ -1,7 +1,11 @@
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
 import { audioBuffersActions } from 'application/audioBuffers/framework/0-reducer';
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParams/core/1-constants';
+import {
+  RAW_PATH,
+  RECORD_VOICE_STORAGE_PATH,
+} from 'application/recordVoiceParams/core/1-constants';
 import { Services } from 'infrastructure/services';
+import { RootState } from 'main';
 import { IRecordVoiceAsset } from '../core/0-interface';
 
 const recordVoiceAssetsMiddleware =
@@ -48,6 +52,24 @@ const recordVoiceAssetsMiddleware =
         const path = RECORD_VOICE_STORAGE_PATH + id;
         services.api.recordVoiceAssets.deleteOne(id);
         dispatch(audioBuffersActions.removeAudioBuffer(path));
+        return;
+      }
+      case 'recordVoiceAssets/addAsset': {
+        const asset = action.payload as IRecordVoiceAsset;
+        const rawBlob = (getState() as RootState).recordedAudio.blob;
+        const audioBuffer = (getState() as RootState).audioBuffers.entities[
+          RAW_PATH
+        ];
+        const path = RECORD_VOICE_STORAGE_PATH + asset.id;
+        if (!rawBlob || !audioBuffer || !audioBuffer.audioBuffer) return;
+        dispatch(
+          audioBuffersActions.saveAudioBuffer({
+            id: path,
+            audioBuffer: audioBuffer.audioBuffer,
+          })
+        );
+        services.api.recordVoiceAssets.addOne(asset);
+
         return;
       }
       default:

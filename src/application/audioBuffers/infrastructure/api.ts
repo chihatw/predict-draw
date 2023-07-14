@@ -49,5 +49,5 @@ const fetchAudioBuffer = async (path: string) => {
   if (!blob) return;
 
   const audioBuffer = await blobToAudioBuffer(blob);
-  return audioBuffer;
+  return { audioBuffer, blob };
 };

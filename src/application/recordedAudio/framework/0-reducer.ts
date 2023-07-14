@@ -5,6 +5,12 @@ const recordedAudioSlice = createSlice({
   name: 'recordedAudio',
   initialState: initialState,
   reducers: {
+    setBlob: (state, { payload }: { payload: Blob }) => {
+      state.blob = payload;
+    },
+    removeBlob: (state) => {
+      state.blob = undefined;
+    },
     setRecordedAudio: (
       state,
       {

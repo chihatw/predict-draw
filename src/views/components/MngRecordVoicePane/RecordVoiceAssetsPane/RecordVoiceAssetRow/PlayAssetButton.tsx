@@ -23,8 +23,8 @@ const PlayAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
     setIsPlaying(true);
     playAudioBufferAndSetSourceNode(
       audioBuffer.audioBuffer,
-      0,
-      audioBuffer.audioBuffer.duration,
+      asset.startAt,
+      asset.stopAt,
       sourceNodeRef,
       () => setIsPlaying(false)
     );
