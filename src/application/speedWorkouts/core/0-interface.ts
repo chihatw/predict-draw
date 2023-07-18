@@ -13,9 +13,10 @@ export interface IRemoteSpeedWorkout {
   cueType: string;
   cues: string[];
   items: {
-    chinese: string;
-    pitchesArray: string;
     text: string;
+    chinese: string;
+    pitchStr: string;
+    cuePitchStr: string;
   }[];
   label: string;
 }

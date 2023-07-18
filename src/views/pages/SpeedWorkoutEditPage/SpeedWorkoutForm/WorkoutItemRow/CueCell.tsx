@@ -21,7 +21,7 @@ const CueCell = ({
             justifyContent: 'center',
           }}
         >
-          {workoutItem.text}
+          {workoutItem.chinese}
         </div>
       );
     case CUE_TYPES.PITCH:

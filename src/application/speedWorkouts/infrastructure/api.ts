@@ -25,6 +25,7 @@ export const fetchSpeedWorkouts = async () => {
 
   querySnapshot.forEach((doc) => {
     const { workout, workoutItems } = buildSpeedWorkout(doc);
+    console.log({ workout, workoutItems });
     speedWorkouts.push(workout);
     speedWorkoutItems = speedWorkoutItems.concat(workoutItems);
   });
@@ -41,14 +42,14 @@ const buildSpeedWorkout = (
 
   for (const item of items as {
     chinese: string;
-    pitchesArray: string;
+    pitchStr: string;
     text: string;
     cuePitchStr: string;
   }[]) {
     const tempId = nanoid(8);
     workoutItems.push({
       chinese: item.chinese,
-      pitchStr: item.pitchesArray,
+      pitchStr: item.pitchStr || '',
       tempId,
       text: item.text,
       cuePitchStr: item.cuePitchStr || '',
@@ -72,7 +73,8 @@ const buildItemTempIds = (
 ) => {
   const itemTempIds: string[] = [];
   for (const cue of cues) {
-    const target = workoutItems.find((item) => item.text === cue);
+    const target = workoutItems.find((item) => item.chinese === cue); // cutType string のみ対応
+    if (!target) continue;
     itemTempIds.push(target!.tempId);
   }
   return itemTempIds;
@@ -83,5 +85,5 @@ export const updateSpeedWorkout = async (
   workout: Omit<IRemoteSpeedWorkout, 'createdAt'>
 ) => {
   console.log(`%cupdate ${COLLECTION}`, 'color:red');
-  updateDoc(doc(db, COLLECTION, workoutId), { ...workout }); // todo check
+  updateDoc(doc(db, COLLECTION, workoutId), { ...workout });
 };

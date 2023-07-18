@@ -10,8 +10,11 @@ const speedWorkoutsSlice = createSlice({
   initialState: speedWorkoutAdapter.getInitialState(),
   reducers: {
     startFetch: (state) => state,
-    upsertSpeedWorkouts: (state, { payload }: { payload: ISpeedWorkout[] }) => {
+    upsertMany: (state, { payload }: { payload: ISpeedWorkout[] }) => {
       speedWorkoutAdapter.upsertMany(state, payload);
+    },
+    upsertOne: (state, { payload }: { payload: ISpeedWorkout }) => {
+      speedWorkoutAdapter.upsertOne(state, payload);
     },
   },
 });

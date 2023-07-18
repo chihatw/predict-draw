@@ -36,7 +36,7 @@ const CueCell = ({
           marginRight: 16,
         }}
       >
-        {speedWorkoutItem.text}
+        {speedWorkoutItem.chinese}
       </div>
     );
   }

@@ -9,11 +9,11 @@ const speedWorkoutItemsSlice = createSlice({
   name: 'speedWorkoutItems',
   initialState: speedWorkoutItemAdapter.getInitialState(),
   reducers: {
-    upsertSpeedWorkoutItems: (
-      state,
-      { payload }: { payload: ISpeedWorkoutItem[] }
-    ) => {
+    upsertMany: (state, { payload }: { payload: ISpeedWorkoutItem[] }) => {
       speedWorkoutItemAdapter.upsertMany(state, payload);
+    },
+    removeMany: (state, { payload }: { payload: string[] }) => {
+      speedWorkoutItemAdapter.removeMany(state, payload);
     },
   },
 });

@@ -7,10 +7,9 @@ function WorkoutItemRow({ index }: { index: number }) {
   const { cueType } = useSelector(
     (state: RootState) => state.speedWorkoutEditPage
   );
-  const speedWorkoutItems = useSelector(
-    (state: RootState) => state.speedWorkoutEditPage.workoutItems
+  const workoutItem = useSelector(
+    (state: RootState) => state.speedWorkoutEditPage.workoutItems[index]
   );
-  const workoutItem = speedWorkoutItems[index];
 
   if (!workoutItem) return <></>;
 

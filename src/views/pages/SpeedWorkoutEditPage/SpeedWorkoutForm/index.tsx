@@ -2,7 +2,6 @@ import { Button, Container, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import {
-  buildRemoteSpeedWorkout,
   buildSpeedWorkoutItems,
   buildSpeedWorkoutItemsStr,
 } from 'application/speedWorkoutEditPage/core/2-services';
@@ -53,9 +52,8 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
 
   const handleSubmit = () => {
     if (!workoutId) return;
-    const remoteSpeedWorkout = buildRemoteSpeedWorkout(speedWorkoutEditPage);
     dispatch(
-      speedWorkoutEditPageActions.submit({ workoutId, remoteSpeedWorkout })
+      speedWorkoutEditPageActions.submit({ workoutId, speedWorkoutEditPage })
     );
     navigate('/mng');
   };
@@ -109,7 +107,7 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
           ))}
         </Select>
         <div style={{ display: 'grid', rowGap: 16 }}>
-          {speedWorkout.itemTempIds.map((itemTempId, index) => (
+          {speedWorkoutEditPage.workoutItems.map((_, index) => (
             <WorkoutItemRow index={index} key={index} />
           ))}
         </div>
