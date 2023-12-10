@@ -5,13 +5,14 @@ const TopPage = () => {
     <Layout color=''>
       <div
         style={{
-          color: 'rgba(0,0,0,0.15)',
+          top:0,
           height: '100%',
-          fontSize: 300,
+          width:'100%',
+          color: 'rgba(0,0,0,0.8)',
+          justifyContent:'center',
           position: 'fixed',
-          wordBreak: 'break-all',
-          fontWeight: 900,
-          lineHeight: 0.7,
+          alignItems:'center',
+          display:'flex',
           fontFamily: 'Roboto, sans-serif',
         }}
       >
