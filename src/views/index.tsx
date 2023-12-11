@@ -21,7 +21,7 @@ import { listenSpeedWorkoutParams } from "@/application/speedWorkoutParams/infra
 import { speedWorkoutsActions } from "@/application/speedWorkouts/framework/0-reducer";
 import { RootState } from "@/main";
 import MngPage from "./pages/MngPage";
-import NotePage from "./pages/Note/NotePage";
+import NotePage from "./pages/NotePage";
 import SpeedWorkoutEditPage from "./pages/SpeedWorkoutEditPage";
 import TopPage from "./pages/TopPage";
 import UserPage from "./pages/UserPage";

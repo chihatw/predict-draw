@@ -1,5 +1,4 @@
-import React from 'react';
-import { green, height, highPos, lowPos, width } from './constants';
+import { green, height, highPos, lowPos, width } from "./constants";
 
 const Line = ({
   wordPitchLevels,
@@ -18,32 +17,32 @@ const Line = ({
   return (
     <div
       style={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         height,
         width: svgWidth,
       }}
     >
       <svg
-        xmlns='http://www.w3.org/2000/svg'
+        xmlns="http://www.w3.org/2000/svg"
         width={svgWidth}
         height={height}
         viewBox={`0 0 ${svgWidth} ${height}`}
       >
         <polyline
-          fill='none'
+          fill="none"
           stroke={green}
           strokeWidth={2}
-          points={points.join(',')}
+          points={points.join(",")}
         />
         {showOdakaLine && (
           <polyline
-            fill='none'
+            fill="none"
             stroke={green}
-            strokeWidth='3'
-            strokeDasharray='2 2'
-            strokeDashoffset='1'
-            points={[lastXPos, highPos, lastXPos + width, lowPos].join(',')}
+            strokeWidth="3"
+            strokeDasharray="2 2"
+            strokeDashoffset="1"
+            points={[lastXPos, highPos, lastXPos + width, lowPos].join(",")}
           />
         )}
       </svg>
