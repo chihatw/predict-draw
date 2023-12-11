@@ -1,8 +1,8 @@
 import { Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { audioBuffersActions } from 'application/audioBuffers/framework/0-reducer';
-import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
+import { audioBuffersActions } from '@/application/audioBuffers/framework/0-reducer';
+import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
 import { useDispatch } from 'react-redux';
 import PlayAudioPane from './PlayAudioPane';
 import RecButton from './RecButton';

@@ -1,7 +1,9 @@
-import { CUE_TYPES } from 'application/speedWorkouts/core/1-constants';
-import { RootState } from 'main';
+import { CUE_TYPES } from '@/application/speedWorkouts/core/1-constants';
+import { RootState } from '@/main';
+import SentencePitchLine from '@/views/components/SentencePitchLine';
+
 import { useSelector } from 'react-redux';
-import SentencePitchLine from 'views/components/SentencePitchLine';
+
 
 const CueCell = ({
   isActive,

@@ -1,6 +1,6 @@
+import { buildNoteStr } from '@/application/note/core/2-services';
+import { noteActions } from '@/application/note/framework/0-reducer';
 import { Button, TextField } from '@mui/material';
-import { buildNoteStr } from 'application/note/core/2-services';
-import { noteActions } from 'application/note/framework/0-reducer';
 import { RootState } from 'main';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

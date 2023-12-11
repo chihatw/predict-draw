@@ -1,11 +1,11 @@
+import {
+    pauseSourceNode,
+    playAudioBufferAndSetSourceNode,
+} from '@/application/audioBuffers/core/2-services';
+import { IRecordVoiceAsset } from '@/application/recordVoiceAssets/core/0-interface';
+import { RECORD_VOICE_STORAGE_PATH } from '@/application/recordVoiceParams/core/1-constants';
 import { PlayArrow, StopCircle } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import {
-  pauseSourceNode,
-  playAudioBufferAndSetSourceNode,
-} from 'application/audioBuffers/core/2-services';
-import { IRecordVoiceAsset } from 'application/recordVoiceAssets/core/0-interface';
-import { RECORD_VOICE_STORAGE_PATH } from 'application/recordVoiceParams/core/1-constants';
 import { RootState } from 'main';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';

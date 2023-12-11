@@ -1,5 +1,5 @@
+import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
 import { createSlice } from '@reduxjs/toolkit';
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
 import { ICueWorkoutCue } from '../core/0-interface';
 import { initialState } from '../core/1-constants';
 

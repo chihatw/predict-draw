@@ -3,9 +3,9 @@ import { RootState } from 'main';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
-import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
+import { ICuePattern } from '@/application/cuePattern/core/0-interface';
+import { cueWorkoutCueActions } from '@/application/cueWorkoutCue/framework/0-reducer';
+import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
 import TimeDisplay from '../TimeDisplay';
 import ColorList from './CardList/ColorList';
 import CuePane from './CuePane';

@@ -1,14 +1,14 @@
+import { db } from '@/infrastructure/firebase';
 import {
-  DocumentData,
-  doc,
-  increment,
-  onSnapshot,
-  updateDoc,
+    DocumentData,
+    doc,
+    increment,
+    onSnapshot,
+    updateDoc,
 } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
 
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
 import { ICueWorkoutParams } from '../core/0-interface';
 import { INITIAL_LAST_PATTERNS } from '../core/1-constants';
 

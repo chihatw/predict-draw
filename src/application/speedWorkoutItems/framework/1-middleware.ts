@@ -1,8 +1,8 @@
+import { ISpeedWorkoutEditPage } from '@/application/speedWorkoutEditPage/core/0-interface';
+import { speedWorkoutEditPageActions } from '@/application/speedWorkoutEditPage/framework/0-reducer';
+import { ISpeedWorkout } from '@/application/speedWorkouts/core/0-interface';
+import { Services } from '@/infrastructure/services';
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { ISpeedWorkoutEditPage } from 'application/speedWorkoutEditPage/core/0-interface';
-import { speedWorkoutEditPageActions } from 'application/speedWorkoutEditPage/framework/0-reducer';
-import { ISpeedWorkout } from 'application/speedWorkouts/core/0-interface';
-import { Services } from 'infrastructure/services';
 import { RootState } from 'main';
 import { speedWorkoutItemsActions } from './0-reducer';
 

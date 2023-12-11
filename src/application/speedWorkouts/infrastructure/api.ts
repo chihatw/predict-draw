@@ -1,13 +1,13 @@
-import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
+import { ISpeedWorkoutItem } from '@/application/speedWorkoutItems/core/0-interface';
+import { db } from '@/infrastructure/firebase';
 import {
-  DocumentData,
-  collection,
-  doc,
-  getDocs,
-  query,
-  updateDoc,
+    DocumentData,
+    collection,
+    doc,
+    getDocs,
+    query,
+    updateDoc,
 } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import { nanoid } from 'nanoid';
 import { IRemoteSpeedWorkout, ISpeedWorkout } from '../core/0-interface';
 

@@ -1,5 +1,5 @@
-import { calcBpm } from 'application/speedWorkoutParams/core/2-services';
-import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
+import { calcBpm } from '@/application/speedWorkoutParams/core/2-services';
+import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

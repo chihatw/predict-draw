@@ -1,5 +1,5 @@
+import { db } from '@/infrastructure/firebase';
 import { DocumentData, doc, onSnapshot, setDoc } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
 
 import { INote } from '../core/0-interface';

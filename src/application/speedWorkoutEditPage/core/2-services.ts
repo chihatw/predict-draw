@@ -1,9 +1,9 @@
-import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
+import { ISpeedWorkoutItem } from '@/application/speedWorkoutItems/core/0-interface';
 import {
-  IRemoteSpeedWorkout,
-  ISpeedWorkout,
-} from 'application/speedWorkouts/core/0-interface';
-import { CUE_TYPES } from 'application/speedWorkouts/core/1-constants';
+    IRemoteSpeedWorkout,
+    ISpeedWorkout,
+} from '@/application/speedWorkouts/core/0-interface';
+import { CUE_TYPES } from '@/application/speedWorkouts/core/1-constants';
 import { nanoid } from 'nanoid';
 import { ISpeedWorkoutEditPage } from './0-interface';
 

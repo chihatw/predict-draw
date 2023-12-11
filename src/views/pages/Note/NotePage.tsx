@@ -1,11 +1,11 @@
+import SentencePitchLine from '@/views/components/SentencePitchLine';
 import {
-  Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
+    Container,
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
 } from '@mui/material';
-import SentencePitchLine from 'views/components/SentencePitchLine';
 
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';

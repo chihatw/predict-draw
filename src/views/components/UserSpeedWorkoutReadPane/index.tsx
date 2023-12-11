@@ -2,7 +2,7 @@ import { CloseRounded } from '@mui/icons-material';
 import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
 import { Container, IconButton } from '@mui/material';
 
-import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
+import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 import WorkoutLabel from '../WorkoutLabel';

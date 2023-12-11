@@ -1,6 +1,6 @@
-import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
-import { CUE_TYPES } from 'application/speedWorkouts/core/1-constants';
-import SentencePitchLine from 'views/components/SentencePitchLine';
+import { ISpeedWorkoutItem } from '@/application/speedWorkoutItems/core/0-interface';
+import { CUE_TYPES } from '@/application/speedWorkouts/core/1-constants';
+import SentencePitchLine from '@/views/components/SentencePitchLine';
 
 const CueCell = ({
   workoutItem,

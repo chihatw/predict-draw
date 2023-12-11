@@ -1,5 +1,5 @@
+import { db } from '@/infrastructure/firebase';
 import { DocumentData, doc, onSnapshot, updateDoc } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import _ from 'lodash';
 import { IRecordVoiceParams } from '../core/0-interface';
 

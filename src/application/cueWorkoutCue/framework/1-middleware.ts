@@ -1,7 +1,7 @@
+import { cuePatternActions } from '@/application/cuePattern/framework/0-reducer';
+import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
+import { Services } from '@/infrastructure/services';
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { cuePatternActions } from 'application/cuePattern/framework/0-reducer';
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import { Services } from 'infrastructure/services';
 import { RootState } from 'main';
 import { updateCue } from '../core/2-services';
 import { cueWorkoutCueActions } from './0-reducer';

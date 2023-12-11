@@ -1,10 +1,10 @@
+import { storage } from '@/infrastructure/firebase';
 import {
   deleteObject,
   getDownloadURL,
   ref,
   uploadBytes,
 } from 'firebase/storage';
-import { storage } from 'infrastructure/firebase';
 import { blobToAudioBuffer } from '../core/2-services';
 
 export const COLLECTION = 'recordVoiceAssets';

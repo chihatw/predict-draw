@@ -1,11 +1,11 @@
+import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
 import { Button } from '@mui/material';
-import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
-import { COLORS } from 'application/cueWorkoutParams/core/1-constants';
-import { toggleElement } from 'application/cueWorkoutParams/core/2-services';
+import { cueWorkoutCueActions } from '@/application/cueWorkoutCue/framework/0-reducer';
+import { COLORS } from '@/application/cueWorkoutParams/core/1-constants';
+import { toggleElement } from '@/application/cueWorkoutParams/core/2-services';
 
 const SelectColors = () => {
   const dispatch = useDispatch();

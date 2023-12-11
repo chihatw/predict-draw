@@ -1,14 +1,14 @@
+import { db } from '@/infrastructure/firebase';
 import { Dictionary } from '@reduxjs/toolkit';
 import {
-  DocumentData,
-  collection,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  setDoc,
-  updateDoc,
+    DocumentData,
+    collection,
+    deleteDoc,
+    doc,
+    onSnapshot,
+    setDoc,
+    updateDoc,
 } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import _ from 'lodash';
 import { IRecordVoiceAsset } from '../core/0-interface';
 

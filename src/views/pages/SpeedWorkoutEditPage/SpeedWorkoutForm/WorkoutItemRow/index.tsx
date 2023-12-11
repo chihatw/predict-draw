@@ -1,6 +1,6 @@
+import SentencePitchLine from '@/views/components/SentencePitchLine';
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
-import SentencePitchLine from 'views/components/SentencePitchLine';
 import CueCell from './CueCell';
 
 function WorkoutItemRow({ index }: { index: number }) {

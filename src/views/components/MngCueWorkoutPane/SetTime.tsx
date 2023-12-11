@@ -1,5 +1,5 @@
+import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
 import { TextField } from '@mui/material';
-import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 

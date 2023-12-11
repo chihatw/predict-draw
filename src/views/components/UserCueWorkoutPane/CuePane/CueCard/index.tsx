@@ -1,4 +1,5 @@
-import SentencePitchLine from 'views/components/SentencePitchLine';
+
+import SentencePitchLine from '@/views/components/SentencePitchLine';
 import CardCellContainer from './CardCellContainer';
 
 const CueCard = ({ label, pitchStr }: { label: string; pitchStr: string }) => {

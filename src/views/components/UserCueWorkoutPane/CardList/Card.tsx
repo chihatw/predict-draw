@@ -1,9 +1,9 @@
-import blue from 'assets/images/blue.png';
-import green from 'assets/images/green.png';
-import orange from 'assets/images/orange.png';
-import pink from 'assets/images/pink.png';
-import red from 'assets/images/red.png';
-import yellow from 'assets/images/yellow.png';
+import blue from '@/assets/images/blue.png';
+import green from '@/assets/images/green.png';
+import orange from '@/assets/images/orange.png';
+import pink from '@/assets/images/pink.png';
+import red from '@/assets/images/red.png';
+import yellow from '@/assets/images/yellow.png';
 
 const Card = ({ cardId, isActive }: { cardId: string; isActive: boolean }) => {
   const src = (() => {

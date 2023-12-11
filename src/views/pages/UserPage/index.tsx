@@ -1,8 +1,8 @@
-import { PAGES } from 'application/pageStates/core/1-constants';
-import { USER_LAYOUTS } from 'application/userPage/core/1-constants';
+import { PAGES } from '@/application/pageStates/core/1-constants';
+import { USER_LAYOUTS } from '@/application/userPage/core/1-constants';
+import Layout from '@/views/Layout';
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
-import Layout from 'views/Layout';
 import UserCueWorkoutPane from '../../components/UserCueWorkoutPane';
 import UserMicPane from '../../components/UserMicPane';
 import UserNotePane from '../../components/UserNotePane';

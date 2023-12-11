@@ -1,7 +1,7 @@
+import { ISpeedWorkoutItem } from '@/application/speedWorkoutItems/core/0-interface';
+import { calcBeatCount } from '@/application/speedWorkoutItems/core/2-services';
+import { ISpeedWorkout } from '@/application/speedWorkouts/core/0-interface';
 import { createSlice } from '@reduxjs/toolkit';
-import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
-import { calcBeatCount } from 'application/speedWorkoutItems/core/2-services';
-import { ISpeedWorkout } from 'application/speedWorkouts/core/0-interface';
 import { ISpeedWorkoutEditPage } from '../core/0-interface';
 import { initialState } from '../core/1-constants';
 

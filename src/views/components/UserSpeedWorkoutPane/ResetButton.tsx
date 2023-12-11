@@ -1,5 +1,5 @@
+import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
 import { Button } from '@mui/material';
-import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import { useDispatch } from 'react-redux';
 
 function ResetButton() {

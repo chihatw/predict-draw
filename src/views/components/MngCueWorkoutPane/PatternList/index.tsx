@@ -1,15 +1,15 @@
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
 } from '@mui/material';
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
 
-import { PATTERNS } from 'application/cuePattern/core/1-constants';
-import { buildCurrentPatterns } from 'application/cuePattern/core/2-services';
+import { PATTERNS } from '@/application/cuePattern/core/1-constants';
+import { buildCurrentPatterns } from '@/application/cuePattern/core/2-services';
 import PatternListSwitchesPane from './PatternListSwitchesPane';
 import PatternRow from './PatternRow';
 

@@ -1,5 +1,5 @@
+import { Services } from '@/infrastructure/services';
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { Services } from 'infrastructure/services';
 import { IPageState } from '../core/0-interface';
 
 const pageStatesMiddleware =

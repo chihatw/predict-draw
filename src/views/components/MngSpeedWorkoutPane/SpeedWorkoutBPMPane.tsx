@@ -1,7 +1,7 @@
 import { Clear } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 
-import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
+import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 

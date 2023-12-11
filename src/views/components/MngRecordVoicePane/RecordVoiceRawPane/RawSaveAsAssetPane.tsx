@@ -1,7 +1,7 @@
+import { IRecordVoiceAsset } from '@/application/recordVoiceAssets/core/0-interface';
+import { recordVoiceAssetsActions } from '@/application/recordVoiceAssets/framework/0-reducer';
+import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
 import { Button } from '@mui/material';
-import { IRecordVoiceAsset } from 'application/recordVoiceAssets/core/0-interface';
-import { recordVoiceAssetsActions } from 'application/recordVoiceAssets/framework/0-reducer';
-import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
 import { RootState } from 'main';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';

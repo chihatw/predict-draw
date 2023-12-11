@@ -1,7 +1,7 @@
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { initialState } from 'application/cuePattern/core/1-constants';
+import { ICuePattern } from '@/application/cuePattern/core/0-interface';
+import { initialState } from '@/application/cuePattern/core/1-constants';
+import { db } from '@/infrastructure/firebase';
 import { DocumentData, doc, onSnapshot, updateDoc } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
 import { ICueWorkoutCue } from '../core/0-interface';
 

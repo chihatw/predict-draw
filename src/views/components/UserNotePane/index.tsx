@@ -1,7 +1,7 @@
+import SentencePitchLine from '@/views/components/SentencePitchLine';
 import { Container } from '@mui/material';
 import { RootState } from 'main';
 import { useSelector } from 'react-redux';
-import SentencePitchLine from 'views/components/SentencePitchLine';
 
 const UserNotePane = () => {
   const note = useSelector((state: RootState) => state.note);

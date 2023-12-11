@@ -1,8 +1,8 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
-import { cuePatternParamsActions } from 'application/cuePatternParams/framework/0-reducer';
-import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
+import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
+import { cuePatternParamsActions } from '@/application/cuePatternParams/framework/0-reducer';
+import { cueWorkoutCueActions } from '@/application/cueWorkoutCue/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 

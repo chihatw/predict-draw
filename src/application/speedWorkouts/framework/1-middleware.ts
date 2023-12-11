@@ -1,13 +1,13 @@
+import { Services } from '@/infrastructure/services';
 import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { Services } from 'infrastructure/services';
 import { RootState } from 'main';
 
-import { ISpeedWorkoutEditPage } from 'application/speedWorkoutEditPage/core/0-interface';
+import { ISpeedWorkoutEditPage } from '@/application/speedWorkoutEditPage/core/0-interface';
 import {
-  buildRemoteSpeedWorkout,
-  buildSpeedWorkout,
-} from 'application/speedWorkoutEditPage/core/2-services';
-import { speedWorkoutItemsActions } from 'application/speedWorkoutItems/framework/0-reducer';
+    buildRemoteSpeedWorkout,
+    buildSpeedWorkout,
+} from '@/application/speedWorkoutEditPage/core/2-services';
+import { speedWorkoutItemsActions } from '@/application/speedWorkoutItems/framework/0-reducer';
 import { speedWorkoutsActions } from './0-reducer';
 
 const speedWorkoutsMiddleware =

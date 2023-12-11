@@ -1,7 +1,7 @@
+import { ICuePattern } from '@/application/cuePattern/core/0-interface';
+import { TARGET } from '@/application/cuePattern/core/1-constants';
 import { Clear } from '@mui/icons-material';
 import { TableCell, TableRow } from '@mui/material';
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { TARGET } from 'application/cuePattern/core/1-constants';
 
 function PatternRow({
   index,

@@ -1,6 +1,6 @@
+import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
 import Check from '@mui/icons-material/Check';
 import { Button, IconButton } from '@mui/material';
-import { speedWorkoutParamsActions } from 'application/speedWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

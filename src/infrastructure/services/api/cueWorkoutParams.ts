@@ -1,12 +1,12 @@
 import {
-  next,
-  reset,
-  setColors,
-  setTime,
-  start,
-  stop,
-  updatePatternParams,
-} from 'application/cueWorkoutParams/infrastructure/api';
+    next,
+    reset,
+    setColors,
+    setTime,
+    start,
+    stop,
+    updatePatternParams,
+} from '@/application/cueWorkoutParams/infrastructure/api';
 
 export default {
   reset,

@@ -1,4 +1,4 @@
-import { string2PitchesArray } from 'application/utils/string2PitchesArray';
+import { string2PitchesArray } from '@/application/utils/string2PitchesArray';
 import { ISpeedWorkoutItem } from './0-interface';
 
 export const calcBeatCount = (workoutItems: ISpeedWorkoutItem[]) => {

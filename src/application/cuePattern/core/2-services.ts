@@ -1,4 +1,4 @@
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
 import { ICuePattern } from './0-interface';
 import { TARGET } from './1-constants';
 

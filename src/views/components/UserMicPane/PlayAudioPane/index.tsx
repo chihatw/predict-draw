@@ -2,13 +2,13 @@ import { IconButton } from '@mui/material';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import {
+    pauseSourceNode,
+    playAudioBufferAndSetSourceNode,
+} from '@/application/audioBuffers/core/2-services';
+import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
 import { StopCircle } from '@mui/icons-material';
 import PlayArrow from '@mui/icons-material/PlayArrow';
-import {
-  pauseSourceNode,
-  playAudioBufferAndSetSourceNode,
-} from 'application/audioBuffers/core/2-services';
-import { RAW_PATH } from 'application/recordVoiceParams/core/1-constants';
 import { RootState } from 'main';
 
 const PlayAudioPane = () => {

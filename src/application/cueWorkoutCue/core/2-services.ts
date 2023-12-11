@@ -1,20 +1,20 @@
-import { ICuePatternParams } from 'application/cuePatternParams/core/0-interface';
+import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
 import * as _ from 'lodash';
 
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { ICuePattern } from '@/application/cuePattern/core/0-interface';
 import {
-  PATTERNS,
-  TARGET,
-  initialState as cuePatternInitialState,
-} from 'application/cuePattern/core/1-constants';
-import { buildCurrentPatterns } from 'application/cuePattern/core/2-services';
-import { CUE_CARDS } from 'application/cueWorkoutCards/core/1-constants';
+    PATTERNS,
+    TARGET,
+    initialState as cuePatternInitialState,
+} from '@/application/cuePattern/core/1-constants';
+import { buildCurrentPatterns } from '@/application/cuePattern/core/2-services';
+import { CUE_CARDS } from '@/application/cueWorkoutCards/core/1-constants';
 import {
-  ICueCard,
-  ICueWorkoutCue,
-} from 'application/cueWorkoutCue/core/0-interface';
-import { initialState as cueWorkoutCueInitialState } from 'application/cueWorkoutCue/core/1-constants';
-import { shuffle } from 'application/utils/utils';
+    ICueCard,
+    ICueWorkoutCue,
+} from '@/application/cueWorkoutCue/core/0-interface';
+import { initialState as cueWorkoutCueInitialState } from '@/application/cueWorkoutCue/core/1-constants';
+import { shuffle } from '@/application/utils/utils';
 
 export const updateCue = (
   colors: string[],

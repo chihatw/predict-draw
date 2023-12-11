@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PitchLine from '../PitchLine';
 
-import { buildWordPitchStrs } from 'application/utils/utils';
+import { buildWordPitchStrs } from '@/application/utils/utils';
 
 const SentencePitchLine = ({ pitchStr }: { pitchStr: string }) => {
   const wordPitchStrs = useMemo(() => buildWordPitchStrs(pitchStr), [pitchStr]);

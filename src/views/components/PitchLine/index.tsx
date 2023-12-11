@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import Line from './Line';
 import Mora from './Mora';
 
-import { buildWordPitches } from 'application/utils/buildWordPitches';
+import { buildWordPitches } from '@/application/utils/buildWordPitches';
 
 const PitchLine = ({ wordPitchStr }: { wordPitchStr: string }) => {
   const wordPitches = useMemo(

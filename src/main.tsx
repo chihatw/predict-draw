@@ -7,8 +7,8 @@ import { TypographyOptions } from '@mui/material/styles/createTypography';
 import './index.css';
 import App from './views';
 
-import { configureStore } from 'application/0-store/store';
-import services from 'infrastructure/services';
+import { configureStore } from '@/application/0-store/store';
+import services from '@/infrastructure/services';
 import { Provider } from 'react-redux';
 
 interface ExtendedTypographyOptions extends TypographyOptions {

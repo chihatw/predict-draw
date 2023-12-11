@@ -2,11 +2,11 @@ import { Button, Container, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import {
-  buildSpeedWorkoutItems,
-  buildSpeedWorkoutItemsStr,
-} from 'application/speedWorkoutEditPage/core/2-services';
-import { speedWorkoutEditPageActions } from 'application/speedWorkoutEditPage/framework/0-reducer';
-import { CUE_TYPES } from 'application/speedWorkouts/core/1-constants';
+    buildSpeedWorkoutItems,
+    buildSpeedWorkoutItemsStr,
+} from '@/application/speedWorkoutEditPage/core/2-services';
+import { speedWorkoutEditPageActions } from '@/application/speedWorkoutEditPage/framework/0-reducer';
+import { CUE_TYPES } from '@/application/speedWorkouts/core/1-constants';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

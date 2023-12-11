@@ -1,5 +1,5 @@
+import { recordVoiceParamsActions } from '@/application/recordVoiceParams/framework/0-reducer';
 import { TextField } from '@mui/material';
-import { recordVoiceParamsActions } from 'application/recordVoiceParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 

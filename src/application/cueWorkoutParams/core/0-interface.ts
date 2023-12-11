@@ -1,4 +1,4 @@
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
+import { ICuePattern } from '@/application/cuePattern/core/0-interface';
 
 export interface ICueWorkoutParams {
   colors: string[];

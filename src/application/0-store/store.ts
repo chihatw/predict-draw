@@ -1,8 +1,8 @@
 import * as rtk from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
-import reducer from 'application/0-store/reducer';
-import { Services } from 'infrastructure/services';
+import reducer from '@/application/0-store/reducer';
+import { Services } from '@/infrastructure/services';
 import middleware from './middleware';
 
 const serializableCheck = {

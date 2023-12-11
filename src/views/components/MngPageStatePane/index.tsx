@@ -1,16 +1,16 @@
 import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from '@mui/material';
+    PAGE_STATE,
+    USER_LABELS,
+} from '@/application/pageStates/core/1-constants';
+import { pageStatesActions } from '@/application/pageStates/framework/0-reducer';
 import {
-  PAGE_STATE,
-  USER_LABELS,
-} from 'application/pageStates/core/1-constants';
-import { pageStatesActions } from 'application/pageStates/framework/0-reducer';
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 

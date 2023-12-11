@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 
+import { db } from '@/infrastructure/firebase';
 import { Dictionary } from '@reduxjs/toolkit';
 import {
   DocumentData,
@@ -9,7 +10,6 @@ import {
   query,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 
 import { IPageState } from '../core/0-interface';
 

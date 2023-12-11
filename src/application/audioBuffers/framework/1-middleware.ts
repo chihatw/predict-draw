@@ -1,11 +1,11 @@
-import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { IRecordVoiceParams } from 'application/recordVoiceParams/core/0-interface';
+import { IRecordVoiceParams } from '@/application/recordVoiceParams/core/0-interface';
 import {
-  RAW_PATH,
-  RECORD_VOICE_STORAGE_PATH,
-} from 'application/recordVoiceParams/core/1-constants';
-import { recordedAudioActions } from 'application/recordedAudio/framework/0-reducer';
-import { Services } from 'infrastructure/services';
+    RAW_PATH,
+    RECORD_VOICE_STORAGE_PATH,
+} from '@/application/recordVoiceParams/core/1-constants';
+import { recordedAudioActions } from '@/application/recordedAudio/framework/0-reducer';
+import { Services } from '@/infrastructure/services';
+import { AnyAction, Middleware } from '@reduxjs/toolkit';
 import { RootState } from 'main';
 import { audioBuffersActions } from './0-reducer';
 

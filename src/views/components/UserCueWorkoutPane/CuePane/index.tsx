@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ICuePattern } from 'application/cuePattern/core/0-interface';
-import { TARGET } from 'application/cuePattern/core/1-constants';
-import { ICueWorkoutCue } from 'application/cueWorkoutCue/core/0-interface';
+import { ICuePattern } from '@/application/cuePattern/core/0-interface';
+import { TARGET } from '@/application/cuePattern/core/1-constants';
+import { ICueWorkoutCue } from '@/application/cueWorkoutCue/core/0-interface';
 import CueCard from './CueCard';
 
 const CuePane = React.memo(

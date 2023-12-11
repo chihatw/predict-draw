@@ -1,4 +1,4 @@
-import { ISpeedWorkoutItem } from 'application/speedWorkoutItems/core/0-interface';
+import { ISpeedWorkoutItem } from '@/application/speedWorkoutItems/core/0-interface';
 
 export interface ISpeedWorkoutEditPage {
   label: string;

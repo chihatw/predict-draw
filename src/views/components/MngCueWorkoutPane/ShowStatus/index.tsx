@@ -1,6 +1,6 @@
+import { cueWorkoutCueActions } from '@/application/cueWorkoutCue/framework/0-reducer';
+import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
 import { Button } from '@mui/material';
-import { cueWorkoutCueActions } from 'application/cueWorkoutCue/framework/0-reducer';
-import { cueWorkoutParamsActions } from 'application/cueWorkoutParams/framework/0-reducer';
 import { RootState } from 'main';
 import { useDispatch, useSelector } from 'react-redux';
 

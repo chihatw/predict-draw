@@ -1,12 +1,12 @@
+import { db } from '@/infrastructure/firebase';
 import {
-  DocumentData,
-  arrayUnion,
-  doc,
-  increment,
-  onSnapshot,
-  updateDoc,
+    DocumentData,
+    arrayUnion,
+    doc,
+    increment,
+    onSnapshot,
+    updateDoc,
 } from 'firebase/firestore';
-import { db } from 'infrastructure/firebase';
 import * as _ from 'lodash';
 import { ISpeedWorkoutParams } from '../core/0-interface';
 

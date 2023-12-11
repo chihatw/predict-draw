@@ -1,8 +1,8 @@
 import {
-  deleteStorageByPath,
-  fetchStorageAudioBuffer,
-  uploadStorageByPath,
-} from 'application/audioBuffers/infrastructure/api';
+    deleteStorageByPath,
+    fetchStorageAudioBuffer,
+    uploadStorageByPath,
+} from '@/application/audioBuffers/infrastructure/api';
 
 export default {
   uploadStorageByPath,
