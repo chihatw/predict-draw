@@ -1,10 +1,10 @@
-import { audioBuffersActions } from '@/application/audioBuffers/framework/0-reducer';
-import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
-import { recordVoiceParamsActions } from '@/application/recordVoiceParams/framework/0-reducer';
-import { recordedAudioActions } from '@/application/recordedAudio/framework/0-reducer';
-import Delete from '@mui/icons-material/Delete';
-import { IconButton } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { audioBuffersActions } from "@/application/audioBuffers/framework/0-reducer";
+import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { recordVoiceParamsActions } from "@/application/recordVoiceParams/framework/0-reducer";
+import { recordedAudioActions } from "@/application/recordedAudio/framework/0-reducer";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { useDispatch } from "react-redux";
 
 const DeleteRawButton = () => {
   const dispatch = useDispatch();
@@ -14,9 +14,9 @@ const DeleteRawButton = () => {
     dispatch(recordedAudioActions.removeBlob());
   };
   return (
-    <IconButton size='small' onClick={deleteRecordVoiceRaw}>
-      <Delete />
-    </IconButton>
+    <Button variant="ghost" size="icon" onClick={deleteRecordVoiceRaw}>
+      <Trash2 />
+    </Button>
   );
 };
 

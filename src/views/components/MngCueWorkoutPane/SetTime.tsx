@@ -1,6 +1,6 @@
 import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
+import { Input } from "@/components/ui/input";
 import { RootState } from "@/main";
-import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 const SetTime = () => {
@@ -10,16 +10,14 @@ const SetTime = () => {
     dispatch(cueWorkoutParamsActions.setTime(time));
   };
   return (
-    <>
+    <div>
       <h4>Time</h4>
-      <TextField
-        fullWidth
-        size="small"
+      <Input
         type="number"
         value={time}
         onChange={(e) => handleChangeTime(Number(e.target.value))}
       />
-    </>
+    </div>
   );
 };
 

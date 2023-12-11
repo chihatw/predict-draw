@@ -1,18 +1,13 @@
 import {
-    PAGE_STATE,
-    USER_LABELS,
-} from '@/application/pageStates/core/1-constants';
-import { pageStatesActions } from '@/application/pageStates/framework/0-reducer';
-import {
-    Button,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    Radio,
-    RadioGroup,
-} from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+  PAGE_STATE,
+  USER_LABELS,
+} from "@/application/pageStates/core/1-constants";
+import { pageStatesActions } from "@/application/pageStates/framework/0-reducer";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const MngPageStatePane = ({
   user,
@@ -36,35 +31,34 @@ const MngPageStatePane = ({
   };
 
   const handleChange = (value: string) => {
+    console.log({ value });
     dispatch(pageStatesActions.changePageState({ id: user, state: value }));
   };
 
   return (
-    <FormControl>
+    <div>
       <Button
-        fullWidth
-        sx={{ padding: '8px', justifyContent: 'flex-start' }}
+        variant="ghost"
+        className="w-full justify-start p-2"
         onClick={handleClick}
       >
-        <FormLabel sx={{ fontSize: 12 }}>{USER_LABELS[user] || '??'}</FormLabel>
+        <div className="text-xs">{USER_LABELS[user] || "??"}</div>
       </Button>
       {open && (
         <RadioGroup
-          row
+          className="flex flex-wrap"
           value={value}
-          onChange={(e) => handleChange(e.target.value)}
+          onValueChange={(value) => handleChange(value)}
         >
-          {PAGE_STATE.map(({ value, label }, index) => (
-            <FormControlLabel
-              key={index}
-              value={value}
-              control={<Radio size='small' />}
-              label={label}
-            />
+          {PAGE_STATE.map(({ value: itemvalue, label }, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <RadioGroupItem value={itemvalue} checked={itemvalue === value} />
+              <Label className="whitespace-nowrap">{label}</Label>
+            </div>
           ))}
         </RadioGroup>
       )}
-    </FormControl>
+    </div>
   );
 };
 

@@ -1,10 +1,10 @@
-import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import RecordVoiceAssetsPane from './RecordVoiceAssetsPane';
-import RecordVoiceRawPane from './RecordVoiceRawPane';
+import { Button } from "@/components/ui/button";
+import RecordVoiceAssetsPane from "./RecordVoiceAssetsPane";
+import RecordVoiceRawPane from "./RecordVoiceRawPane";
 
-const LOCAL_STORAGE = 'recordVoice';
+const LOCAL_STORAGE = "recordVoice";
 
 const MngRecordVoicePane = () => {
   const [open, setOpen] = useState(false);
@@ -24,21 +24,21 @@ const MngRecordVoicePane = () => {
     <div>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Button
-          fullWidth
-          sx={{ color: 'black', justifyContent: 'flex-start' }}
+          variant="ghost"
+          className="w-full justify-start"
           onClick={handleClickTitle}
         >
           <h3>Record Voice</h3>
         </Button>
       </div>
       {open && (
-        <div style={{ display: 'grid', rowGap: 8, padding: '0 16px' }}>
+        <div className="grid gap-2 px-8 ">
           <h4>Raw</h4>
           <RecordVoiceRawPane />
           <h4>Assets</h4>

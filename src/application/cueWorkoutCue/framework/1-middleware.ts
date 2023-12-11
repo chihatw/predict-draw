@@ -22,19 +22,16 @@ const cueWorkoutCueMiddleware =
           colors: string[];
           cuePatternParams: ICuePatternParams;
         };
-
         const { cuePattern, cueWorkoutCue } = updateCue(
           colors,
           cuePatternParams,
           currentCuePattern,
           currentCueWorkoutCue,
         );
-
         dispatch(cuePatternActions.setProps(cuePattern));
         dispatch(cueWorkoutCueActions.setProps(cueWorkoutCue));
 
         services.api.cueWorkoutCue.setCueWorkoutCue(cueWorkoutCue, cuePattern);
-
         return;
       }
       default:

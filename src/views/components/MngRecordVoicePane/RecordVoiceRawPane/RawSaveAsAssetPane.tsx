@@ -1,8 +1,8 @@
 import { IRecordVoiceAsset } from "@/application/recordVoiceAssets/core/0-interface";
 import { recordVoiceAssetsActions } from "@/application/recordVoiceAssets/framework/0-reducer";
 import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
-import { Button } from "@mui/material";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,13 +26,7 @@ const RawSaveAsAssetPane = () => {
     dispatch(recordVoiceAssetsActions.addAsset(asset));
   };
   return (
-    <Button
-      size="small"
-      variant="contained"
-      sx={{ color: "white" }}
-      disabled={!rawBlob}
-      onClick={handleSave}
-    >
+    <Button disabled={!rawBlob} onClick={handleSave}>
       save
     </Button>
   );

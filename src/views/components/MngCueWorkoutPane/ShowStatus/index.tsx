@@ -1,7 +1,7 @@
 import { cueWorkoutCueActions } from "@/application/cueWorkoutCue/framework/0-reducer";
 import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
-import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 const ShowStatus = () => {
@@ -18,7 +18,7 @@ const ShowStatus = () => {
     dispatch(cueWorkoutCueActions.updateCueStart({ colors, cuePatternParams }));
   };
   return (
-    <>
+    <div>
       <div
         style={{
           display: "grid",
@@ -29,20 +29,14 @@ const ShowStatus = () => {
         <h4>Points</h4>
         <div>{points}</div>
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 100px)",
-          alignItems: "center",
-        }}
-      >
+      <div className="grid grid-cols-[100px_100px] items-center">
         <h4>IsRunning</h4>
         <div>{String(isRunning)}</div>
       </div>
-      <Button fullWidth variant="outlined" onClick={handleReset}>
+      <Button className="w-full" variant="outline" onClick={handleReset}>
         reset
       </Button>
-    </>
+    </div>
   );
 };
 

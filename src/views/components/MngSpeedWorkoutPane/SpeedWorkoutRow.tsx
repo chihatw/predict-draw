@@ -1,7 +1,7 @@
 import { speedWorkoutParamsActions } from "@/application/speedWorkoutParams/framework/0-reducer";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
 import Check from "@mui/icons-material/Check";
-import { Button, IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -23,15 +23,19 @@ function SpeedWorkoutRow({ speedWorkoutId }: { speedWorkoutId: string }) {
   };
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <IconButton
+      <Button
+        variant="ghost"
+        className={
+          selectedId === speedWorkoutId ? "text-green-600" : "text-gray-500"
+        }
         onClick={() => handleChangeSelectedId(speedWorkoutId)}
-        sx={{ color: selectedId === speedWorkoutId ? "#52a2aa" : "#ccc" }}
       >
         <Check />
-      </IconButton>
+      </Button>
 
       <Button
-        sx={{ flexGrow: 1, justifyContent: "flex-start", color: "black" }}
+        variant="ghost"
+        className="justify-start"
         onClick={() => handleOpenEditor(speedWorkoutId)}
       >
         {label}

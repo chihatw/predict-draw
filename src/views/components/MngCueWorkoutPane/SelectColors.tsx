@@ -1,11 +1,12 @@
 import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
 import { RootState } from "@/main";
-import { Button } from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { cueWorkoutCueActions } from "@/application/cueWorkoutCue/framework/0-reducer";
 import { COLORS } from "@/application/cueWorkoutParams/core/1-constants";
 import { toggleElement } from "@/application/cueWorkoutParams/core/2-services";
+import { Button } from "@/components/ui/button";
 
 const SelectColors = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,10 @@ const SelectColors = () => {
         {COLORS.map((color) => (
           <Button
             key={color}
-            color={colors.includes(color) ? "primary" : "secondary"}
+            variant="ghost"
+            className={
+              colors.includes(color) ? "text-green-600" : "text-purple-600"
+            }
             onClick={() => handleClickColor(color)}
           >
             {color}

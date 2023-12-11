@@ -4,9 +4,9 @@ import {
 } from "@/application/audioBuffers/core/2-services";
 import { IRecordVoiceAsset } from "@/application/recordVoiceAssets/core/0-interface";
 import { RECORD_VOICE_STORAGE_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
-import { PlayArrow, StopCircle } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { PauseCircle, PlayCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -44,9 +44,9 @@ const PlayAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
   };
   if (!audioBuffer || !audioBuffer.audioBuffer) return <></>;
   return (
-    <IconButton size="small" onClick={handleClick}>
-      {isPlaying ? <StopCircle /> : <PlayArrow />}
-    </IconButton>
+    <Button size="icon" variant="ghost" onClick={handleClick}>
+      {isPlaying ? <PauseCircle /> : <PlayCircle />}
+    </Button>
   );
 };
 

@@ -1,8 +1,8 @@
-import { IRecordVoiceAsset } from '@/application/recordVoiceAssets/core/0-interface';
-import { recordVoiceAssetsActions } from '@/application/recordVoiceAssets/framework/0-reducer';
-import Delete from '@mui/icons-material/Delete';
-import { IconButton } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { IRecordVoiceAsset } from "@/application/recordVoiceAssets/core/0-interface";
+import { recordVoiceAssetsActions } from "@/application/recordVoiceAssets/framework/0-reducer";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { useDispatch } from "react-redux";
 
 const DeleteAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
   const dispatch = useDispatch();
@@ -10,9 +10,9 @@ const DeleteAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
     dispatch(recordVoiceAssetsActions.removeOne(asset.id));
   };
   return (
-    <IconButton size='small' onClick={deleteAsset}>
-      <Delete />
-    </IconButton>
+    <Button variant="ghost" size="icon" onClick={deleteAsset}>
+      <Trash2 />
+    </Button>
   );
 };
 

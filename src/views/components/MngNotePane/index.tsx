@@ -1,7 +1,8 @@
 import { buildNoteStr } from "@/application/note/core/2-services";
 import { noteActions } from "@/application/note/framework/0-reducer";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { RootState } from "@/main";
-import { Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,7 +24,7 @@ const MngNotePane = () => {
     setValue(buildNoteStr(note));
   }, [value, note]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
     dispatch(noteActions.update(e.target.value));
   };
@@ -36,15 +37,20 @@ const MngNotePane = () => {
   return (
     <div style={{ display: "grid", rowGap: 8 }}>
       <Button
-        fullWidth
-        sx={{ color: "black", justifyContent: "flex-start" }}
+        variant="ghost"
+        className="justify-start"
         onClick={handleClickTitle}
       >
         <h3>Note</h3>
       </Button>
 
       {open && (
-        <TextField multiline rows={20} value={value} onChange={handleChange} />
+        <Textarea
+          className="mx-8"
+          rows={20}
+          value={value}
+          onChange={handleChange}
+        />
       )}
     </div>
   );

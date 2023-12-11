@@ -2,11 +2,11 @@ import {
   pauseSourceNode,
   playAudioBufferAndSetSourceNode,
 } from "@/application/audioBuffers/core/2-services";
-import { PlayArrow, StopCircle } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
 
 import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
+import { PauseCircle, PlayCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -44,9 +44,9 @@ const PlayRawPane = () => {
 
   if (!rawAudioBuffer || !rawAudioBuffer.audioBuffer) return <></>;
   return (
-    <IconButton size="small" onClick={handleClick}>
-      {isPlaying ? <StopCircle /> : <PlayArrow />}
-    </IconButton>
+    <Button size="icon" onClick={handleClick}>
+      {isPlaying ? <PauseCircle /> : <PlayCircle />}
+    </Button>
   );
 };
 

@@ -1,26 +1,26 @@
-import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
-import * as _ from 'lodash';
+import { ICuePatternParams } from "@/application/cuePatternParams/core/0-interface";
+import * as _ from "lodash";
 
-import { ICuePattern } from '@/application/cuePattern/core/0-interface';
+import { ICuePattern } from "@/application/cuePattern/core/0-interface";
 import {
-    PATTERNS,
-    TARGET,
-    initialState as cuePatternInitialState,
-} from '@/application/cuePattern/core/1-constants';
-import { buildCurrentPatterns } from '@/application/cuePattern/core/2-services';
-import { CUE_CARDS } from '@/application/cueWorkoutCards/core/1-constants';
+  PATTERNS,
+  TARGET,
+  initialState as cuePatternInitialState,
+} from "@/application/cuePattern/core/1-constants";
+import { buildCurrentPatterns } from "@/application/cuePattern/core/2-services";
+import { CUE_CARDS } from "@/application/cueWorkoutCards/core/1-constants";
 import {
-    ICueCard,
-    ICueWorkoutCue,
-} from '@/application/cueWorkoutCue/core/0-interface';
-import { initialState as cueWorkoutCueInitialState } from '@/application/cueWorkoutCue/core/1-constants';
-import { shuffle } from '@/application/utils/utils';
+  ICueCard,
+  ICueWorkoutCue,
+} from "@/application/cueWorkoutCue/core/0-interface";
+import { initialState as cueWorkoutCueInitialState } from "@/application/cueWorkoutCue/core/1-constants";
+import { shuffle } from "@/application/utils/utils";
 
 export const updateCue = (
   colors: string[],
   cuePatternParams: ICuePatternParams,
   currentCuePattern: ICuePattern,
-  currentCueWorkoutCue: ICueWorkoutCue
+  currentCueWorkoutCue: ICueWorkoutCue,
 ): {
   cuePattern: ICuePattern;
   cueWorkoutCue: ICueWorkoutCue;
@@ -29,17 +29,20 @@ export const updateCue = (
     cuePattern: currentCuePattern,
     cueWorkoutCue: currentCueWorkoutCue,
   };
-  while (_.isEqual(currentCuePattern, updatedCue.cuePattern)) {
+  let i = 0;
+  while (_.isEqual(currentCuePattern, updatedCue.cuePattern) && i < 10) {
+    console.log({ i });
     const { cuePattern: _cuePattern, cueWorkoutCue: _cueWorkoutCue } =
       createCueFromParams(colors, cuePatternParams);
     updatedCue = { cuePattern: _cuePattern, cueWorkoutCue: _cueWorkoutCue };
+    i++;
   }
   return updatedCue;
 };
 
 export const createCueFromParams = (
   colors: string[],
-  patternParams: ICuePatternParams
+  patternParams: ICuePatternParams,
 ): { cuePattern: ICuePattern; cueWorkoutCue: ICueWorkoutCue } => {
   const patterns = PATTERNS;
   const currentPatterns = buildCurrentPatterns(patterns, patternParams);
@@ -59,7 +62,7 @@ export const createCueFromParams = (
     (a, b) =>
       topicOrder.indexOf(a.topic) * 10 +
       groupingOrder.indexOf(a.grouping) -
-      (topicOrder.indexOf(b.topic) * 10 + groupingOrder.indexOf(b.grouping))
+      (topicOrder.indexOf(b.topic) * 10 + groupingOrder.indexOf(b.grouping)),
   );
   for (const currentPattern of sortedCurrentPatterns) {
     pumpedCurrentPatterns.push(currentPattern);
@@ -100,14 +103,14 @@ export const createCueFromParams = (
 
   const { cuePattern, cueWorkoutCue } = buildCueWorkoutCueAndPattern(
     colors,
-    pumpedCurrentPatterns
+    pumpedCurrentPatterns,
   );
   return { cuePattern, cueWorkoutCue };
 };
 
 const buildCueWorkoutCueAndPattern = (
   colors: string[],
-  currentPatterns: ICuePattern[]
+  currentPatterns: ICuePattern[],
 ): { cuePattern: ICuePattern; cueWorkoutCue: ICueWorkoutCue } => {
   // パターン抽選
   const currentPattern: ICuePattern = shuffle(currentPatterns)[0];
@@ -121,17 +124,17 @@ const buildCueWorkoutCueAndPattern = (
   // 動詞を作成
   const verb = currentPattern.isNegative
     ? {
-        label: '入れない',
-        pitchStr: 'いれない',
+        label: "入れない",
+        pitchStr: "いれない",
       }
     : {
-        label: '入れる',
-        pitchStr: 'いれる',
+        label: "入れる",
+        pitchStr: "いれる",
       };
 
   const text = [header, nouns[0], nouns[1], verb]
     .map((item) => item.label)
-    .join('');
+    .join("");
 
   const cuePattern: ICuePattern = currentPattern;
   const cueWorkoutCue: ICueWorkoutCue = { text, verb, nouns, header };
@@ -161,12 +164,12 @@ const buildNouns = (colors: string[], pattern: ICuePattern) => {
       ? {
           label: `私は${CUE_CARDS[nounId1].label}が好きです`,
           pitchStr: [
-            'わたしは',
+            "わたしは",
             `${CUE_CARDS[nounId1].pitchStr}が`,
-            'すき＼です',
-          ].join(' '),
+            "すき＼です",
+          ].join(" "),
         }
-      : { label: '', pitchStr: '' };
+      : { label: "", pitchStr: "" };
 
   return { nouns, header };
 };
@@ -177,13 +180,13 @@ const buildNounCueCardProps = (nounId: string, joshi: string) => {
 
   // 助詞が「には」で、名詞にアクセントがない場合は、「に＼は」になる
   if (
-    joshi === 'には' &&
-    !noun.pitchStr.includes('＼') &&
+    joshi === "には" &&
+    !noun.pitchStr.includes("＼") &&
     !noun.hasTailAccent
   ) {
-    joshi = 'に＼は';
+    joshi = "に＼は";
   }
 
-  const pitchStr = noun.pitchStr + (noun.hasTailAccent ? '＼' : '') + joshi;
+  const pitchStr = noun.pitchStr + (noun.hasTailAccent ? "＼" : "") + joshi;
   return { label, pitchStr };
 };

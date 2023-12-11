@@ -1,25 +1,25 @@
-import { IRecordVoiceAsset } from '@/application/recordVoiceAssets/core/0-interface';
-import { recordVoiceAssetsActions } from '@/application/recordVoiceAssets/framework/0-reducer';
-import { TextField } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { IRecordVoiceAsset } from "@/application/recordVoiceAssets/core/0-interface";
+import { recordVoiceAssetsActions } from "@/application/recordVoiceAssets/framework/0-reducer";
+import { Input } from "@/components/ui/input";
+import { useDispatch } from "react-redux";
 
 const RecordVoiceAssetStopAt = ({ asset }: { asset: IRecordVoiceAsset }) => {
   const dispatch = useDispatch();
   const handleChange = (input: number) => {
     dispatch(
-      recordVoiceAssetsActions.changeStopAt({ id: asset.id, stopAt: input })
+      recordVoiceAssetsActions.changeStopAt({ id: asset.id, stopAt: input }),
     );
   };
 
   return (
-    <TextField
-      sx={{ flexBasis: 80 }}
-      size='small'
-      type='number'
+    <Input
+      className="basis-[100px]"
+      type="number"
       value={asset.stopAt}
-      label='stopAt'
+      placeholder="stopAt"
       onChange={(e) => handleChange(Number(e.target.value))}
-      inputProps={{ step: 0.1, min: 0 }}
+      step={0.1}
+      min={0}
     />
   );
 };

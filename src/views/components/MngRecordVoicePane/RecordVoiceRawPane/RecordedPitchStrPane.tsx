@@ -1,5 +1,5 @@
 import { recordVoiceParamsActions } from "@/application/recordVoiceParams/framework/0-reducer";
-import { TextField } from "@mui/material";
+import { Input } from "@/components/ui/input";
 
 import { RootState } from "@/main";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,11 +13,9 @@ const RecordedPitchStrPane = () => {
     dispatch(recordVoiceParamsActions.changeRecordedPitchStr(value));
   };
   return (
-    <TextField
-      sx={{ flexGrow: 1 }}
-      size="small"
+    <Input
       value={recordedPitchStr}
-      label="recordedPitchStr"
+      placeholder="recordedPitchStr"
       onChange={(e) => handleChange(e.target.value)}
       autoComplete="off"
     />

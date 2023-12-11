@@ -1,13 +1,13 @@
-import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import SelectColors from './SelectColors';
-import SetTime from './SetTime';
-import ShowStatus from './ShowStatus';
+import SelectColors from "./SelectColors";
+import SetTime from "./SetTime";
+import ShowStatus from "./ShowStatus";
 
-import PatternList from './PatternList';
+import { Button } from "@/components/ui/button";
+import PatternList from "./PatternList";
 
-const LOCAL_STATE = 'cueWorkout';
+const LOCAL_STATE = "cueWorkout";
 
 const MngCueWorkoutPane = () => {
   const [open, setOpen] = useState(false);
@@ -23,21 +23,18 @@ const MngCueWorkoutPane = () => {
   return (
     <div>
       <Button
-        fullWidth
-        sx={{
-          color: 'black',
-          textTransform: 'none',
-          justifyContent: 'flex-start',
-        }}
+        variant="ghost"
+        className="w-full justify-start"
         onClick={handleClickTitle}
       >
         <h3>紙コップ(CueWorkout)</h3>
       </Button>
       {open && (
-        <div style={{ display: 'grid', rowGap: 8 }}>
+        <div className="grid gap-2 px-8">
           <ShowStatus />
           <SetTime />
           <SelectColors />
+          {/* todo */}
           <PatternList />
         </div>
       )}

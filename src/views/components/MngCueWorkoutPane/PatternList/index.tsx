@@ -1,11 +1,4 @@
 import { RootState } from "@/main";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 import { useSelector } from "react-redux";
 
 import { PATTERNS } from "@/application/cuePattern/core/1-constants";
@@ -27,19 +20,25 @@ const PatternList = () => {
   return (
     <div>
       <PatternListSwitchesPane />
-      <Table size="small" sx={{ marginBottom: 8 }}>
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>例文</TableCell>
-            <TableCell align="center">主題</TableCell>
-            <TableCell align="center">分類</TableCell>
-            <TableCell align="center">格順</TableCell>
-            <TableCell align="center">肯否</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{tableContent}</TableBody>
-      </Table>
+      <div className="mb-10">
+        <div className="grid grid-cols-8 py-2">
+          <div />
+          <div className="col-span-3 flex items-center justify-center text-sm">
+            例文
+          </div>
+          <div className="flex items-center justify-center text-sm">主題</div>
+          <div className="flex items-center justify-center text-sm">分類</div>
+          <div className="flex items-center justify-center text-sm">格順</div>
+          <div className="flex items-center justify-center text-sm">肯否</div>
+        </div>
+        <div>
+          {buildCurrentPatterns(PATTERNS, cuePatternParams).map(
+            (pattern, index) => (
+              <PatternRow key={index} index={index} pattern={pattern} />
+            ),
+          )}
+        </div>
+      </div>
     </div>
   );
 };

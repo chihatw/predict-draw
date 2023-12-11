@@ -1,14 +1,14 @@
-import DeleteRawButton from './DeleteRawButton';
-import PlayRawPane from './PlayRawPane';
-import RawSaveAsAssetPane from './RawSaveAsAssetPane';
-import RecordedPitchStrPane from './RecordedPitchStrPane';
-import TargetPitchPane from './TargetPitchPane';
+import DeleteRawButton from "./DeleteRawButton";
+import PlayRawPane from "./PlayRawPane";
+import RawSaveAsAssetPane from "./RawSaveAsAssetPane";
+import RecordedPitchStrPane from "./RecordedPitchStrPane";
+import TargetPitchPane from "./TargetPitchPane";
 
 const RecordVoiceRawPane = () => {
   return (
-    <div style={{ display: 'grid', rowGap: 8 }}>
+    <div className="grid gap-2">
       <TargetPitchPane />
-      <div style={{ display: 'flex', alignItems: 'center', columnGap: 8 }}>
+      <div className="flex items-center gap-2">
         <PlayRawPane />
         <RecordedPitchStrPane />
         <DeleteRawButton />
