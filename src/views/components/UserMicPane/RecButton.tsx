@@ -1,23 +1,23 @@
-import MicIcon from '@mui/icons-material/Mic';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
-import { IconButton } from '@mui/material';
-import { useRef, useState } from 'react';
+import MicIcon from "@mui/icons-material/Mic";
+import StopCircleIcon from "@mui/icons-material/StopCircle";
+import { IconButton } from "@mui/material";
+import { useRef, useState } from "react";
 
 import {
-    clearMediaRecorder,
-    createMediaRecorder,
-    startRecording,
-} from '@/application/audioBuffers/core/2-services';
-import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
-import { recordVoiceParamsActions } from '@/application/recordVoiceParams/framework/0-reducer';
-import { recordedAudioActions } from '@/application/recordedAudio/framework/0-reducer';
-import { RootState } from 'main';
-import { useDispatch, useSelector } from 'react-redux';
+  clearMediaRecorder,
+  createMediaRecorder,
+  startRecording,
+} from "@/application/audioBuffers/core/2-services";
+import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { recordVoiceParamsActions } from "@/application/recordVoiceParams/framework/0-reducer";
+import { recordedAudioActions } from "@/application/recordedAudio/framework/0-reducer";
+import { RootState } from "@/main";
+import { useDispatch, useSelector } from "react-redux";
 
 const RecButton = () => {
   const dispatch = useDispatch();
   const rawAudioBuffer = useSelector(
-    (state: RootState) => state.audioBuffers.entities[RAW_PATH]
+    (state: RootState) => state.audioBuffers.entities[RAW_PATH],
   );
   const [isRecording, setIsRecording] = useState(false);
 
@@ -30,7 +30,7 @@ const RecButton = () => {
 
     const mediaRecorder = await createMediaRecorder(
       audioElemRef,
-      mediaRecorderRef
+      mediaRecorderRef,
     );
 
     await startRecording(
@@ -40,9 +40,9 @@ const RecButton = () => {
           recordedAudioActions.setRecordedAudio({
             recordedBlob: blob,
             recordedAudioBuffer: audioBuffer,
-          })
+          }),
         );
-      }
+      },
     );
 
     setIsRecording(true);
@@ -63,9 +63,9 @@ const RecButton = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', height: 136 }}>
+    <div style={{ display: "flex", justifyContent: "center", height: 136 }}>
       <IconButton
-        sx={{ color: '#52a2aa' }}
+        sx={{ color: "#52a2aa" }}
         onClick={handleClick}
         disabled={!!rawAudioBuffer}
       >

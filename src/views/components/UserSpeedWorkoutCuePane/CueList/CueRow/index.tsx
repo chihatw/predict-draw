@@ -1,8 +1,8 @@
-import { Check } from '@mui/icons-material';
-import { Button, Collapse } from '@mui/material';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
-import CueCell from './CueCell';
+import { RootState } from "@/main";
+import { Check } from "@mui/icons-material";
+import { Button, Collapse } from "@mui/material";
+import { useSelector } from "react-redux";
+import CueCell from "./CueCell";
 
 const CueRow = ({
   index,
@@ -16,10 +16,10 @@ const CueRow = ({
   itemTempId: string;
 }) => {
   const { selectedId, checkedIndexes } = useSelector(
-    (state: RootState) => state.speedWorkoutParams
+    (state: RootState) => state.speedWorkoutParams,
   );
   const speedWorkout = useSelector(
-    (state: RootState) => state.speedWorkouts.entities[selectedId]
+    (state: RootState) => state.speedWorkouts.entities[selectedId],
   );
 
   const isChecked = checkedIndexes.includes(index);
@@ -31,25 +31,25 @@ const CueRow = ({
       <Button
         fullWidth
         sx={{
-          color: '#555',
-          padding: '8px 16px',
-          textAlign: 'left',
-          margin: '8px 0',
+          color: "#555",
+          padding: "8px 16px",
+          textAlign: "left",
+          margin: "8px 0",
         }}
         disabled={isChecked}
         onClick={handleClick}
       >
         <div
           style={{
-            display: 'grid',
+            display: "grid",
             rowGap: 4,
             flexGrow: 1,
-            alignItems: 'center',
+            alignItems: "center",
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <CueCell itemTempId={itemTempId} isActive={isActive} />
-            <Check sx={{ color: isChecked ? '#52a2aa' : '#eee' }} />
+            <Check sx={{ color: isChecked ? "#52a2aa" : "#eee" }} />
           </div>
         </div>
       </Button>

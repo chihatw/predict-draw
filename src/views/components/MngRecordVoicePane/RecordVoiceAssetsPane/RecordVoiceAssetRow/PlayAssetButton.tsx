@@ -1,19 +1,19 @@
 import {
-    pauseSourceNode,
-    playAudioBufferAndSetSourceNode,
-} from '@/application/audioBuffers/core/2-services';
-import { IRecordVoiceAsset } from '@/application/recordVoiceAssets/core/0-interface';
-import { RECORD_VOICE_STORAGE_PATH } from '@/application/recordVoiceParams/core/1-constants';
-import { PlayArrow, StopCircle } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { RootState } from 'main';
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+  pauseSourceNode,
+  playAudioBufferAndSetSourceNode,
+} from "@/application/audioBuffers/core/2-services";
+import { IRecordVoiceAsset } from "@/application/recordVoiceAssets/core/0-interface";
+import { RECORD_VOICE_STORAGE_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { RootState } from "@/main";
+import { PlayArrow, StopCircle } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 const PlayAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
   const audioBuffer = useSelector(
     (state: RootState) =>
-      state.audioBuffers.entities[RECORD_VOICE_STORAGE_PATH + asset.id]
+      state.audioBuffers.entities[RECORD_VOICE_STORAGE_PATH + asset.id],
   );
   const sourceNodeRef = useRef<AudioBufferSourceNode | undefined>(undefined);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +26,7 @@ const PlayAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
       asset.startAt,
       asset.stopAt,
       sourceNodeRef,
-      () => setIsPlaying(false)
+      () => setIsPlaying(false),
     );
   };
 
@@ -44,7 +44,7 @@ const PlayAssetButton = ({ asset }: { asset: IRecordVoiceAsset }) => {
   };
   if (!audioBuffer || !audioBuffer.audioBuffer) return <></>;
   return (
-    <IconButton size='small' onClick={handleClick}>
+    <IconButton size="small" onClick={handleClick}>
       {isPlaying ? <StopCircle /> : <PlayArrow />}
     </IconButton>
   );

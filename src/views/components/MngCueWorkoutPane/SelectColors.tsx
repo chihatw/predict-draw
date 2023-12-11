@@ -1,17 +1,17 @@
-import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
-import { Button } from '@mui/material';
-import { RootState } from 'main';
-import { useDispatch, useSelector } from 'react-redux';
+import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
+import { RootState } from "@/main";
+import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
-import { cueWorkoutCueActions } from '@/application/cueWorkoutCue/framework/0-reducer';
-import { COLORS } from '@/application/cueWorkoutParams/core/1-constants';
-import { toggleElement } from '@/application/cueWorkoutParams/core/2-services';
+import { cueWorkoutCueActions } from "@/application/cueWorkoutCue/framework/0-reducer";
+import { COLORS } from "@/application/cueWorkoutParams/core/1-constants";
+import { toggleElement } from "@/application/cueWorkoutParams/core/2-services";
 
 const SelectColors = () => {
   const dispatch = useDispatch();
   const { colors } = useSelector((state: RootState) => state.cueWorkoutParams);
   const cuePatternParams = useSelector(
-    (state: RootState) => state.cuePatternParams
+    (state: RootState) => state.cuePatternParams,
   );
 
   const handleClickColor = async (color: string) => {
@@ -21,7 +21,7 @@ const SelectColors = () => {
       cueWorkoutCueActions.updateCueStart({
         colors: updatedColors,
         cuePatternParams,
-      })
+      }),
     );
   };
 
@@ -30,15 +30,15 @@ const SelectColors = () => {
       <h4>色</h4>
       <div
         style={{
-          display: 'grid',
+          display: "grid",
           columnGap: 8,
-          gridTemplateColumns: 'repeat(6, 80px)',
+          gridTemplateColumns: "repeat(6, 80px)",
         }}
       >
         {COLORS.map((color) => (
           <Button
             key={color}
-            color={colors.includes(color) ? 'primary' : 'secondary'}
+            color={colors.includes(color) ? "primary" : "secondary"}
             onClick={() => handleClickColor(color)}
           >
             {color}

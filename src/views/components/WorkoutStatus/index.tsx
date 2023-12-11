@@ -1,21 +1,21 @@
-import { useTheme } from '@mui/system';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import { useTheme } from "@mui/system";
+import { useSelector } from "react-redux";
 
 const WorkoutStatus = () => {
   const theme = useTheme();
 
   const { selectedId, checkedIndexes, totalRounds, currentRound } = useSelector(
-    (state: RootState) => state.speedWorkoutParams
+    (state: RootState) => state.speedWorkoutParams,
   );
   const speedWorkout = useSelector(
-    (state: RootState) => state.speedWorkouts.entities[selectedId]
+    (state: RootState) => state.speedWorkouts.entities[selectedId],
   );
 
   if (!speedWorkout) return <></>;
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: "flex", alignItems: "center" }}>
       <div>
         <span
           style={{

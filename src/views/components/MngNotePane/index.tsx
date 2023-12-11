@@ -1,17 +1,17 @@
-import { buildNoteStr } from '@/application/note/core/2-services';
-import { noteActions } from '@/application/note/framework/0-reducer';
-import { Button, TextField } from '@mui/material';
-import { RootState } from 'main';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { buildNoteStr } from "@/application/note/core/2-services";
+import { noteActions } from "@/application/note/framework/0-reducer";
+import { RootState } from "@/main";
+import { Button, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const LOCAL_STORAGE = 'notePane';
+const LOCAL_STORAGE = "notePane";
 
 const MngNotePane = () => {
   const dispatch = useDispatch();
   const note = useSelector((state: RootState) => state.note);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     const value = localStorage.getItem(LOCAL_STORAGE);
@@ -34,10 +34,10 @@ const MngNotePane = () => {
     localStorage.setItem(LOCAL_STORAGE, String(updatedOpen));
   };
   return (
-    <div style={{ display: 'grid', rowGap: 8 }}>
+    <div style={{ display: "grid", rowGap: 8 }}>
       <Button
         fullWidth
-        sx={{ color: 'black', justifyContent: 'flex-start' }}
+        sx={{ color: "black", justifyContent: "flex-start" }}
         onClick={handleClickTitle}
       >
         <h3>Note</h3>

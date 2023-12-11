@@ -1,19 +1,19 @@
-import { IconButton } from '@mui/material';
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { IconButton } from "@mui/material";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
-    pauseSourceNode,
-    playAudioBufferAndSetSourceNode,
-} from '@/application/audioBuffers/core/2-services';
-import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
-import { StopCircle } from '@mui/icons-material';
-import PlayArrow from '@mui/icons-material/PlayArrow';
-import { RootState } from 'main';
+  pauseSourceNode,
+  playAudioBufferAndSetSourceNode,
+} from "@/application/audioBuffers/core/2-services";
+import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { RootState } from "@/main";
+import { StopCircle } from "@mui/icons-material";
+import PlayArrow from "@mui/icons-material/PlayArrow";
 
 const PlayAudioPane = () => {
   const rawAudioBuffer = useSelector(
-    (state: RootState) => state.audioBuffers.entities[RAW_PATH]
+    (state: RootState) => state.audioBuffers.entities[RAW_PATH],
   );
   const sourceNodeRef = useRef<AudioBufferSourceNode | undefined>(undefined);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +26,7 @@ const PlayAudioPane = () => {
       0,
       rawAudioBuffer.audioBuffer.duration,
       sourceNodeRef,
-      () => setIsPlaying(false)
+      () => setIsPlaying(false),
     );
   };
 
@@ -48,13 +48,13 @@ const PlayAudioPane = () => {
   return (
     <div
       style={{
-        display: 'flex',
+        display: "flex",
         height: 136,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <IconButton sx={{ color: '#52a2aa' }} onClick={handleClick}>
+      <IconButton sx={{ color: "#52a2aa" }} onClick={handleClick}>
         {isPlaying ? (
           <StopCircle sx={{ fontSize: 120 }} />
         ) : (

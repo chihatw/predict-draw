@@ -1,13 +1,13 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { RootState } from 'main';
-import { IAudioBuffer } from '../core/0-interface';
+import { RootState } from "@/main";
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { IAudioBuffer } from "../core/0-interface";
 
 const audioBufferAdapter = createEntityAdapter<IAudioBuffer>({
   selectId: (audioBuffer) => audioBuffer.id,
 });
 
 const audioSlice = createSlice({
-  name: 'audioBuffers',
+  name: "audioBuffers",
   initialState: audioBufferAdapter.getInitialState(),
   reducers: {
     getAudioBufferStart: (state, { payload }: { payload: string }) => state,
@@ -17,7 +17,7 @@ const audioSlice = createSlice({
     },
     saveAudioBuffer: (
       state,
-      { payload }: { payload: { id: string; audioBuffer: AudioBuffer } }
+      { payload }: { payload: { id: string; audioBuffer: AudioBuffer } },
     ) => {
       audioBufferAdapter.upsertOne(state, payload);
     },
@@ -32,5 +32,5 @@ export const audioBuffersActions = audioSlice.actions;
 export default audioSlice.reducer;
 
 export const { selectById: selectAudioById } = audioBufferAdapter.getSelectors(
-  (state: RootState) => state.audioBuffers
+  (state: RootState) => state.audioBuffers,
 );

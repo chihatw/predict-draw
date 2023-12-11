@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
-import { RootState } from 'main';
-import { useDispatch, useSelector } from 'react-redux';
-import CueRow from './CueRow';
-import NextButton from './NextButton';
+import { speedWorkoutParamsActions } from "@/application/speedWorkoutParams/framework/0-reducer";
+import { RootState } from "@/main";
+import { useDispatch, useSelector } from "react-redux";
+import CueRow from "./CueRow";
+import NextButton from "./NextButton";
 
 const CueList = () => {
   const dispatch = useDispatch();
   const { selectedId, isRunning, checkedIndexes, currentRound, totalRounds } =
     useSelector((state: RootState) => state.speedWorkoutParams);
   const speedWorkout = useSelector(
-    (state: RootState) => state.speedWorkouts.entities[selectedId]
+    (state: RootState) => state.speedWorkouts.entities[selectedId],
   );
   const [selectedIndex, setSelectedIndex] = useState(-1);
 

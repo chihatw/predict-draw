@@ -1,12 +1,12 @@
-import { recordVoiceParamsActions } from '@/application/recordVoiceParams/framework/0-reducer';
-import { TextField } from '@mui/material';
-import { RootState } from 'main';
-import { useDispatch, useSelector } from 'react-redux';
+import { recordVoiceParamsActions } from "@/application/recordVoiceParams/framework/0-reducer";
+import { RootState } from "@/main";
+import { TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 const TargetPitchPane = () => {
   const dispatch = useDispatch();
   const rawPitchStr = useSelector(
-    (state: RootState) => state.recordVoiceParams.rawPitchStr
+    (state: RootState) => state.recordVoiceParams.rawPitchStr,
   );
 
   const handleChangeInput = (input: string) => {
@@ -14,11 +14,11 @@ const TargetPitchPane = () => {
   };
   return (
     <TextField
-      size='small'
+      size="small"
       value={rawPitchStr}
-      label='rawPitchStr'
+      label="rawPitchStr"
       onChange={(e) => handleChangeInput(e.target.value)}
-      autoComplete='off'
+      autoComplete="off"
     />
   );
 };

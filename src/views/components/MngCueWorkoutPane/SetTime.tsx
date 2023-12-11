@@ -1,7 +1,7 @@
-import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
-import { TextField } from '@mui/material';
-import { RootState } from 'main';
-import { useDispatch, useSelector } from 'react-redux';
+import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
+import { RootState } from "@/main";
+import { TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 const SetTime = () => {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const SetTime = () => {
       <h4>Time</h4>
       <TextField
         fullWidth
-        size='small'
-        type='number'
+        size="small"
+        type="number"
         value={time}
         onChange={(e) => handleChangeTime(Number(e.target.value))}
       />

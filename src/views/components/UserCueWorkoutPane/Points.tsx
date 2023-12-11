@@ -1,13 +1,13 @@
-import { useTheme } from '@mui/material';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import { useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Points = () => {
   const theme = useTheme();
   const { points } = useSelector((state: RootState) => state.cueWorkoutParams);
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div style={{ textAlign: 'center' }}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ textAlign: "center" }}>
         <div>
           <span
             style={{

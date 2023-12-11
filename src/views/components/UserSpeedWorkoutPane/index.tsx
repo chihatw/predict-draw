@@ -1,22 +1,22 @@
-import { calcBpm } from '@/application/speedWorkoutParams/core/2-services';
-import { speedWorkoutParamsActions } from '@/application/speedWorkoutParams/framework/0-reducer';
-import { RootState } from 'main';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import BPMCulcLabel from './BPMCulcLabel';
+import { calcBpm } from "@/application/speedWorkoutParams/core/2-services";
+import { speedWorkoutParamsActions } from "@/application/speedWorkoutParams/framework/0-reducer";
+import { RootState } from "@/main";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import BPMCulcLabel from "./BPMCulcLabel";
 
-import BpmPane from './BpmPane';
-import ResetButton from './ResetButton';
-import TimePane from './TimePane';
-import TimerButton from './TimerButton';
+import BpmPane from "./BpmPane";
+import ResetButton from "./ResetButton";
+import TimePane from "./TimePane";
+import TimerButton from "./TimerButton";
 
 const UserSpeedWorkoutPane = () => {
   const dispatch = useDispatch();
   const { selectedId, isRunning, bpm } = useSelector(
-    (state: RootState) => state.speedWorkoutParams
+    (state: RootState) => state.speedWorkoutParams,
   );
   const speedWorkout = useSelector(
-    (state: RootState) => state.speedWorkouts.entities[selectedId]
+    (state: RootState) => state.speedWorkouts.entities[selectedId],
   );
 
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -64,7 +64,7 @@ const UserSpeedWorkoutPane = () => {
 
   if (!speedWorkout) return <></>;
   return (
-    <div style={{ display: 'grid', rowGap: 40 }}>
+    <div style={{ display: "grid", rowGap: 40 }}>
       <BPMCulcLabel />
       <div>
         <BpmPane elapsedTime={elapsedTime} />

@@ -1,24 +1,24 @@
-import { Container } from '@mui/material';
-import { RootState } from 'main';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import { Container } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { ICuePattern } from '@/application/cuePattern/core/0-interface';
-import { cueWorkoutCueActions } from '@/application/cueWorkoutCue/framework/0-reducer';
-import { cueWorkoutParamsActions } from '@/application/cueWorkoutParams/framework/0-reducer';
-import TimeDisplay from '../TimeDisplay';
-import ColorList from './CardList/ColorList';
-import CuePane from './CuePane';
-import PlayButton from './PlayButton';
+import { ICuePattern } from "@/application/cuePattern/core/0-interface";
+import { cueWorkoutCueActions } from "@/application/cueWorkoutCue/framework/0-reducer";
+import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
+import TimeDisplay from "../TimeDisplay";
+import ColorList from "./CardList/ColorList";
+import CuePane from "./CuePane";
+import PlayButton from "./PlayButton";
 
 const UserCueWorkoutPane = () => {
   const dispatch = useDispatch();
 
   const { isRunning, time, colors } = useSelector(
-    (state: RootState) => state.cueWorkoutParams
+    (state: RootState) => state.cueWorkoutParams,
   );
   const { cuePatternParams, cuePattern, cueWorkoutCue } = useSelector(
-    (state: RootState) => state
+    (state: RootState) => state,
   );
 
   const [miliSeconds, setMiliSeconds] = useState(0);
@@ -66,11 +66,11 @@ const UserCueWorkoutPane = () => {
   };
 
   return (
-    <Container maxWidth='sm' sx={{ paddingTop: 0 }}>
-      <div style={{ display: 'grid', rowGap: 8 }}>
+    <Container maxWidth="sm" sx={{ paddingTop: 0 }}>
+      <div style={{ display: "grid", rowGap: 8 }}>
         <ColorList />
         <TimeDisplay miliSeconds={miliSeconds} />
-        <div style={{ margin: '16px 0', height: 300 }}>
+        <div style={{ margin: "16px 0", height: 300 }}>
           {isRunning && (
             <CuePane cueWorkoutCue={cueWorkoutCue} cuePattern={cuePattern} />
           )}
@@ -85,14 +85,14 @@ export default UserCueWorkoutPane;
 
 const isContinue = (
   currentPattern: ICuePattern,
-  updatedPattern: ICuePattern
+  updatedPattern: ICuePattern,
 ) => {
   return isSamePattern(currentPattern, updatedPattern);
 };
 
 const isSamePattern = (
   currentPattern: ICuePattern,
-  updatedPattern: ICuePattern
+  updatedPattern: ICuePattern,
 ) => {
   return JSON.stringify(updatedPattern) === JSON.stringify(currentPattern);
 };

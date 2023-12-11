@@ -1,30 +1,30 @@
-import { Button, Container, MenuItem, Select, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 
 import {
-    buildSpeedWorkoutItems,
-    buildSpeedWorkoutItemsStr,
-} from '@/application/speedWorkoutEditPage/core/2-services';
-import { speedWorkoutEditPageActions } from '@/application/speedWorkoutEditPage/framework/0-reducer';
-import { CUE_TYPES } from '@/application/speedWorkouts/core/1-constants';
-import { RootState } from 'main';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import WorkoutItemRow from './WorkoutItemRow';
+  buildSpeedWorkoutItems,
+  buildSpeedWorkoutItemsStr,
+} from "@/application/speedWorkoutEditPage/core/2-services";
+import { speedWorkoutEditPageActions } from "@/application/speedWorkoutEditPage/framework/0-reducer";
+import { CUE_TYPES } from "@/application/speedWorkouts/core/1-constants";
+import { RootState } from "@/main";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import WorkoutItemRow from "./WorkoutItemRow";
 
 const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const speedWorkout = useSelector(
-    (state: RootState) => state.speedWorkouts.entities[workoutId]
+    (state: RootState) => state.speedWorkouts.entities[workoutId],
   );
 
   const speedWorkoutEditPage = useSelector(
-    (state: RootState) => state.speedWorkoutEditPage
+    (state: RootState) => state.speedWorkoutEditPage,
   );
 
-  const [value, setValue] = useState({ workoutItemsStr: '', cuesStr: '' });
+  const [value, setValue] = useState({ workoutItemsStr: "", cuesStr: "" });
 
   useEffect(() => {
     if (!!value.workoutItemsStr) return;
@@ -53,28 +53,28 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
   const handleSubmit = () => {
     if (!workoutId) return;
     dispatch(
-      speedWorkoutEditPageActions.submit({ workoutId, speedWorkoutEditPage })
+      speedWorkoutEditPageActions.submit({ workoutId, speedWorkoutEditPage }),
     );
-    navigate('/mng');
+    navigate("/mng");
   };
 
   if (!speedWorkout) return;
   return (
-    <Container maxWidth='sm' sx={{ paddingTop: 10, paddingBottom: 20 }}>
-      <div style={{ display: 'grid', rowGap: 8 }}>
+    <Container maxWidth="sm" sx={{ paddingTop: 10, paddingBottom: 20 }}>
+      <div style={{ display: "grid", rowGap: 8 }}>
         <div>{`beatCount: ${speedWorkoutEditPage.beatCount}`}</div>
         <TextField
-          label='label'
-          size='small'
+          label="label"
+          size="small"
           value={speedWorkoutEditPage.label}
           onChange={(e) => handleChangeLabel(e.target.value)}
         />
         <div
           style={{
             fontSize: 8,
-            color: 'gray',
-            paddingLeft: '2em',
-            paddingBottom: '1em',
+            color: "gray",
+            paddingLeft: "2em",
+            paddingBottom: "1em",
           }}
         >
           <div>text</div>
@@ -85,7 +85,7 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
         <TextField
           multiline
           rows={12}
-          label='workout items'
+          label="workout items"
           value={value.workoutItemsStr}
           onChange={(e) =>
             setValue((currentValue) => ({
@@ -96,7 +96,7 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
         />
 
         <Select
-          size='small'
+          size="small"
           value={speedWorkoutEditPage.cueType}
           onChange={(e) => handleChangeCueType(e.target.value)}
         >
@@ -106,7 +106,7 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
             </MenuItem>
           ))}
         </Select>
-        <div style={{ display: 'grid', rowGap: 16 }}>
+        <div style={{ display: "grid", rowGap: 16 }}>
           {speedWorkoutEditPage.workoutItems.map((_, index) => (
             <WorkoutItemRow index={index} key={index} />
           ))}

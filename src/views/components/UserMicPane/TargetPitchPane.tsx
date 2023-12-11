@@ -1,13 +1,13 @@
-import SentencePitchLine from '@/views/components/SentencePitchLine';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import SentencePitchLine from "@/views/components/SentencePitchLine";
+import { useSelector } from "react-redux";
 
 const TargetPitchPane = () => {
   const rawPitchStr = useSelector(
-    (state: RootState) => state.recordVoiceParams.rawPitchStr
+    (state: RootState) => state.recordVoiceParams.rawPitchStr,
   );
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', height: 40 }}>
+    <div style={{ display: "flex", justifyContent: "center", height: 40 }}>
       <SentencePitchLine pitchStr={rawPitchStr} />
     </div>
   );

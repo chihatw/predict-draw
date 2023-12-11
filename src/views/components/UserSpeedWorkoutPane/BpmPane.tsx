@@ -1,6 +1,6 @@
-import { useTheme } from '@mui/material';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import { useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function BpmPane({ elapsedTime }: { elapsedTime: number }) {
   const theme = useTheme();
@@ -11,9 +11,9 @@ function BpmPane({ elapsedTime }: { elapsedTime: number }) {
       style={{
         ...(theme.typography as any).lato900,
         fontSize: 60,
-        display: 'flex',
-        alignItems: 'end',
-        justifyContent: 'center',
+        display: "flex",
+        alignItems: "end",
+        justifyContent: "center",
       }}
     >
       <div
@@ -26,7 +26,7 @@ function BpmPane({ elapsedTime }: { elapsedTime: number }) {
       >
         BPM
       </div>
-      <div>{bpm > 0 ? bpm : '--'}</div>
+      <div>{bpm > 0 ? bpm : "--"}</div>
     </div>
   );
 }

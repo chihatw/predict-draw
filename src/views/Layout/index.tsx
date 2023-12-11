@@ -1,41 +1,22 @@
-import { useTheme } from '@mui/system';
-import React, { useMemo } from 'react';
-
-import Header from './components/Header';
-
-const HEADER_HEIGHT = 60;
-const PADDING_TOP = 8;
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
 const Layout: React.FC<{
   color: string;
   label?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }> = ({ color, label, children }) => {
-  const theme = useTheme();
-  const backgroundColor = useMemo(() => {
-    let result = '';
-    switch (color) {
-      case 'red':
-        result = theme.palette.liSan.main;
-        break;
-      case 'blue':
-        result = theme.palette.kouSan.main;
-        break;
-    }
-
-    return result;
-  }, []);
   return (
-    <div style={{ height: '100%' }}>
-      <Header
-        label={label}
-        height={HEADER_HEIGHT}
-        backgroundColor={backgroundColor}
-      />
-      <div style={{ height: PADDING_TOP }} />
-      <div style={{ height: `calc(100% - ${HEADER_HEIGHT + PADDING_TOP}px)` }}>
-        {children}
+    <div className="flex min-h-screen flex-col gap-y-2">
+      <div
+        className={cn(
+          "flex h-[60px] items-center justify-center",
+          color === "red" ? "bg-rose-700" : "bg-blue-700",
+        )}
+      >
+        <span className="p-20 text-lg font-bold text-white">{label}</span>
       </div>
+      <div className="flex-1 ">{children}</div>
     </div>
   );
 };

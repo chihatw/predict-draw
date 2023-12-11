@@ -1,10 +1,10 @@
-import { cuePatternActions } from '@/application/cuePattern/framework/0-reducer';
-import { ICuePatternParams } from '@/application/cuePatternParams/core/0-interface';
-import { Services } from '@/infrastructure/services';
-import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { RootState } from 'main';
-import { updateCue } from '../core/2-services';
-import { cueWorkoutCueActions } from './0-reducer';
+import { cuePatternActions } from "@/application/cuePattern/framework/0-reducer";
+import { ICuePatternParams } from "@/application/cuePatternParams/core/0-interface";
+import { Services } from "@/infrastructure/services";
+import { RootState } from "@/main";
+import { AnyAction, Middleware } from "@reduxjs/toolkit";
+import { updateCue } from "../core/2-services";
+import { cueWorkoutCueActions } from "./0-reducer";
 
 const cueWorkoutCueMiddleware =
   (services: Services): Middleware =>
@@ -13,7 +13,7 @@ const cueWorkoutCueMiddleware =
   async (action: AnyAction) => {
     next(action);
     switch (action.type) {
-      case 'cueWorkoutCue/updateCueStart': {
+      case "cueWorkoutCue/updateCueStart": {
         const {
           cuePattern: currentCuePattern,
           cueWorkoutCue: currentCueWorkoutCue,
@@ -27,7 +27,7 @@ const cueWorkoutCueMiddleware =
           colors,
           cuePatternParams,
           currentCuePattern,
-          currentCueWorkoutCue
+          currentCueWorkoutCue,
         );
 
         dispatch(cuePatternActions.setProps(cuePattern));

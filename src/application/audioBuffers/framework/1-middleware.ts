@@ -1,13 +1,13 @@
-import { IRecordVoiceParams } from '@/application/recordVoiceParams/core/0-interface';
+import { IRecordVoiceParams } from "@/application/recordVoiceParams/core/0-interface";
 import {
-    RAW_PATH,
-    RECORD_VOICE_STORAGE_PATH,
-} from '@/application/recordVoiceParams/core/1-constants';
-import { recordedAudioActions } from '@/application/recordedAudio/framework/0-reducer';
-import { Services } from '@/infrastructure/services';
-import { AnyAction, Middleware } from '@reduxjs/toolkit';
-import { RootState } from 'main';
-import { audioBuffersActions } from './0-reducer';
+  RAW_PATH,
+  RECORD_VOICE_STORAGE_PATH,
+} from "@/application/recordVoiceParams/core/1-constants";
+import { recordedAudioActions } from "@/application/recordedAudio/framework/0-reducer";
+import { Services } from "@/infrastructure/services";
+import { RootState } from "@/main";
+import { AnyAction, Middleware } from "@reduxjs/toolkit";
+import { audioBuffersActions } from "./0-reducer";
 
 const audioMiddleWare =
   (services: Services): Middleware =>
@@ -16,7 +16,7 @@ const audioMiddleWare =
   async (action: AnyAction) => {
     next(action);
     switch (action.type) {
-      case 'audioBuffers/getAudioBufferStart': {
+      case "audioBuffers/getAudioBufferStart": {
         const path = action.payload as string;
         const audioBuffers = (getState() as RootState).audioBuffers.entities;
 
@@ -25,9 +25,8 @@ const audioMiddleWare =
         // path がすでに存在すれば、終了
         if (paths.includes(path)) break;
 
-        const result = await services.api.audioBuffers.fetchStorageAudioBuffer(
-          path
-        );
+        const result =
+          await services.api.audioBuffers.fetchStorageAudioBuffer(path);
 
         if (!result) return;
 
@@ -41,7 +40,7 @@ const audioMiddleWare =
               id: path,
               audioBuffer: gotAudioBuffer || undefined,
             },
-          ])
+          ]),
         );
 
         if (path === RAW_PATH) {
@@ -50,7 +49,7 @@ const audioMiddleWare =
 
         return;
       }
-      case 'audioBuffers/getAudioBuffersStart': {
+      case "audioBuffers/getAudioBuffersStart": {
         const paths = action.payload as string[];
         const audioBuffers = (getState() as RootState).audioBuffers.entities;
 
@@ -74,13 +73,13 @@ const audioMiddleWare =
                 audioBuffer: gotAudioBuffer,
               });
             }
-          })
+          }),
         );
 
         dispatch(audioBuffersActions.mergeAudioBuffers(gotAudioBuffers));
         return;
       }
-      case 'audioBuffers/saveAudioBuffer': {
+      case "audioBuffers/saveAudioBuffer": {
         const path = action.payload.id as string;
         const recordedBlob = (getState() as RootState).recordedAudio.blob;
 
@@ -90,29 +89,29 @@ const audioMiddleWare =
         dispatch(recordedAudioActions.resetRecordedAudio());
         return;
       }
-      case 'audioBuffers/removeAudioBuffer': {
+      case "audioBuffers/removeAudioBuffer": {
         const path = action.payload as string;
         await services.api.audioBuffers.deleteStorageByPath(path);
         return;
       }
       // audioBuffers に追加、storage に upload
-      case 'recordedAudio/setRecordedAudio': {
+      case "recordedAudio/setRecordedAudio": {
         const { recordedAudioBuffer, recordedBlob } = action.payload as {
           recordedBlob: Blob;
           recordedAudioBuffer: AudioBuffer;
         };
         if (!recordedBlob || !recordedAudioBuffer) return;
-        const path = RECORD_VOICE_STORAGE_PATH + 'raw';
+        const path = RECORD_VOICE_STORAGE_PATH + "raw";
         await services.api.audioBuffers.uploadStorageByPath(recordedBlob, path);
         dispatch(
           audioBuffersActions.saveAudioBuffer({
             id: path,
             audioBuffer: recordedAudioBuffer,
-          })
+          }),
         );
         return;
       }
-      case 'recordVoiceParams/setParams': {
+      case "recordVoiceParams/setParams": {
         const params = action.payload as IRecordVoiceParams;
         if (!params.hasRaw) {
           dispatch(audioBuffersActions.removeAudioBuffer(RAW_PATH));

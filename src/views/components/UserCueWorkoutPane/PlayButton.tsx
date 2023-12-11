@@ -1,8 +1,8 @@
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import PlayCircleRounded from '@mui/icons-material/PlayCircleRounded';
-import { IconButton } from '@mui/material';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import PlayCircleRounded from "@mui/icons-material/PlayCircleRounded";
+import { IconButton } from "@mui/material";
+import { useSelector } from "react-redux";
 
 // const rotate = keyframes`
 //   0%  {
@@ -16,17 +16,17 @@ import { useSelector } from 'react-redux';
 
 const PlayButton = ({ handleClick }: { handleClick: () => void }) => {
   const { isRunning, points } = useSelector(
-    (state: RootState) => state.cueWorkoutParams
+    (state: RootState) => state.cueWorkoutParams,
   );
 
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
+        display: "flex",
+        justifyContent: "center",
       }}
     >
-      <IconButton color='primary' onClick={handleClick}>
+      <IconButton color="primary" onClick={handleClick}>
         {isRunning ? (
           <ChangeCircleIcon
             // className={css`

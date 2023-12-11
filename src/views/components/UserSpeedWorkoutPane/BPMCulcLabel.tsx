@@ -1,20 +1,20 @@
-import { useTheme } from '@mui/material';
-import { RootState } from 'main';
-import { useSelector } from 'react-redux';
+import { RootState } from "@/main";
+import { useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const BPMCulcLabel = () => {
   const theme = useTheme();
   const { selectedId } = useSelector(
-    (state: RootState) => state.speedWorkoutParams
+    (state: RootState) => state.speedWorkoutParams,
   );
   const speedWorkout = useSelector(
-    (state: RootState) => state.speedWorkouts.entities[selectedId]
+    (state: RootState) => state.speedWorkouts.entities[selectedId],
   );
 
   if (!speedWorkout) return <></>;
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         style={{
           ...(theme.typography as any).mRounded300,
@@ -23,7 +23,7 @@ const BPMCulcLabel = () => {
       >
         <span>{speedWorkout.label}</span>
         <span style={{ fontSize: 16, paddingLeft: 8 }}>
-          {' '}
+          {" "}
           {`(${speedWorkout.beatCount} beats)`}
         </span>
       </div>
