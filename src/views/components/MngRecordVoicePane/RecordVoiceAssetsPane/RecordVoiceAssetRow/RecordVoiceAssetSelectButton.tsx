@@ -1,6 +1,4 @@
-import Check from '@mui/icons-material/Check';
-import { IconButton } from '@mui/material';
-import React from 'react';
+import { Button } from "@/components/ui/button";
 
 const RecordVoiceAssetSelectButton = ({
   index,
@@ -10,16 +8,16 @@ const RecordVoiceAssetSelectButton = ({
   handleClick: () => void;
 }) => {
   return (
-    <IconButton
-      size='small'
-      sx={{
-        width: 32,
-        color: index > -1 ? '#52a2aa' : 'gray',
+    <Button
+      variant={"ghost"}
+      className="w-8"
+      style={{
+        color: index > -1 ? "#52a2aa" : "gray",
       }}
       onClick={handleClick}
     >
-      {index > -1 ? index + 1 : '-'}
-    </IconButton>
+      {index > -1 ? index + 1 : "-"}
+    </Button>
   );
 };
 

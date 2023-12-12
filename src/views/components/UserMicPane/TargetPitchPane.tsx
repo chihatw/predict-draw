@@ -7,7 +7,7 @@ const TargetPitchPane = () => {
     (state: RootState) => state.recordVoiceParams.rawPitchStr,
   );
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: 40 }}>
+    <div className="flex h-10 justify-center">
       <SentencePitchLine pitchStr={rawPitchStr} />
     </div>
   );

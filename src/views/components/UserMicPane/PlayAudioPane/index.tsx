@@ -1,4 +1,3 @@
-import { IconButton } from "@mui/material";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -7,9 +6,10 @@ import {
   playAudioBufferAndSetSourceNode,
 } from "@/application/audioBuffers/core/2-services";
 import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
-import { StopCircle } from "@mui/icons-material";
-import PlayArrow from "@mui/icons-material/PlayArrow";
+
+import { PlayCircle, StopCircle } from "lucide-react";
 
 const PlayAudioPane = () => {
   const rawAudioBuffer = useSelector(
@@ -46,21 +46,19 @@ const PlayAudioPane = () => {
   if (!rawAudioBuffer || !rawAudioBuffer.audioBuffer) return <></>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: 136,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <IconButton sx={{ color: "#52a2aa" }} onClick={handleClick}>
+    <div className="flex h-[136px] items-center justify-center">
+      <Button
+        variant={"ghost"}
+        size="icon"
+        onClick={handleClick}
+        className="h-[120px] w-[120px]"
+      >
         {isPlaying ? (
-          <StopCircle sx={{ fontSize: 120 }} />
+          <StopCircle size={120} color="#52a2aa" />
         ) : (
-          <PlayArrow sx={{ fontSize: 120 }} />
+          <PlayCircle size={120} color="#52a2aa" />
         )}
-      </IconButton>
+      </Button>
     </div>
   );
 };

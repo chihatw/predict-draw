@@ -1,6 +1,3 @@
-import MicIcon from "@mui/icons-material/Mic";
-import StopCircleIcon from "@mui/icons-material/StopCircle";
-import { IconButton } from "@mui/material";
 import { useRef, useState } from "react";
 
 import {
@@ -11,7 +8,9 @@ import {
 import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
 import { recordVoiceParamsActions } from "@/application/recordVoiceParams/framework/0-reducer";
 import { recordedAudioActions } from "@/application/recordedAudio/framework/0-reducer";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
+import { Mic, StopCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
 const RecButton = () => {
@@ -64,17 +63,19 @@ const RecButton = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", height: 136 }}>
-      <IconButton
-        sx={{ color: "#52a2aa" }}
+      <Button
+        size="icon"
+        variant="ghost"
         onClick={handleClick}
         disabled={!!rawAudioBuffer}
+        className="h-[120px] w-[120px]"
       >
         {isRecording ? (
-          <StopCircleIcon sx={{ fontSize: 120 }} />
+          <StopCircle size={120} color="#52a2aa" />
         ) : (
-          <MicIcon sx={{ fontSize: 120 }} />
+          <Mic size={120} color="#52a2aa" />
         )}
-      </IconButton>
+      </Button>
     </div>
   );
 };

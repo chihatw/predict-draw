@@ -1,7 +1,8 @@
 import { speedWorkoutParamsActions } from "@/application/speedWorkoutParams/framework/0-reducer";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
-import Check from "@mui/icons-material/Check";
+import { Check } from "lucide-react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

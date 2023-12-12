@@ -28,7 +28,6 @@ const UserPage = ({ user }: { user: string }) => {
       case PAGES.note:
         return <UserNotePane />;
       case PAGES.micTest:
-        // todo
         return <UserMicPane />;
       default:
         return <div></div>;

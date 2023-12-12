@@ -1,12 +1,11 @@
-import { Container } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { audioBuffersActions } from '@/application/audioBuffers/framework/0-reducer';
-import { RAW_PATH } from '@/application/recordVoiceParams/core/1-constants';
-import { useDispatch } from 'react-redux';
-import PlayAudioPane from './PlayAudioPane';
-import RecButton from './RecButton';
-import TargetPitchPane from './TargetPitchPane';
+import { audioBuffersActions } from "@/application/audioBuffers/framework/0-reducer";
+import { RAW_PATH } from "@/application/recordVoiceParams/core/1-constants";
+import { useDispatch } from "react-redux";
+import PlayAudioPane from "./PlayAudioPane";
+import RecButton from "./RecButton";
+import TargetPitchPane from "./TargetPitchPane";
 
 const UserMicPane = () => {
   const dispatch = useDispatch();
@@ -19,15 +18,15 @@ const UserMicPane = () => {
   }, [initializing]);
 
   return (
-    <Container maxWidth='sm'>
-      <div style={{ display: 'grid', paddingTop: 80, rowGap: 40 }}>
+    <div className="mx-auto max-w-lg">
+      <div className="grid gap-10 pt-20">
         <div>
           <TargetPitchPane />
           <RecButton />
         </div>
         <PlayAudioPane />
       </div>
-    </Container>
+    </div>
   );
 };
 

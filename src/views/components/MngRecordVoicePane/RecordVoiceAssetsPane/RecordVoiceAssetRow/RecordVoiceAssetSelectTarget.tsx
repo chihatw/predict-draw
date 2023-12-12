@@ -1,5 +1,5 @@
-import Check from '@mui/icons-material/Check';
-import { IconButton } from '@mui/material';
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 
 const RecordVoiceAssetSelectTarget = ({
   isTarget,
@@ -9,12 +9,14 @@ const RecordVoiceAssetSelectTarget = ({
   selectTarget: () => void;
 }) => {
   return (
-    <IconButton
-      sx={{ color: isTarget ? '#52a2aa' : 'grey' }}
+    <Button
+      size="icon"
+      variant={"ghost"}
+      style={{ color: isTarget ? "#52a2aa" : "grey" }}
       onClick={selectTarget}
     >
       <Check />
-    </IconButton>
+    </Button>
   );
 };
 

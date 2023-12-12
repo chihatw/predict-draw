@@ -1,6 +1,6 @@
 import { ICuePattern } from "@/application/cuePattern/core/0-interface";
 import { TARGET } from "@/application/cuePattern/core/1-constants";
-import { Clear } from "@mui/icons-material";
+import { X } from "lucide-react";
 
 function PatternRow({
   index,
@@ -11,7 +11,7 @@ function PatternRow({
 }) {
   const topicCell =
     pattern.topic === TARGET.none ? (
-      <Clear sx={{ fontSize: 12 }} />
+      <X size={12} />
     ) : pattern.topic === TARGET.wo ? (
       "ヲ格"
     ) : (
@@ -19,7 +19,7 @@ function PatternRow({
     );
   const groupingCell =
     pattern.grouping === TARGET.none ? (
-      <Clear sx={{ fontSize: 12 }} />
+      <X size={12} />
     ) : pattern.grouping === TARGET.wo ? (
       "ヲ格"
     ) : (
