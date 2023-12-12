@@ -28,18 +28,20 @@ const CueList = () => {
   if (!speedWorkout) return <></>;
   if (isRunning) {
     return (
-      <div>
-        {speedWorkout.itemTempIds.map((itemTempId, index) => {
-          return (
-            <CueRow
-              key={index}
-              index={index}
-              isActive={selectedIndex === index}
-              handleClick={() => handleClickCheck(index)}
-              itemTempId={itemTempId}
-            />
-          );
-        })}
+      <div className="space-y-10">
+        <div className="space-y-2">
+          {speedWorkout.itemTempIds.map((itemTempId, index) => {
+            return (
+              <CueRow
+                key={index}
+                index={index}
+                isActive={selectedIndex === index}
+                handleClick={() => handleClickCheck(index)}
+                itemTempId={itemTempId}
+              />
+            );
+          })}
+        </div>
         {isRunning &&
           currentRound !== totalRounds &&
           checkedIndexes.length === speedWorkout.itemTempIds.length && (

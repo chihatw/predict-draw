@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/main";
-import { Check } from "@mui/icons-material";
-import { Button, Collapse } from "@mui/material";
+
+import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 import { useSelector } from "react-redux";
 import CueCell from "./CueCell";
 
@@ -27,33 +29,23 @@ const CueRow = ({
   if (!speedWorkout) return <></>;
 
   return (
-    <Collapse in={!isChecked || isActive}>
+    <div
+      className={cn(isChecked && !isActive ? "bg-black/10" : "", "rounded-lg")}
+    >
       <Button
-        fullWidth
-        sx={{
-          color: "#555",
-          padding: "8px 16px",
-          textAlign: "left",
-          margin: "8px 0",
-        }}
+        variant="ghost"
+        className="w-full px-4 text-left text-gray-700"
         disabled={isChecked}
         onClick={handleClick}
       >
-        <div
-          style={{
-            display: "grid",
-            rowGap: 4,
-            flexGrow: 1,
-            alignItems: "center",
-          }}
-        >
+        <div className="grid flex-1 items-center gap-1">
           <div style={{ display: "flex", alignItems: "center" }}>
             <CueCell itemTempId={itemTempId} isActive={isActive} />
-            <Check sx={{ color: isChecked ? "#52a2aa" : "#eee" }} />
+            <Check color={isChecked ? "#52a2aa" : "#eee"} />
           </div>
         </div>
       </Button>
-    </Collapse>
+    </div>
   );
 };
 

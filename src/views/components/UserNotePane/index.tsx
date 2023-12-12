@@ -1,29 +1,21 @@
 import { RootState } from "@/main";
 import SentencePitchLine from "@/views/components/SentencePitchLine";
-import { Container } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const UserNotePane = () => {
   const note = useSelector((state: RootState) => state.note);
 
   return (
-    <Container maxWidth="sm" sx={{ paddingTop: 5 }}>
-      <div style={{ display: "grid", rowGap: 8 }}>
+    <div className="mx-auto max-w-xl pt-5">
+      <div className="grid gap-2">
         {note.texts.map((text, index) => (
-          <div
-            key={index}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              columnGap: 16,
-            }}
-          >
-            <div style={{ textAlign: "right" }}>{text}</div>
+          <div key={index} className="grid grid-cols-[1fr_1fr] gap-4">
+            <div className="flex items-center ">{text}</div>
             <SentencePitchLine pitchStr={note.pitchStrs[index] || ""} />
           </div>
         ))}
       </div>
-    </Container>
+    </div>
   );
 };
 

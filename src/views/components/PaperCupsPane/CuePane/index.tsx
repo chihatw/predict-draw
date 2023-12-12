@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { ICuePattern } from '@/application/cuePattern/core/0-interface';
-import { TARGET } from '@/application/cuePattern/core/1-constants';
-import { ICueWorkoutCue } from '@/application/cueWorkoutCue/core/0-interface';
-import CueCard from './CueCard';
+import { ICuePattern } from "@/application/cuePattern/core/0-interface";
+import { TARGET } from "@/application/cuePattern/core/1-constants";
+import { ICueWorkoutCue } from "@/application/cueWorkoutCue/core/0-interface";
+import CueCard from "./CueCard";
 
 const CuePane = React.memo(
   ({
@@ -14,8 +14,8 @@ const CuePane = React.memo(
     cueWorkoutCue: ICueWorkoutCue;
   }) => {
     return (
-      <div style={{ height: 200 }}>
-        <div style={{ display: 'grid', rowGap: 16, flexGrow: 1 }}>
+      <div className="h-[200px]">
+        <div className="grid flex-1 gap-4">
           {cuePattern.topic !== TARGET.none && (
             <CueCard
               label={cueWorkoutCue.header.label}
@@ -36,7 +36,7 @@ const CuePane = React.memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default CuePane;

@@ -1,10 +1,7 @@
 import { RootState } from "@/main";
-import { useTheme } from "@mui/system";
 import { useSelector } from "react-redux";
 
 const WorkoutStatus = () => {
-  const theme = useTheme();
-
   const { selectedId, checkedIndexes, totalRounds, currentRound } = useSelector(
     (state: RootState) => state.speedWorkoutParams,
   );
@@ -15,23 +12,15 @@ const WorkoutStatus = () => {
   if (!speedWorkout) return <></>;
 
   return (
-    <div style={{ display: "flex", alignItems: "center" }}>
+    <div className="flex items-center">
       <div>
-        <span
-          style={{
-            ...(theme.typography as any).lato900,
-            fontSize: 90,
-          }}
-        >
+        <span className="font-lato text-[90px] font-[900] text-gray-700">
           {checkedIndexes.length +
             speedWorkout.itemTempIds.length * (currentRound - 1)}
         </span>
-        <span
-          style={{
-            ...(theme.typography as any).lato900,
-            fontSize: 48,
-          }}
-        >{`/${speedWorkout.itemTempIds.length * totalRounds}`}</span>
+        <span className="font-lato text-[48px] font-[900] text-gray-700">{`/${
+          speedWorkout.itemTempIds.length * totalRounds
+        }`}</span>
       </div>
     </div>
   );

@@ -1,9 +1,7 @@
 import { RootState } from "@/main";
-import { Container } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ICuePattern } from "@/application/cuePattern/core/0-interface";
 import { cueWorkoutCueActions } from "@/application/cueWorkoutCue/framework/0-reducer";
 import { cueWorkoutParamsActions } from "@/application/cueWorkoutParams/framework/0-reducer";
 import TimeDisplay from "../TimeDisplay";
@@ -11,7 +9,7 @@ import ColorList from "./CardList/ColorList";
 import CuePane from "./CuePane";
 import PlayButton from "./PlayButton";
 
-const UserCueWorkoutPane = () => {
+const PaperCupsPane = () => {
   const dispatch = useDispatch();
 
   const { isRunning, time, colors } = useSelector(
@@ -66,33 +64,19 @@ const UserCueWorkoutPane = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ paddingTop: 0 }}>
-      <div style={{ display: "grid", rowGap: 8 }}>
+    <div className="mx-auto max-w-md">
+      <div className="grid gap-2">
         <ColorList />
         <TimeDisplay miliSeconds={miliSeconds} />
-        <div style={{ margin: "16px 0", height: 300 }}>
+        <div className="my-4 h-[300px]">
           {isRunning && (
             <CuePane cueWorkoutCue={cueWorkoutCue} cuePattern={cuePattern} />
           )}
         </div>
         <PlayButton handleClick={handleClick} />
       </div>
-    </Container>
+    </div>
   );
 };
 
-export default UserCueWorkoutPane;
-
-const isContinue = (
-  currentPattern: ICuePattern,
-  updatedPattern: ICuePattern,
-) => {
-  return isSamePattern(currentPattern, updatedPattern);
-};
-
-const isSamePattern = (
-  currentPattern: ICuePattern,
-  updatedPattern: ICuePattern,
-) => {
-  return JSON.stringify(updatedPattern) === JSON.stringify(currentPattern);
-};
+export default PaperCupsPane;

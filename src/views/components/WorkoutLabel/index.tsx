@@ -1,5 +1,3 @@
-import { useTheme } from '@mui/system';
-
 const WorkoutLabel = ({
   label,
   beatCount,
@@ -7,20 +5,11 @@ const WorkoutLabel = ({
   label: string;
   beatCount: number;
 }) => {
-  const theme = useTheme();
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div
-        style={{
-          ...(theme.typography as any).mRounded300,
-          fontSize: 24,
-        }}
-      >
+    <div className="flex justify-center">
+      <div className="font-mPlusRounded space-x-2 text-[24px] font-[300] text-gray-700">
         <span>{label}</span>
-        <span style={{ fontSize: 16, paddingLeft: 8 }}>
-          {' '}
-          {`(${beatCount} beats)`}
-        </span>
+        <span className="pl-2 text-[16px]">{`(${beatCount} beats)`}</span>
       </div>
     </div>
   );

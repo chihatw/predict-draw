@@ -34,7 +34,6 @@ const MngCueWorkoutPane = () => {
           <ShowStatus />
           <SetTime />
           <SelectColors />
-          {/* todo */}
           <PatternList />
         </div>
       )}

@@ -10,7 +10,7 @@ import ResetButton from "./ResetButton";
 import TimePane from "./TimePane";
 import TimerButton from "./TimerButton";
 
-const UserSpeedWorkoutPane = () => {
+const SokudokuSoloPane = () => {
   const dispatch = useDispatch();
   const { selectedId, isRunning, bpm } = useSelector(
     (state: RootState) => state.speedWorkoutParams,
@@ -64,10 +64,10 @@ const UserSpeedWorkoutPane = () => {
 
   if (!speedWorkout) return <></>;
   return (
-    <div style={{ display: "grid", rowGap: 40 }}>
+    <div className="mt-6 grid gap-10">
       <BPMCulcLabel />
       <div>
-        <BpmPane elapsedTime={elapsedTime} />
+        <BpmPane />
         <TimePane miliSeconds={elapsedTime} />
       </div>
       <TimerButton handleClick={handleClick} />
@@ -76,4 +76,4 @@ const UserSpeedWorkoutPane = () => {
   );
 };
 
-export default UserSpeedWorkoutPane;
+export default SokudokuSoloPane;

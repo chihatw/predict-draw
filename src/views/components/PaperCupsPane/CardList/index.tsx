@@ -1,4 +1,4 @@
-import Card from './Card';
+import Card from "./Card";
 
 const CardList = ({
   list,
@@ -11,10 +11,8 @@ const CardList = ({
 }) => {
   return (
     <div
+      className="grid gap-2"
       style={{
-        display: 'grid',
-        columnGap: 8,
-        rowGap: 8,
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
       }}
     >

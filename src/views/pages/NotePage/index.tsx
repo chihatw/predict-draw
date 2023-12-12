@@ -13,12 +13,10 @@ const NotePage = () => {
         <div className="mt-4 ">
           <div>
             {note.texts.map((text, index) => (
-              <div key={index} className="grid w-full grid-cols-2 bg-blue-100">
-                <div className="flex items-center bg-yellow-50 p-2 text-xl">
-                  {text}
-                </div>
+              <div key={index} className="grid w-full grid-cols-2 ">
+                <div className="flex items-center  p-2 text-xl">{text}</div>
 
-                <div className="flex items-center bg-rose-50 p-2">
+                <div className="flex items-center  p-2">
                   <div className="scale-110 pl-2">
                     <SentencePitchLine pitchStr={note.pitchStrs[index] || ""} />
                   </div>
