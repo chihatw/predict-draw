@@ -1,4 +1,4 @@
-import MoraCircle from './MoraCircle';
+import MoraCircle from "./MoraCircle";
 
 const Mora = ({
   mora,
@@ -11,43 +11,15 @@ const Mora = ({
   isAccentCore: boolean;
   isMute?: boolean;
 }) => {
-  const _isMute = isMute || ['っ', 'ッ'].includes(mora);
+  const _isMute = isMute || ["っ", "ッ"].includes(mora);
   return (
-    <div style={{ position: 'relative' }}>
-      <div
-        style={{
-          position: 'absolute',
-          left: 15,
-          zIndex: -1,
-          height: 40,
-          marginLeft: -1,
-        }}
-      />
+    <div className="relative">
+      <div className="absolute left-[15px] z-[-1] ml-[-1px] h-10" />
       <MoraCircle isHigh={pitchLevel} isMute={_isMute} />
-      <div
-        style={{
-          width: 15,
-          height: 20,
-          display: 'flex',
-          boxSizing: 'border-box',
-          alignItems: 'center',
-          paddingTop: 1,
-          paddingLeft: 1,
-          flexDirection: 'column',
-        }}
-      >
+      <div className="box-border flex h-5 w-[15px] flex-col items-center pl-[1px] pt-[1px]">
         <div
-          style={{
-            color: isAccentCore ? 'red' : 'inherit',
-            fontSize: 11,
-            textAlign: 'center',
-            transform: 'scaleX(0.8)',
-            whiteSpace: 'nowrap',
-            userSelect: 'none',
-            marginLeft: -1,
-            letterSpacing: -2,
-            transformOrigin: 'left',
-          }}
+          className="ml-[-1px] origin-left scale-x-[0.8] select-none whitespace-nowrap text-center text-[11px] tracking-[-2px]"
+          style={{ color: isAccentCore ? "red" : "inherit" }}
         >
           {mora}
         </div>

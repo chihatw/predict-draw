@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import SpeedWorkoutForm from './SpeedWorkoutForm';
+import SpeedWorkoutForm from "./SpeedWorkoutForm";
 
 const SpeedWorkoutEditPage = () => {
   const { workoutId } = useParams();

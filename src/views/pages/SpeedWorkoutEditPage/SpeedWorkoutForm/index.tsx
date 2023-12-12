@@ -1,4 +1,3 @@
-import { Button, Container, MenuItem, Select, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import {
@@ -7,6 +6,16 @@ import {
 } from "@/application/speedWorkoutEditPage/core/2-services";
 import { speedWorkoutEditPageActions } from "@/application/speedWorkoutEditPage/framework/0-reducer";
 import { CUE_TYPES } from "@/application/speedWorkouts/core/1-constants";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { RootState } from "@/main";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -60,32 +69,23 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
 
   if (!speedWorkout) return;
   return (
-    <Container maxWidth="sm" sx={{ paddingTop: 10, paddingBottom: 20 }}>
-      <div style={{ display: "grid", rowGap: 8 }}>
+    <div className="mx-auto max-w-lg py-40 pt-20">
+      <div className="grid gap-2">
         <div>{`beatCount: ${speedWorkoutEditPage.beatCount}`}</div>
-        <TextField
-          label="label"
-          size="small"
+        <Input
+          placeholder="label"
           value={speedWorkoutEditPage.label}
           onChange={(e) => handleChangeLabel(e.target.value)}
         />
-        <div
-          style={{
-            fontSize: 8,
-            color: "gray",
-            paddingLeft: "2em",
-            paddingBottom: "1em",
-          }}
-        >
+        <div className="p-2.5 text-xs text-gray-700">
           <div>text</div>
           <div>chinese</div>
           <div>pitchStr</div>
           <div>cuePitchStr</div>
         </div>
-        <TextField
-          multiline
+        <Textarea
           rows={12}
-          label="workout items"
+          placeholder="workout items"
           value={value.workoutItemsStr}
           onChange={(e) =>
             setValue((currentValue) => ({
@@ -96,24 +96,30 @@ const SpeedWorkoutForm = ({ workoutId }: { workoutId: string }) => {
         />
 
         <Select
-          size="small"
           value={speedWorkoutEditPage.cueType}
-          onChange={(e) => handleChangeCueType(e.target.value)}
+          onValueChange={(value) => handleChangeCueType(value)}
         >
-          {Object.values(CUE_TYPES).map((type, index) => (
-            <MenuItem key={index} value={type}>
-              {type}
-            </MenuItem>
-          ))}
+          <SelectTrigger>
+            <SelectValue placeholder="type" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.values(CUE_TYPES).map((type, index) => (
+              <SelectItem key={index} value={type}>
+                {type}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
-        <div style={{ display: "grid", rowGap: 16 }}>
+        <div className="grid gap-4">
           {speedWorkoutEditPage.workoutItems.map((_, index) => (
             <WorkoutItemRow index={index} key={index} />
           ))}
         </div>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button variant="outline" onClick={handleSubmit}>
+          Submit
+        </Button>
       </div>
-    </Container>
+    </div>
   );
 };
 

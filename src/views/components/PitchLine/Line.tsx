@@ -16,9 +16,8 @@ const Line = ({
   const lastXPos = width / 2 + (wordPitchLevels.length - 1) * width;
   return (
     <div
+      className="t-0 absolute"
       style={{
-        position: "absolute",
-        top: 0,
         height,
         width: svgWidth,
       }}

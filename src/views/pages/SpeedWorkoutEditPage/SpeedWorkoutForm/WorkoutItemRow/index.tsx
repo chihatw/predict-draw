@@ -14,14 +14,12 @@ function WorkoutItemRow({ index }: { index: number }) {
   if (!workoutItem) return <></>;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "20px 1fr 4fr" }}>
-      <div style={{ display: "flex", alignItems: "center", fontSize: 12 }}>
-        {index + 1}
-      </div>
+    <div className="grid grid-cols-[20px_2fr_4fr]">
+      <div className="flex items-center text-sm">{index + 1}</div>
       <CueCell workoutItem={workoutItem} cueType={cueType} />
-      <div style={{ display: "grid", rowGap: 4 }}>
-        <div style={{ fontSize: 14 }}>{workoutItem.text}</div>
-        <div style={{ fontSize: 12, color: "#555" }}>{workoutItem.chinese}</div>
+      <div className="grid gap-1">
+        <div>{workoutItem.text}</div>
+        <div className="text-xs text-gray-500">{workoutItem.chinese}</div>
         <SentencePitchLine pitchStr={workoutItem.pitchStr} />
       </div>
     </div>
