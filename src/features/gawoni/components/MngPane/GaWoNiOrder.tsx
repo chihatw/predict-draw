@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
-import { updateIsRandomOrder } from "../services/firebase";
+import { updateIsRandomOrder } from "../../services/firebase";
 
 const GaWoNiOrder = ({ isRandomOrder }: { isRandomOrder: boolean }) => {
   const [value, setValue] = useState(isRandomOrder);

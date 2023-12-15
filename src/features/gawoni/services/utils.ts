@@ -2,7 +2,7 @@ import { shuffle } from "lodash";
 import { GAWONI_ORDER } from "../constants";
 import { GaWoNiProps, PoolItem } from "../schema";
 
-export const buildSentence = (props: GaWoNiProps): string => {
+export const buildGaWoNiSentence = (props: GaWoNiProps): string => {
   const gaItem = getPoolItem(props.ga_pool);
   const woItem = getPoolItem(
     props.wo_pool.filter((item) => item.label !== gaItem),

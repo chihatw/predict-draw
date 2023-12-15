@@ -1,7 +1,7 @@
 import { isArray } from "lodash";
 import { useEffect, useState } from "react";
-import { GaWoNiProps } from "../../schema";
-import { updateGaWoNiProps } from "../../services/firebase";
+import { GaWoNiProps } from "../../../schema";
+import { updateGaWoNiProps } from "../../../services/firebase";
 import ItemPool from "./ItemPool";
 
 const GaWoNiPools = ({ props }: { props: GaWoNiProps }) => {

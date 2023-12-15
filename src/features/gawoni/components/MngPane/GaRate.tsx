@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { updateGaRate } from "../services/firebase";
+import { updateGaRate } from "../../services/firebase";
 
 const GaRate = ({ ga_rate }: { ga_rate: number }) => {
   const [value, setValue] = useState(ga_rate);

@@ -1,4 +1,4 @@
-import GaWoNiMngPane from "@/features/gawoni/components/GaWoNiMngPane";
+import GaWoNiMngPane from "@/features/gawoni/components/MngPane/GaWoNiMngPane";
 import { RootState } from "@/main";
 import { useSelector } from "react-redux";
 import Layout from "../../Layout";

@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import _, { shuffle } from "lodash";
 import { RefreshCw, X } from "lucide-react";
-import { GAWONI_ORDER } from "../constants";
-import { GaWoNiProps } from "../schema";
-import { updateGaWoNiProps } from "../services/firebase";
+import { GAWONI_ORDER } from "../../constants";
+import { GaWoNiProps } from "../../schema";
+import { updateGaWoNiProps } from "../../services/firebase";
 
 const ReadOrder = ({ props }: { props: GaWoNiProps }) => {
   const buildReadOrder = () => {
