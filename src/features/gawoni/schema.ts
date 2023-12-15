@@ -10,5 +10,6 @@ export interface GaWoNiProps {
   ga_pool: PoolItem[];
   wo_pool: PoolItem[];
   ni_pool: PoolItem[];
-  // todo readOrder:string[]
+  readOrder: string[];
+  isRandomReadOrder: boolean;
 }

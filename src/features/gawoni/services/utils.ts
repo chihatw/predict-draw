@@ -1,7 +1,6 @@
 import { shuffle } from "lodash";
+import { GAWONI_ORDER } from "../constants";
 import { GaWoNiProps, PoolItem } from "../schema";
-
-const ORDER = ["が", "を", "に"];
 
 export const buildSentence = (props: GaWoNiProps): string => {
   const gaItem = getPoolItem(props.ga_pool);
@@ -15,7 +14,7 @@ export const buildSentence = (props: GaWoNiProps): string => {
   );
 
   const result: string[] = [];
-  const shuffled = props.isRandomOrder ? shuffle(ORDER) : ORDER;
+  const shuffled = props.isRandomOrder ? shuffle(GAWONI_ORDER) : GAWONI_ORDER;
 
   for (const item of shuffled) {
     switch (item) {

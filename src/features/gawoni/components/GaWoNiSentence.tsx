@@ -6,13 +6,7 @@ import { GaWoNiProps } from "../schema";
 import { updateGaWoNiProps } from "../services/firebase";
 import { buildSentence } from "../services/utils";
 
-const GaWoNiSentence = ({
-  sentence,
-  props,
-}: {
-  sentence: string;
-  props: GaWoNiProps;
-}) => {
+const GaWoNiSentence = ({ props }: { props: GaWoNiProps }) => {
   const _buildSentence = () => {
     const cloned = { ...props };
     cloned.sentence = buildSentence(props);
@@ -26,7 +20,7 @@ const GaWoNiSentence = ({
   return (
     <div className="flex items-center gap-1">
       <div className="basis-[320px]">
-        <SentencePitchLine pitchStr={sentence} />
+        <SentencePitchLine pitchStr={props.sentence} />
       </div>
       <Button size="icon" variant={"ghost"} onClick={_buildSentence}>
         <RefreshCw color="gray" />
