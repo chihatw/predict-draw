@@ -9,7 +9,7 @@ import PatternList from "./PatternList";
 
 const LOCAL_STATE = "cueWorkout";
 
-const MngCueWorkoutPane = () => {
+const MngPaperCupsPane = () => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const value = localStorage.getItem(LOCAL_STATE);
@@ -27,7 +27,7 @@ const MngCueWorkoutPane = () => {
         className="w-full justify-start"
         onClick={handleClickTitle}
       >
-        <h3>紙コップ(CueWorkout)</h3>
+        <h3>紙コップ</h3>
       </Button>
       {open && (
         <div className="grid gap-2 px-8">
@@ -41,4 +41,4 @@ const MngCueWorkoutPane = () => {
   );
 };
 
-export default MngCueWorkoutPane;
+export default MngPaperCupsPane;

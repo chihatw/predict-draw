@@ -29,6 +29,12 @@ const UserPage = ({ user }: { user: string }) => {
         return <UserNotePane />;
       case PAGES.micTest:
         return <UserMicPane />;
+      case PAGES.ga_wo_ni:
+        return (
+          <div className="flex h-screen items-center justify-center font-lato text-[120px] font-[900] text-gray-300">
+            TODO
+          </div>
+        );
       default:
         return <div></div>;
     }

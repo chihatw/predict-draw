@@ -10,7 +10,7 @@ import SpeedWorkoutRow from "./SpeedWorkoutRow";
 
 const LOCAL_STORAGE = "speedWorkkout";
 
-const MngSpeedWorkoutPane = () => {
+const MngSokudokuPane = () => {
   const dispatch = useDispatch();
   const speedWorkoutIds = useSelector(
     (state: RootState) => state.speedWorkouts.ids,
@@ -72,4 +72,4 @@ const MngSpeedWorkoutPane = () => {
   );
 };
 
-export default MngSpeedWorkoutPane;
+export default MngSokudokuPane;

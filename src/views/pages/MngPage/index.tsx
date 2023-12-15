@@ -1,11 +1,12 @@
+import GaWoNiMngPane from "@/features/gawoni/components/GaWoNiMngPane";
 import { RootState } from "@/main";
 import { useSelector } from "react-redux";
 import Layout from "../../Layout";
-import MngCueWorkoutPane from "../../components/MngCueWorkoutPane";
 import MngNotePane from "../../components/MngNotePane";
 import MngPageStatePane from "../../components/MngPageStatePane";
+import MngPaperCupsPane from "../../components/MngPaperCupsPane";
 import MngRecordVoicePane from "../../components/MngRecordVoicePane";
-import MngSpeedWorkoutPane from "../../components/MngSpeedWorkoutPane";
+import MngSokudokuPane from "../../components/MngSokudokuPane";
 
 const MngPage = () => {
   const { ids: users, entities: pageStates } = useSelector(
@@ -26,8 +27,9 @@ const MngPage = () => {
             ))}
           </div>
           <div style={{ display: "grid", rowGap: 0, paddingBottom: 80 }}>
-            <MngSpeedWorkoutPane />
-            <MngCueWorkoutPane />
+            <MngSokudokuPane />
+            <MngPaperCupsPane />
+            <GaWoNiMngPane />
             <MngRecordVoicePane />
             <MngNotePane />
           </div>
