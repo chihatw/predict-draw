@@ -1,6 +1,6 @@
 import { PAGES } from "@/application/pageStates/core/1-constants";
 import { USER_LAYOUTS } from "@/application/userPage/core/1-constants";
-import { GaWoNiOrderPane, GaWoNiPane } from "@/features/gawoni";
+import { GaWoNiPane } from "@/features/gawoni";
 import { RootState } from "@/main";
 import Layout from "@/views/Layout";
 import { useSelector } from "react-redux";
@@ -32,8 +32,6 @@ const UserPage = ({ user }: { user: string }) => {
         return <UserMicPane />;
       case PAGES.ga_wo_ni:
         return <GaWoNiPane />;
-      case PAGES.ga_wo_ni_order:
-        return <GaWoNiOrderPane />;
       default:
         return <div></div>;
     }

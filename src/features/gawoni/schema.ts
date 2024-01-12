@@ -4,12 +4,10 @@ export interface PoolItem {
 }
 
 export interface GaWoNiProps {
+  isRaw: boolean;
   sentence: string;
-  ga_rate: number;
   isRandomOrder: boolean;
   ga_pool: PoolItem[];
   wo_pool: PoolItem[];
   ni_pool: PoolItem[];
-  readOrder: string[];
-  isRandomReadOrder: boolean;
 }

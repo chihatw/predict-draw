@@ -4,25 +4,15 @@ import { GAWONI_COLLECTION, GAWONI_DOC_ID } from "../constants";
 import { GaWoNiProps } from "../schema";
 
 export const buildGawoniProps = (doc: DocumentData): GaWoNiProps => {
-  const {
-    sentence,
-    ga_rate,
-    isRandomOrder,
-    ga_pool,
-    wo_pool,
-    ni_pool,
-    readOrder,
-    isRandomReadOrder,
-  } = doc.data();
+  const { isRaw, sentence, isRandomOrder, ga_pool, wo_pool, ni_pool } =
+    doc.data();
   return {
+    isRaw,
     sentence,
-    ga_rate,
     isRandomOrder,
     ga_pool,
     wo_pool,
     ni_pool,
-    readOrder,
-    isRandomReadOrder,
   };
 };
 
@@ -44,4 +34,9 @@ export const updateIsRandomReadOrder = (isRandomReadOrder: boolean) => {
 export const updateGaWoNiProps = (gawoniProps: GaWoNiProps) => {
   console.log(`%cupdate ${GAWONI_COLLECTION}`, "color:red");
   updateDoc(doc(db, GAWONI_COLLECTION, GAWONI_DOC_ID), { ...gawoniProps });
+};
+
+export const updateIsRaw = (isRaw: boolean) => {
+  console.log(`%cupdate ${GAWONI_COLLECTION}`, "color:red");
+  updateDoc(doc(db, GAWONI_COLLECTION, GAWONI_DOC_ID), { isRaw });
 };

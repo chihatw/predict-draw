@@ -1,7 +1,6 @@
 import { GaWoNiProps, PoolItem } from "./schema";
 
 import GaWoNiMngPane from "./components/MngPane/GaWoNiMngPane";
-import GaWoNiOrderPane from "./components/UserPane/GaWoNiOrderPane";
 import GaWoNiPane from "./components/UserPane/GaWoNiPane";
 import {
   GAWONI_COLLECTION,
@@ -17,7 +16,6 @@ export {
   GAWONI_DOC_ID,
   GAWONI_ORDER,
   GaWoNiMngPane,
-  GaWoNiOrderPane,
   GaWoNiPane,
   INITIAL_GAWONI_PROPS,
   buildGaWoNiSentence,

@@ -56,7 +56,22 @@ const GaWoNiPane = () => {
                 item.includes("おば＼ーさん") ? " bg-orange-50" : "",
               )}
             >
-              <SentencePitchLine pitchStr={item} />
+              {value.isRaw ? (
+                (() => {
+                  const isLast = !"をにが".split("").includes(item.at(-1)!);
+                  if (isLast) return <div>{item}</div>;
+                  const joshi = item.at(-1)!;
+                  const meishi = item.substring(0, item.length - 1);
+                  return (
+                    <div className="flex space-x-0.5">
+                      <div className="text-red-500">{meishi}</div>
+                      <div>{joshi}</div>
+                    </div>
+                  );
+                })()
+              ) : (
+                <SentencePitchLine pitchStr={item} />
+              )}
             </div>
           ))}
       </div>

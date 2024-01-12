@@ -24,7 +24,11 @@ const GaWoNiSentence = ({ props }: { props: GaWoNiProps }) => {
   return (
     <div className="flex items-center gap-1">
       <div className="basis-[320px]">
-        <SentencePitchLine pitchStr={props.sentence} />
+        {props.isRaw ? (
+          <div>{props.sentence}</div>
+        ) : (
+          <SentencePitchLine pitchStr={props.sentence} />
+        )}
       </div>
       <Button size="icon" variant={"ghost"} onClick={_buildGaWoNiSentence}>
         <RefreshCw color="gray" />
