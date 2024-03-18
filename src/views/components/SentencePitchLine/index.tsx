@@ -9,7 +9,7 @@ const SentencePitchLine = ({ pitchStr }: { pitchStr: string }) => {
   return (
     <div className="flex flex-wrap">
       {wordPitchStrs.map((wordPitchStr, index) => (
-        <PitchLine key={index} wordPitchStr={wordPitchStr} />
+        <PitchLine key={index} pitchString={wordPitchStr} />
       ))}
     </div>
   );
