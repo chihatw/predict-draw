@@ -31,7 +31,6 @@ export const updateCue = (
   };
   let i = 0;
   while (_.isEqual(currentCuePattern, updatedCue.cuePattern) && i < 10) {
-    console.log({ i });
     const { cuePattern: _cuePattern, cueWorkoutCue: _cueWorkoutCue } =
       createCueFromParams(colors, cuePatternParams);
     updatedCue = { cuePattern: _cuePattern, cueWorkoutCue: _cueWorkoutCue };
@@ -40,7 +39,7 @@ export const updateCue = (
   return updatedCue;
 };
 
-export const createCueFromParams = (
+const createCueFromParams = (
   colors: string[],
   patternParams: ICuePatternParams,
 ): { cuePattern: ICuePattern; cueWorkoutCue: ICueWorkoutCue } => {

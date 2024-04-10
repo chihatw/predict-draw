@@ -14,7 +14,10 @@ const PitchLine = ({ pitchString }: { pitchString: string }) => {
 
   return (
     <div className="relative h-10 ">
-      <div className="absolute top-0 h-4" style={{ width: lineWidth }}>
+      <div
+        className="absolute top-0 h-4 overflow-hidden"
+        style={{ width: lineWidth }}
+      >
         <SVGLine isOdaka={isOdaka} pitches={pitches} width={WIDTH} />
       </div>
       <div className="flex flex-nowrap ">

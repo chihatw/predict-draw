@@ -9,9 +9,11 @@ import { buildGaWoNiSentence } from "../../services/utils";
 const GaWoNiSentence = ({ props }: { props: GaWoNiProps }) => {
   const _buildGaWoNiSentence = () => {
     const cloned = { ...props };
+    let i = 0;
     let temp = buildGaWoNiSentence(props);
-    while (temp === props.sentence) {
+    while (temp === props.sentence || i < 10) {
       temp = buildGaWoNiSentence(props);
+      i++;
     }
     cloned.sentence = temp;
     updateGaWoNiProps(cloned);

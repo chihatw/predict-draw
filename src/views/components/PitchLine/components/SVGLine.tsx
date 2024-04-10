@@ -16,7 +16,7 @@ const SVGLine = ({
   if (!isKanaWord) return <></>;
 
   return (
-    <svg className="inset-0">
+    <svg>
       <polyline
         className={`fill-none stroke-[#52a2aa] stroke-2`}
         points={points}
